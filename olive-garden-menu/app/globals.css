@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens (see docs/DESIGN_SYSTEM.md).
+ * Use them as Tailwind classes, e.g. bg-brand, text-brand-dark, border-line.
+ * IMPORTANT: never use `brand` (#a1b626) for text on white (contrast 2.27:1).
+ */
+@theme {
+  --color-brand: #a1b626;
+  --color-brand-dark: #556b12;
+  --color-brand-darker: #3f500d;
+  --color-brand-tint: #f6f8e8;
+  --color-ink: #1c1917;
+  --color-muted: #57534e;
+  --color-line: #e7e5e4;
+  --color-background: #ffffff;
+  --color-warning-bg: #fef3c7;
+  --color-warning-text: #78350f;
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+}
+
+html {
+  /* Keeps anchored sections visible below the sticky header. */
+  scroll-padding-top: 5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-ink);
+}
