@@ -7,6 +7,7 @@ clear search intent each.
 
 ```
 /                                   Homepage: full menu overview with prices
+/menu                               Menu hub (exists; noindex placeholder, see note below)
 /menu/[category]                    One page per menu category
 /blog                               Blog index
 /blog/[slug]                        Blog articles (guides)
@@ -36,9 +37,14 @@ The real category list must be confirmed from the current official menu
 before building. Do not create a category page without real items.
 
 ### Rules to avoid duplicate intent
-- **No `/menu` page.** The homepage already targets "Olive Garden menu with
-  prices". Breadcrumbs go `Home > Category`. If `/menu` is ever requested,
-  add a permanent redirect to `/`.
+- **`/menu` (owner decision, 2026-11-10):** a `/menu` hub page exists as a
+  **noindex placeholder** that lists categories. Breadcrumbs go
+  `Home > Menu > Category`. **Before removing noindex**, decide how `/menu`
+  and the homepage differ in intent (e.g. homepage = brand overview + guides,
+  `/menu` = full category index), or redirect `/menu` to `/`. Both pages
+  must not target the same "Olive Garden menu with prices" query.
+- **Placeholder pages are noindex** (`robots: { index: false }`) until
+  approved content exists. `/design-preview` is dev-only (404 in production).
 - **No individual pages per menu item** (thin, near-duplicate content).
   Items live in category tables. An item can get a blog guide only if it
   has enough unique, helpful content.

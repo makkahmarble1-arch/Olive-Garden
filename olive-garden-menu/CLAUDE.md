@@ -40,6 +40,12 @@ TypeScript, Tailwind CSS v4 (config lives in `app/globals.css`, there is no
 
 - Reusable components in `components/`; content/data in `content/`;
   helpers and types in `lib/`. See the roadmap for the folder layout.
+- Reuse existing components before creating new ones: `MenuTable`,
+  `PriceNotice`, `CategoryCard`, `Breadcrumbs` (includes BreadcrumbList
+  JSON-LD), `TableOfContents`, `ArticleLayout`, `RelatedArticles`,
+  `VerificationBadge`, `PlaceholderImage`, `SectionHeading`, `Container`.
+- Pages read content through `lib/content.ts` helpers, and build URLs with
+  its path helpers (`menuCategoryPath`, `articlePath`).
 - Server Components by default. Add `"use client"` only when a component
   needs state, effects, or browser events.
 - Do **not** add npm dependencies without asking the owner first and
@@ -87,8 +93,14 @@ where it is needed. Never fill gaps with invented data.
 ## SEO rules
 
 - One search intent per URL. Before creating a page, check that no existing
-  page targets the same intent. No `/menu` index page (homepage covers it),
-  no per-item pages, no separate calorie pages.
+  page targets the same intent. No per-item pages, no separate calorie pages.
+- `/menu` exists as a **noindex** placeholder hub. Its intent vs. the homepage
+  must be decided before indexing (see `docs/SEO_ARCHITECTURE.md`).
+- Any placeholder page must be `robots: { index: false }` until approved
+  content exists. Do not create final `/menu/[category]` or `/blog/[slug]`
+  routes until the owner approves categories/slugs and content.
+- `/design-preview` is a dev-only component preview (404 in production).
+  Its sample data must never be imported into public pages.
 - Every page: unique `title`, `description`, self-canonical, Open Graph.
 - One `h1` per page; logical heading order.
 - JSON-LD via the shared `JsonLd` component, escaped with

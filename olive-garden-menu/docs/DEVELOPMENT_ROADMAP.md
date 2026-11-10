@@ -5,37 +5,42 @@ browser (desktop + mobile width), run `npm run lint`, then commit to git.
 
 ## Planned folder structure
 
+(✅ = exists, ⏳ = planned)
+
 ```
 olive-garden-menu/
 ├── app/
-│   ├── layout.tsx                 Root layout: fonts, Header, Footer, default metadata
-│   ├── page.tsx                   Homepage
-│   ├── globals.css                Tailwind + design tokens
-│   ├── not-found.tsx              404 page
-│   ├── sitemap.ts                 /sitemap.xml
-│   ├── robots.ts                  /robots.txt
-│   ├── menu/[category]/page.tsx   Category pages
-│   ├── blog/page.tsx              Blog index
-│   ├── blog/[slug]/page.tsx       Blog articles
-│   ├── about/page.tsx
-│   ├── contact/page.tsx
-│   ├── disclaimer/page.tsx
-│   └── privacy-policy/page.tsx
+│   ├── layout.tsx                 ✅ Root layout: fonts, Header, Footer, default metadata
+│   ├── page.tsx                   ✅ Homepage
+│   ├── globals.css                ✅ Tailwind + design tokens
+│   ├── menu/page.tsx              ✅ Menu hub (noindex placeholder)
+│   ├── design-preview/            ✅ Dev-only component previews (404 in production)
+│   ├── not-found.tsx              ⏳ 404 page
+│   ├── sitemap.ts                 ⏳ /sitemap.xml
+│   ├── robots.ts                  ⏳ /robots.txt
+│   ├── menu/[category]/page.tsx   ⏳ Category pages (after owner approves categories)
+│   ├── blog/page.tsx              ⏳ Blog index
+│   ├── blog/[slug]/page.tsx       ⏳ Blog articles (after owner approves topics)
+│   ├── about/, contact/, disclaimer/, privacy-policy/   ⏳
 ├── components/
-│   ├── layout/        Header, MobileMenu, Footer, Container, SkipLink
-│   ├── navigation/    Breadcrumbs, TableOfContents
-│   ├── menu/          CategoryCard, PriceTable, PriceNotice, VerificationBadge
-│   ├── content/       FaqSection, RelatedArticles, ArticleBody, ArticleCard
-│   └── seo/           JsonLd
+│   ├── layout/        ✅ Header, MobileMenu, Footer, Container, SkipLink
+│   ├── home/          ✅ Hero
+│   ├── navigation/    ✅ Breadcrumbs (+ BreadcrumbList JSON-LD), TableOfContents
+│   ├── menu/          ✅ CategoryCard, MenuTable, PriceNotice
+│   ├── content/       ✅ ArticleLayout, ContentBlocks, RichText, ArticleCard, RelatedArticles
+│   │                  ⏳ FaqSection
+│   ├── ui/            ✅ PlaceholderImage, SectionHeading, VerificationBadge
+│   └── seo/           ✅ JsonLd
 ├── content/
-│   ├── menu/          One .ts file per category (items, prices, calories, FAQ)
-│   └── blog/          One .ts file per article
+│   ├── menu/          ✅ categories.ts (registry, placeholders now), _template.ts
+│   └── articles/      ✅ index.ts (registry, empty), _template.ts
 ├── lib/
-│   ├── site.ts        Site name, URL, author, "prices last checked" date
-│   ├── types.ts       TypeScript types for menu items and articles
-│   ├── content.ts     Helper functions: getAllCategories, getPostBySlug, etc.
-│   └── seo.ts         Helpers to build metadata and JSON-LD
-└── public/images/     Our own images
+│   ├── site.ts        ✅ Site name, URL (env var), nav, disclaimer, price notice
+│   ├── types.ts       ✅ Menu, article, breadcrumb, TOC types
+│   ├── content.ts     ✅ Content helpers + URL path helpers
+│   ├── format.ts      ✅ Date, price, number formatting (en-US)
+│   └── seo.ts         ⏳ Metadata helpers (when real pages exist)
+└── public/images/     ⏳ Owner-approved images
 ```
 
 ## Content management (beginner-friendly, no CMS)
@@ -68,10 +73,17 @@ export const desserts: MenuCategory = {
 - TypeScript types catch mistakes (missing fields, wrong types) before the site runs.
 - `lib/content.ts` collects all files so pages, sitemap, and navigation
   update automatically.
-- Blog articles use the same idea: an object with `title`, `description`,
-  `publishedAt`, `updatedAt`, `sections` (each with `id`, `heading`, and
-  content blocks), `faqs`, and `relatedSlugs`. Section headings build the
-  table of contents automatically.
+- `MenuTable` shows a price/calorie value only when the item's `status` is
+  `"verified"` and the value is not `null`; otherwise "Not verified yet".
+- **Adding a menu category:** copy `content/menu/_template.ts` to
+  `content/menu/<slug>.ts`, fill in verified data, then replace the matching
+  placeholder in `content/menu/categories.ts` with an import of the new file.
+- **Adding an article:** copy `content/articles/_template.ts` to
+  `content/articles/<slug>.ts`, fill in real content, then add it to the
+  array in `content/articles/index.ts`. Articles have `title`, `description`,
+  `intro`, `featuredImage`, `publishedAt`, `updatedAt`, `author`, `sections`
+  (each with `id`, `heading`, and content blocks), and `relatedSlugs`.
+  Section headings build the table of contents automatically.
 - Later option (only if writing in TS gets painful): switch articles to MDX.
   That needs extra packages, so it is not part of the initial plan.
 
@@ -81,30 +93,38 @@ export const desserts: MenuCategory = {
 - [x] Inspect project
 - [x] Write `docs/` and `CLAUDE.md`
 
-### Phase 1: Foundation
+### Phase 1: Foundation (done)
 1. `lib/site.ts` (site name, disclaimer text, URL from `NEXT_PUBLIC_SITE_URL`
    with localhost fallback) and `lib/types.ts` (data types)
 2. Design tokens in `app/globals.css`; remove starter dark-mode styles
 3. Fonts + default metadata (`metadataBase`, title template) in `app/layout.tsx`
 4. `Container`, `SkipLink`, `Header` (with mobile menu), `Footer` (with disclaimer)
 5. Replace starter homepage with a simple placeholder; delete unused starter SVGs
-6. Version control + deployment (when the owner is ready): rename branch to
-   `main`, create GitHub repo, connect Vercel, set `NEXT_PUBLIC_SITE_URL`
+6. Version control + deployment: branch `main` pushed to GitHub, Vercel
+   connected (Root Directory `olive-garden-menu`). `NEXT_PUBLIC_SITE_URL` is
+   set later, once the domain is decided
+
+### Phase 1.5: Reusable component architecture (done)
+- `MenuTable`, `PriceNotice`, `VerificationBadge`, `Breadcrumbs`, `JsonLd`,
+  `TableOfContents`, `ArticleLayout`, `ContentBlocks`, `RichText`,
+  `ArticleCard`, `RelatedArticles`
+- Content registries + templates, `lib/content.ts`, `lib/format.ts`
+- `/menu` noindex placeholder hub; dev-only `/design-preview`
 
 ### Phase 2: Menu pages
 1. Confirm real category list; create one category data file with
    verified (or clearly marked unverified) items
-2. `PriceTable`, `PriceNotice`, `VerificationBadge`
-3. `Breadcrumbs` + `BreadcrumbList` JSON-LD (`JsonLd` component)
+2. ~~`MenuTable`, `PriceNotice`, `VerificationBadge`~~ (done in Phase 1.5)
+3. ~~`Breadcrumbs` + `BreadcrumbList` JSON-LD~~ (done in Phase 1.5)
 4. `app/menu/[category]/page.tsx` with `generateStaticParams` + `generateMetadata`
 5. Add remaining categories one at a time
 6. Homepage: intro, category cards with price ranges, price notice
 
 ### Phase 3: Blog
-1. Article data type + first real article
-2. `ArticleBody`, `TableOfContents`, `FaqSection` (+ `FAQPage` JSON-LD)
-3. `app/blog/[slug]/page.tsx` with `BlogPosting` JSON-LD
-4. `RelatedArticles`, `ArticleCard`, `app/blog/page.tsx`
+1. First real article (owner-provided topic and outline)
+2. `FaqSection` (+ `FAQPage` JSON-LD)
+3. `app/blog/[slug]/page.tsx` using `ArticleLayout`, with `BlogPosting` JSON-LD
+4. `app/blog/page.tsx` using `ArticleCard`
 5. Internal links between articles and category pages
 
 ### Phase 4: Trust and legal pages
@@ -144,13 +164,14 @@ needed. Until then, use clearly identified placeholders and never invent data.
 | 7 | Contact email | Pending | Later (Phase 4) |
 | 8 | Logo and images | Pending. Use clearly identified placeholders (e.g. labeled "Placeholder image") | Design and content phases |
 | 9 | Blog topics + SEO outlines | Pending | Phase 3 |
-| 10 | GitHub repository | Configured in the version-control/deployment phase. New repo uses **`main`** as default branch (local repo is currently on `master` with no commits; rename then) | Phase 1, step 6 |
+| 10 | GitHub repository | **Done.** `main` branch pushed to `github.com/makkahmarble1-arch/Olive-Garden`; Vercel deploys from it | Done |
 | 11 | Analytics and ads | **Not implemented** until the final integration phase | Phase 7 |
 
 ## Repo note
 
 The git repository root is `Olive Garden/` and the Next.js app is inside
-`olive-garden-menu/`. When importing to Vercel, set **Root Directory** to
-`olive-garden-menu`. A stray `package-lock.json` in `C:\Users\WC` causes a
+`olive-garden-menu/`. Vercel's **Root Directory** is set to
+`olive-garden-menu` (without it, Vercel deploys an empty site that returns
+404). After changing Vercel settings, a redeploy is required. A stray `package-lock.json` in `C:\Users\WC` causes a
 Turbopack warning; it is outside the project and harmless, but can be removed
 by the owner.
