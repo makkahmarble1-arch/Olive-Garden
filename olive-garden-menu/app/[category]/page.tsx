@@ -141,18 +141,24 @@ export default async function CategoryPage({ params }: PageProps<"/[category]">)
 
         {popular.length > 0 && (
           <section aria-labelledby="popular" className="mt-14">
-            <SectionHeading id="popular" title={`Popular ${category.name}`} />
-            <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <SectionHeading
+              id="popular"
+              title={`Popular ${category.name}`}
+              intro="Photos are provided by the site owner for illustration and are not official Olive Garden photos. Dishes may look different at your restaurant."
+            />
+            <ul
+              className={`mt-8 grid gap-6 sm:grid-cols-2 ${popular.length === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"}`}
+            >
               {popular.map(({ offering, image }) => (
                 <li key={offering.id} className="overflow-hidden rounded-lg border border-line bg-white">
                   {image && (
-                    <div className="relative aspect-[4/3] bg-brand-tint">
+                    <div className="relative aspect-[4/3] bg-white">
                       <Image
                         src={image.src}
                         alt={image.alt}
                         fill
-                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                        className="object-cover"
+                        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                        className="object-contain p-3"
                       />
                     </div>
                   )}
