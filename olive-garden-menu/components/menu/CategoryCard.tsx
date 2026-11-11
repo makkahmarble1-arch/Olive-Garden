@@ -1,29 +1,44 @@
 import Link from "next/link";
-import type { MenuCategory } from "@/lib/types";
+import type { MenuCategoryDef } from "@/lib/types";
 import { menuCategoryPath } from "@/lib/content";
-import PlaceholderImage from "@/components/ui/PlaceholderImage";
 import VerificationBadge from "@/components/ui/VerificationBadge";
+import CategoryVisual from "./CategoryVisual";
 
 type CategoryCardProps = {
-  category: MenuCategory;
+  category: Pick<
+    MenuCategoryDef,
+    "slug" | "name" | "summary" | "contentStatus" | "inventoryOrder" | "image"
+  >;
+  /** Small label above the name, e.g. the category's group on /menu. */
+  label?: string;
+  /** Optional id so in-page navigation can jump to this card. */
+  anchorId?: string;
 };
 
 /**
  * Card for one menu category.
- * Published categories link to /menu/[slug]; placeholders are not links,
- * because their pages do not exist yet.
+ *
+ * Link activation: a card links to /{slug} only when the category's
+ * `contentStatus` is "published" (its page exists). Until then it shows
+ * "Page coming soon" and is not a link, so there are no broken links.
+ * To activate a card later, publish the category in content/menu/categories.ts.
  */
-export default function CategoryCard({ category }: CategoryCardProps) {
+export default function CategoryCard({ category, label, anchorId }: CategoryCardProps) {
   const isPublished = category.contentStatus === "published";
 
   return (
     <article
-      className={`relative flex flex-col overflow-hidden rounded-lg border border-line bg-white ${
+      id={anchorId}
+      className={`relative flex w-full flex-col overflow-hidden rounded-lg border border-line bg-white ${
         isPublished ? "transition-shadow hover:shadow-md" : ""
       }`}
     >
-      <PlaceholderImage label={`${category.name} photo`} />
+      <CategoryVisual number={category.inventoryOrder} image={category.image} />
+
       <div className="flex flex-1 flex-col gap-2 p-5">
+        {label && (
+          <p className="text-xs font-semibold tracking-wide text-brand-dark uppercase">{label}</p>
+        )}
         <h3 className="font-display text-xl font-bold text-ink">
           {isPublished ? (
             <Link
@@ -36,16 +51,21 @@ export default function CategoryCard({ category }: CategoryCardProps) {
             category.name
           )}
         </h3>
-        <p className="text-muted">{category.summary}</p>
-        <p className="mt-auto pt-2 text-sm">
-          <span className="font-medium text-ink">Prices: </span>
-          <VerificationBadge />
-        </p>
-        {!isPublished && (
-          <p className="text-xs font-semibold tracking-wide text-muted uppercase">
-            Placeholder &middot; Page coming soon
+        <p className="leading-7 text-muted">{category.summary}</p>
+
+        <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-3 text-sm">
+          <p>
+            <span className="font-medium text-ink">Prices: </span>
+            <VerificationBadge />
           </p>
-        )}
+          {isPublished ? (
+            <p className="font-semibold text-brand-dark">
+              View menu <span aria-hidden="true">&rarr;</span>
+            </p>
+          ) : (
+            <p className="font-medium text-muted">Page coming soon</p>
+          )}
+        </div>
       </div>
     </article>
   );

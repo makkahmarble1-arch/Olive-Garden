@@ -12,8 +12,8 @@ Planning docs (read the relevant one before working on a feature):
 - `docs/DEVELOPMENT_ROADMAP.md`: folder structure, content model, phases, open questions
 - `docs/MENU_INVENTORY.md`: **owner-approved content scope** (17 categories,
   210 placements). Not verified menu facts. Owner's file: do not edit without asking.
-- `docs/CONTENT_ARCHITECTURE.md`: category → page mapping, overlaps, aliases,
-  menu data model (product / offering / category)
+- `docs/CONTENT_ARCHITECTURE.md`: **approved** 17 category URLs, distinct
+  intent per page, overlaps, aliases, menu data model (product / offering / category)
 - `docs/MENU_PAGE_OUTLINES.md`: SEO outline for the homepage and each menu page
 - `docs/MENU_RESEARCH_PLAN.md`: how prices/calories are researched and verified
 - `docs/INTERNAL_LINKING.md`: navigation, breadcrumbs, contextual links
@@ -53,7 +53,11 @@ TypeScript, Tailwind CSS v4 (config lives in `app/globals.css`, there is no
   JSON-LD), `TableOfContents`, `ArticleLayout`, `RelatedArticles`,
   `VerificationBadge`, `PlaceholderImage`, `SectionHeading`, `Container`.
 - Pages read content through `lib/content.ts` helpers, and build URLs with
-  its path helpers (`menuCategoryPath`, `articlePath`).
+  its path helpers (`menuPath`, `menuCategoryPath` → `/{slug}`, `articlePath`).
+- Menu data: `content/menu/` (`categories.ts`, `products.ts`,
+  `offerings/<category>.ts`, `locations.ts`, `aliases.ts`). Types in
+  `lib/types.ts`; `lib/menu-validation.ts` runs on every dev/build and must
+  stay passing. Never weaken a validation rule to make data pass.
 - Server Components by default. Add `"use client"` only when a component
   needs state, effects, or browser events.
 - Do **not** add npm dependencies without asking the owner first and
@@ -75,13 +79,22 @@ where it is needed. Never fill gaps with invented data.
 
 - Site name: **Olive Garden Menu & Prices**, defined only in `lib/site.ts`
   (branding may change later). Always paired with non-affiliation disclaimers.
-- Domain: not decided. **Never hardcode a domain.** Use `NEXT_PUBLIC_SITE_URL`
-  with fallback `http://localhost:3000`.
-- Menu categories/items: defined by `docs/MENU_INVENTORY.md` (all 17
-  categories and every item placement must be preserved; never merge
-  possible aliases without owner confirmation). Prices/calories: only from
-  verified sources per `docs/MENU_RESEARCH_PLAN.md`.
-- All proposed menu URLs are **provisional** until the owner approves them.
+- Domain: a **new** domain, name not decided. **Never hardcode a domain.**
+  Use `NEXT_PUBLIC_SITE_URL` with fallback `http://localhost:3000`. Do not
+  migrate, redirect, or change any existing website of the owner.
+- Menu categories/items: defined by `docs/MENU_INVENTORY.md`. All 17
+  categories, all 210 entries, and every category-item association are
+  preserved (imported in `content/menu/offerings/`). Never delete an entry.
+  Never merge possible aliases (A1–A17, `content/menu/aliases.ts`) without
+  owner confirmation. Keep `inventoryName` exactly as in the inventory.
+- **Approved URLs:** 17 dedicated category pages at the **root** with the
+  exact slugs in `docs/CONTENT_ARCHITECTURE.md` §2 (e.g. `/lunch-menu`,
+  `/kids-meal`). Not under `/menu/`. Never merge or rename them.
+- `/menu` = main menu hub (Option B). Homepage = intro + featured
+  categories + link to `/menu`; it must not duplicate the hub.
+- Prices: one benchmark restaurant in **Orlando, FL** (exact restaurant
+  needs owner approval before any price is entered). Prices/calories only
+  from verified sources per `docs/MENU_RESEARCH_PLAN.md`.
 - Author, contact email: pending. Do not invent names, credentials, or emails.
 - Logo/images: pending. Use placeholders clearly labeled as placeholders.
 - Blog topics/outlines: provided in the blog phase.
@@ -91,7 +104,11 @@ where it is needed. Never fill gaps with invented data.
 ## Content and accuracy rules
 
 - **Never invent prices, calories, or nutrition facts.** Unknown values are
-  `null` with `status: "needs-verification"` and display "Not verified yet".
+  `null`/empty with `status: "needs-verification"` and display "Not verified yet".
+  A value is stored only with `status: "verified"`, a source, a date, and
+  (for prices) an approved reference location.
+- Never invent menu descriptions; `description` stays `null` until written
+  from verified official information.
 - Every price table shows the "prices last checked" date and a note that
   prices vary by location.
 - Clearly separate verified data from placeholders in code and on the page.
@@ -105,11 +122,15 @@ where it is needed. Never fill gaps with invented data.
 
 - One search intent per URL. Before creating a page, check that no existing
   page targets the same intent. No per-item pages, no separate calorie pages.
-- `/menu` exists as a **noindex** placeholder hub. Its intent vs. the homepage
-  must be decided before indexing (see `docs/SEO_ARCHITECTURE.md`).
+- `/menu` is the main menu hub, **noindex** until its final verified content
+  is approved; then it is indexed. Homepage and `/menu` must not target the
+  same intent (see `docs/SEO_ARCHITECTURE.md`).
+- Overlapping category pages (e.g. Amazing Alfredos vs. Classic Entrees)
+  each need their own intent and angle; never copy paragraphs between pages.
 - Any placeholder page must be `robots: { index: false }` until approved
-  content exists. Do not create final `/menu/[category]` or `/blog/[slug]`
-  routes until the owner approves categories/slugs and content.
+  content exists. Do not create the category route (`app/[category]`) or
+  `/blog/[slug]` until the owner approves the page content.
+- Category breadcrumbs: `Home > Menu > {Category}`.
 - `/design-preview` is a dev-only component preview (404 in production).
   Its sample data must never be imported into public pages.
 - Every page: unique `title`, `description`, self-canonical, Open Graph.

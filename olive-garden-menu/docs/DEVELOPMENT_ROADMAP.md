@@ -13,12 +13,12 @@ olive-garden-menu/
 │   ├── layout.tsx                 ✅ Root layout: fonts, Header, Footer, default metadata
 │   ├── page.tsx                   ✅ Homepage
 │   ├── globals.css                ✅ Tailwind + design tokens
-│   ├── menu/page.tsx              ✅ Menu hub (noindex placeholder)
+│   ├── menu/page.tsx              ✅ Main menu hub: 17 categories in 6 groups (noindex for now)
 │   ├── design-preview/            ✅ Dev-only component previews (404 in production)
 │   ├── not-found.tsx              ⏳ 404 page
 │   ├── sitemap.ts                 ⏳ /sitemap.xml
 │   ├── robots.ts                  ⏳ /robots.txt
-│   ├── menu/[category]/page.tsx   ⏳ Category pages (after owner approves categories)
+│   ├── [category]/page.tsx        ⏳ 17 category pages at root URLs (after content approval)
 │   ├── blog/page.tsx              ⏳ Blog index
 │   ├── blog/[slug]/page.tsx       ⏳ Blog articles (after owner approves topics)
 │   ├── about/, contact/, disclaimer/, privacy-policy/   ⏳
@@ -32,12 +32,15 @@ olive-garden-menu/
 │   ├── ui/            ✅ PlaceholderImage, SectionHeading, VerificationBadge
 │   └── seo/           ✅ JsonLd
 ├── content/
-│   ├── menu/          ✅ categories.ts (registry, placeholders now), _template.ts
+│   ├── menu/          ✅ categories.ts (17 + groups), products.ts (130), offerings/ (17 files, 210),
+│   │                     locations.ts (Orlando market), aliases.ts (A1-A17), _template.ts
 │   └── articles/      ✅ index.ts (registry, empty), _template.ts
 ├── lib/
 │   ├── site.ts        ✅ Site name, URL (env var), nav, disclaimer, price notice
-│   ├── types.ts       ✅ Menu, article, breadcrumb, TOC types
-│   ├── content.ts     ✅ Content helpers + URL path helpers
+│   ├── types.ts       ✅ Menu data model, article, breadcrumb, TOC types
+│   ├── menu-data.ts   ✅ defineOfferings() helper for offering files
+│   ├── menu-validation.ts ✅ Menu data checks (run on every dev/build)
+│   ├── content.ts     ✅ Content helpers, URL path helpers, runs validation
 │   ├── format.ts      ✅ Date, price, number formatting (en-US)
 │   └── seo.ts         ⏳ Metadata helpers (when real pages exist)
 └── public/images/     ⏳ Owner-approved images
@@ -46,46 +49,39 @@ olive-garden-menu/
 ## Content management (beginner-friendly, no CMS)
 
 Content lives in TypeScript files. To add or update content you edit a data
-file; no component code changes.
+file; no component code changes. TypeScript and the menu validation catch
+mistakes before the site runs.
+
+**Menu data** (details: `docs/CONTENT_ARCHITECTURE.md` section 6):
 
 ```ts
-// content/menu/desserts.ts (example shape, values are placeholders)
-export const desserts: MenuCategory = {
-  slug: "desserts",
-  name: "Desserts",
-  title: "Olive Garden Desserts Menu & Prices",
-  description: "...",
-  updatedAt: "2026-11-10",
-  items: [
-    {
-      name: "Example Dessert",
-      price: null,          // null = not verified, shows "Not verified yet"
-      calories: null,
-      status: "needs-verification",
-      source: "",
-      lastChecked: null,
-    },
-  ],
-  faqs: [],
-};
+// content/menu/offerings/desserts.ts (one line per inventory entry)
+export const dessertsOfferings = defineOfferings("desserts", [
+  { inventoryName: "Tiramisu", displayName: "Tiramisu", productId: "tiramisu" },
+  // ...
+]);
 ```
 
-- TypeScript types catch mistakes (missing fields, wrong types) before the site runs.
-- `lib/content.ts` collects all files so pages, sitemap, and navigation
-  update automatically.
-- `MenuTable` shows a price/calorie value only when the item's `status` is
+- Unknown fields are filled automatically with safe defaults (`null`,
+  `"unknown"`, `"needs-verification"`), so they show "Not verified yet".
+- **Adding verified data:** first add the approved restaurant to
+  `content/menu/locations.ts`, then add only the verified fields (prices,
+  calories, sources, `status: "verified"`, `verifiedAt`) to the entry.
+  `content/menu/_template.ts` shows the exact shape.
+- **Publishing a category page:** set `contentStatus: "published"` and
+  `updatedAt` in `content/menu/categories.ts` (only with owner approval).
+- `npm run dev` / `npm run build` stop with a clear message if the data is
+  invalid (e.g. a price without source or location, or a missing entry).
+- `MenuTable` shows a price/calorie value only when `status` is
   `"verified"` and the value is not `null`; otherwise "Not verified yet".
-- **Adding a menu category:** copy `content/menu/_template.ts` to
-  `content/menu/<slug>.ts`, fill in verified data, then replace the matching
-  placeholder in `content/menu/categories.ts` with an import of the new file.
-- **Adding an article:** copy `content/articles/_template.ts` to
-  `content/articles/<slug>.ts`, fill in real content, then add it to the
-  array in `content/articles/index.ts`. Articles have `title`, `description`,
-  `intro`, `featuredImage`, `publishedAt`, `updatedAt`, `author`, `sections`
-  (each with `id`, `heading`, and content blocks), and `relatedSlugs`.
-  Section headings build the table of contents automatically.
-- Later option (only if writing in TS gets painful): switch articles to MDX.
-  That needs extra packages, so it is not part of the initial plan.
+
+**Articles:** copy `content/articles/_template.ts` to
+`content/articles/<slug>.ts`, fill in real content, then add it to the array
+in `content/articles/index.ts`. Articles have `title`, `description`, `intro`,
+`featuredImage`, `publishedAt`, `updatedAt`, `author`, `sections` (each with
+`id`, `heading`, and content blocks), and `relatedSlugs`. Section headings
+build the table of contents automatically. (Later option, only if needed:
+MDX, which needs extra packages.)
 
 ## Phases
 
@@ -115,16 +111,28 @@ export const desserts: MenuCategory = {
 - Owner inventory received (`MENU_INVENTORY.md`: 17 categories, 210 placements)
 - Planned in `CONTENT_ARCHITECTURE.md`, `MENU_PAGE_OUTLINES.md`,
   `MENU_RESEARCH_PLAN.md`, `INTERNAL_LINKING.md`, `IMAGE_REQUIREMENTS.md`
-- Awaiting owner decisions listed in `CONTENT_ARCHITECTURE.md` §11
+- Owner decisions received the same day (see Phase 1.7)
+
+### Phase 1.7: Approved architecture + menu data model (done, 2026-11-11)
+- 17 dedicated category pages at root URLs (exact slugs recorded)
+- `/menu` = main menu hub (Option B), 17 categories in 6 groups, noindex for now
+- Homepage shows featured categories + link to `/menu`; header links to `/menu`
+- Data model: `MenuCategoryDef` / `MenuProduct` / `MenuOffering` /
+  `ReferenceLocation` / `AliasCase`; all 210 inventory entries imported
+  (130 products), no prices or calories
+- Validation of the menu data on every dev/build
+- Reference market Orlando, FL (restaurant not selected yet); new domain
 
 ### Phase 2: Menu pages
-1. Confirm real category list; create one category data file with
-   verified (or clearly marked unverified) items
-2. ~~`MenuTable`, `PriceNotice`, `VerificationBadge`~~ (done in Phase 1.5)
-3. ~~`Breadcrumbs` + `BreadcrumbList` JSON-LD~~ (done in Phase 1.5)
-4. `app/menu/[category]/page.tsx` with `generateStaticParams` + `generateMetadata`
-5. Add remaining categories one at a time
-6. Homepage: intro, category cards with price ranges, price notice
+1. ~~Confirm category list and import items~~ (done in Phase 1.7)
+2. Select and approve the Orlando reference restaurant
+3. Research the first category (official sources), owner review, enter
+   verified values
+4. Extend `MenuTable` (price ranges, calorie ranges, optional Calories column)
+5. `app/[category]/page.tsx` with `generateStaticParams`, `dynamicParams = false`,
+   `generateMetadata`, breadcrumbs `Home > Menu > Category`
+6. Publish categories one at a time (each needs owner approval)
+7. `/menu` final content (group intros, verified price summary), then index it
 
 ### Phase 3: Blog
 1. First real article (owner-provided topic and outline)
@@ -162,9 +170,9 @@ needed. Until then, use clearly identified placeholders and never invent data.
 | # | Topic | Decision / status | Provided in |
 |---|---|---|---|
 | 1 | Site name | **"Olive Garden Menu & Prices"** (decided). Independent site; always paired with disclaimers. Independent branding may be refined later, so keep the name in one place (`lib/site.ts`) | Decided |
-| 2 | Domain | Pending. **Do not hardcode.** Read from env var `NEXT_PUBLIC_SITE_URL`, fallback `http://localhost:3000` for local dev | Before deployment |
-| 3 | Prices, sources, locations | Owner provides verified data. Do not invent prices | Content development (Phase 2) |
-| 4 | Menu categories, items, page outlines | Owner provides before real menu pages are built. Temporary, clearly labeled placeholder categories are OK for initial design | Before Phase 2 menu pages |
+| 2 | Domain | **New domain** (name pending). No existing website is migrated or redirected. **Do not hardcode.** Read from `NEXT_PUBLIC_SITE_URL`, fallback `http://localhost:3000` | Before launch |
+| 3 | Prices, sources, locations | Reference market **Orlando, FL** (decided). Exact restaurant: proposed during research, owner approves. Do not invent prices | Phase 2 |
+| 4 | Menu categories, items, URLs | **Decided:** 17 categories, 17 pages, exact root slugs, `/menu` hub (Option B); 210 entries imported. Alias cases A1-A17 still open | Decided (aliases pending) |
 | 5 | Calories / nutrition | Owner provides verified data or approved sources. Do not invent | When required (Phase 2) |
 | 6 | Author name + bio | Pending. Do not invent author names or credentials | Before publishing articles / About page |
 | 7 | Contact email | Pending | Later (Phase 4) |

@@ -31,7 +31,7 @@ export const siteConfig = {
   // once those routes are built (see docs/DEVELOPMENT_ROADMAP.md).
   nav: [
     { label: "Home", href: "/" },
-    { label: "Menu Categories", href: "/#menu-categories" },
+    { label: "Menu", href: "/menu" },
     { label: "About This Guide", href: "/#about-this-guide" },
   ] satisfies NavLink[],
 } as const;

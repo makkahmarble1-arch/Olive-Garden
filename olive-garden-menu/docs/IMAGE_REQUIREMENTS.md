@@ -1,7 +1,8 @@
 # Image Requirements
 
-**Status:** Planning (2026-11-11). No images are in the project yet.
-All images are supplied by the owner (original or properly licensed).
+**Status:** Convention approved (2026-11-11). No images are in the project yet.
+All images are supplied by the owner (original or properly licensed) and are
+integrated during the page development phases.
 
 ## 1. Rules
 
@@ -12,6 +13,7 @@ All images are supplied by the owner (original or properly licensed).
   Garden logo or official marketing images.
 - **No fake paths.** Data files keep `image: null` until the real file exists
   in `/public`. Placeholders (`PlaceholderImage`) are used until then.
+  Folders are created only when the first real image is added.
 - Photos must honestly represent the dish (no misleading edits).
 
 ## 2. Folder structure
@@ -22,7 +24,7 @@ public/images/
 │   ├── products/        One photo per canonical product (shared across categories)
 │   ├── catering/        Catering pans, trays, combinations (different from dine-in)
 │   ├── family-style/    Family-size bundles
-│   └── categories/      One card/hero image per menu page (12)
+│   └── categories/      One card/hero image per category page (17), named by category slug
 ├── pages/               Homepage hero, About, etc.
 ├── blog/<article-slug>/ Featured and in-article images
 └── og/                  Social sharing images (1200 x 630)
@@ -31,15 +33,18 @@ public/images/
 ## 3. File naming
 
 - Lowercase, hyphen-separated, descriptive, no spaces or dates in the name.
-- Product photos use the **product id** from `CONTENT_ARCHITECTURE.md`.
-- Variants add a suffix after `--`.
+- Product photos use the **product id** from `content/menu/products.ts`.
+- Variants add a suffix after `--` (same as offering variant ids, e.g. `--large`).
+- Category images use the **category slug** (e.g. `wine-and-beer-to-go.jpg`).
+- Image names follow the product id even while an alias case is unresolved;
+  if two products are later merged, keep one file and update the reference.
 
 | Image | Path example |
 |---|---|
 | Product | `public/images/menu/products/chicken-parmigiana.jpg` |
-| Product variant | `public/images/menu/products/cheese-ravioli--meat-sauce.jpg` |
+| Product variant | `public/images/menu/products/homemade-soups--large.jpg` |
 | Catering version | `public/images/menu/catering/chicken-parmigiana--catering-pan.jpg` |
-| Category card/hero | `public/images/menu/categories/desserts.jpg` |
+| Category card/hero | `public/images/menu/categories/desserts.jpg`, `.../soups-salad-and-breadsticks.jpg` |
 | Homepage hero | `public/images/pages/home-hero.jpg` |
 | Article featured | `public/images/blog/<slug>/featured.jpg` |
 | Social share | `public/images/og/menu-desserts.jpg` |
@@ -68,9 +73,23 @@ public/images/
 
 ## 6. Image records
 
-Each image is referenced through an `ImageRef` (see `CONTENT_ARCHITECTURE.md`
-§9.2): `src`, `alt`, `width`, `height`, `credit`, `license`. A build-time
-check (later) confirms every `src` file exists.
+Each image is referenced through an `ImageRef` (`lib/types.ts`): `src`
+(path inside `/public`, starting with `/images/`), `alt`, `width`, `height`,
+`credit`, `license`.
+
+| Where | Field | Use |
+|---|---|---|
+| `MenuProduct.image` | shared photo of a dish | Used by every offering of that product |
+| `MenuOffering.image` | format-specific photo | Overrides the product photo (e.g. a catering pan) |
+| Category | (added when category pages are built) | Card + hero image |
+| `Article.featuredImage` | article photo | Blog |
+
+Rendering: always `next/image` with the stored `width`/`height` (or `fill` +
+`sizes`), so Next.js serves optimized, resized AVIF/WebP automatically.
+
+Validation (`lib/menu-validation.ts`) already checks that image paths start
+with `/images/` and have alt text. A check that the file really exists is
+added when the first images arrive.
 
 ## 7. When images are needed
 
