@@ -111,6 +111,12 @@ export const desserts: MenuCategory = {
 - Content registries + templates, `lib/content.ts`, `lib/format.ts`
 - `/menu` noindex placeholder hub; dev-only `/design-preview`
 
+### Phase 1.6: Content architecture planning (done, 2026-11-11)
+- Owner inventory received (`MENU_INVENTORY.md`: 17 categories, 210 placements)
+- Planned in `CONTENT_ARCHITECTURE.md`, `MENU_PAGE_OUTLINES.md`,
+  `MENU_RESEARCH_PLAN.md`, `INTERNAL_LINKING.md`, `IMAGE_REQUIREMENTS.md`
+- Awaiting owner decisions listed in `CONTENT_ARCHITECTURE.md` §11
+
 ### Phase 2: Menu pages
 1. Confirm real category list; create one category data file with
    verified (or clearly marked unverified) items

@@ -10,6 +10,14 @@ Planning docs (read the relevant one before working on a feature):
 - `docs/SEO_ARCHITECTURE.md`: URLs, metadata, structured data, internal linking
 - `docs/DESIGN_SYSTEM.md`: colors, typography, component styles, accessibility
 - `docs/DEVELOPMENT_ROADMAP.md`: folder structure, content model, phases, open questions
+- `docs/MENU_INVENTORY.md`: **owner-approved content scope** (17 categories,
+  210 placements). Not verified menu facts. Owner's file: do not edit without asking.
+- `docs/CONTENT_ARCHITECTURE.md`: category → page mapping, overlaps, aliases,
+  menu data model (product / offering / category)
+- `docs/MENU_PAGE_OUTLINES.md`: SEO outline for the homepage and each menu page
+- `docs/MENU_RESEARCH_PLAN.md`: how prices/calories are researched and verified
+- `docs/INTERNAL_LINKING.md`: navigation, breadcrumbs, contextual links
+- `docs/IMAGE_REQUIREMENTS.md`: image rules, folders, naming, specs
 
 ## Owner
 
@@ -69,8 +77,11 @@ where it is needed. Never fill gaps with invented data.
   (branding may change later). Always paired with non-affiliation disclaimers.
 - Domain: not decided. **Never hardcode a domain.** Use `NEXT_PUBLIC_SITE_URL`
   with fallback `http://localhost:3000`.
-- Menu categories/items/prices/calories: provided by the owner. Until then,
-  only clearly labeled placeholder categories for design work.
+- Menu categories/items: defined by `docs/MENU_INVENTORY.md` (all 17
+  categories and every item placement must be preserved; never merge
+  possible aliases without owner confirmation). Prices/calories: only from
+  verified sources per `docs/MENU_RESEARCH_PLAN.md`.
+- All proposed menu URLs are **provisional** until the owner approves them.
 - Author, contact email: pending. Do not invent names, credentials, or emails.
 - Logo/images: pending. Use placeholders clearly labeled as placeholders.
 - Blog topics/outlines: provided in the blog phase.
