@@ -35,9 +35,10 @@ export const menuCategories: MenuCategoryDef[] = [
     inventoryItemCount: 10,
     defaultPortionType: "regular",
     featuredOnHomepage: true,
-    // Page exists (noindex) while prices/calories are being verified.
-    contentStatus: "preview",
-    updatedAt: null,
+    // Owner approved publishing on 2026-11-11 (indexed).
+    // Prices/calories verified 2026-11-11 (research/appetizers/).
+    contentStatus: "published",
+    updatedAt: "2026-11-11",
   },
   {
     id: "classic-entrees",

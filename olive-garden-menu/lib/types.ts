@@ -23,6 +23,8 @@ export type MenuItem = {
   price: number | null;
   /** Calories. `null` = not verified yet (never guess). */
   calories: number | null;
+  /** Upper end of a calorie range (calories = lower end). */
+  caloriesMax?: number | null;
   /** Price and calories are displayed only when this is "verified". */
   status: VerificationStatus;
   /** Where the price/calories came from (e.g. official nutrition PDF, store menu). */
@@ -33,6 +35,10 @@ export type MenuItem = {
   lastChecked: string | null;
   /** True when the item was checked and is not on the reference restaurant's menu. */
   notListed?: boolean;
+  /** Verified portion, e.g. "6 breadsticks". Shown under the item name. */
+  servingSize?: string | null;
+  /** What the calories refer to, e.g. "per breadstick". Shown under the calories. */
+  caloriesBasis?: string | null;
 };
 
 /* ---------- Menu data model (docs/CONTENT_ARCHITECTURE.md §6) ---------- */
@@ -133,8 +139,12 @@ export type CategoryPageContent = {
   intro: string[];
   /** Caption of the price table. */
   tableCaption: string;
-  /** Short notes about how calories are listed (shown under the table). */
+  /** Extra verified price details (other sizes, price type), shown under the table. */
+  priceNotes: string[];
+  /** Short notes about how calories are listed. */
   nutritionNotes: string[];
+  /** Official sources used for the values on the page. */
+  sources: { label: string; url: string }[];
   faqs: FaqItem[];
   /** Related categories with the reason to visit them (contextual links). */
   related: { categoryId: MenuCategoryId; text: string }[];

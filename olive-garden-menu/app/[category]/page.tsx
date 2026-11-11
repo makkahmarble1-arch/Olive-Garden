@@ -123,9 +123,9 @@ export default async function CategoryPage({ params }: PageProps<"/[category]">)
             role="note"
             className="mt-6 max-w-3xl rounded-lg border border-line bg-warning-bg px-4 py-3 text-sm leading-6 text-warning-text"
           >
-            <strong className="font-semibold">Preview:</strong> Prices and calories on this
-            page are still being checked. Items marked “Not verified yet” have not been
-            checked against an official source.
+            <strong className="font-semibold">Preview:</strong> This page is not published
+            yet. Items marked “Not verified yet” have not been confirmed against an
+            official source.
           </div>
         )}
 
@@ -136,6 +136,13 @@ export default async function CategoryPage({ params }: PageProps<"/[category]">)
           <div className="space-y-4">
             <PriceNotice lastChecked={lastChecked} location={location} />
             <MenuTable caption={content.tableCaption} items={rows} />
+            {content.priceNotes.length > 0 && (
+              <ul className="list-disc space-y-2 pl-5 text-sm leading-6 text-muted marker:text-brand-dark">
+                {content.priceNotes.map((note) => (
+                  <li key={note}>{note}</li>
+                ))}
+              </ul>
+            )}
           </div>
         </section>
 
@@ -182,6 +189,26 @@ export default async function CategoryPage({ params }: PageProps<"/[category]">)
               <li key={note}>{note}</li>
             ))}
           </ul>
+          {content.sources.length > 0 && (
+            <>
+              <h3 className="mt-8 font-display text-lg font-bold text-ink">Sources</h3>
+              <ul className="mt-3 space-y-2 leading-7 text-muted">
+                {content.sources.map((source) => (
+                  <li key={source.url}>
+                    <a
+                      href={source.url}
+                      rel="nofollow noopener"
+                      target="_blank"
+                      className="text-brand-dark underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-brand-dark"
+                    >
+                      {source.label}
+                      <span className="sr-only"> (opens in a new tab)</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
         </section>
 
         {content.faqs.length > 0 && (

@@ -169,11 +169,14 @@ export function toMenuTableItem(offering: MenuOffering): MenuItem {
     description: offering.description,
     price: price?.amount ?? null,
     calories: offering.status === "verified" ? offering.calories : null,
+    caloriesMax: offering.status === "verified" ? offering.caloriesMax : null,
     status: offering.status,
     source: price?.sourceUrl ?? price?.sourceNote ?? offering.caloriesSourceUrl,
     location: location ? `${location.city}, ${location.state}` : null,
     lastChecked: price?.checkedAt ?? offering.verifiedAt,
     notListed: offering.availability === "unavailable",
+    servingSize: offering.status === "verified" ? offering.servingSize : null,
+    caloriesBasis: offering.status === "verified" && offering.calories !== null ? offering.caloriesBasis : null,
   };
 }
 

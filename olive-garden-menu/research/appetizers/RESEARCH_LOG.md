@@ -4,6 +4,24 @@
 **Result:** No price or calorie value is verified. Nothing from this log may
 be entered into `content/menu/` as verified data.
 
+## Update 2026-11-11 (entered into the site)
+
+Owner asked to complete the Appetizers page from this research. Entered:
+the Millenia location (`content/menu/locations.ts`), 10 prices and 9
+calorie values (`content/menu/offerings/appetizers.ts`). Catering values
+were not entered.
+
+Owner decisions (same day): Dipping Sauces calories use the official PDF
+per-sauce values (regular 70-490, sauce only; `nutrition.md` §2), and the
+page is published (`contentStatus: "published"`, indexed).
+
+## Update 2026-11-11 (Claude in Chrome connected)
+
+The official site opened normally in Chrome. Findings are now in
+`prices.md`, `nutrition.md`, and `sources.md` in this folder; they replace
+the "Not verified" table below. Still not entered into `content/menu/`
+(owner approval pending).
+
 ## Update 2026-11-11 (after owner approval)
 
 - Owner approved the Millenia Mall restaurant as the reference location and

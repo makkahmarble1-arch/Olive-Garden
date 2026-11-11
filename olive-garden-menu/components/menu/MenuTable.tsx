@@ -27,6 +27,21 @@ function VerifiedValue({
   return <>{format(value)}</>;
 }
 
+/** "800", or "70–490" for a range. */
+function formatCalories(value: number, max: number | null | undefined): string {
+  return max != null && max !== value ? `${formatNumber(value)}–${formatNumber(max)}` : formatNumber(value);
+}
+
+/** Small "per breadstick" style note under a shown calorie value. */
+function CaloriesBasis({ item }: { item: MenuItem }) {
+  if (item.notListed || item.calories === null || !item.caloriesBasis) return null;
+  return (
+    <span className="block text-xs whitespace-normal text-muted">
+      {item.caloriesBasis}
+    </span>
+  );
+}
+
 /**
  * Accessible, responsive price + calories table.
  * Phones (< 640px) get a stacked list (one card per item) instead of a wide
@@ -52,6 +67,9 @@ export default function MenuTable({ caption, items }: MenuTableProps) {
                 className="border-t border-line px-4 py-3"
               >
                 <p className="font-medium text-ink">{item.name}</p>
+                {item.servingSize && (
+                  <p className="mt-0.5 text-sm text-muted">{item.servingSize}</p>
+                )}
                 {item.description && (
                   <p className="mt-1 text-sm text-muted">{item.description}</p>
                 )}
@@ -72,8 +90,9 @@ export default function MenuTable({ caption, items }: MenuTableProps) {
                       <VerifiedValue
                         item={item}
                         value={item.calories}
-                        format={formatNumber}
+                        format={(n) => formatCalories(n, item.caloriesMax)}
                       />
+                      <CaloriesBasis item={item} />
                     </dd>
                   </div>
                 </dl>
@@ -123,6 +142,11 @@ export default function MenuTable({ caption, items }: MenuTableProps) {
                 >
                   <th scope="row" className="px-4 py-3 font-medium text-ink">
                     {item.name}
+                    {item.servingSize && (
+                      <span className="mt-0.5 block text-sm font-normal text-muted">
+                        {item.servingSize}
+                      </span>
+                    )}
                     {item.description && (
                       <span className="mt-1 block text-sm font-normal text-muted">
                         {item.description}
@@ -140,8 +164,9 @@ export default function MenuTable({ caption, items }: MenuTableProps) {
                     <VerifiedValue
                       item={item}
                       value={item.calories}
-                      format={formatNumber}
+                      format={(n) => formatCalories(n, item.caloriesMax)}
                     />
+                    <CaloriesBasis item={item} />
                   </td>
                 </tr>
               ))

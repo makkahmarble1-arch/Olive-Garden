@@ -13,33 +13,54 @@ export const categoryPages: CategoryPageContent[] = [
     categoryId: "appetizers",
     metaTitle: "Olive Garden Appetizers Menu with Prices",
     metaDescription:
-      "See the Olive Garden appetizers covered in this guide, from Fried Mozzarella to Toasted Ravioli. Prices and calories are shown only after they are verified.",
+      "Compare Olive Garden appetizer prices and calories, from Fried Mozzarella to Shrimp Fritto Misto, checked at one Orlando, Florida restaurant.",
     h1: "Olive Garden Appetizers Menu with Prices",
     intro: [
-      "Planning to start your meal with something to share? This page lists the 10 Olive Garden appetizers covered in this guide in one table, so you can compare them before you order.",
-      "Prices are checked at one reference restaurant in Orlando, Florida, so every item is compared at the same location. Anything we have not checked yet is clearly marked instead of showing a guess.",
+      "Planning to start your meal with something to share? This page lists 10 Olive Garden appetizers in one table, so you can compare prices and calories before you order.",
+      "Prices were checked on Olive Garden's online ordering menu for one restaurant in Orlando, Florida, so every item is compared at the same location. Calories come from Olive Garden's official nutrition guide. Anything we could not confirm is clearly marked instead of showing a guess.",
     ],
     tableCaption: "Olive Garden Appetizer Prices and Calories",
+    priceNotes: [
+      "Prices are online pickup prices at the Orlando – Millenia Mall restaurant. Dine-in prices were not checked and may be different.",
+      "Breadsticks: the price shown is for 6 breadsticks. An order of 12 breadsticks was $7.29.",
+      "Dipping Sauces with Breadsticks: the price shown is for the regular size with 4 breadsticks. The large size with 8 breadsticks was $7.29.",
+    ],
     nutritionNotes: [
-      "Calories come from Olive Garden's official nutrition information and are listed for the full order unless a note says otherwise.",
-      "Dipping sauces can add calories. When the official source lists a sauce separately, we note it next to the item.",
-      "For allergens and full nutrition details, check Olive Garden's official nutrition information or ask your server.",
+      "Calories are for the full order as served, unless a note in the table says otherwise. Breadsticks are listed per breadstick.",
+      "Dipping sauces are counted separately. Marinara adds 35 calories to Fried Mozzarella, Stuffed Ziti Fritta, Calamari, Shrimp Fritto Misto, and Toasted Ravioli. Alfredo adds 220 calories to Stuffed Ziti Fritta, and spicy ranch adds 240 calories to Calamari and Shrimp Fritto Misto.",
+      "Dipping Sauces with Breadsticks: the calories in the table are for the regular sauce only. Marinara is 70, Five Cheese Marinara 200, Alfredo 440, and Spicy Alfredo 490. A large sauce is 150 to 980 calories, and each breadstick adds 140.",
+      "Calorie counts are national values from Olive Garden's nutrition guide for U.S. restaurants. For allergens and full nutrition details, check that guide or ask your server.",
+    ],
+    sources: [
+      {
+        label: "Olive Garden online ordering menu (Orlando – Millenia Mall, pickup)",
+        url: "https://www.olivegarden.com/menu/appetizers",
+      },
+      {
+        label: "Olive Garden Nutrition Information (U.S. Restaurants)",
+        url: "https://media.olivegarden.com/en_us/pdf/olive_garden_nutrition.pdf",
+      },
     ],
     faqs: [
       {
-        question: "Why do some appetizers show “Not verified yet”?",
+        question: "What is the cheapest appetizer on this list?",
         answer:
-          "We publish a price or calorie count only after checking it against an official source. Until an item has been checked, it is marked “Not verified yet” instead of showing an estimate.",
+          "Breadsticks are the lowest-priced item at $4.99 for 6. Among the shareable starters, Fried Mozzarella was the lowest at $9.79. Prices were checked at one Orlando, Florida restaurant and can be different at yours.",
+      },
+      {
+        question: "Which appetizer has the most calories?",
+        answer:
+          "Of the appetizers with a calorie count for the full order, Shrimp Fritto Misto has the most at 1,280 calories before dipping sauce. Spinach-Artichoke Dip follows at 1,160 calories with flatbread crisps. Breadsticks are listed per breadstick (140 calories each), so the total depends on how many you eat.",
       },
       {
         question: "Are these prices the same at every Olive Garden?",
         answer:
-          "No. Prices vary by location and can change at any time. This guide checks prices at one restaurant in Orlando, Florida, so always confirm the price with your local restaurant.",
+          "No. Prices vary by location and can change at any time. This guide shows online pickup prices from one restaurant in Orlando, Florida, so always confirm the price with your local restaurant.",
       },
       {
-        question: "What does “Not currently listed” mean?",
+        question: "Where do these prices and calories come from?",
         answer:
-          "It means we checked the reference restaurant's menu and the item was not on it at that time. It may still be offered at other locations or return later.",
+          "Prices were read from Olive Garden's online ordering menu for the Orlando – Millenia Mall restaurant (pickup) on November 11, 2026. Calories come from Olive Garden's official nutrition guide for U.S. restaurants. Both sources are linked on this page.",
       },
     ],
     related: [
