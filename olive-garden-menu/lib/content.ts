@@ -5,13 +5,15 @@
 import { inventoryTotals, menuCategories, menuCategoryGroups } from "@/content/menu/categories";
 import { menuProducts } from "@/content/menu/products";
 import { menuOfferings } from "@/content/menu/offerings";
-import { referenceLocations } from "@/content/menu/locations";
+import { referenceLocations, referenceMarket } from "@/content/menu/locations";
 import { aliasCases } from "@/content/menu/aliases";
+import { categoryPages } from "@/content/menu/category-pages";
 import { articles } from "@/content/articles";
 import { validateMenuData } from "./menu-validation";
 import type {
   Article,
   ArticleCardData,
+  CategoryPageContent,
   MenuCategoryDef,
   MenuCategoryId,
   MenuItem,
@@ -31,6 +33,19 @@ const menuIssues = validateMenuData({
   aliasCases,
   expected: inventoryTotals,
 });
+
+// A category page needs both a non-placeholder status and written content.
+for (const category of menuCategories) {
+  const hasContent = categoryPages.some((p) => p.categoryId === category.id);
+  if (category.contentStatus !== "placeholder" && !hasContent) {
+    menuIssues.push(`${category.id}: status is "${category.contentStatus}" but content/menu/category-pages.ts has no entry.`);
+  }
+}
+for (const page of categoryPages) {
+  if (categoryPages.filter((p) => p.categoryId === page.categoryId).length > 1) {
+    menuIssues.push(`${page.categoryId}: more than one entry in content/menu/category-pages.ts.`);
+  }
+}
 
 if (menuIssues.length > 0) {
   throw new Error(`Menu data check failed:\n- ${menuIssues.join("\n- ")}`);
@@ -60,6 +75,28 @@ export function getAllMenuCategories(): MenuCategoryDef[] {
 /** Only categories with approved content and their own page. */
 export function getPublishedMenuCategories(): MenuCategoryDef[] {
   return getAllMenuCategories().filter((c) => c.contentStatus === "published");
+}
+
+/** True when the category's page exists ("preview" or "published"). */
+export function hasCategoryPage(category: Pick<MenuCategoryDef, "contentStatus">): boolean {
+  return category.contentStatus !== "placeholder";
+}
+
+/** Categories that have their own page (linked; indexed only when "published"). */
+export function getMenuCategoriesWithPages(): MenuCategoryDef[] {
+  return getAllMenuCategories().filter(hasCategoryPage);
+}
+
+export function getCategoryPageContent(categoryId: MenuCategoryId): CategoryPageContent | undefined {
+  return categoryPages.find((p) => p.categoryId === categoryId);
+}
+
+/**
+ * Link to a category: its own page if it exists, otherwise its card on the
+ * /menu hub (so a link never leads to a 404).
+ */
+export function menuCategoryHref(category: Pick<MenuCategoryDef, "slug" | "contentStatus">): string {
+  return hasCategoryPage(category) ? menuCategoryPath(category.slug) : `${menuPath}#${category.slug}`;
 }
 
 /** The small selection shown on the homepage (the full list lives on /menu). */
@@ -113,6 +150,11 @@ export function getReferenceLocation(id: string): ReferenceLocation | undefined 
   return referenceLocations.find((l) => l.id === id);
 }
 
+/** "Orlando, FL": the approved price reference market. */
+export function getReferenceMarketLabel(): string {
+  return `${referenceMarket.city}, ${referenceMarket.state}`;
+}
+
 /**
  * Converts an offering into a `MenuTable` row. Uses the first price
  * observation (the reference location). Unverified values stay null,
@@ -131,6 +173,7 @@ export function toMenuTableItem(offering: MenuOffering): MenuItem {
     source: price?.sourceUrl ?? price?.sourceNote ?? offering.caloriesSourceUrl,
     location: location ? `${location.city}, ${location.state}` : null,
     lastChecked: price?.checkedAt ?? offering.verifiedAt,
+    notListed: offering.availability === "unavailable",
   };
 }
 

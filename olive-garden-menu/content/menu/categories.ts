@@ -35,7 +35,8 @@ export const menuCategories: MenuCategoryDef[] = [
     inventoryItemCount: 10,
     defaultPortionType: "regular",
     featuredOnHomepage: true,
-    contentStatus: "placeholder",
+    // Page exists (noindex) while prices/calories are being verified.
+    contentStatus: "preview",
     updatedAt: null,
   },
   {

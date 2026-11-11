@@ -128,8 +128,11 @@ where it is needed. Never fill gaps with invented data.
 - Overlapping category pages (e.g. Amazing Alfredos vs. Classic Entrees)
   each need their own intent and angle; never copy paragraphs between pages.
 - Any placeholder page must be `robots: { index: false }` until approved
-  content exists. Do not create the category route (`app/[category]`) or
-  `/blog/[slug]` until the owner approves the page content.
+  content exists. Do not create `/blog/[slug]` until the owner approves it.
+- Category pages: `app/[category]/page.tsx` renders a category only when its
+  `contentStatus` is `"preview"` (linked, noindex) or `"published"` (indexed)
+  and it has an entry in `content/menu/category-pages.ts`. Other paths 404.
+  Owner approval is needed before a category becomes `"published"`.
 - Category breadcrumbs: `Home > Menu > {Category}`.
 - `/design-preview` is a dev-only component preview (404 in production).
   Its sample data must never be imported into public pages.

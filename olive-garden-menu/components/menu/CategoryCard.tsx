@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { MenuCategoryDef } from "@/lib/types";
-import { menuCategoryPath } from "@/lib/content";
+import { hasCategoryPage, menuCategoryPath } from "@/lib/content";
 import VerificationBadge from "@/components/ui/VerificationBadge";
 import CategoryVisual from "./CategoryVisual";
 
@@ -18,13 +18,12 @@ type CategoryCardProps = {
 /**
  * Card for one menu category.
  *
- * Link activation: a card links to /{slug} only when the category's
- * `contentStatus` is "published" (its page exists). Until then it shows
+ * Link activation: a card links to /{slug} only when the category's page
+ * exists (`contentStatus` "preview" or "published"). Until then it shows
  * "Page coming soon" and is not a link, so there are no broken links.
- * To activate a card later, publish the category in content/menu/categories.ts.
  */
 export default function CategoryCard({ category, label, anchorId }: CategoryCardProps) {
-  const isPublished = category.contentStatus === "published";
+  const isPublished = hasCategoryPage(category);
 
   return (
     <article

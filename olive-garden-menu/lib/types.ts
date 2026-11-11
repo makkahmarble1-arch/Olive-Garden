@@ -31,6 +31,8 @@ export type MenuItem = {
   location: string | null;
   /** ISO date, e.g. "2026-11-10". */
   lastChecked: string | null;
+  /** True when the item was checked and is not on the reference restaurant's menu. */
+  notListed?: boolean;
 };
 
 /* ---------- Menu data model (docs/CONTENT_ARCHITECTURE.md §6) ---------- */
@@ -56,10 +58,12 @@ export type MenuCategoryId =
   | "catering";
 
 /**
- * "placeholder" = no publication-ready page yet (never linked, never indexed).
- * "published"   = verified, owner-approved content with its own page.
+ * "placeholder" = no page yet (never linked, never indexed).
+ * "preview"     = the page exists and is linked, but its values are not all
+ *                 verified yet, so it stays noindex.
+ * "published"   = verified, owner-approved content (indexable).
  */
-export type ContentStatus = "placeholder" | "published";
+export type ContentStatus = "placeholder" | "preview" | "published";
 
 /**
  * Portion/format of an offering. The default comes from its category
@@ -107,6 +111,33 @@ export type MenuCategoryDef = {
   updatedAt: string | null;
   /** Card/hero image, added only when the owner provides a real file. */
   image?: ImageRef | null;
+};
+
+/** One visible FAQ (also used for FAQPage JSON-LD). Answers state only verified facts. */
+export type FaqItem = {
+  question: string;
+  answer: string;
+};
+
+/**
+ * Written page content for a category page (`app/[category]/page.tsx`).
+ * Every category with contentStatus "preview" or "published" needs one.
+ */
+export type CategoryPageContent = {
+  categoryId: MenuCategoryId;
+  /** <title> (the site name is added by the layout template). */
+  metaTitle: string;
+  metaDescription: string;
+  h1: string;
+  /** Short introduction paragraphs. No unverified menu claims. */
+  intro: string[];
+  /** Caption of the price table. */
+  tableCaption: string;
+  /** Short notes about how calories are listed (shown under the table). */
+  nutritionNotes: string[];
+  faqs: FaqItem[];
+  /** Related categories with the reason to visit them (contextual links). */
+  related: { categoryId: MenuCategoryId; text: string }[];
 };
 
 /** A heading on /menu that groups related categories. */

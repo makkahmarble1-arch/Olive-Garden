@@ -46,9 +46,9 @@ export default function MenuPage() {
           role="note"
           className="mt-6 max-w-3xl rounded-lg border border-line bg-warning-bg px-4 py-3 text-sm leading-6 text-warning-text"
         >
-          <strong className="font-semibold">Preview:</strong> Category pages are not
-          published yet. Menu items, prices, and calories will be added after they
-          are verified.
+          <strong className="font-semibold">Preview:</strong> Most category pages are
+          still being prepared. Prices and calories are added only after they are
+          verified.
         </div>
 
         <nav
