@@ -117,22 +117,55 @@ MDX, which needs extra packages.)
 - 17 dedicated category pages at root URLs (exact slugs recorded)
 - `/menu` = main menu hub (Option B), 17 categories in 6 groups, noindex for now
 - Homepage shows featured categories + link to `/menu`; header links to `/menu`
+  *(superseded 2026-11-12: see Phase 2.5)*
 - Data model: `MenuCategoryDef` / `MenuProduct` / `MenuOffering` /
   `ReferenceLocation` / `AliasCase`; all 210 inventory entries imported
   (130 products), no prices or calories
 - Validation of the menu data on every dev/build
-- Reference market Orlando, FL (restaurant not selected yet); new domain
+- Reference market Orlando, FL; new domain (restaurant later approved:
+  Orlando - Millenia Mall, 2026-11-11)
 
 ### Phase 2: Menu pages
 1. ~~Confirm category list and import items~~ (done in Phase 1.7)
-2. Select and approve the Orlando reference restaurant
-3. Research the first category (official sources), owner review, enter
-   verified values
-4. Extend `MenuTable` (price ranges, calorie ranges, optional Calories column)
-5. `app/[category]/page.tsx` with `generateStaticParams`, `dynamicParams = false`,
-   `generateMetadata`, breadcrumbs `Home > Menu > Category`
-6. Publish categories one at a time (each needs owner approval)
-7. `/menu` final content (group intros, verified price summary), then index it
+2. ~~Select and approve the Orlando reference restaurant~~ (done: Millenia Mall)
+3. ~~Research the first category~~ (done: Appetizers, 2026-11-11)
+4. ~~Extend `MenuTable`~~ (done: calorie ranges, serving size, calorie basis)
+5. ~~`app/[category]/page.tsx`~~ (done; `generateStaticParams` + `notFound()`,
+   because `dynamicParams` is not allowed with `cacheComponents`)
+6. Publish categories one at a time (each needs owner approval);
+   `/appetizers` published 2026-11-11
+7. ~~`/menu` final content, then index it~~ (withdrawn 2026-11-12: `/menu`
+   stays noindex; redirect to `/` reviewed before launch)
+
+### Lesson 7: Owner decisions of 2026-11-12 (final)
+Recorded in the docs on 2026-11-12 (documentation only, no code changes):
+architecture, food images, popular items, social links, price/calorie
+sources, rating system. Next steps, each after owner approval:
+
+- **7.1B Complete menu research** (`MENU_RESEARCH_PLAN.md` §1-7): ✅ done
+  2026-11-12; results in `research/menu/` (231 offerings, 146 products, PDF
+  cross-check, `MASTER_RESEARCH_SUMMARY.md`).
+- **7.1C Supporting homepage research:** ✅ done 2026-11-12; results in
+  `research/homepage/` (`supporting-content.md`, `hours.md`,
+  `holiday-hours.md`, `deals.md`, `nutrition-guide.md`, `faqs.md`,
+  `official-links.md`). Implementation waits for owner approval.
+- **Data model update:** value basis (official / calculated / estimated),
+  display notes, validation; Dipping Sauces calculated totals (regular and
+  large); official-name records.
+- **Full-menu homepage** (spec: `MENU_PAGE_OUTLINES.md` "Homepage"):
+  1. H1, intro, pricing/verification notice, category navigation +
+     instant menu search, 17 category H2 sections from the shared data
+  2. Item display: image (or labelled placeholder), name, price, calories,
+     rating, short description, size/portion options
+  3. Seven supporting H2 sections (Popular Menu Items with the 6 owner
+     items, Lunch Specials & Deals, Hours, Holiday Hours, Nutrition &
+     Dietary Options, How to Order Online, FAQ)
+  4. Internal links and official resources, sources, footer social links
+     (owner-supplied URLs only)
+- **Remaining category pages:** Option B images, indexed when complete.
+- **Rating system lesson:** architecture, storage/database, spam and
+  duplicate protection; "Not rated yet" default.
+- **Before launch:** review `/menu` → `/` redirect.
 
 ### Phase 3: Blog
 1. First real article (owner-provided topic and outline)
@@ -170,13 +203,18 @@ needed. Until then, use clearly identified placeholders and never invent data.
 | # | Topic | Decision / status | Provided in |
 |---|---|---|---|
 | 1 | Site name | **"Olive Garden Menu & Prices"** (decided). Independent site; always paired with disclaimers. Independent branding may be refined later, so keep the name in one place (`lib/site.ts`) | Decided |
-| 2 | Domain | **New domain** (name pending). No existing website is migrated or redirected. **Do not hardcode.** Read from `NEXT_PUBLIC_SITE_URL`, fallback `http://localhost:3000` | Before launch |
-| 3 | Prices, sources, locations | Reference market **Orlando, FL** (decided). Exact restaurant: proposed during research, owner approves. Do not invent prices | Phase 2 |
-| 4 | Menu categories, items, URLs | **Decided:** 17 categories, 17 pages, exact root slugs, `/menu` hub (Option B); 210 entries imported. Alias cases A1-A17 still open | Decided (aliases pending) |
-| 5 | Calories / nutrition | Owner provides verified data or approved sources. Do not invent | When required (Phase 2) |
+| 2 | Domain | **https://olivegardenmenuprices.us** (owner decision 2026-11-13). No existing website is migrated or redirected. **Do not hardcode.** Set `NEXT_PUBLIC_SITE_URL` in Vercel Production; fallback `http://localhost:3000` | Decided |
+| 3 | Prices, sources, locations | **Decided:** Olive Garden Orlando - Millenia Mall (4101 Conroy Road, Orlando, FL 32839), online pickup prices. Do not invent prices | Decided (2026-11-11) |
+| 4 | Menu categories, items, URLs | **Decided:** 17 categories, 17 pages, exact root slugs; 210 entries imported. Inventory names kept; official names recorded separately. **2026-11-12:** alias cases A1-A17 decided (shared data/photos, nothing merged; A4 kept separate); 21 new official items approved (231 offerings, 146 products); Buy One Take One = current "$6 Take Home Entrées" (3 eligible items, 4 kept as not eligible); Create Your Own Pasta: 23 option records; full nutrition-PDF cross-check. All in `research/menu/` | Decided (integration into `content/menu/` pending approval) |
+| 4a | Website architecture (decision 1) | **Decided 2026-11-12:** homepage = primary indexable full-menu page (17 categories, every item, 7 supporting sections); 17 category pages indexed when complete; one shared data source; `/menu` noindex, redirect to `/` reviewed before launch | Decided |
+| 4b | Food images (decision 2) | **Decided 2026-11-12:** homepage image for every item; category pages Option B (3-5 images, reused); owner supplies all photos; `IMAGE_MANIFEST.md` | Decided (photos supplied over time) |
+| 4c | Popular Menu Items (decision 3) | **Decided 2026-11-12:** Chicken Alfredo, Tour of Italy, Lasagna Classico, Chicken Parmigiana, Fettuccine Alfredo, Breadsticks | Decided |
+| 4d | Social media links (decision 4) | **Decided:** footer links with owner-supplied URLs. URLs still to be supplied; never invented | URLs pending |
+| 5 | Prices and calories (decision 5) | **Decided 2026-11-12:** Millenia online pickup prices; official → official nutrition → calculated → labeled third-party estimate; no empty cells (`MENU_RESEARCH_PLAN.md`) | Decided |
+| 5a | Rating system (decision 6) | **Decided 2026-11-12:** genuine 1-5 star visitor ratings, average + count, "Not rated yet", shared, spam/duplicate protection, persistent storage. Architecture/database chosen in the rating lesson | Rating lesson |
 | 6 | Author name + bio | Pending. Do not invent author names or credentials | Before publishing articles / About page |
 | 7 | Contact email | Pending | Later (Phase 4) |
-| 8 | Logo and images | Pending. Use clearly identified placeholders (e.g. labeled "Placeholder image") | Design and content phases |
+| 8 | Logo | Pending. Text logo until then | Design phase |
 | 9 | Blog topics + SEO outlines | Pending | Phase 3 |
 | 10 | GitHub repository | **Done.** `main` branch pushed to `github.com/makkahmarble1-arch/Olive-Garden`; Vercel deploys from it | Done |
 | 11 | Analytics and ads | **Not implemented** until the final integration phase | Phase 7 |

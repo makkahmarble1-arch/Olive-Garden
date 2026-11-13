@@ -1,8 +1,9 @@
 # Image Requirements
 
-**Status:** Convention approved (2026-11-11). No images are in the project yet.
-All images are supplied by the owner (original or properly licensed) and are
-integrated during the page development phases.
+**Status:** Convention approved (2026-11-11); image plan finalized by the
+owner on 2026-11-12 (decision 2). All food images are supplied by the owner
+(original or properly licensed). Never generate or download food images.
+First images: 10 appetizer photos (`IMAGE_MANIFEST.md`).
 
 ## 1. Rules
 
@@ -14,6 +15,8 @@ integrated during the page development phases.
 - **No fake paths.** Data files keep `image: null` until the real file exists
   in `/public`. Placeholders (`PlaceholderImage`) are used until then.
   Folders are created only when the first real image is added.
+- **Manifest:** every image file is listed in `docs/IMAGE_MANIFEST.md`
+  (file, folder, menu item, alt text, credit, where used) when it is added.
 - Photos must honestly represent the dish (no misleading edits).
 
 ## 2. Folder structure
@@ -96,9 +99,22 @@ added when the first images arrive.
 | Phase | Images needed |
 |---|---|
 | Before the first menu page is published | 1 category hero/card image for that page (optional: product photos for its items) |
-| Homepage refresh | Homepage hero + category card images for published pages |
+| Full-menu homepage (Phase 2.5) | A food image for **every item shown** (one per canonical product in `products/`, plus `catering/` or `family-style/` images where the portion looks different). Until the owner supplies a photo, a labelled placeholder is shown. "Popular Menu Items" uses owner-provided photos |
 | Blog phase | Featured image per article |
 | Technical SEO phase (before launch) | Default OG image + optional per-page OG images |
 | Logo/branding | Before launch (site currently uses a text logo) |
 
-Pages can be published without product photos; tables work without images.
+## 8. Image use per page (owner decision 2, 2026-11-12)
+
+| Page | Images |
+|---|---|
+| Homepage | A food image for **every** approved menu item. Labelled placeholder until the owner supplies the photo; never AI-generated or copied |
+| Homepage "Popular Menu Items" | Photos of the 6 owner-chosen items (same files as their menu entries) |
+| Category pages | **Option B** (approved for all category pages): complete menu table without images + 3-5 selected photos in a "Popular {Category}" section, reusing the homepage item photos where possible |
+
+One photo file per dish, shared by the homepage and the category pages
+(via `MenuProduct.image` or `MenuOffering.image`), so no duplicate files.
+
+Current exception: the 10 appetizer photos are in `public/images/appetizers/`
+(added before this plan). They stay there until the owner approves moving
+them to `public/images/menu/products/` (`IMAGE_MANIFEST.md`).

@@ -78,7 +78,10 @@ Loaded with `next/font/google` (self-hosted at build, no extra npm package).
 | Links in text | `brand-dark`, underlined, visible focus ring |
 | Category card | White, `border`, image on top, title + price range |
 | Price table | Header row `brand-tint`; zebra rows optional; columns: Item, Price, Calories; price right-aligned; horizontally scrollable on mobile |
-| "Not verified yet" badge | Warning colors, small pill |
+| "Not verified yet" badge | Warning colors, small pill (only while research is unfinished) |
+| "Calculated" / "Estimated" labels | Small text label next to the value, not color alone; style designed when the homepage is rebuilt (owner decision 5, 2026-11-12) |
+| Star rating | 1-5 stars + average + vote count as text ("4.3 · 120 votes"); "Not rated yet" when empty; keyboard-accessible, 44px touch targets; designed in the rating lesson (decision 6) |
+| Menu item (homepage) | Image (or labelled placeholder), name, price, calories, rating, short description, size options; designed when the homepage is rebuilt |
 | Price notice callout | `brand-tint` box with "Prices last checked {date}. Prices vary by location." |
 | Breadcrumbs | Small, `muted` text, `/` separators, current page not linked |
 | Table of contents | Box with `border`; collapsible on mobile (`<details>`) |

@@ -6,9 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "check:supabase": "node scripts/check-supabase.mjs",
+    "test:rating-api": "node scripts/test-rating-api.mjs",
+    "rating:visitor-hash": "node scripts/rating-visitor-hash.mjs"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.119.0",
     "next": "16.4.6",
     "react": "19.3.0",
     "react-dom": "19.3.0"

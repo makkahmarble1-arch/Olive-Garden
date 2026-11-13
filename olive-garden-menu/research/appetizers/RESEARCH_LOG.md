@@ -4,6 +4,14 @@
 **Result:** No price or calorie value is verified. Nothing from this log may
 be entered into `content/menu/` as verified data.
 
+## Update 2026-11-12 (owner decision 5)
+
+Dipping Sauces with Breadsticks: show **calculated** totals from official
+values, regular and large separate: regular 4 × 140 + 70-490 =
+630-1,050 cal; large 8 × 140 + 150-980 = 1,270-2,100 cal. The site still
+shows the sauce-only range (70-490); changed in a later code step
+(`docs/MENU_RESEARCH_PLAN.md` §6). Recorded in docs only.
+
 ## Update 2026-11-11 (entered into the site)
 
 Owner asked to complete the Appetizers page from this research. Entered:

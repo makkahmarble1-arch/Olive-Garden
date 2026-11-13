@@ -1,68 +1,582 @@
 import { defineOfferings } from "@/lib/menu-data";
 
 /**
- * 13. Non- alcoholic beverages: 13 inventory entries (docs/MENU_INVENTORY.md).
- * Order = inventory order. Prices and calories stay empty/null until verified
- * (see docs/MENU_RESEARCH_PLAN.md). `inventoryName` is the owner's exact text.
+ * 13. Non-Alcoholic Beverages: 13 inventory entries + 1 new official item(s).
+ *
+ * Imported from research/menu/menu-research.json (final research, 2026-11-12;
+ * owner approved integration in Lesson 7.2). Source notes per value:
+ * research/menu/non-alcoholic-beverages/. Order = inventory order, new official items last.
+ * `inventoryName` is the owner's exact text (null only for new official items).
+ * Prices: online pickup, Olive Garden Orlando - Millenia Mall.
  */
 export const nonAlcoholicBeveragesOfferings = defineOfferings("non-alcoholic-beverages", [
   {
     inventoryName: "Gallon iced teas & raspberry lemonade",
     displayName: "Gallon Iced Teas & Raspberry Lemonade",
     productId: "gallon-iced-teas-and-raspberry-lemonade",
+    officialName: "Gallon Iced Teas & Raspberry Lemonade",
+    isNewOfficialItem: false,
+    description: "Take-home gallons of iced tea or raspberry lemonade, from sweet and unsweet tea to fruit teas, priced by flavor.",
+    portionType: "regular",
+    servingSize: "1 gallon",
+    prices: [
+      {
+        amount: 8.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/gallon-iced-teas-raspberry-lemonade/prod6660219",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [
+      {
+        label: "Gallon Sweet Tea",
+        price: 8.49,
+        calories: 960,
+        caloriesMax: null,
+        caloriesUnit: "per gallon",
+        caloriesBasis: "official",
+        caloriesFormula: null
+      },
+      {
+        label: "Gallon Iced Tea (unsweet)",
+        price: 8.49,
+        calories: 40,
+        caloriesMax: null,
+        caloriesUnit: "per gallon",
+        caloriesBasis: "official",
+        caloriesFormula: null
+      },
+      {
+        label: "Gallon Half Iced Tea + Half Lemonade",
+        price: 8.49,
+        calories: 900,
+        caloriesMax: null,
+        caloriesUnit: "per gallon",
+        caloriesBasis: "official",
+        caloriesFormula: null
+      },
+      {
+        label: "Gallon Bellini Peach Tea",
+        price: 10.49,
+        calories: 800,
+        caloriesMax: null,
+        caloriesUnit: "per gallon",
+        caloriesBasis: "official",
+        caloriesFormula: null
+      },
+      {
+        label: "Gallon Raspberry Tea",
+        price: 10.49,
+        calories: 830,
+        caloriesMax: null,
+        caloriesUnit: "per gallon",
+        caloriesBasis: "official",
+        caloriesFormula: null
+      },
+      {
+        label: "Gallon Raspberry Lemonade",
+        price: 10.49,
+        calories: 1760,
+        caloriesMax: null,
+        caloriesUnit: "per gallon",
+        caloriesBasis: "official",
+        caloriesFormula: null
+      },
+      {
+        label: "Gallon Mango-Passion Fruit Iced Tea",
+        price: 10.49,
+        calories: 1140,
+        caloriesMax: null,
+        caloriesUnit: "per gallon",
+        caloriesBasis: "official",
+        caloriesFormula: null,
+        unavailable: true
+      }
+    ],
+    calories: 40,
+    caloriesMax: 1760,
+    caloriesBasis: "per gallon, depends on flavor",
+    caloriesSourceUrl: "https://media.olivegarden.com/en_us/pdf/olive_garden_nutrition.pdf",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "PDF check: Menu lists Gallon Raspberry Lemonade 1,810 (range 40-1,810); PDF lists 1,760"
   },
-  { inventoryName: "2-liter soda", displayName: "2-Liter Soda", productId: "2-liter-soda" },
+  {
+    inventoryName: "2-liter soda",
+    displayName: "2-Liter Soda",
+    productId: "2-liter-soda",
+    officialName: "2-Liter Soda",
+    isNewOfficialItem: false,
+    description: "A two-liter bottle of Coke, Diet Coke, or Sprite to add to a to-go order for the whole table.",
+    portionType: "regular",
+    servingSize: "2 liters; Coke, Diet Coke, or Sprite",
+    prices: [
+      {
+        amount: 5.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/2-liter-soda/prod6660191",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 0,
+    caloriesMax: 790,
+    caloriesBasis: "per 2-liter bottle, depends on flavor",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/2-liter-soda/prod6660191",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: null
+  },
   {
     inventoryName: "To go fountain drinks",
     displayName: "To-Go Fountain Drinks",
     productId: "to-go-fountain-drinks",
+    officialName: "To Go Fountain Drinks",
+    isNewOfficialItem: false,
+    description: "A to-go fountain soda with a choice of Coke, Diet Coke, Coke Zero Sugar, Sprite, Dr Pepper, or ginger ale.",
+    portionType: "regular",
+    servingSize: "One fountain drink",
+    prices: [
+      {
+        amount: 3.99,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/to-go-fountain-drinks/prod2030014",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 0,
+    caloriesMax: 180,
+    caloriesBasis: "per drink, depends on flavor",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/to-go-fountain-drinks/prod2030014",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "PDF check: PDF maximum is 170; menu says up to 180"
   },
   {
     inventoryName: "Raspberry lemonade",
     displayName: "Raspberry Lemonade",
     productId: "raspberry-lemonade",
+    officialName: "Raspberry Lemonade",
+    isNewOfficialItem: false,
+    description: "A cold raspberry-flavored lemonade, sold by the glass and also available by the gallon for to-go orders.",
+    portionType: "regular",
+    servingSize: "One drink",
+    prices: [
+      {
+        amount: 4.29,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/raspberry-lemonade/prod81052",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 160,
+    caloriesMax: null,
+    caloriesBasis: "per drink",
+    caloriesSourceUrl: "https://media.olivegarden.com/en_us/pdf/olive_garden_nutrition.pdf",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "PDF check: Menu lists 170; PDF lists 160"
   },
   {
     inventoryName: "Classic lemonade",
     displayName: "Classic Lemonade",
     productId: "classic-lemonade",
+    officialName: "Classic Lemonade",
+    isNewOfficialItem: false,
+    description: "A cold glass of classic lemonade, a simple non-alcoholic choice that also goes into the half tea, half lemonade drink.",
+    portionType: "regular",
+    servingSize: "One drink",
+    prices: [
+      {
+        amount: 3.99,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/classic-lemonade/prod7200045",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 170,
+    caloriesMax: null,
+    caloriesBasis: "per drink",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/classic-lemonade/prod7200045",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: null
   },
   {
     inventoryName: "Desert pear limonata",
     displayName: "Desert Pear Limonata",
     productId: "desert-pear-limonata",
-    notes: "Spelling \"Desert\" kept as listed (likely the desert pear fruit). Confirm public spelling.",
+    officialName: "Sweet Pear Limonata",
+    isNewOfficialItem: false,
+    description: "Sweet prickly pear lemonade mixed with sparkling water for a lightly bubbly, fruity non-alcoholic drink; officially named Sweet Pear Limonata.",
+    portionType: "regular",
+    servingSize: "One drink",
+    prices: [
+      {
+        amount: 4.79,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/sweet-pear-limonata/prod20770016",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 240,
+    caloriesMax: null,
+    caloriesBasis: "per drink",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/sweet-pear-limonata/prod20770016",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Official name is \"Sweet Pear Limonata\" (inventory: Desert Pear Limonata)"
   },
   {
     inventoryName: "Strawberry-passion fruit limonata",
     displayName: "Strawberry-Passion Fruit Limonata",
     productId: "strawberry-passion-fruit-limonata",
+    officialName: "Strawberry-Passion Fruit Limonata",
+    isNewOfficialItem: false,
+    description: "Strawberry and passion fruit lemonade topped with sparkling water for a fizzy, fruit-forward glass without alcohol.",
+    portionType: "regular",
+    servingSize: "One drink",
+    prices: [
+      {
+        amount: 4.79,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/strawberry-passion-fruit-limonata/prod81045",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 180,
+    caloriesMax: null,
+    caloriesBasis: "per drink",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/strawberry-passion-fruit-limonata/prod81045",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: null
   },
   {
     inventoryName: "Mango-passion fruit lced tea",
     displayName: "Mango-Passion Fruit Iced Tea",
     productId: "mango-passion-fruit-iced-tea",
-    notes: "Inventory spelling \"lced\" corrected to \"Iced\". Confirm on the official menu.",
+    officialName: "Mango-Passion Fruit Iced Tea",
+    isNewOfficialItem: false,
+    description: "Iced tea flavored with mango and passion fruit, a fruity alternative to plain sweet or unsweet iced tea.",
+    portionType: "regular",
+    servingSize: "One drink",
+    prices: [
+      {
+        amount: 4.29,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/mango-passion-fruit-iced-tea/prod20770017",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 100,
+    caloriesMax: null,
+    caloriesBasis: "per drink",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/mango-passion-fruit-iced-tea/prod20770017",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "unavailable",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Listed but marked \"CURRENTLY UNAVAILABLE\" at Millenia on 2026-11-12 (not assumed discontinued)"
   },
   {
     inventoryName: "Bellini peach-raspberry iced tea",
     displayName: "Bellini Peach-Raspberry Iced Tea",
     productId: "bellini-peach-raspberry-iced-tea",
+    officialName: "Bellini Peach-Raspberry Iced Tea",
+    isNewOfficialItem: false,
+    description: "Iced tea flavored with peach and raspberry, served cold, with slightly fewer calories than the sweet tea.",
+    portionType: "regular",
+    servingSize: "One drink",
+    prices: [
+      {
+        amount: 4.29,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/bellini-peach-raspberry-iced-tea/prod81132",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 80,
+    caloriesMax: null,
+    caloriesBasis: "per drink",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/bellini-peach-raspberry-iced-tea/prod81132",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: null
   },
   {
     inventoryName: "Fresh brewed sweet iced tea",
     displayName: "Fresh-Brewed Sweet Iced Tea",
     productId: "fresh-brewed-sweet-iced-tea",
+    officialName: "Fresh Brewed Sweet Iced Tea",
+    isNewOfficialItem: false,
+    description: "Fresh-brewed iced tea, sweetened and served over ice; it is also sold by the gallon for to-go orders.",
+    portionType: "regular",
+    servingSize: "One drink",
+    prices: [
+      {
+        amount: 3.99,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/fresh-brewed-sweet-iced-tea/prod8570038",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 90,
+    caloriesMax: null,
+    caloriesBasis: "per drink",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/fresh-brewed-sweet-iced-tea/prod8570038",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "PDF check (not-listed): Sweet iced tea is not listed in the PDF"
   },
   {
     inventoryName: "Fresh brewed unsweet iced tea",
     displayName: "Fresh-Brewed Unsweet Iced Tea",
     productId: "fresh-brewed-unsweet-iced-tea",
+    officialName: "Fresh Brewed Unsweet Iced Tea",
+    isNewOfficialItem: false,
+    description: "Fresh-brewed iced tea with no added sugar, served over ice; it is also sold by the gallon for to-go orders.",
+    portionType: "regular",
+    servingSize: "One drink",
+    prices: [
+      {
+        amount: 3.99,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/fresh-brewed-unsweet-iced-tea/prod81058",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 0,
+    caloriesMax: null,
+    caloriesBasis: "per drink",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/fresh-brewed-unsweet-iced-tea/prod81058",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: null
   },
-  { inventoryName: "Cappuccino", displayName: "Cappuccino", productId: "cappuccino" },
+  {
+    inventoryName: "Cappuccino",
+    displayName: "Cappuccino",
+    productId: "cappuccino",
+    officialName: "Cappuccino",
+    isNewOfficialItem: false,
+    description: "Lavazza espresso with steamed milk, topped with whipped cream and a sprinkle of cinnamon for a warm after-dinner drink.",
+    portionType: "regular",
+    servingSize: "One drink",
+    prices: [
+      {
+        amount: 4.99,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/cappuccino/prod81088",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 150,
+    caloriesMax: null,
+    caloriesBasis: "per drink",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/cappuccino/prod81088",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: null
+  },
   {
     inventoryName: "Lavazza espresso",
     displayName: "Lavazza Espresso",
     productId: "lavazza-espresso",
+    officialName: "Lavazza Espresso",
+    isNewOfficialItem: false,
+    description: "A shot of Lavazza espresso, the Italian coffee used for the cappuccino, for a strong and simple finish to the meal.",
+    portionType: "regular",
+    servingSize: "One espresso",
+    prices: [
+      {
+        amount: 3.99,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/lavazza-espresso/prod81037",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 60,
+    caloriesMax: null,
+    caloriesBasis: "per drink",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/lavazza-espresso/prod81037",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: null
   },
+  {
+    inventoryName: null,
+    displayName: "Half Iced Tea + Half Lemonade",
+    productId: "half-iced-tea-and-half-lemonade",
+    officialName: "NEW! Half Iced Tea + Half Lemonade",
+    isNewOfficialItem: true,
+    description: "Half fresh-brewed iced tea and half lemonade poured together in one glass; it is also sold by the gallon for to-go orders.",
+    portionType: "regular",
+    servingSize: "One drink",
+    prices: [
+      {
+        amount: 3.69,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/half-iced-tea-half-lemonade/prod0219000016",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 80,
+    caloriesMax: null,
+    caloriesBasis: "per drink",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/half-iced-tea-half-lemonade/prod0219000016",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: null
+  }
 ]);

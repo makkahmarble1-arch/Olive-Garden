@@ -1,212 +1,429 @@
-import { defineOfferings, type OfferingInput } from "@/lib/menu-data";
-import type { ImageRef } from "@/lib/types";
-
-/** Owner-provided photo in public/images/appetizers/ (credit: site owner). */
-function ownerPhoto(file: string, alt: string, width: number, height: number): ImageRef {
-  return {
-    src: `/images/appetizers/${file}`,
-    alt,
-    width,
-    height,
-    credit: "Site owner",
-    license: "Owner-provided",
-  };
-}
-
-/* ---------- Verified research, 2026-11-11 (research/appetizers/) ---------- */
-
-const CHECKED = "2026-11-11";
-const LOCATION = "orlando-fl-millenia-mall";
-/** Official nutrition PDF (sources.md S6), pages 2-4. */
-const NUTRITION_PDF = "https://media.olivegarden.com/en_us/pdf/olive_garden_nutrition.pdf";
-
-type VerifiedInput = {
-  /** Online pickup price at the reference restaurant. */
-  price: number;
-  /** Official item page the price was read from (Millenia selected). */
-  priceUrl: string;
-  priceUnit?: string;
-  /** From the official nutrition PDF. `null` = not verified. */
-  calories: number | null;
-  /** Upper end when the official value depends on a choice (e.g. the sauce). */
-  caloriesMax?: number;
-  caloriesBasis?: string;
-  servingSize?: string;
-  notes?: string;
-};
-
-/** Fields for an offering whose price (and usually calories) was verified. */
-function verified(v: VerifiedInput): Partial<OfferingInput> {
-  return {
-    prices: [
-      {
-        amount: v.price,
-        unit: v.priceUnit ?? null,
-        locationId: LOCATION,
-        sourceUrl: v.priceUrl,
-        sourceNote: "Online ordering, Order Type: Pickup",
-        checkedAt: CHECKED,
-      },
-    ],
-    calories: v.calories,
-    caloriesMax: v.caloriesMax ?? null,
-    caloriesBasis: v.caloriesBasis ?? null,
-    caloriesSourceUrl: v.calories === null ? null : NUTRITION_PDF,
-    servingSize: v.servingSize ?? null,
-    availability: "available",
-    status: "verified",
-    verifiedAt: CHECKED,
-    notes: v.notes ?? null,
-  };
-}
+import { defineOfferings } from "@/lib/menu-data";
 
 /**
- * 2. Appetizers: 10 inventory entries (docs/MENU_INVENTORY.md).
- * Order = inventory order. `inventoryName` is the owner's exact text.
- * Values come from research/appetizers/prices.md and nutrition.md.
+ * 2. Appetizers: 10 inventory entries.
+ *
+ * Imported from research/menu/menu-research.json (final research, 2026-11-12;
+ * owner approved integration in Lesson 7.2). Source notes per value:
+ * research/menu/appetizers/. Order = inventory order, new official items last.
+ * `inventoryName` is the owner's exact text (null only for new official items).
+ * Prices: online pickup, Olive Garden Orlando - Millenia Mall.
  */
 export const appetizersOfferings = defineOfferings("appetizers", [
   {
     inventoryName: "Breadsticks",
     displayName: "Breadsticks",
     productId: "breadsticks",
-    ...verified({
-      price: 4.99,
-      priceUrl: "https://www.olivegarden.com/menu/breadsticks-v/prod840053",
-      priceUnit: "6 breadsticks",
-      calories: 140,
-      caloriesBasis: "per breadstick",
-      servingSize: "6 breadsticks",
-      notes: "12 breadsticks: $7.29. Unbaked 6/12 same prices. Plain breadstick 130 cal (PDF).",
-    }),
+    officialName: "Breadsticks (V)",
+    isNewOfficialItem: false,
+    description: "Soft, warm breadsticks brushed with a garlic topping, sold by the half dozen or dozen, freshly baked or ready to bake at home.",
+    portionType: "regular",
+    servingSize: "6 or 12 breadsticks",
+    prices: [
+      {
+        amount: 4.99,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/breadsticks-v/prod840053",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-11"
+      }
+    ],
+    priceNote: null,
+    options: [
+      {
+        label: "6 breadsticks, baked",
+        price: 4.99,
+        calories: 840,
+        caloriesMax: null,
+        caloriesUnit: null,
+        caloriesBasis: "calculated",
+        caloriesFormula: "6 × 140"
+      },
+      {
+        label: "12 breadsticks, baked",
+        price: 7.29,
+        calories: 1680,
+        caloriesMax: null,
+        caloriesUnit: null,
+        caloriesBasis: "calculated",
+        caloriesFormula: "12 × 140"
+      },
+      {
+        label: "6 breadsticks, unbaked (bake at home)",
+        price: 4.99,
+        calories: 840,
+        caloriesMax: null,
+        caloriesUnit: null,
+        caloriesBasis: "calculated",
+        caloriesFormula: "6 × 140"
+      },
+      {
+        label: "12 breadsticks, unbaked (bake at home)",
+        price: 7.29,
+        calories: 1680,
+        caloriesMax: null,
+        caloriesUnit: null,
+        caloriesBasis: "calculated",
+        caloriesFormula: "12 × 140"
+      }
+    ],
+    calories: 140,
+    caloriesMax: null,
+    caloriesBasis: "per breadstick (with garlic topping)",
+    caloriesSourceUrl: "https://media.olivegarden.com/en_us/pdf/olive_garden_nutrition.pdf",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-11",
+    notes: null
   },
   {
     inventoryName: "Fried Mozzarella",
     displayName: "Fried Mozzarella",
     productId: "fried-mozzarella",
-    image: ownerPhoto(
-      "fried-mozzarella.webp",
-      "Breaded fried mozzarella sticks on a white plate, one pulled apart to show melted cheese, with a cup of red dipping sauce",
-      1402,
-      1122,
-    ),
-    ...verified({
-      price: 9.79,
-      priceUrl: "https://www.olivegarden.com/menu/fried-mozzarella/prod2350153",
-      calories: 800,
-      notes: "Marinara adds 35 cal.",
-    }),
+    officialName: "Fried Mozzarella",
+    isNewOfficialItem: false,
+    description: "Breaded mozzarella cheese fried until golden and crisp outside and melty inside, served with warm marinara sauce for dipping.",
+    portionType: "regular",
+    servingSize: "One appetizer order",
+    prices: [
+      {
+        amount: 9.79,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/fried-mozzarella/prod2350153",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-11"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 800,
+    caloriesMax: null,
+    caloriesBasis: "per order",
+    caloriesSourceUrl: "https://media.olivegarden.com/en_us/pdf/olive_garden_nutrition.pdf",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-11",
+    notes: null
   },
   {
     inventoryName: "Stuffed Ziti Fritta",
     displayName: "Stuffed Ziti Fritta",
     productId: "stuffed-ziti-fritta",
-    ...verified({
-      price: 9.99,
-      priceUrl: "https://www.olivegarden.com/menu/stuffed-ziti-fritta/prod6580009",
-      calories: 500,
-      notes: "Marinara adds 35 cal; alfredo adds 220 cal.",
-    }),
+    officialName: "Stuffed Ziti Fritta",
+    isNewOfficialItem: false,
+    description: "Crispy fried ziti pasta stuffed with a five-cheese filling, served with two dipping sauces: creamy alfredo and classic marinara.",
+    portionType: "regular",
+    servingSize: "One appetizer order",
+    prices: [
+      {
+        amount: 9.99,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/stuffed-ziti-fritta/prod6580009",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-11"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 500,
+    caloriesMax: null,
+    caloriesBasis: "per order",
+    caloriesSourceUrl: "https://media.olivegarden.com/en_us/pdf/olive_garden_nutrition.pdf",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-11",
+    notes: null
   },
   {
     inventoryName: "Dipping Sauces with breadsticks",
     displayName: "Dipping Sauces with Breadsticks",
     productId: "dipping-sauces-with-breadsticks",
-    ...verified({
-      price: 5.29,
-      priceUrl: "https://www.olivegarden.com/menu/dipping-sauces-includes-breadsticks-v/prod80955",
-      priceUnit: "regular",
-      // Owner decision 2026-11-11: use the official PDF per-sauce values
-      // (regular: marinara 70 ... spicy alfredo 490), sauce only.
-      calories: 70,
-      caloriesMax: 490,
-      caloriesBasis: "sauce only, depends on the sauce; breadsticks 140 each",
-      servingSize: "Regular, with 4 breadsticks",
-      notes: "Large (8 breadsticks, serves 4): $7.29. Ordering page card said 90-440 cal; PDF (used) says 70-490 regular, 150-980 large.",
-    }),
+    officialName: "Dipping Sauces Includes Breadsticks (V)",
+    isNewOfficialItem: false,
+    description: "A warm cup of marinara, alfredo, or five cheese marinara sauce with fresh breadsticks; the regular comes with four, the large with eight.",
+    portionType: "regular",
+    servingSize: "Regular: 4 breadsticks, serves 2. Large: 8 breadsticks + 8 oz sauce, serves 4",
+    prices: [
+      {
+        amount: 5.29,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/dipping-sauces-includes-breadsticks-v/prod80955",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-11"
+      }
+    ],
+    priceNote: null,
+    options: [
+      {
+        label: "Regular sauce with 4 breadsticks (serves 2)",
+        price: 5.29,
+        calories: 630,
+        caloriesMax: 1050,
+        caloriesUnit: null,
+        caloriesBasis: "calculated",
+        caloriesFormula: "560 + 70-490"
+      },
+      {
+        label: "Large sauce (8 oz) with 8 breadsticks (serves 4)",
+        price: 7.29,
+        calories: 1270,
+        caloriesMax: 2100,
+        caloriesUnit: null,
+        caloriesBasis: "calculated",
+        caloriesFormula: "1,120 + 150-980"
+      }
+    ],
+    calories: 630,
+    caloriesMax: 1050,
+    caloriesBasis: "per regular order (4 breadsticks + 1 sauce)",
+    caloriesSourceUrl: "https://media.olivegarden.com/en_us/pdf/olive_garden_nutrition.pdf",
+    caloriesValueBasis: "calculated",
+    caloriesFormula: "4 × 140 + sauce 70-490",
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-11",
+    notes: "Owner decision 2026-11-12: show calculated totals. Menu card shows a different sauce range (90-440 / 190-870)."
   },
   {
     inventoryName: "Calamari",
     displayName: "Calamari",
     productId: "calamari",
-    ...verified({
-      price: 13.29,
-      priceUrl: "https://www.olivegarden.com/menu/calamari/prod600045",
-      calories: 670,
-      notes: "Marinara adds 35 cal; spicy ranch adds 240 cal.",
-    }),
+    officialName: "Calamari",
+    isNewOfficialItem: false,
+    description: "Tender calamari in a light breading, fried until crisp and served with marinara sauce and a spicy ranch for dipping.",
+    portionType: "regular",
+    servingSize: "One appetizer order",
+    prices: [
+      {
+        amount: 13.29,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/calamari/prod600045",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-11"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 670,
+    caloriesMax: null,
+    caloriesBasis: "per order",
+    caloriesSourceUrl: "https://media.olivegarden.com/en_us/pdf/olive_garden_nutrition.pdf",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-11",
+    notes: null
   },
   {
     inventoryName: "Meatballs Parmigiana",
     displayName: "Meatballs Parmigiana",
     productId: "meatballs-parmigiana",
-    ...verified({
-      price: 11.79,
-      priceUrl: "https://www.olivegarden.com/menu/meatballs-parmigiana/prod9760001",
-      calories: 1040,
-      servingSize: "5 meatballs",
-    }),
+    officialName: "Meatballs Parmigiana",
+    isNewOfficialItem: false,
+    description: "Five meatballs baked in marinara sauce and finished with melted Italian cheeses and a crunchy layer of toasted breadcrumbs.",
+    portionType: "regular",
+    servingSize: "5 meatballs",
+    prices: [
+      {
+        amount: 11.79,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/meatballs-parmigiana/prod9760001",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-11"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 1040,
+    caloriesMax: null,
+    caloriesBasis: "per order",
+    caloriesSourceUrl: "https://media.olivegarden.com/en_us/pdf/olive_garden_nutrition.pdf",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-11",
+    notes: null
   },
   {
     inventoryName: "Spinach-Artichoke Dip",
     displayName: "Spinach-Artichoke Dip",
     productId: "spinach-artichoke-dip",
-    image: ownerPhoto(
-      "spinach-artichoke-dip.webp",
-      "Baked spinach and artichoke dip with browned cheese in a white dish, surrounded by toasted flatbread triangles and bread slices",
-      1536,
-      1024,
-    ),
-    ...verified({
-      price: 11.49,
-      priceUrl: "https://www.olivegarden.com/menu/spinach-artichoke-dip/prod4890016",
-      calories: 1160,
-      caloriesBasis: "with flatbread crisps",
-    }),
+    officialName: "Spinach-Artichoke Dip",
+    isNewOfficialItem: false,
+    description: "A warm, cheesy blend of spinach and artichokes served with crisp flatbread chips for scooping, an easy starter to share.",
+    portionType: "regular",
+    servingSize: "One appetizer order",
+    prices: [
+      {
+        amount: 11.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/spinach-artichoke-dip/prod4890016",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-11"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 1160,
+    caloriesMax: null,
+    caloriesBasis: "per order, with flatbread crisps",
+    caloriesSourceUrl: "https://media.olivegarden.com/en_us/pdf/olive_garden_nutrition.pdf",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-11",
+    notes: null
   },
   {
     inventoryName: "Lasagna Fritta",
     displayName: "Lasagna Fritta",
     productId: "lasagna-fritta",
-    image: ownerPhoto(
-      "lasagna-fritta.webp",
-      "Fried breaded lasagna pieces topped with red sauce, white sauce drizzle, and grated cheese, one cut open to show the cheese filling",
-      1536,
-      1024,
-    ),
-    ...verified({
-      price: 11.79,
-      priceUrl: "https://www.olivegarden.com/menu/lasagna-fritta/prod80749",
-      calories: 1130,
-    }),
+    officialName: "Lasagna Fritta",
+    isNewOfficialItem: false,
+    description: "Lasagna coated in parmesan breading and fried, then topped with parmesan and a beef and Italian sausage meat sauce, with creamy alfredo.",
+    portionType: "regular",
+    servingSize: "One appetizer order",
+    prices: [
+      {
+        amount: 11.79,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/lasagna-fritta/prod80749",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-11"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 1130,
+    caloriesMax: null,
+    caloriesBasis: "per order",
+    caloriesSourceUrl: "https://media.olivegarden.com/en_us/pdf/olive_garden_nutrition.pdf",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-11",
+    notes: null
   },
   {
     inventoryName: "Shrimp Fritto Misto",
     displayName: "Shrimp Fritto Misto",
     productId: "shrimp-fritto-misto",
-    ...verified({
-      price: 14.29,
-      priceUrl: "https://www.olivegarden.com/menu/shrimp-fritto-misto/prod8290005",
-      calories: 1280,
-      servingSize: "Over a half pound of shrimp",
-      notes: "Marinara adds 35 cal; spicy ranch adds 240 cal.",
-    }),
+    officialName: "Shrimp Fritto Misto",
+    isNewOfficialItem: false,
+    description: "More than half a pound of shrimp, hand-breaded with onions and bell peppers, lightly fried, and served with marinara and spicy ranch.",
+    portionType: "regular",
+    servingSize: "More than half a pound of shrimp (with onions and bell peppers)",
+    prices: [
+      {
+        amount: 14.29,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/shrimp-fritto-misto/prod8290005",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-11"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 1280,
+    caloriesMax: null,
+    caloriesBasis: "per order",
+    caloriesSourceUrl: "https://media.olivegarden.com/en_us/pdf/olive_garden_nutrition.pdf",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-11",
+    notes: null
   },
   {
     inventoryName: "Toasted Ravioli",
     displayName: "Toasted Ravioli",
     productId: "toasted-ravioli",
-    image: ownerPhoto(
-      "toasted-ravioli.webp",
-      "Golden breaded toasted ravioli sprinkled with grated cheese and parsley around a cup of red dipping sauce, one cut open",
-      1536,
-      1024,
-    ),
-    ...verified({
-      price: 10.29,
-      priceUrl: "https://www.olivegarden.com/menu/toasted-ravioli/prod80841",
-      calories: 650,
-      notes: "Marinara adds 35 cal.",
-    }),
-  },
+    officialName: "Toasted Ravioli",
+    isNewOfficialItem: false,
+    description: "Ravioli filled with seasoned beef, lightly fried until golden and crisp, and served with homemade marinara sauce for dipping.",
+    portionType: "regular",
+    servingSize: "One appetizer order",
+    prices: [
+      {
+        amount: 10.29,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/toasted-ravioli/prod80841",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-11"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 650,
+    caloriesMax: null,
+    caloriesBasis: "per order",
+    caloriesSourceUrl: "https://media.olivegarden.com/en_us/pdf/olive_garden_nutrition.pdf",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-11",
+    notes: null
+  }
 ]);

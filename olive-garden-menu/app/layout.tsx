@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, Geist } from "next/font/google";
 import { siteConfig } from "@/lib/site";
+import { DEFAULT_SOCIAL_IMAGE, robotsFor } from "@/lib/metadata";
 import SkipLink from "@/components/layout/SkipLink";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -24,10 +25,18 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  applicationName: siteConfig.name,
+  // Default for pages without their own robots: noindex until launch.
+  robots: robotsFor(true),
   openGraph: {
     type: "website",
     siteName: siteConfig.name,
-    locale: "en_US",
+    locale: siteConfig.locale,
+    images: [DEFAULT_SOCIAL_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: [{ url: DEFAULT_SOCIAL_IMAGE.url, alt: DEFAULT_SOCIAL_IMAGE.alt }],
   },
 };
 

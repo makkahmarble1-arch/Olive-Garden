@@ -16,6 +16,8 @@
   --color-background: #ffffff;
   --color-warning-bg: #fef3c7;
   --color-warning-text: #78350f;
+  /* Rating stars only (graphic, never text: contrast on white is 2.15:1). */
+  --color-star: #f59e0b;
 }
 
 @theme inline {
@@ -37,4 +39,77 @@ html {
 body {
   background: var(--color-background);
   color: var(--color-ink);
+}
+
+/*
+ * Rating stars (components/rating/): drawn with CSS masks so each star is a
+ * single element (the homepage has about 1,200 stars). 18 px golden star:
+ * outline (::before) + golden fill (::after) as wide as --fill (0-100%).
+ */
+@layer components {
+  .og-star,
+  .og-star-btn {
+    --fill: 0%;
+    --og-star-outline: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8L10 1.6z' fill='none' stroke='black' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E");
+    --og-star-solid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8L10 1.6z' fill='black' stroke='black' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E");
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+  .og-star {
+    width: 18px;
+    height: 18px;
+  }
+  /* Button: 24 px wide, 44 px tall touch area, but only 24 px of layout height. */
+  .og-star-btn {
+    width: 1.5rem;
+    height: 2.75rem;
+    margin-block: -0.625rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+  .og-star-btn:disabled {
+    cursor: wait;
+  }
+  .og-star::before,
+  .og-star::after,
+  .og-star-btn::before,
+  .og-star-btn::after {
+    content: "";
+    grid-area: 1 / 1;
+    width: 18px;
+    height: 18px;
+    -webkit-mask: var(--og-star-outline) center / 18px 18px no-repeat;
+    mask: var(--og-star-outline) center / 18px 18px no-repeat;
+    background: var(--color-star);
+  }
+  .og-star::after,
+  .og-star-btn::after {
+    -webkit-mask-image: var(--og-star-solid);
+    mask-image: var(--og-star-solid);
+    background: linear-gradient(90deg, var(--color-star) var(--fill), transparent var(--fill));
+  }
+  .og-star-btn:focus-visible {
+    outline: none;
+  }
+  .og-star-btn:focus-visible::before {
+    outline: 2px solid var(--color-brand-dark);
+    outline-offset: 1px;
+    border-radius: 2px;
+  }
+  @media (forced-colors: active) {
+    .og-star::before,
+    .og-star-btn::before {
+      forced-color-adjust: none;
+      background: CanvasText;
+    }
+    .og-star::after,
+    .og-star-btn::after {
+      forced-color-adjust: none;
+      background: linear-gradient(90deg, CanvasText var(--fill), transparent var(--fill));
+    }
+  }
 }

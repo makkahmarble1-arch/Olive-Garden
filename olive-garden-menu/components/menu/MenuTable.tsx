@@ -1,6 +1,7 @@
 import type { MenuItem } from "@/lib/types";
 import { formatNumber, formatPrice } from "@/lib/format";
 import VerificationBadge from "@/components/ui/VerificationBadge";
+import RatingSummary from "@/components/rating/RatingSummary";
 
 type MenuTableProps = {
   /** Visible table title, e.g. "Appetizer Prices and Calories". */
@@ -12,12 +13,18 @@ type MenuTableProps = {
 function VerifiedValue({
   item,
   value,
+  note,
   format,
 }: {
   item: MenuItem;
   value: number | null;
+  /** Meaningful note shown when there is no value (e.g. "Not published"). */
+  note?: string | null;
   format: (n: number) => string;
 }) {
+  if (value === null && note) {
+    return <span className="text-sm whitespace-normal text-muted">{note}</span>;
+  }
   if (item.notListed) {
     return <VerificationBadge label="Not currently listed" />;
   }
@@ -34,9 +41,17 @@ function formatCalories(value: number, max: number | null | undefined): string {
 
 /** Small "per breadstick" style note under a shown calorie value. */
 function CaloriesBasis({ item }: { item: MenuItem }) {
-  if (item.notListed || item.calories === null || !item.caloriesBasis) return null;
+  if (item.notListed || item.calories === null) return null;
+  const calculated = item.caloriesValueBasis === "calculated";
+  if (!item.caloriesBasis && !calculated) return null;
   return (
     <span className="block text-xs whitespace-normal text-muted">
+      {calculated && (
+        <span className="font-semibold text-ink">
+          Calculated{item.caloriesFormula ? `: ${item.caloriesFormula}` : ""}
+          {item.caloriesBasis ? " · " : ""}
+        </span>
+      )}
       {item.caloriesBasis}
     </span>
   );
@@ -49,6 +64,8 @@ function CaloriesBasis({ item }: { item: MenuItem }) {
  * time, so screen readers never read both.
  */
 export default function MenuTable({ caption, items }: MenuTableProps) {
+  // The rating column appears only when rows are real products.
+  const showRatings = items.some((item) => item.productId);
   return (
     <>
       <div className="rounded-lg border border-line sm:hidden">
@@ -67,6 +84,9 @@ export default function MenuTable({ caption, items }: MenuTableProps) {
                 className="border-t border-line px-4 py-3"
               >
                 <p className="font-medium text-ink">{item.name}</p>
+                {item.productId && (
+                  <RatingSummary align="start" className="mt-1" productId={item.productId} itemName={item.name} />
+                )}
                 {item.servingSize && (
                   <p className="mt-0.5 text-sm text-muted">{item.servingSize}</p>
                 )}
@@ -80,6 +100,7 @@ export default function MenuTable({ caption, items }: MenuTableProps) {
                       <VerifiedValue
                         item={item}
                         value={item.price}
+                        note={item.priceNote}
                         format={formatPrice}
                       />
                     </dd>
@@ -90,6 +111,7 @@ export default function MenuTable({ caption, items }: MenuTableProps) {
                       <VerifiedValue
                         item={item}
                         value={item.calories}
+                        note={item.caloriesNote}
                         format={(n) => formatCalories(n, item.caloriesMax)}
                       />
                       <CaloriesBasis item={item} />
@@ -122,13 +144,18 @@ export default function MenuTable({ caption, items }: MenuTableProps) {
               <th scope="col" className="px-4 py-3 text-right font-semibold">
                 Calories
               </th>
+              {showRatings && (
+                <th scope="col" className="px-4 py-3 font-semibold">
+                  Visitor rating
+                </th>
+              )}
             </tr>
           </thead>
           <tbody>
             {items.length === 0 ? (
               <tr>
                 <td
-                  colSpan={3}
+                  colSpan={showRatings ? 4 : 3}
                   className="border-t border-line px-4 py-6 text-center text-muted"
                 >
                   No menu items have been added yet.
@@ -157,6 +184,7 @@ export default function MenuTable({ caption, items }: MenuTableProps) {
                     <VerifiedValue
                       item={item}
                       value={item.price}
+                      note={item.priceNote}
                       format={formatPrice}
                     />
                   </td>
@@ -164,10 +192,16 @@ export default function MenuTable({ caption, items }: MenuTableProps) {
                     <VerifiedValue
                       item={item}
                       value={item.calories}
+                      note={item.caloriesNote}
                       format={(n) => formatCalories(n, item.caloriesMax)}
                     />
                     <CaloriesBasis item={item} />
                   </td>
+                  {showRatings && (
+                    <td className="min-w-44 px-4 py-3">
+                      {item.productId && <RatingSummary align="start" productId={item.productId} itemName={item.name} />}
+                    </td>
+                  )}
                 </tr>
               ))
             )}

@@ -21,17 +21,36 @@ export const siteConfig = {
   description:
     "An independent guide to the Olive Garden menu for US diners, with prices and calorie information as they are verified. Not affiliated with Olive Garden.",
   url: getSiteUrl(),
+  /** Content language (html lang, Open Graph locale, structured data). */
+  language: "en-US",
+  locale: "en_US",
+  /**
+   * Search-engine indexing switch. OFF unless SITE_INDEXING=true is set
+   * (only in Vercel Production, at launch, with owner approval). While off,
+   * every page is noindex and the sitemap is empty (docs/LAUNCH_CHECKLIST.md).
+   */
+  indexingEnabled: process.env.SITE_INDEXING === "true",
 
   disclaimer:
     "This is an independent informational website. It is not the official Olive Garden website and is not affiliated with, endorsed by, or sponsored by Olive Garden or Darden Restaurants, Inc. Olive Garden is a trademark of its respective owner.",
   priceNotice:
     "Prices vary by location and can change at any time. Always confirm with your local restaurant.",
 
-  // Only link to sections/pages that exist. Add "Blog" and "About" here
-  // once those routes are built (see docs/DEVELOPMENT_ROADMAP.md).
+  // Only link to sections/pages that exist. The full menu lives on the
+  // homepage; /menu is noindex and not linked (redirect reviewed before launch).
+  // Add "About", "Contact", and legal pages here once those routes exist.
   nav: [
-    { label: "Home", href: "/" },
-    { label: "Menu", href: "/menu" },
-    { label: "About This Guide", href: "/#about-this-guide" },
+    { label: "Full Menu", href: "/#full-menu" },
+    { label: "Popular", href: "/#popular-menu-items" },
+    { label: "Deals", href: "/#lunch-specials-deals" },
+    { label: "Hours", href: "/#hours" },
+    { label: "FAQ", href: "/#faq" },
+  ] satisfies NavLink[],
+
+  // Official Olive Garden pages listed in the footer (checked 2026-11-12).
+  officialLinks: [
+    { label: "Official Olive Garden menu", href: "https://www.olivegarden.com/menu" },
+    { label: "Nutrition information (PDF)", href: "https://media.olivegarden.com/en_us/pdf/olive_garden_nutrition.pdf" },
+    { label: "Find a restaurant", href: "https://www.olivegarden.com/locations/location-search" },
   ] satisfies NavLink[],
 } as const;

@@ -18,6 +18,9 @@ Planning docs (read the relevant one before working on a feature):
 - `docs/MENU_RESEARCH_PLAN.md`: how prices/calories are researched and verified
 - `docs/INTERNAL_LINKING.md`: navigation, breadcrumbs, contextual links
 - `docs/IMAGE_REQUIREMENTS.md`: image rules, folders, naming, specs
+- `docs/IMAGE_MANIFEST.md`: every image file, its folder, menu item, and alt text
+- `research/`: research notes per category (`appetizers/`) and the homepage
+  competitor research (`homepage/`, original observations kept unchanged)
 
 ## Owner
 
@@ -66,7 +69,18 @@ TypeScript, Tailwind CSS v4 (config lives in `app/globals.css`, there is no
 - Use design tokens from `globals.css` (e.g. `text-brand-dark`), not raw hex.
 - `#a1b626` (`brand`) is **never** used for text on white (contrast 2.27:1).
   Use `#556b12` (`brand-dark`) for links and text accents.
-- Keep it simple: no CMS, no database, no auth, no enterprise patterns.
+- Keep it simple: no CMS, no auth, no enterprise patterns. No database,
+  **except** persistent storage for the approved rating system: **Supabase**
+  (Free Plan, connected in Lesson 7.4.2). Client: `lib/supabase.ts`
+  (publishable key only, RLS always on); setup and rules:
+  `docs/SUPABASE_SETUP.md`. Never print or commit keys.
+  Rating schema: `supabase/migrations/001_create_ratings.sql`, design and
+  security rules: `docs/RATING_SYSTEM.md` (writes only via server API +
+  secret key; browsers read totals only).
+  Rating UI: `components/rating/` (one `/api/ratings` request per page,
+  cached ~1 min on the server). Votes: `POST /api/ratings/vote` only
+  (same-origin, signed HttpOnly visitor cookie, secret key server-only in
+  `lib/supabase-admin.ts`). Never test votes on the real database.
 - Do not change files unrelated to the current task.
 - Never commit secrets. Use `.env.local` (already git-ignored) if ever needed.
 - Commit only when the owner asks.
@@ -79,52 +93,113 @@ where it is needed. Never fill gaps with invented data.
 
 - Site name: **Olive Garden Menu & Prices**, defined only in `lib/site.ts`
   (branding may change later). Always paired with non-affiliation disclaimers.
-- Domain: a **new** domain, name not decided. **Never hardcode a domain.**
-  Use `NEXT_PUBLIC_SITE_URL` with fallback `http://localhost:3000`. Do not
-  migrate, redirect, or change any existing website of the owner.
+- Domain (owner decision 2026-11-13): **https://olivegardenmenuprices.us**.
+  Still **never hardcode it** in code: it is set as `NEXT_PUBLIC_SITE_URL` in
+  Vercel Production (fallback `http://localhost:3000`). Do not migrate,
+  redirect, or change any existing website of the owner.
 - Menu categories/items: defined by `docs/MENU_INVENTORY.md`. All 17
   categories, all 210 entries, and every category-item association are
   preserved (imported in `content/menu/offerings/`). Never delete an entry.
   Never merge possible aliases (A1–A17, `content/menu/aliases.ts`) without
   owner confirmation. Keep `inventoryName` exactly as in the inventory.
+- **Research final (2026-11-12, owner Decisions 1-4):** `research/menu/`
+  covers the 210 inventory entries plus **21 new official items** (231
+  offerings, 146 products), 23 Create Your Own Pasta options, alias
+  decisions (`ALIAS_MAPPING.md`: shared data/photos only, nothing merged),
+  and a full nutrition-PDF cross-check. **Integrated into `content/menu/`
+  in Lesson 7.2 (2026-11-12)**: offerings, products, Create Your Own Pasta
+  options (`create-your-own-pasta.ts`), alias decisions. The offering files
+  were generated from `menu-research.json`; edit values in `content/menu/`
+  from now on and record the source in `research/`.
 - **Approved URLs:** 17 dedicated category pages at the **root** with the
   exact slugs in `docs/CONTENT_ARCHITECTURE.md` §2 (e.g. `/lunch-menu`,
   `/kids-meal`). Not under `/menu/`. Never merge or rename them.
-- `/menu` = main menu hub (Option B). Homepage = intro + featured
-  categories + link to `/menu`; it must not duplicate the hub.
-- Prices: one benchmark restaurant in **Orlando, FL** (exact restaurant
-  needs owner approval before any price is entered). Prices/calories only
-  from verified sources per `docs/MENU_RESEARCH_PLAN.md`.
+- **Final decisions of 2026-11-12** (details in the docs named below):
+  1. **Architecture:** the homepage `/` is the **primary indexable full-menu
+     page**: all 17 categories and every approved item (image, name, price,
+     calories, rating, short description, size/portion options). Spec:
+     `docs/MENU_PAGE_OUTLINES.md` "Homepage". The 17 category pages stay and
+     add detailed category-specific content; each is indexed when complete
+     and approved. One shared structured data source (`content/menu/`).
+     `/menu` is **not** a full-menu page: since 2026-11-13 it **permanently
+     redirects to `/`** (`next.config.ts`, HTTP 308). Internal links use
+     `menuPath` = `/#full-menu`, never `/menu`.
+  2. **Images:** homepage = a food image for every item; category pages =
+     Option B (complete table + 3-5 selected images, reusing homepage images).
+     The owner provides all food images. Never generate or download them.
+     Every file is listed in `docs/IMAGE_MANIFEST.md`. Owner-supplied
+     AI-generated images are allowed (2026-11-13): mark them
+     `aiGenerated: true` and list them in the manifest. No "AI image" label
+     on cards (owner decision); the homepage Sources section has a general
+     note that some photos are AI-generated illustrations.
+  3. **Popular Menu Items** (owner-chosen, fixed): Chicken Alfredo, Tour of
+     Italy, Lasagna Classico, Chicken Parmigiana, Fettuccine Alfredo,
+     Breadsticks. Shown with image, price, calories, and genuine visitor
+     rating from the shared data. No invented popularity or sales claims.
+  4. **Social media:** footer links only with URLs the owner supplies.
+  5. **Prices/calories:** reference restaurant **Olive Garden Orlando -
+     Millenia Mall** (4101 Conroy Road, Orlando, FL 32839), **online pickup**
+     prices. Source priority and labels in `docs/MENU_RESEARCH_PLAN.md`
+     (official → official nutrition → calculated → labeled third-party estimate).
+  6. **Ratings:** genuine 1-5 star visitor ratings (average + vote count,
+     "Not rated yet" when none), shared by homepage and category pages, with
+     basic duplicate/spam protection and persistent storage. Built in its own
+     lesson; architecture and database decided then.
+- Privacy Policy, author information, and final branding: later lessons
+  (owner, 2026-11-13). Homepage performance: keep the current approach
+  (option A, `docs/PERFORMANCE_AUDIT.md`).
+- **Lesson 8 (next phase):** SEO-optimized dedicated category pages. Each
+  page follows an owner-approved primary keyword, semantic keyword cluster,
+  search intent, competitor analysis, and outline. Do **not** write or build
+  a category page before its SEO instructions are provided.
 - Author, contact email: pending. Do not invent names, credentials, or emails.
-- Logo/images: pending. Use placeholders clearly labeled as placeholders.
+- Logo: pending. Food images: supplied by the owner over time; until a
+  photo exists, use a placeholder clearly labeled as a placeholder.
 - Blog topics/outlines: provided in the blog phase.
 - GitHub: set up in the deployment phase; default branch `main`.
 - Analytics and ads: **do not implement** until the final integration phase.
 
 ## Content and accuracy rules
 
-- **Never invent prices, calories, or nutrition facts.** Unknown values are
-  `null`/empty with `status: "needs-verification"` and display "Not verified yet".
-  A value is stored only with `status: "verified"`, a source, a date, and
-  (for prices) an approved reference location.
+- **Never invent prices, calories, or nutrition facts.** Every displayed
+  value has a source, a date, and (for prices) the approved reference
+  location. Each value has one basis, always visible on the page:
+  **official** (verified) · **calculated** (from official component values,
+  labeled, parts shown) · **estimated** (credible third-party source, labeled
+  "Estimated", cross-checked where possible). Never overwrite an official
+  value with an estimate; never present an estimate or calculation as
+  official. Full rules: `docs/MENU_RESEARCH_PLAN.md`.
+- Goal: no empty price or calorie cells. If no credible value exists, the
+  cell shows a meaningful note (e.g. "Not on the online menu") instead of a
+  number. "Not verified yet" is used only while research is unfinished.
 - Never invent menu descriptions; `description` stays `null` until written
-  from verified official information.
+  (in our own words) from verified official information.
+- Hours, holiday hours, lunch specials, and deals appear only when verified
+  from an official source with a date; otherwise the section says so.
 - Every price table shows the "prices last checked" date and a note that
   prices vary by location.
 - Clearly separate verified data from placeholders in code and on the page.
 - Never present the site as official. Footer disclaimer on every page:
   not affiliated with Olive Garden or Darden Restaurants, Inc.
 - No Olive Garden logo, official photos, or brand styling.
-- No fake reviews, ratings, or testimonials.
+- Ratings come only from real visitor votes. Never seed, generate, or
+  import ratings or vote counts. No reviews or testimonials.
+- Menu names: keep the owner's `inventoryName`; record official name
+  differences separately. Never remove or merge items without permission.
 - Write helpful, natural content. No keyword stuffing.
 
 ## SEO rules
 
 - One search intent per URL. Before creating a page, check that no existing
   page targets the same intent. No per-item pages, no separate calorie pages.
-- `/menu` is the main menu hub, **noindex** until its final verified content
-  is approved; then it is indexed. Homepage and `/menu` must not target the
-  same intent (see `docs/SEO_ARCHITECTURE.md`).
+- The homepage is the only indexable full-menu page ("Olive Garden menu
+  with prices and calories"). `/menu` permanently redirects to `/`
+  (owner decision 2026-11-13, see `docs/SEO_ARCHITECTURE.md`).
+- Homepage headings: one H1 ("Olive Garden Menu with Prices & Calories
+  2026"), one H2 per category (17), seven supporting H2s; H3 only when needed.
+  Section order: `docs/MENU_PAGE_OUTLINES.md` "Homepage".
+- Homepage and category pages share data, not paragraphs: category pages
+  add expanded, category-specific content instead of repeating the homepage.
 - Overlapping category pages (e.g. Amazing Alfredos vs. Classic Entrees)
   each need their own intent and angle; never copy paragraphs between pages.
 - Any placeholder page must be `robots: { index: false }` until approved
@@ -136,17 +211,23 @@ where it is needed. Never fill gaps with invented data.
 - Category breadcrumbs: `Home > Menu > {Category}`.
 - `/design-preview` is a dev-only component preview (404 in production).
   Its sample data must never be imported into public pages.
-- Every page: unique `title`, `description`, self-canonical, Open Graph.
+- Every page: unique `title`, `description`, self-canonical, Open Graph,
+  Twitter card: build it with `pageMetadata()` from `lib/metadata.ts`.
+- **Indexing is OFF until launch:** `SITE_INDEXING=true` (Vercel Production,
+  owner approval) switches it on; never set it locally or in previews.
 - One `h1` per page; logical heading order.
 - JSON-LD via the shared `JsonLd` component, escaped with
-  `.replace(/</g, "\\u003c")`. Allowed: `WebSite`, `Organization` (this blog),
+  `.replace(/</g, "\\u003c")`. Allowed: `WebSite`, `Organization` (this blog), `WebPage`,
   `BreadcrumbList`, `BlogPosting`, `FAQPage` (only for visible FAQs).
-  Not allowed: `Restaurant`, `Menu`, `Product`, `Offer`, `Review`, `AggregateRating`.
+  Not allowed: `Restaurant`, `Menu`, `Product`, `Offer`, `Review`, `AggregateRating`
+  (visitor ratings are shown on the page, but not as structured data).
 - Sitemap `lastModified` uses real `updatedAt` dates, not `new Date()`.
 
 ## Accessibility and performance
 
 - Target WCAG 2.2 AA; mobile-first; touch targets at least 44px.
 - Semantic HTML, real `<table>` with `<th scope>` for prices, visible focus styles.
-- All pages statically generated. `next/image` for images; `priority` only
-  for the main above-the-fold image.
+- All pages statically generated (rating data may load separately, without
+  slowing the page). `next/image` for images; `priority` only for the main
+  above-the-fold image. The full-menu homepage must stay fast: lazy-load
+  images below the fold.

@@ -1,112 +1,183 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { siteConfig } from "@/lib/site";
+import { pageMetadata } from "@/lib/metadata";
 import {
   getAllMenuCategories,
-  getFeaturedMenuCategories,
-  getPublishedArticles,
-  menuPath,
-  toArticleCard,
+  getCreateYourOwnPasta,
+  getMenuCategoriesWithPages,
+  getMenuCheckDates,
+  getOffering,
+  getOfferingsForCategory,
+  getReferenceLocation,
 } from "@/lib/content";
+import { referenceLocations } from "@/content/menu/locations";
+import {
+  categoryNotes,
+  heroImage,
+  heroIntro,
+  lowerCalorieOfferingIds,
+  popularOfferingIds,
+} from "@/content/home/homepage";
+import type { MenuOffering } from "@/lib/types";
 import Container from "@/components/layout/Container";
-import Hero from "@/components/home/Hero";
-import CategoryCard from "@/components/menu/CategoryCard";
-import ArticleCard from "@/components/content/ArticleCard";
-import SectionHeading from "@/components/ui/SectionHeading";
+import Hero, { PricingInfoBar } from "@/components/home/Hero";
+import CategoryNav from "@/components/home/CategoryNav";
+import MenuSearch from "@/components/home/MenuSearch";
+import BackToTop from "@/components/home/BackToTop";
+import MenuCategorySection, { cardGridClass } from "@/components/home/MenuCategorySection";
+import CreateYourOwnPastaTable from "@/components/home/CreateYourOwnPastaTable";
+import MenuItemCard from "@/components/menu/MenuItemCard";
+import JsonLd from "@/components/seo/JsonLd";
+import {
+  DealsSection,
+  FaqSection,
+  HolidaySection,
+  HoursSection,
+  ImportantLinks,
+  NutritionSection,
+  OrderOnlineSection,
+  PopularSection,
+  SourcesList,
+} from "@/components/home/SupportingSections";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/" },
-};
+const H1 = "Olive Garden Menu with Prices & Calories 2026";
+const TITLE = "Olive Garden Menu with Prices & Calories (2026)";
+const DESCRIPTION =
+  "Explore the complete Olive Garden menu with updated 2026 prices, calories, lunch specials, family meals, desserts, drinks, and catering options.";
 
-const guidePoints = [
-  {
-    title: "We check before we publish",
-    text: "Prices and calories appear only after we check them against a real source, such as an official menu or official nutrition information. Until then, you will see “Not verified yet.”",
-  },
-  {
-    title: "Prices vary by location",
-    text: `${siteConfig.priceNotice} Each price table will show where and when prices were checked.`,
-  },
-  {
-    title: "Independent, not official",
-    text: "This website is not the official Olive Garden website and is not affiliated with Olive Garden or Darden Restaurants, Inc.",
-  },
-];
+// The homepage is the primary (and only) indexable full-menu page.
+export const metadata: Metadata = pageMetadata({ title: TITLE, description: DESCRIPTION, path: "/", absoluteTitle: true });
 
+/** Looks up offerings by id; a missing id is a data error, so it fails the build. */
+function offeringsById(ids: readonly string[]): MenuOffering[] {
+  return ids.map((id) => {
+    const offering = getOffering(id);
+    if (!offering) throw new Error(`Homepage: unknown offering "${id}".`);
+    return offering;
+  });
+}
+
+/**
+ * Homepage = the complete Olive Garden menu (owner-approved spec,
+ * docs/MENU_PAGE_OUTLINES.md "Homepage"). Everything is server-rendered;
+ * only the category bar, search, size selectors, and back-to-top link
+ * run in the browser.
+ */
 export default function Home() {
-  // The homepage previews a few categories; the full list lives on /menu.
-  const featuredCategories = getFeaturedMenuCategories();
-  const totalCategories = getAllMenuCategories().length;
-  // Only guides that already exist are shown (none yet, so the section is hidden).
-  const guides = getPublishedArticles().slice(0, 3).map(toArticleCard);
+  const categories = getAllMenuCategories();
+  const cyop = getCreateYourOwnPasta();
+  const location = getReferenceLocation(referenceLocations[0].id) ?? referenceLocations[0];
+  const sections = categories.map((category) => ({
+    category,
+    offerings: getOfferingsForCategory(category.id),
+  }));
+  const searchableTotal =
+    sections.reduce((sum, s) => sum + s.offerings.length, 0) + cyop.options.length + 1;
+
+  // WebSite + Organization (this independent publisher, NOT the restaurant)
+  // + WebPage. No Menu/MenuItem/Product/AggregateRating: docs/SEO_ARCHITECTURE.md §3.
+  const checkDates = getMenuCheckDates();
+  const home = `${siteConfig.url}/`;
+  const homeJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${home}#website`,
+        url: home,
+        name: siteConfig.name,
+        description: siteConfig.description,
+        inLanguage: siteConfig.language,
+        publisher: { "@id": `${home}#organization` },
+      },
+      {
+        "@type": "Organization",
+        "@id": `${home}#organization`,
+        name: siteConfig.name,
+        url: home,
+        description:
+          "Independent publisher of an informational Olive Garden menu and price guide. Not affiliated with Olive Garden or Darden Restaurants, Inc.",
+      },
+      {
+        "@type": "WebPage",
+        "@id": `${home}#webpage`,
+        url: home,
+        name: TITLE,
+        headline: H1,
+        description: DESCRIPTION,
+        inLanguage: siteConfig.language,
+        isPartOf: { "@id": `${home}#website` },
+        publisher: { "@id": `${home}#organization` },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: `${siteConfig.url}${heroImage.src}`,
+          width: heroImage.width,
+          height: heroImage.height,
+        },
+        ...(checkDates ? { dateModified: checkDates.last } : {}),
+      },
+    ],
+  };
 
   return (
     <>
-      <Hero categoryCount={totalCategories} />
+      {/* 2-3. Hero (H1, short intro, food photo) and the pricing/verification facts */}
+      <Hero title={H1} intro={heroIntro} image={heroImage} />
+      <PricingInfoBar location={location} checked={checkDates} />
 
-      <section aria-labelledby="menu-categories" className="py-12 md:py-16">
+      {/* 4-6. Category navigation, search, and all 17 menu sections */}
+      <div id="full-menu" className="scroll-mt-16">
         <Container>
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <SectionHeading
-              id="menu-categories"
-              title="Start With a Menu Category"
-              intro={`A few of the categories covered in this guide. The full menu page lists all ${totalCategories}.`}
-            />
-            <Link
-              href={menuPath}
-              className="inline-flex min-h-12 shrink-0 items-center justify-center self-start rounded-lg border border-brand-dark bg-white px-5 font-semibold text-brand-dark transition-colors hover:bg-brand-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-dark md:self-auto"
-            >
-              See All {totalCategories} Categories
-            </Link>
+          <CategoryNav categories={categories.map((c) => ({ id: c.slug, label: c.name }))} />
+          <div className="py-6">
+            <MenuSearch containerId="menu-sections" total={searchableTotal} />
           </div>
-
-          <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {featuredCategories.map((category) => (
-              <li key={category.slug} className="flex">
-                <CategoryCard category={category} />
-              </li>
-            ))}
-          </ul>
+          <div id="menu-sections" className="space-y-10 pb-12">
+            {sections.map(({ category, offerings }) =>
+              category.id === "create-your-own-pasta" ? (
+                <MenuCategorySection
+                  key={category.id}
+                  category={category}
+                  itemCount={cyop.options.length}
+                  itemWord="build options"
+                  note={categoryNotes[category.id]}
+                >
+                  <CreateYourOwnPastaTable data={cyop} />
+                </MenuCategorySection>
+              ) : (
+                <MenuCategorySection
+                  key={category.id}
+                  category={category}
+                  itemCount={offerings.length}
+                  note={categoryNotes[category.id]}
+                >
+                  <ul className={cardGridClass}>
+                    {offerings.map((offering) => (
+                      <MenuItemCard key={offering.id} offering={offering} searchable />
+                    ))}
+                  </ul>
+                </MenuCategorySection>
+              ),
+            )}
+          </div>
         </Container>
-      </section>
+      </div>
 
-      {guides.length > 0 && (
-        <section aria-labelledby="helpful-guides" className="border-t border-line py-12 md:py-16">
-          <Container>
-            <SectionHeading id="helpful-guides" title="Helpful Guides" />
-            <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {guides.map((guide) => (
-                <li key={guide.href}>
-                  <ArticleCard article={guide} />
-                </li>
-              ))}
-            </ul>
-          </Container>
-        </section>
-      )}
+      {/* 7-13. Supporting sections (seven H2s) */}
+      <PopularSection offerings={offeringsById(popularOfferingIds)} />
+      <DealsSection />
+      <HoursSection location={location} />
+      <HolidaySection />
+      <NutritionSection lowerCalorie={offeringsById(lowerCalorieOfferingIds)} />
+      <OrderOnlineSection />
+      <FaqSection />
 
-      <section
-        aria-labelledby="about-this-guide"
-        className="border-t border-line bg-brand-tint py-12 md:py-16"
-      >
-        <Container>
-          <SectionHeading
-            id="about-this-guide"
-            title="About This Guide"
-            intro="We are an independent website that helps diners in the United States plan their meal before they go."
-          />
+      {/* 14-15. Important links and sources (the footer adds the disclaimer) */}
+      <ImportantLinks categoryPages={getMenuCategoriesWithPages().map((c) => ({ slug: c.slug, name: c.name }))} />
+      <SourcesList />
 
-          <ul className="mt-8 grid gap-6 md:grid-cols-3">
-            {guidePoints.map((point) => (
-              <li key={point.title} className="rounded-lg border border-line bg-white p-6">
-                <div aria-hidden="true" className="h-1.5 w-10 rounded-full bg-brand" />
-                <h3 className="mt-4 font-display text-xl font-bold text-ink">{point.title}</h3>
-                <p className="mt-2 leading-7 text-muted">{point.text}</p>
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </section>
+      <BackToTop />
+      <JsonLd data={homeJsonLd} />
     </>
   );
 }

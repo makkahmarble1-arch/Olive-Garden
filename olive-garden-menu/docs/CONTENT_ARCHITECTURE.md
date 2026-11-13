@@ -6,6 +6,14 @@
 17 categories, 210 category-item placements). The inventory is **not** verified
 2026 menu data. No prices, calories, or availability are confirmed.
 
+> **Research update (2026-11-12, owner Decisions 1-4):** `research/menu/`
+> holds verified data for all 17 categories: the 210 inventory entries plus
+> 21 new official items (owner-approved; 231 offerings, 146 products), 23
+> Create Your Own Pasta option records, and decisions for alias cases A1-A17
+> (`research/menu/ALIAS_MAPPING.md`). The counts and code described below are
+> the current `content/menu/` data (210 / 130); they change only when the
+> owner approves integrating the research.
+
 Related docs: `MENU_PAGE_OUTLINES.md`, `MENU_RESEARCH_PLAN.md`,
 `INTERNAL_LINKING.md`, `IMAGE_REQUIREMENTS.md`, `SEO_ARCHITECTURE.md`.
 
@@ -21,17 +29,28 @@ Related docs: `MENU_PAGE_OUTLINES.md`, `MENU_RESEARCH_PLAN.md`,
    page. No category is merged into another or turned into a section.
 2. **Root-level URLs** with the exact approved slugs (§2). Category pages are
    **not** placed under `/menu/`.
-3. **`/menu` is the main menu hub** (Option B). It lists all 17 categories and
-   becomes indexable once its final, verified content is ready.
+3. **`/menu` is not a second full-menu page** (final owner decision,
+   2026-11-12). It keeps its category cards, stays noindex during
+   development, and a redirect `/menu` → `/` is reviewed before launch.
+   *(Earlier plan, superseded: "/menu is the main hub and becomes indexable".)*
 4. **Every inventory entry is preserved** as its own data record (an
    "offering"), linked to a canonical product. Nothing is deleted or merged.
 5. **Possible aliases stay unresolved** (17 cases, §7) until the owner
    approves them with evidence.
 6. **New domain.** The site launches on a new domain (not decided yet). No
    existing website is migrated, redirected, or changed.
-7. **Price benchmark market: Orlando, Florida.** The exact restaurant is
-   selected and approved during the research phase (`MENU_RESEARCH_PLAN.md`).
+7. **Price benchmark: Olive Garden Orlando - Millenia Mall**, 4101 Conroy
+   Road, Orlando, FL 32839 (approved 2026-11-11), **online pickup** prices
+   (`MENU_RESEARCH_PLAN.md` §3).
 8. **No individual pages per menu item** (unchanged).
+9. **Homepage = primary indexable full-menu page** (owner decision,
+   2026-11-12): all 17 categories and every offering, using one shared
+   structured data source with the category pages
+   (`MENU_PAGE_OUTLINES.md` "Homepage").
+10. **Category pages** give detailed category information (table,
+    nutrition, FAQs, links, 3-5 images) and are indexed when complete.
+11. **Visitor ratings** (owner decision, 2026-11-12) are one shared data
+    set for homepage and category pages; designed in the rating lesson.
 
 ---
 
@@ -78,10 +97,11 @@ which returns `/{slug}`.
 
 | URL | Status | Indexing |
 |---|---|---|
-| `/` | Exists | index |
-| `/menu` | Exists (main hub, placeholder content) | noindex, follow until final verified content |
+| `/` | Exists (Lesson 5 version; to be rebuilt as the full-menu homepage) | index |
+| `/menu` | Exists (category cards) | noindex, follow; redirect to `/` reviewed before launch |
 | `/design-preview`, `/design-preview/article` | Exist (dev only, 404 in production) | noindex |
-| 17 category URLs (§2) | Recorded, **not built** | noindex until verified content is approved |
+| `/appetizers` | Built, published 2026-11-11 | index |
+| Other 16 category URLs (§2) | Recorded, not built yet | noindex ("preview") until complete and approved |
 
 ---
 
@@ -199,7 +219,9 @@ lib/
 | Display name | `displayName` (capitalization/spelling corrected) |
 | Category | `categoryId` (+ `inventoryOrder` inside the category) |
 | Description | `description` (null until written from verified facts) |
-| Price | `prices: PriceObservation[]` (empty = "Not verified yet") |
+| Price | `prices: PriceObservation[]` (empty = "Not verified yet" while research is unfinished) |
+| Value basis (planned, Lesson 7) | official / calculated / estimated per value, plus a display note when no credible value exists (`MENU_RESEARCH_PLAN.md` §1). Needs a data model + validation update before estimated values are entered |
+| Rating (planned) | Visitor ratings, stored outside `content/menu/` (rating lesson) |
 | Reference location | `prices[].locationId` → `content/menu/locations.ts` |
 | Source URL | `prices[].sourceUrl` (or `sourceNote` for in-store evidence), `caloriesSourceUrl` |
 | Verification date | `prices[].checkedAt`, `verifiedAt` |
@@ -320,7 +342,8 @@ the offerings to one `productId`. Never delete an offering.
 - The site launches on a **new domain** (not decided). It does not replace
   any existing website: no migration, no redirects, no changes to the
   owner's other sites. The domain is never hardcoded (`NEXT_PUBLIC_SITE_URL`).
-- Current routes (`/`, `/menu`, dev-only `/design-preview`) are kept.
+- Current routes (`/`, `/menu`, dev-only `/design-preview`) are kept;
+  `/menu` → `/` redirect reviewed before launch (owner decision 2026-11-12).
 - Once a URL is published and indexed, it is never renamed without a 301
   redirect plan.
 
@@ -328,9 +351,16 @@ the offerings to one `productId`. Never delete an offering.
 
 ## 10. Still open (owner)
 
-1. Alias cases A1–A17 and the open questions in §7.
-2. Approve the exact Orlando restaurant (proposed during research).
-3. Which category page to build and research first (Lesson 5).
-4. Homepage featured categories (currently: Family-Style Meals, Appetizers,
-   Classic Entrees, Soups/Salad/Breadsticks, Desserts, Kids Meal; change with
-   `featuredOnHomepage` in `categories.ts`).
+1. ~~Alias cases A1–A17 and the open questions in §7~~ (decided 2026-11-12:
+   `research/menu/ALIAS_MAPPING.md`. A4 "Large Salad" kept separate: no
+   official listing to match. Cheese Grater is a product for sale; Family-Style
+   Lasagna Bundle is officially listed in Classic Entrées; Buy One Take One is
+   now the official "$6 Take Home Entrées" offer, 3 of 7 items eligible).
+   Applying the decisions to `content/menu/aliases.ts` waits for integration approval.
+2. ~~Approve the exact Orlando restaurant~~ (done: Orlando - Millenia Mall, 2026-11-11).
+3. ~~Which category page first~~ (done: Appetizers, published 2026-11-11).
+4. ~~Homepage featured categories~~ (superseded 2026-11-12: the homepage
+   shows all 17 categories; `featuredOnHomepage` is no longer the homepage
+   rule and may be removed or reused when the homepage is rebuilt).
+5. ~~Future role of `/menu`~~ (decided 2026-11-12: noindex now, redirect
+   to `/` reviewed before launch).

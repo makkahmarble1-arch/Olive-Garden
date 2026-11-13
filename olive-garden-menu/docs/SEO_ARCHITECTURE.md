@@ -6,8 +6,8 @@ All URLs are lowercase, hyphenated, without trailing slashes, and have one
 clear search intent each.
 
 ```
-/                                   Homepage: independent guide intro, featured categories, guides
-/menu                               Main menu hub: all 17 categories (noindex until final content)
+/                                   Homepage: primary indexable full-menu page (17 categories, all items) + planning info
+/menu                               Permanent redirect (308) to / (owner decision 2026-11-13); no page
 /[category]                         17 category pages at the root, e.g. /desserts, /lunch-menu
 /blog                               Blog index
 /blog/[slug]                        Blog articles (guides)
@@ -38,16 +38,23 @@ clear search intent each.
 
 ### Rules to avoid duplicate intent
 
-- **Homepage vs. `/menu` (owner decision: Option B).**
-  - Homepage = independent website introduction, featured categories,
-    important resources and guides, clear link to the full menu.
-    It does **not** list all categories or repeat the hub content.
-  - `/menu` = comprehensive menu overview: all 17 categories, grouped, with
-    short category descriptions and (later) a verified price summary.
-  - Different titles, H1s, and descriptions. Only `/menu` targets the general
-    "Olive Garden menu" topic.
-  - `/menu` is **noindex, follow** until its final verified content is ready
-    and approved; then it becomes indexable.
+- **Homepage vs. `/menu` (final owner decision, 2026-11-12).**
+  - Homepage = the **primary indexable** full-menu page: all 17 categories,
+    every approved item, plus pricing/verification info and the 7 supporting
+    sections (spec: `MENU_PAGE_OUTLINES.md` "Homepage"). It targets
+    "Olive Garden menu with prices and calories".
+  - `/menu` is **never** a second full-menu page. Owner decision
+    2026-11-13: `/menu` **permanently redirects to `/`** (`next.config.ts`
+    `redirects()`, HTTP 308, query strings kept). The old hub page was
+    removed; internal links point to `/#full-menu` (`menuPath`) or
+    `/#{category}` so they never pass through the redirect.
+  - *Superseded:* "the homepage does not list all categories; only `/menu`
+    targets the general menu topic" (Lesson 5) and "`/menu` is indexed once
+    its final content is ready".
+- **Homepage vs. category pages.** Both read the same structured data.
+  The homepage shows every item briefly; each category page targets its own
+  category intent with expanded, category-specific content (outlines in
+  `MENU_PAGE_OUTLINES.md`). Paragraphs are never copied between them.
 - **Overlapping categories** (Amazing Alfredos ⊂ Classic Entrees, Lighter
   Portions ⊂ Lunch Menu, Drink Menu ⊂ Non-Alcoholic Beverages, Family-Style
   ≈ Catering …) stay separate pages, but each has its own intent and angle
@@ -93,7 +100,7 @@ Use one reusable `JsonLd` component.
 
 | Page | Schema types |
 |---|---|
-| Homepage | `WebSite`, `Organization` (the blog itself, not Olive Garden) |
+| Homepage | `WebSite`, `Organization` (the blog itself, not Olive Garden), `WebPage` (name, description, `dateModified` = last real price check, primary image) in one `@graph`; `FAQPage` only for the visible FAQ. No `Menu`/`MenuItem`/`Product`/`AggregateRating` even though the full menu and visitor ratings are shown |
 | `/menu` hub | `BreadcrumbList` |
 | Category pages | `BreadcrumbList` (`Home > Menu > Category`); `FAQPage` only if a visible FAQ exists |
 | Blog articles | `BlogPosting` (headline, dates, author, image), `BreadcrumbList`, `FAQPage` if visible FAQ |
@@ -101,7 +108,8 @@ Use one reusable `JsonLd` component.
 
 **Do not use:** `Restaurant`, `Menu`/`MenuItem`, `Product`, `Offer`,
 `AggregateRating`, or `Review`. These would misrepresent the site as the
-restaurant or a seller. FAQ schema must match visible on-page FAQ text exactly.
+restaurant or a seller. Visitor ratings (owner decision 6) are shown on the
+page only, never as rating markup. FAQ schema must match visible on-page FAQ text exactly.
 (Note: Google shows FAQ rich results only for limited sites, but the markup is
 still valid and harmless when it matches the page.)
 
@@ -109,9 +117,10 @@ still valid and harmless when it matches the page.)
 
 - `app/sitemap.ts` builds the list from the same data files used by the pages
   (published categories + blog posts), so new content is added automatically.
-  Noindex pages (placeholders, `/menu` until approved) are left out.
+  Noindex pages (placeholders, preview category pages, `/menu`) are left out.
 - `lastModified` uses each item's real `updatedAt` date, never `new Date()`.
-- `app/robots.ts` allows all crawlers and points to `/sitemap.xml`.
+- `app/robots.ts` allows all crawlers (except `/api/`) and points to `/sitemap.xml`.
+- **Indexing switch (Lesson 7.5):** `SITE_INDEXING=true` (Vercel Production only, at launch, owner approval) turns indexing on. Without it every page is `noindex, follow`, the sitemap is empty, and robots.txt does not list it. Page metadata comes from `pageMetadata()` in `lib/metadata.ts` (title, description, canonical, Open Graph, Twitter card, robots via `robotsFor()`).
 - Vercel preview deployments should not be indexed (Vercel adds
   `X-Robots-Tag: noindex` on preview URLs by default; verify after deploy).
 
@@ -119,7 +128,9 @@ still valid and harmless when it matches the page.)
 
 - Header: Home, Menu (`/menu`), Blog, About. Full plan: `INTERNAL_LINKING.md`.
 - Footer: all categories, key guides, legal pages.
-- Homepage links to featured categories, `/menu`, and the latest guides.
+- Homepage links to all 17 category sections (jump links) and to each
+  published category page, important internal pages, and official
+  Olive Garden pages (ordering, nutrition, location) where helpful.
 - `/menu` links to every category page.
 - Each category page links to 2-5 related categories and 1-2 related guides.
 - Each blog article links to the relevant category pages in the body and
@@ -137,7 +148,10 @@ still valid and harmless when it matches the page.)
 - "Prices last checked: {date}" + "Prices vary by location" note.
 - Write for people first: helpful, specific, honest. No filler or stuffing.
 - Show the author/editor name and the "last updated" date on articles (E-E-A-T).
-- Mark unverified data visibly ("Not verified yet") instead of guessing.
+- Show each value's basis visibly ("Calculated", "Estimated", or a note
+  when no credible value exists) instead of guessing; explain the labels
+  near the price notice.
+- Visitor ratings always show the vote count; "Not rated yet" when none.
 
 ## 7. Performance (helps SEO)
 

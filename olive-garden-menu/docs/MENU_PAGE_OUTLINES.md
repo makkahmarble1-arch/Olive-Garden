@@ -1,9 +1,14 @@
 # Menu Page Outlines
 
-**Status:** Approved structure (2026-11-11): homepage, `/menu` hub, and 17
-category pages at root-level URLs (see `CONTENT_ARCHITECTURE.md` §2).
-Pages are **not built yet**. No keyword volumes, rankings, or competitor data
-are used or implied: intents are judged from the topic itself.
+**Status:** Approved structure (2026-11-11), homepage and architecture
+finalized by the owner on 2026-11-12: the homepage is the primary indexable
+full-menu page, the 17 category pages give detailed category information,
+and `/menu` stays noindex (redirect to `/` reviewed before launch).
+Built so far: `/appetizers` (published). The homepage still shows the
+Lesson 5 version until it is rebuilt to the spec below. No keyword volumes
+or rankings are used or implied: intents are judged from the topic itself.
+Competitor pages were reviewed only for structure
+(`research/homepage/competitor-analysis.md`).
 
 ## Rules for every menu page
 
@@ -11,12 +16,14 @@ are used or implied: intents are judged from the topic itself.
   (`CONTENT_ARCHITECTURE.md` §4). Do not copy descriptive paragraphs between
   pages; mention the other page and link to it.
 - **Answer first:** the opening 1-2 sentences say what the page covers and
-  the verified price range (or that prices are not verified yet).
+  the price range.
 - Price/calorie table near the top, with `PriceNotice` (last checked date +
   location, e.g. "Orlando, FL").
-- **Only verified facts.** A heading that depends on an unverified fact
-  (hours, refills, serving counts, promotion terms) is published only after
-  verification; otherwise the section is left out, not guessed.
+- **Menu values** (price, calories) follow `MENU_RESEARCH_PLAN.md` §1-2:
+  official, calculated (labeled), or estimated (labeled), or a meaningful
+  note. **Other facts** (hours, refills, serving counts, promotion terms)
+  are published only from official sources; otherwise the section is left
+  out or says so, never guessed.
 - Item groupings below (e.g. "Chicken" vs. "Seafood") are provisional and
   must match official item descriptions once verified.
 - FAQs only with verified answers, and only if visible on the page
@@ -27,45 +34,120 @@ are used or implied: intents are judged from the topic itself.
   No keyword stuffing, no near-duplicate keyword variations.
 - Every page: unique title + description, self-canonical (`/{slug}`),
   Open Graph, breadcrumbs `Home > Menu > {Category}` (+ BreadcrumbList JSON-LD).
-- Pages stay `noindex` until their content is verified and approved.
+- Category pages stay `noindex` ("preview") until their content is
+  complete and the owner approves; then they are indexed ("published").
+- **Category page images (Option B):** complete menu table without images,
+  plus a "Popular {Category}" section with 3-5 selected owner photos,
+  reusing the homepage item images where possible (`IMAGE_MANIFEST.md`).
+- Each category page: detailed category-specific information, the menu
+  table, nutrition information, useful FAQs, relevant internal links, and
+  visitor ratings from the shared rating data (once the rating system exists).
 - Global footer disclaimer: not affiliated with Olive Garden.
 
 ---
 
-## Homepage `/` (exists)
+## Homepage `/` (final owner-approved spec, 2026-11-12)
 
-- **Purpose:** introduce this independent guide and help people get started.
-- **Intent:** navigational: "where do I start, what does this site offer".
-  It does **not** try to be the full menu (that is `/menu`).
-- **Title:** brand-led, e.g. "Olive Garden Menu & Prices: Independent Guide"
-  (final wording when content is approved)
-- **H1:** Olive Garden Menu & Prices (existing)
-- **Sections (implemented, Lesson 5):**
-  1. Hero: independence badge, H1, short intro, primary button
-     "View the Full Menu" → `/menu`, "Inside this guide" panel (CSS only)
-  2. **Start With a Menu Category** (H2): 6 featured cards + "See All 17 Categories" → `/menu`
-  3. **Helpful Guides** (H2): shown automatically only when published articles exist
-  4. **About This Guide** (H2, `#about-this-guide`): 3 short points (H3)
-  5. Short general FAQ (only verified answers), later
-- **Not on the homepage:** the full 17-category list, price tables, or the
-  `/menu` hub text.
+> **Supersedes** the Lesson 5 homepage (intro + 6 featured categories +
+> link to `/menu`, "no full menu on the homepage") and the first 2026-11-12
+> draft. **Built in Lesson 7.2 (2026-11-12)**: `app/page.tsx` with
+> `components/home/` and `components/menu/MenuItemCard.tsx` (card design
+> Option C); supporting text in `content/home/homepage.ts`. Ratings are not
+> shown yet (rating lesson 7.4); food photos are added in Lesson 7.3.
 
-## `/menu` main menu hub (exists, noindex placeholder)
+- **Purpose:** the complete Olive Garden menu on one page, with prices,
+  calories, ratings, and helpful planning information.
+- **Intent:** "Olive Garden menu with prices and calories". This is the
+  **only indexable full-menu page**; `/menu` stays noindex.
+- **H1:** Olive Garden Menu with Prices & Calories 2026 (the year changes
+  only when the menu data is re-checked for the new year).
+- **Title/description:** written when the content is approved.
 
-- **Purpose:** comprehensive menu overview; the one place that lists all
-  17 categories.
-- **Intent:** "Olive Garden menu" (full menu overview by category).
-- **Title:** e.g. "Olive Garden Menu: All Categories With Prices"
-- **H1:** Olive Garden Menu by Category (existing)
-- **Layout (implemented, Lesson 5):** all 17 categories in the approved
-  order (1-17). H2 "Jump to a Category" (in-page anchor links to each card),
-  H2 "All 17 Menu Categories" (cards, `h3`; each card shows its group name
-  as a small label), H2 "How Prices Will Appear".
-- **Later (verified only):** a short intro per group; a "Prices at a Glance"
-  table with one row per category (verified price range or "Not verified
-  yet", last-checked date). No full item tables (those live on category pages).
-- **Indexing:** becomes indexable when the hub has its final, verified,
-  helpful content and the owner approves.
+### Content (approved order)
+
+| # | Block | Heading |
+|---:|---|---|
+| 1 | Header and navigation | none (site header) |
+| 2 | Olive Garden Menu with Prices & Calories 2026 | **H1** |
+| 3 | Short helpful introduction (2-3 sentences) | none |
+| 4 | Pricing location and verification information: reference restaurant (Orlando - Millenia Mall), "online pickup prices", real last-checked date, what "Calculated" and "Estimated" mean, "prices vary by location" | none (notice box) |
+| 5 | Category navigation (jump links to the 17 sections) and instant menu search | none (labelled `nav` / search) |
+| 6 | All 17 complete menu categories with every approved item, in the approved order (`CONTENT_ARCHITECTURE.md` §2) | **17 H2s**, one per category |
+| 7 | Olive Garden Popular Menu Items | H2 |
+| 8 | Olive Garden Lunch Specials & Deals | H2 |
+| 9 | Olive Garden Hours — Opening & Closing Times | H2 |
+| 10 | Olive Garden Holiday Hours | H2 |
+| 11 | Olive Garden Nutrition & Dietary Options | H2 |
+| 12 | How to Order Olive Garden Online | H2 |
+| 13 | Frequently Asked Questions | H2 |
+| 14 | Important internal links and official resources | none (labelled `nav`) |
+| 15 | Sources, disclaimer, footer, and social media links | none (sources list + site footer) |
+
+Headings: exactly one H1; 17 category H2s + 7 supporting H2s (rows 7-13);
+H3 only when genuinely necessary (e.g. a sub-group inside a large
+category). Concise, accurate, no repetition, no keyword stuffing.
+
+### Each category section (row 6)
+
+- Every approved offering of that category (`content/menu/offerings/`),
+  in inventory order, with the owner's inventory names. Items listed in
+  several categories appear in each of them (210 placements, 231 once the
+  21 approved new official items are integrated), each with its
+  own price, calories, and portion.
+- Per item: **food image, name, price, calories, rating** (average + vote
+  count, or "Not rated yet"), **short helpful description**, and **size and
+  portion options** where they exist (e.g. 6 / 12 breadsticks, regular /
+  large sauce). Catering and family-style portions stay separate.
+- Values follow `MENU_RESEARCH_PLAN.md` §1: official, "Calculated", or
+  "Estimated", or a meaningful note. No empty cells.
+- Missing photo: labelled placeholder until the owner supplies one.
+- A link to the category's dedicated page ("More about {category}") once
+  that page is in preview or published (never a link to a 404).
+- A helpful table may be used where it suits the category (e.g. drinks).
+
+### Supporting sections (rows 7-13)
+
+| Section | Shows | Source rule |
+|---|---|---|
+| Olive Garden Popular Menu Items | The 6 owner-chosen items: Chicken Alfredo, Tour of Italy, Lasagna Classico, Chicken Parmigiana, Fettuccine Alfredo, Breadsticks. Image, price, calories, visitor rating | Shared menu data and shared rating data. "Popular" = owner's selection; no popularity statistics or sales rankings |
+| Olive Garden Lunch Specials & Deals | Current lunch specials and deals | Official site, with terms and dates; expired offers removed |
+| Olive Garden Hours — Opening & Closing Times | Reference restaurant hours (dining, online ordering) | Official location page, with check date; "hours vary by location" |
+| Olive Garden Holiday Hours | Holiday hours of the reference restaurant | Official source only; otherwise says hours are not published and to check with the restaurant |
+| Olive Garden Nutrition & Dietary Options | Where calories come from; gluten-sensitive and vegetarian information | Official nutrition/allergen documents, official wording |
+| How to Order Olive Garden Online | Neutral steps + link to the official ordering site | Official site; no affiliate links |
+| Frequently Asked Questions | Short Q&As | Accurate answers only; FAQPage JSON-LD matches the visible text |
+
+Popular items use the regular portion (Classic Entrees for the five
+entrees, Appetizers for Breadsticks) unless the owner chooses otherwise.
+
+### Rows 14-15
+
+- **Important internal links and official resources:** the dedicated
+  category pages, About/Contact/Disclaimer when they exist, and official
+  Olive Garden pages (ordering, nutrition PDF, reference restaurant page).
+- **Sources:** official sources with real check dates; third-party sources
+  for any "Estimated" values (rel="nofollow").
+- **Disclaimer** (not affiliated with Olive Garden or Darden) and **footer**.
+- **Social media links:** only the URLs the owner supplies; none until then.
+
+### Shared data rule
+
+Homepage and the 17 category pages read the **same** data
+(`content/menu/`, via `lib/content.ts`) and the same rating data. A value
+is changed once and appears everywhere. Category pages add expanded,
+category-specific content (their outlines below); they do not copy
+homepage paragraphs.
+
+## `/menu` (exists, noindex)
+
+> **Owner decision (2026-11-12):** `/menu` is **not** a second indexable
+> full-menu page. It stays as it is now (category cards, noindex, follow)
+> during development. Redirecting `/menu` to the homepage is reviewed
+> before the final launch. The earlier plan to give `/menu` its own
+> indexable content ("Prices at a Glance", group intros) is **withdrawn**.
+
+- **H1:** Olive Garden Menu by Category (existing, Lesson 5 layout).
+- **Indexing:** noindex, follow. Never added to the sitemap.
 
 ---
 

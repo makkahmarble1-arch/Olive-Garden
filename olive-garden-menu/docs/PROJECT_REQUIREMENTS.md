@@ -41,9 +41,9 @@ This must be stated clearly on the site (footer on every page + Disclaimer page)
 ### Pages
 | Page | Purpose |
 |---|---|
-| Homepage | Independent site intro, featured categories, guides, link to the full menu |
-| Main menu hub (`/menu`) | All 17 categories, grouped, with links to each category page |
-| Menu category pages | 17 pages at root URLs (e.g. `/desserts`), each with a prices + calories table |
+| Homepage | **Primary indexable full-menu page:** all 17 categories and every approved item (image, name, price, calories, rating, short description, size/portion options), pricing/verification info, and 7 supporting sections. Spec: `MENU_PAGE_OUTLINES.md` "Homepage" |
+| Main menu hub (`/menu`) | Not a second full-menu page. Noindex during development; a redirect to `/` is reviewed before launch |
+| Menu category pages | 17 pages at root URLs (e.g. `/desserts`): complete menu table, nutrition information, 3-5 selected images, useful FAQs, internal links. Indexed when complete and owner-approved |
 | Blog index | List of all articles |
 | Blog articles | Informational guides with TOC, FAQ, related articles |
 | About | Who runs the site, how prices are collected and verified |
@@ -62,6 +62,19 @@ This must be stated clearly on the site (footer on every page + Disclaimer page)
 - Internal links between menu pages and guides
 - Prices and calories tables (accessible HTML `<table>`)
 - "Prices last checked" date and location-variance note near every price table
+- Menu search on the homepage (instant, filters the items on the page)
+- 5-star visitor rating per menu item (see below)
+- Footer social media links (only URLs supplied by the owner)
+
+### Rating system (owner decision, 2026-11-12; built in its own lesson)
+- Visitors rate a menu item from 1 to 5 stars.
+- Average rating and total vote count are shown; "Not rated yet" when an
+  item has no votes.
+- One rating per item, shared by the homepage and the category pages
+  (stored per product or offering; decided in the rating lesson).
+- Basic duplicate-vote and spam protection; ratings stored persistently.
+- Never fake, seed, or import ratings or vote counts.
+- Architecture and database are chosen in the rating lesson.
 
 ### Technical requirements
 - SEO metadata on every page (title, description, canonical, Open Graph)
@@ -69,24 +82,35 @@ This must be stated clearly on the site (footer on every page + Disclaimer page)
 - Structured data (JSON-LD) where appropriate (see `SEO_ARCHITECTURE.md`)
 - Optimized images with `next/image`
 - Clean, lowercase, hyphenated URLs
-- Static generation for all pages (fast loading, cheap hosting)
+- Static generation for all pages (fast loading, cheap hosting); rating
+  data is the only dynamic part
 - Accessibility: WCAG 2.2 AA target
 - Mobile-first responsive design
 
 ## 4. Content accuracy rules (critical)
 
-1. **Never invent prices or nutrition facts.** If a value is not verified,
-   store it as `null` and show "Not verified yet" on the site.
+1. **Never invent prices or nutrition facts.** Every value has a source and
+   a date. Values are labeled by basis: official, calculated (from official
+   components), or estimated (credible third party). Rules and source
+   priority: `MENU_RESEARCH_PLAN.md` §1-2.
 2. Every menu offering records prices (each with location, source, and
    date), calories (with source), and `status` (`"verified"`,
    `"needs-verification"`, or `"not-verified"`). See `CONTENT_ARCHITECTURE.md` section 6.
 3. Prices vary by location and change over time. Show this note near every
    price table.
-4. Calories should come from Olive Garden's official published nutrition
-   information. Record the source and date.
-5. Placeholder/sample data must be clearly marked in code
+4. Calories come from Olive Garden's official nutrition information first.
+   A calculated value (e.g. breadsticks + sauce) is labeled "calculated" with
+   its parts shown. A third-party value is used only when no official value
+   exists, labeled "Estimated", and never replaces an official value.
+   No empty cells: if no credible value exists, a meaningful note is shown.
+5. Prices come from the approved reference restaurant (Orlando - Millenia
+   Mall) and are labeled as **online pickup** prices.
+6. Placeholder/sample data must be clearly marked in code
    (`status: "needs-verification"`) and must never be shown as fact.
-6. No fake reviews, ratings, or testimonials.
+7. No fake reviews, ratings, or testimonials. Visitor ratings are real
+   votes only. No invented popularity or sales claims.
+8. Hours, holiday hours, lunch specials, and deals are shown only when
+   verified from an official source with a date.
 
 ## 5. Brand and legal rules
 
@@ -95,11 +119,15 @@ This must be stated clearly on the site (footer on every page + Disclaimer page)
 - Use the brand name only to describe the restaurant (nominative use),
   never to suggest affiliation.
 - Do not use `Restaurant`, `Menu`, `Product`/`Offer`, or rating structured
-  data that suggests we are the restaurant or sell its food.
+  data that suggests we are the restaurant or sell its food. Visitor
+  ratings are shown on the page only, not as `AggregateRating` markup.
+- Food images are supplied by the owner; never generated or downloaded.
+- Social media links only to accounts the owner supplies.
 
 ## 6. Out of scope (for now)
 
-- User accounts, comments, or a database
+- User accounts or comments
+- A database for anything other than the rating system
 - A CMS dashboard (content lives in TypeScript files in the repo)
 - Online ordering, maps, or store locators
 - Multiple languages

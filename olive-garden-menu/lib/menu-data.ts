@@ -2,6 +2,8 @@
  * Helper used by the files in content/menu/offerings/.
  * It fills every unknown field with a safe default (null / "unknown" /
  * "needs-verification"), so data files only list what is actually known.
+ * inventoryOrder = position in the list (inventory entries first, then
+ * new official items).
  */
 import { menuCategories } from "@/content/menu/categories";
 import type { MenuCategoryId, MenuOffering } from "./types";
@@ -30,15 +32,25 @@ export function defineOfferings(
     id: offeringId(categoryId, entry.productId, variant),
     categoryId,
     inventoryOrder: index + 1,
+    officialName: null,
+    isNewOfficialItem: false,
     description: null,
     portionType: category.defaultPortionType,
     servingSize: null,
     prices: [],
+    priceNote: null,
+    options: [],
     calories: null,
     caloriesMax: null,
     caloriesBasis: null,
     caloriesSourceUrl: null,
+    caloriesValueBasis: null,
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
     availability: "unknown",
+    promotion: null,
+    regularPriceOfferingId: null,
     image: null,
     status: "needs-verification",
     verifiedAt: null,

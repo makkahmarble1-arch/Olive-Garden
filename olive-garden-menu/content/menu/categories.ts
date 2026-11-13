@@ -8,8 +8,12 @@ import type { MenuCategoryDef, MenuCategoryGroup } from "@/lib/types";
  * owner-approved content. Placeholders are never linked or indexed.
  */
 
-/** Totals from the inventory summary table. Validation checks the data against these. */
-export const inventoryTotals = { categories: 17, placements: 210 } as const;
+/**
+ * Totals from the inventory summary table (210 owner entries) plus the 21
+ * new official items approved in owner Decision 3 (2026-11-12) = 231 offerings.
+ * Validation checks the data against these.
+ */
+export const inventoryTotals = { categories: 17, placements: 210, newOfficialItems: 21 } as const;
 
 export const menuCategories: MenuCategoryDef[] = [
   {

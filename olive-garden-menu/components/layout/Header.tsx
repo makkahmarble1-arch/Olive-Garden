@@ -12,7 +12,7 @@ export default function Header() {
           href="/"
           className="flex flex-col rounded-md leading-tight focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-dark"
         >
-          <span className="font-display text-lg font-bold text-ink sm:text-xl">
+          <span className="font-display text-base font-bold text-ink min-[380px]:text-lg sm:text-xl">
             {siteConfig.name}
           </span>
           <span className="text-xs text-muted">{siteConfig.tagline}</span>

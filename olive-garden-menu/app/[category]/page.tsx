@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -19,6 +20,7 @@ import Breadcrumbs from "@/components/navigation/Breadcrumbs";
 import MenuTable from "@/components/menu/MenuTable";
 import PriceNotice from "@/components/menu/PriceNotice";
 import SectionHeading from "@/components/ui/SectionHeading";
+import RatingSummary from "@/components/rating/RatingSummary";
 import JsonLd from "@/components/seo/JsonLd";
 
 /**
@@ -46,13 +48,13 @@ export async function generateMetadata({ params }: PageProps<"/[category]">): Pr
   const { category, content } = data;
   const path = menuCategoryPath(category.slug);
 
-  return {
+  // Indexable only when "published" (and the site-wide indexing switch is on).
+  return pageMetadata({
     title: content.metaTitle,
     description: content.metaDescription,
-    alternates: { canonical: path },
-    openGraph: { title: content.metaTitle, description: content.metaDescription, url: path },
-    robots: category.contentStatus === "published" ? undefined : { index: false, follow: true },
-  };
+    path,
+    indexable: category.contentStatus === "published",
+  });
 }
 
 export default async function CategoryPage({ params }: PageProps<"/[category]">) {
@@ -174,6 +176,7 @@ export default async function CategoryPage({ params }: PageProps<"/[category]">)
                     {offering.description && (
                       <p className="mt-2 leading-7 text-muted">{offering.description}</p>
                     )}
+                    <RatingSummary align="start" className="mt-2" productId={offering.productId} itemName={offering.displayName} />
                     {image?.credit && <p className="mt-2 text-xs text-muted">Photo: {image.credit}</p>}
                   </div>
                 </li>
@@ -252,7 +255,7 @@ export default async function CategoryPage({ params }: PageProps<"/[category]">)
                 href={menuPath}
                 className="font-semibold text-brand-dark underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-brand-dark"
               >
-                See all menu categories <span aria-hidden="true">&rarr;</span>
+                See the full menu <span aria-hidden="true">&rarr;</span>
               </Link>
             </p>
           </section>

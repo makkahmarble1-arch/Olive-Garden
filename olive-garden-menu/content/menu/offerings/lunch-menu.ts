@@ -1,47 +1,682 @@
 import { defineOfferings } from "@/lib/menu-data";
 
 /**
- * 9. Lunch menu: 10 inventory entries (docs/MENU_INVENTORY.md).
- * Order = inventory order. Prices and calories stay empty/null until verified
- * (see docs/MENU_RESEARCH_PLAN.md). `inventoryName` is the owner's exact text.
+ * 9. Lunch Menu: 10 inventory entries + 7 new official item(s).
+ *
+ * Imported from research/menu/menu-research.json (final research, 2026-11-12;
+ * owner approved integration in Lesson 7.2). Source notes per value:
+ * research/menu/lunch-menu/. Order = inventory order, new official items last.
+ * `inventoryName` is the owner's exact text (null only for new official items).
+ * Prices: online pickup, Olive Garden Orlando - Millenia Mall.
  */
 export const lunchMenuOfferings = defineOfferings("lunch-menu", [
   {
     inventoryName: "Chicken Parmigiana",
     displayName: "Chicken Parmigiana",
     productId: "chicken-parmigiana",
+    officialName: "Chicken Parmigiana (Lunch)",
+    isNewOfficialItem: false,
+    description: "A lunch-size Chicken Parmigiana with homemade marinara and a side of spaghetti, offered Monday through Friday before 3 pm.",
+    portionType: "lunch",
+    servingSize: "Lunch-size portion",
+    prices: [
+      {
+        amount: 12.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/chicken-parmigiana/prod80622",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 630,
+    caloriesMax: null,
+    caloriesBasis: "per lunch entrée",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/chicken-parmigiana/prod80622",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Lunch: Mon-Fri 11 AM-3 PM. Soup or salad and 2 breadsticks included (dine-in/pickup entrée) | Listed on the Millenia online ordering menu"
   },
   {
     inventoryName: "Fettuccine Alfredo",
     displayName: "Fettuccine Alfredo",
     productId: "fettuccine-alfredo",
+    officialName: "Fettuccine Alfredo (V) (Lunch)",
+    isNewOfficialItem: false,
+    description: "Lunch-size fettuccine alfredo made with parmesan, fresh cream, and garlic, available on weekdays from 11 am to 3 pm.",
+    portionType: "lunch",
+    servingSize: "Lunch-size portion",
+    prices: [
+      {
+        amount: 11.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/fettuccine-alfredo-v/prod80637",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 920,
+    caloriesMax: null,
+    caloriesBasis: "per lunch entrée",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/fettuccine-alfredo-v/prod80637",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Lunch: Mon-Fri 11 AM-3 PM. Soup or salad and 2 breadsticks included (dine-in/pickup entrée) | Listed on the Millenia online ordering menu"
   },
   {
     inventoryName: "Five cheese ziti al forno",
     displayName: "Five Cheese Ziti al Forno",
     productId: "five-cheese-ziti-al-forno",
+    officialName: "Five Cheese Ziti al Forno (Lunch)",
+    isNewOfficialItem: false,
+    description: "A lunch-size bake of pasta, Italian cheeses, and five cheese marinara, available on weekdays from 11 am to 3 pm.",
+    portionType: "lunch",
+    servingSize: "Lunch-size portion",
+    prices: [
+      {
+        amount: 11.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/five-cheese-ziti-al-forno/prod80613",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 630,
+    caloriesMax: null,
+    caloriesBasis: "per lunch entrée",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/five-cheese-ziti-al-forno/prod80613",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Lunch: Mon-Fri 11 AM-3 PM. Soup or salad and 2 breadsticks included (dine-in/pickup entrée) | Listed on the Millenia online ordering menu"
   },
   {
     inventoryName: "Lasagna Classico",
     displayName: "Lasagna Classico",
     productId: "lasagna-classico",
+    officialName: "Lasagna Classico (Lunch)",
+    isNewOfficialItem: false,
+    description: "A lunch-size portion of lasagna layered with pasta, Italian cheeses, and homemade meat sauce, served weekdays before 3 pm.",
+    portionType: "lunch",
+    servingSize: "Lunch-size portion",
+    prices: [
+      {
+        amount: 12.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/lasagna-classico/prod80611",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 500,
+    caloriesMax: null,
+    caloriesBasis: "per lunch entrée",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/lasagna-classico/prod80611",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Lunch: Mon-Fri 11 AM-3 PM. Soup or salad and 2 breadsticks included (dine-in/pickup entrée) | Listed on the Millenia online ordering menu"
   },
-  { inventoryName: "Shrimp scampi", displayName: "Shrimp Scampi", productId: "shrimp-scampi" },
+  {
+    inventoryName: "Shrimp scampi",
+    displayName: "Shrimp Scampi",
+    productId: "shrimp-scampi",
+    officialName: "Shrimp Scampi (Lunch)",
+    isNewOfficialItem: false,
+    description: "Lunch-size shrimp scampi with asparagus, tomatoes, and angel hair in garlic sauce, available weekdays from 11 am to 3 pm.",
+    portionType: "lunch",
+    servingSize: "Lunch-size portion",
+    prices: [
+      {
+        amount: 12.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/shrimp-scampi/prod80692",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 460,
+    caloriesMax: null,
+    caloriesBasis: "per lunch entrée",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/shrimp-scampi/prod80692",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Lunch: Mon-Fri 11 AM-3 PM. Soup or salad and 2 breadsticks included (dine-in/pickup entrée) | Listed on the Millenia online ordering menu"
+  },
   {
     inventoryName: "Spaghetti & Meatballs",
     displayName: "Spaghetti & Meatballs",
     productId: "spaghetti-and-meatballs",
+    officialName: "Spaghetti & Meatballs (Lunch)",
+    isNewOfficialItem: false,
+    description: "Lunch-size spaghetti with two meatballs in your choice of meat sauce or marinara, served Monday through Friday before 3 pm.",
+    portionType: "lunch",
+    servingSize: "Two meatballs",
+    prices: [
+      {
+        amount: 12.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/spaghetti-meatballs/prod80648",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [
+      {
+        label: "Meat sauce & meatballs",
+        price: 12.49,
+        calories: 800,
+        caloriesMax: null,
+        caloriesUnit: "per lunch entrée",
+        caloriesBasis: "official",
+        caloriesFormula: null
+      },
+      {
+        label: "Marinara & meatballs",
+        price: 12.49,
+        calories: 690,
+        caloriesMax: null,
+        caloriesUnit: "per lunch entrée",
+        caloriesBasis: "official",
+        caloriesFormula: null
+      }
+    ],
+    calories: 690,
+    caloriesMax: 800,
+    caloriesBasis: "per lunch entrée",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/spaghetti-meatballs/prod80648",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Lunch: Mon-Fri 11 AM-3 PM. Soup or salad and 2 breadsticks included (dine-in/pickup entrée) | Listed on the Millenia online ordering menu"
   },
-  { inventoryName: "Cheese ravioli", displayName: "Cheese Ravioli", productId: "cheese-ravioli" },
+  {
+    inventoryName: "Cheese ravioli",
+    displayName: "Cheese Ravioli",
+    productId: "cheese-ravioli",
+    officialName: "Cheese Ravioli (Lunch)",
+    isNewOfficialItem: false,
+    description: "Lunch-size cheese ravioli topped with mozzarella and your choice of marinara or meat sauce, available weekdays before 3 pm.",
+    portionType: "lunch",
+    servingSize: "Lunch-size portion",
+    prices: [
+      {
+        amount: 11.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/cheese-ravioli/prod1360049",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 440,
+    caloriesMax: 500,
+    caloriesBasis: "per lunch entrée",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/cheese-ravioli/prod1360049",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Lunch: Mon-Fri 11 AM-3 PM. Soup or salad and 2 breadsticks included (dine-in/pickup entrée) | Listed on the Millenia online ordering menu"
+  },
   {
     inventoryName: "Eggplant parmigiana",
     displayName: "Eggplant Parmigiana",
     productId: "eggplant-parmigiana",
+    officialName: "Eggplant Parmigiana (V) (Lunch)",
+    isNewOfficialItem: false,
+    description: "A lunch-size eggplant parmigiana, hand-breaded and fried, topped with marinara and mozzarella, with a side of spaghetti.",
+    portionType: "lunch",
+    servingSize: "Lunch-size portion",
+    prices: [
+      {
+        amount: 11.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/eggplant-parmigiana-v/prod80610",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 660,
+    caloriesMax: null,
+    caloriesBasis: "per lunch entrée",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/eggplant-parmigiana-v/prod80610",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Lunch: Mon-Fri 11 AM-3 PM. Soup or salad and 2 breadsticks included (dine-in/pickup entrée) | Listed on the Millenia online ordering menu"
   },
-  { inventoryName: "Spaghetti", displayName: "Spaghetti", productId: "spaghetti" },
+  {
+    inventoryName: "Spaghetti",
+    displayName: "Spaghetti",
+    productId: "spaghetti",
+    officialName: "Spaghetti (Lunch)",
+    isNewOfficialItem: false,
+    description: "Lunch-size spaghetti with your choice of homemade marinara or meat sauce, a simple weekday option served before 3 pm.",
+    portionType: "lunch",
+    servingSize: "Lunch-size portion",
+    prices: [
+      {
+        amount: 11.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/spaghetti/prod80636",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [
+      {
+        label: "Lunch Spaghetti with Meat Sauce",
+        price: 11.49,
+        calories: 480,
+        caloriesMax: null,
+        caloriesUnit: "per lunch entrée",
+        caloriesBasis: "official",
+        caloriesFormula: null
+      },
+      {
+        label: "Lunch Spaghetti with Marinara",
+        price: 11.49,
+        calories: 370,
+        caloriesMax: null,
+        caloriesUnit: "per lunch entrée",
+        caloriesBasis: "official",
+        caloriesFormula: null
+      }
+    ],
+    calories: 370,
+    caloriesMax: 480,
+    caloriesBasis: "per lunch entrée",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/spaghetti/prod80636",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Lunch: Mon-Fri 11 AM-3 PM. Soup or salad and 2 breadsticks included (dine-in/pickup entrée). Choice of marinara or meat sauce (resolves alias A9) | Listed on the Millenia online ordering menu"
+  },
   {
     inventoryName: "Soup, salad and breadsticks | Lunch",
     displayName: "Soup, Salad and Breadsticks (Lunch)",
     productId: "soup-salad-and-breadsticks-lunch",
+    officialName: "Soup, Salad and Breadsticks | Lunch",
+    isNewOfficialItem: false,
+    description: "The weekday lunch version of soup, salad, and breadsticks: the Famous House Salad, a homemade soup, and warm garlic breadsticks.",
+    portionType: "lunch",
+    servingSize: "House salad + soup + breadsticks",
+    prices: [
+      {
+        amount: 9.99,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/soup-salad-and-breadsticks-lunch/prod1360042",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 400,
+    caloriesMax: 520,
+    caloriesBasis: "per meal, depends on soup",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/soup-salad-and-breadsticks-lunch/prod1360042",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "limited-time",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Lunch: Mon-Fri 11 AM-3 PM. Same meal and price as the Weekday Lunch Special card | Listed on the Millenia online ordering menu | PDF check (match (calculated from PDF parts)): Calculated from PDF parts: salad with dressing 150 + soup 110-230 + 1 breadstick 140 = 400-520 (matches the menu)"
   },
+  {
+    inventoryName: null,
+    displayName: "Spicy Alfredo Fettuccine (Lunch)",
+    productId: "spicy-alfredo-fettuccine",
+    officialName: "NEW! Spicy Alfredo Fettuccine (Lunch)",
+    isNewOfficialItem: true,
+    description: "Lunch-size fettuccine in limited-time spicy alfredo sauce made with Calabrian peppers, available Monday through Friday before 3 pm.",
+    portionType: "lunch",
+    servingSize: "Lunch-size portion",
+    prices: [
+      {
+        amount: 11.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/spicy-alfredo-fettuccine/prod0219000044",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 1000,
+    caloriesMax: null,
+    caloriesBasis: "per lunch entrée",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/spicy-alfredo-fettuccine/prod0219000044",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "limited-time",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Lunch: Mon-Fri 11 AM-3 PM. Soup or salad and 2 breadsticks included (dine-in/pickup entrée) | Listed on the Millenia online ordering menu"
+  },
+  {
+    inventoryName: null,
+    displayName: "Chicken Parmigiana Sandwich",
+    productId: "chicken-parmigiana-sandwich",
+    officialName: "NEW! Chicken Parmigiana Sandwich",
+    isNewOfficialItem: true,
+    description: "Crispy chicken fritta or grilled chicken with mozzarella and marinara on a toasted garlic knot bun, served with french fries at lunch.",
+    portionType: "lunch",
+    servingSize: "Sandwich + french fries",
+    prices: [
+      {
+        amount: 11.99,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/chicken-parmigiana-sandwich/prod0219000113",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [
+      {
+        label: "Chicken Parmigiana Sandwich (crispy chicken fritta)",
+        price: 11.99,
+        calories: 960,
+        caloriesMax: null,
+        caloriesUnit: "per sandwich with fries",
+        caloriesBasis: "official",
+        caloriesFormula: null
+      },
+      {
+        label: "Grilled Chicken Parmigiana Sandwich",
+        price: 11.99,
+        calories: 840,
+        caloriesMax: null,
+        caloriesUnit: "per sandwich with fries",
+        caloriesBasis: "official",
+        caloriesFormula: null
+      }
+    ],
+    calories: 840,
+    caloriesMax: 960,
+    caloriesBasis: "per sandwich with fries",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/chicken-parmigiana-sandwich/prod0219000113",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Lunch: Mon-Fri 11 AM-3 PM. Lunch Sandwiches & Flatbreads section (where available) | Listed on the Millenia online ordering menu"
+  },
+  {
+    inventoryName: null,
+    displayName: "Eggplant Parmigiana Sandwich",
+    productId: "eggplant-parmigiana-sandwich",
+    officialName: "NEW! Eggplant Parmigiana Sandwich",
+    isNewOfficialItem: true,
+    description: "Hand-breaded fried eggplant with melted mozzarella and marinara on a toasted garlic knot bun, served with french fries on weekdays at lunch.",
+    portionType: "lunch",
+    servingSize: "Sandwich + french fries",
+    prices: [
+      {
+        amount: 9.99,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/eggplant-parmigiana-sandwich/prod0219000077",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 980,
+    caloriesMax: null,
+    caloriesBasis: "per sandwich with fries",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/eggplant-parmigiana-sandwich/prod0219000077",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Lunch: Mon-Fri 11 AM-3 PM | Listed on the Millenia online ordering menu"
+  },
+  {
+    inventoryName: null,
+    displayName: "Italian Grilled Chicken Sandwich",
+    productId: "italian-grilled-chicken-sandwich",
+    officialName: "NEW! Italian Grilled Chicken Sandwich",
+    isNewOfficialItem: true,
+    description: "Grilled chicken breast with mozzarella, tomatoes, pepperoncini, and lettuce in signature dressing on a garlic knot bun, with french fries.",
+    portionType: "lunch",
+    servingSize: "Sandwich + french fries",
+    prices: [
+      {
+        amount: 11.99,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/italian-grilled-chicken-sandwich/prod0219000071",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 860,
+    caloriesMax: null,
+    caloriesBasis: "per sandwich with fries",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/italian-grilled-chicken-sandwich/prod0219000071",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Lunch: Mon-Fri 11 AM-3 PM | Listed on the Millenia online ordering menu"
+  },
+  {
+    inventoryName: null,
+    displayName: "Chicken Alfredo Flatbread",
+    productId: "chicken-alfredo-flatbread",
+    officialName: "NEW! Chicken Alfredo Flatbread",
+    isNewOfficialItem: true,
+    description: "A flatbread pizza topped with signature alfredo sauce, chicken, roasted red peppers, and melted mozzarella, offered on weekdays at lunch.",
+    portionType: "lunch",
+    servingSize: "One flatbread",
+    prices: [
+      {
+        amount: 10.99,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/chicken-alfredo-flatbread/prod0219000106",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 920,
+    caloriesMax: null,
+    caloriesBasis: "per flatbread",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/chicken-alfredo-flatbread/prod0219000106",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Lunch: Mon-Fri 11 AM-3 PM | Listed on the Millenia online ordering menu"
+  },
+  {
+    inventoryName: null,
+    displayName: "Five Cheese Flatbread",
+    productId: "five-cheese-flatbread",
+    officialName: "NEW! Five Cheese Flatbread",
+    isNewOfficialItem: true,
+    description: "A flatbread pizza topped with five cheese marinara and melted mozzarella cheese, offered as a weekday lunch item before 3 pm.",
+    portionType: "lunch",
+    servingSize: "One flatbread",
+    prices: [
+      {
+        amount: 9.99,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/five-cheese-flatbread/prod0219000068",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 510,
+    caloriesMax: null,
+    caloriesBasis: "per flatbread",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/five-cheese-flatbread/prod0219000068",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Lunch: Mon-Fri 11 AM-3 PM | Listed on the Millenia online ordering menu"
+  },
+  {
+    inventoryName: null,
+    displayName: "Classic Pepperoni Flatbread",
+    productId: "classic-pepperoni-flatbread",
+    officialName: "NEW! Classic Pepperoni Flatbread",
+    isNewOfficialItem: true,
+    description: "A flatbread pizza topped with marinara sauce, mozzarella cheese, and pepperoni, available as a weekday lunch item before 3 pm.",
+    portionType: "lunch",
+    servingSize: "One flatbread",
+    prices: [
+      {
+        amount: 9.99,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/classic-pepperoni-flatbread/prod0219000069",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 560,
+    caloriesMax: null,
+    caloriesBasis: "per flatbread",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/classic-pepperoni-flatbread/prod0219000069",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Lunch: Mon-Fri 11 AM-3 PM | Listed on the Millenia online ordering menu"
+  }
 ]);

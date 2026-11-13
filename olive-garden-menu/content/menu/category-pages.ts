@@ -28,7 +28,7 @@ export const categoryPages: CategoryPageContent[] = [
     nutritionNotes: [
       "Calories are for the full order as served, unless a note in the table says otherwise. Breadsticks are listed per breadstick.",
       "Dipping sauces are counted separately. Marinara adds 35 calories to Fried Mozzarella, Stuffed Ziti Fritta, Calamari, Shrimp Fritto Misto, and Toasted Ravioli. Alfredo adds 220 calories to Stuffed Ziti Fritta, and spicy ranch adds 240 calories to Calamari and Shrimp Fritto Misto.",
-      "Dipping Sauces with Breadsticks: the calories in the table are for the regular sauce only. Marinara is 70, Five Cheese Marinara 200, Alfredo 440, and Spicy Alfredo 490. A large sauce is 150 to 980 calories, and each breadstick adds 140.",
+      "Dipping Sauces with Breadsticks: the table shows a calculated total for the regular order, 4 breadsticks (140 each) plus one sauce: Marinara 70, Five Cheese Marinara 200, Alfredo 440, or Spicy Alfredo 490, for 630 to 1,050 calories. The large order (8 breadsticks and an 8 oz sauce of 150 to 980 calories) comes to 1,270 to 2,100 calories. These totals are our calculation from Olive Garden's official values.",
       "Calorie counts are national values from Olive Garden's nutrition guide for U.S. restaurants. For allergens and full nutrition details, check that guide or ask your server.",
     ],
     sources: [
@@ -50,7 +50,7 @@ export const categoryPages: CategoryPageContent[] = [
       {
         question: "Which appetizer has the most calories?",
         answer:
-          "Of the appetizers with a calorie count for the full order, Shrimp Fritto Misto has the most at 1,280 calories before dipping sauce. Spinach-Artichoke Dip follows at 1,160 calories with flatbread crisps. Breadsticks are listed per breadstick (140 calories each), so the total depends on how many you eat.",
+          "Among the single-size appetizers, Shrimp Fritto Misto has the most at 1,280 calories before dipping sauce, followed by Spinach-Artichoke Dip at 1,160 calories with flatbread crisps. A large Dipping Sauces with Breadsticks order can reach 2,100 calories with Spicy Alfredo (our calculation from official values). Breadsticks are 140 calories each.",
       },
       {
         question: "Are these prices the same at every Olive Garden?",

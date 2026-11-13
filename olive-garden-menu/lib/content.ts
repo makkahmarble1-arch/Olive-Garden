@@ -7,6 +7,7 @@ import { menuProducts } from "@/content/menu/products";
 import { menuOfferings } from "@/content/menu/offerings";
 import { referenceLocations, referenceMarket } from "@/content/menu/locations";
 import { aliasCases } from "@/content/menu/aliases";
+import { createYourOwnPasta } from "@/content/menu/create-your-own-pasta";
 import { categoryPages } from "@/content/menu/category-pages";
 import { articles } from "@/content/articles";
 import { validateMenuData } from "./menu-validation";
@@ -14,6 +15,8 @@ import type {
   Article,
   ArticleCardData,
   CategoryPageContent,
+  CreateYourOwnPasta,
+  ImageRef,
   MenuCategoryDef,
   MenuCategoryId,
   MenuItem,
@@ -31,6 +34,7 @@ const menuIssues = validateMenuData({
   offerings: menuOfferings,
   locations: referenceLocations,
   aliasCases,
+  createYourOwnPasta,
   expected: inventoryTotals,
 });
 
@@ -53,8 +57,12 @@ if (menuIssues.length > 0) {
 
 /* ---------- URLs (one place, so links never get out of sync) ---------- */
 
-/** Main menu hub. */
-export const menuPath = "/menu";
+/**
+ * The full menu lives on the homepage (owner decision 2026-11-13: /menu
+ * permanently redirects to /, see next.config.ts). Links go straight to the
+ * full-menu section so they never pass through the redirect.
+ */
+export const menuPath = "/#full-menu";
 
 /** Category pages use the approved root-level URLs, e.g. /desserts. */
 export function menuCategoryPath(slug: string): string {
@@ -92,11 +100,11 @@ export function getCategoryPageContent(categoryId: MenuCategoryId): CategoryPage
 }
 
 /**
- * Link to a category: its own page if it exists, otherwise its card on the
- * /menu hub (so a link never leads to a 404).
+ * Link to a category: its own page if it exists, otherwise its section on
+ * the homepage full menu (so a link never leads to a 404).
  */
 export function menuCategoryHref(category: Pick<MenuCategoryDef, "slug" | "contentStatus">): string {
-  return hasCategoryPage(category) ? menuCategoryPath(category.slug) : `${menuPath}#${category.slug}`;
+  return hasCategoryPage(category) ? menuCategoryPath(category.slug) : `/#${category.slug}`;
 }
 
 /** The small selection shown on the homepage (the full list lives on /menu). */
@@ -137,6 +145,11 @@ export function getOfferingsForCategory(categoryId: MenuCategoryId): MenuOfferin
     .sort((a, b) => a.inventoryOrder - b.inventoryOrder);
 }
 
+/** Ids of all canonical products (used to load all ratings in one request). */
+export function getAllMenuProductIds(): string[] {
+  return menuProducts.map((p) => p.id);
+}
+
 export function getMenuProduct(productId: string): MenuProduct | undefined {
   return menuProducts.find((p) => p.id === productId);
 }
@@ -144,6 +157,43 @@ export function getMenuProduct(productId: string): MenuProduct | undefined {
 /** Every offering of a product (e.g. regular, lunch, family-style, catering). */
 export function getOfferingsForProduct(productId: string): MenuOffering[] {
   return menuOfferings.filter((o) => o.productId === productId);
+}
+
+export function getOffering(id: string): MenuOffering | undefined {
+  return menuOfferings.find((o) => o.id === id);
+}
+
+/** Photo to show for an offering: its own photo, else the shared product photo (or null). */
+export function getOfferingImage(offering: MenuOffering): ImageRef | null {
+  return offering.image ?? getMenuProduct(offering.productId)?.image ?? null;
+}
+
+/** Create Your Own Pasta base price and the 23 official build options. */
+export function getCreateYourOwnPasta(): CreateYourOwnPasta {
+  return createYourOwnPasta;
+}
+
+/** Earliest and latest check dates of all verified values (for "checked on" notes). */
+export function getMenuCheckDates(): { first: string; last: string } | null {
+  const dates = menuOfferings
+    .filter((o) => o.status === "verified")
+    .flatMap((o) => [o.verifiedAt, ...o.prices.map((p) => p.checkedAt)])
+    .filter((d): d is string => d !== null)
+    .sort();
+  if (dates.length === 0) return null;
+  return { first: dates[0], last: dates[dates.length - 1] };
+}
+
+/** Latest check date of one category's verified values. */
+export function getCategoryCheckDate(categoryId: MenuCategoryId): string | null {
+  if (categoryId === "create-your-own-pasta") return createYourOwnPasta.checkedAt;
+  return (
+    getOfferingsForCategory(categoryId)
+      .filter((o) => o.status === "verified")
+      .flatMap((o) => o.prices.map((p) => p.checkedAt))
+      .sort()
+      .at(-1) ?? null
+  );
 }
 
 export function getReferenceLocation(id: string): ReferenceLocation | undefined {
@@ -166,6 +216,7 @@ export function toMenuTableItem(offering: MenuOffering): MenuItem {
 
   return {
     name: offering.displayName,
+    productId: offering.productId,
     description: offering.description,
     price: price?.amount ?? null,
     calories: offering.status === "verified" ? offering.calories : null,
@@ -174,9 +225,13 @@ export function toMenuTableItem(offering: MenuOffering): MenuItem {
     source: price?.sourceUrl ?? price?.sourceNote ?? offering.caloriesSourceUrl,
     location: location ? `${location.city}, ${location.state}` : null,
     lastChecked: price?.checkedAt ?? offering.verifiedAt,
-    notListed: offering.availability === "unavailable",
+    notListed: offering.availability === "not-listed",
     servingSize: offering.status === "verified" ? offering.servingSize : null,
     caloriesBasis: offering.status === "verified" && offering.calories !== null ? offering.caloriesBasis : null,
+    priceNote: offering.priceNote,
+    caloriesNote: offering.caloriesNote,
+    caloriesValueBasis: offering.status === "verified" ? offering.caloriesValueBasis : null,
+    caloriesFormula: offering.status === "verified" ? offering.caloriesFormula : null,
   };
 }
 

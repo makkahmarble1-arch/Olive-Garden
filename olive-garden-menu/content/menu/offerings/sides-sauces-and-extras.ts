@@ -1,59 +1,449 @@
 import { defineOfferings } from "@/lib/menu-data";
 
 /**
- * 12. Sides, sauces and extras: 9 inventory entries (docs/MENU_INVENTORY.md).
- * Order = inventory order. Prices and calories stay empty/null until verified
- * (see docs/MENU_RESEARCH_PLAN.md). `inventoryName` is the owner's exact text.
+ * 12. Sides, Sauces and Extras: 9 inventory entries + 3 new official item(s).
+ *
+ * Imported from research/menu/menu-research.json (final research, 2026-11-12;
+ * owner approved integration in Lesson 7.2). Source notes per value:
+ * research/menu/sides-sauces-and-extras/. Order = inventory order, new official items last.
+ * `inventoryName` is the owner's exact text (null only for new official items).
+ * Prices: online pickup, Olive Garden Orlando - Millenia Mall.
  */
 export const sidesSaucesAndExtrasOfferings = defineOfferings("sides-sauces-and-extras", [
   {
     inventoryName: "Cheese Grater",
     displayName: "Cheese Grater",
     productId: "cheese-grater",
-    notes: "Unclear whether this is a product for sale or a table service. Confirm before publishing.",
+    officialName: "Cheese Grater",
+    isNewOfficialItem: false,
+    description: "A take-home cheese grater that comes with a block of Romano cheese for grating fresh cheese over pasta at home.",
+    portionType: "side",
+    servingSize: "One grater + one block of Romano cheese",
+    prices: [
+      {
+        amount: 19.99,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/cheese-grater/prod82648",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: null,
+    caloriesMax: null,
+    caloriesBasis: null,
+    caloriesSourceUrl: null,
+    caloriesValueBasis: null,
+    caloriesFormula: null,
+    caloriesNote: "Not listed by Olive Garden",
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Resolves open question: it is a product for sale | No calories listed (take-home grater; includes a block of Romano cheese) | PDF check (not-listed): Not a food item; no calories listed"
   },
   {
     inventoryName: "Side of Meatballs",
     displayName: "Side of Meatballs",
     productId: "side-of-meatballs",
+    officialName: "Side of Meatballs",
+    isNewOfficialItem: false,
+    description: "A side order of meatballs to add extra protein to a pasta, a salad, or any entrée on the menu.",
+    portionType: "side",
+    servingSize: "Side order of 3 meatballs",
+    prices: [
+      {
+        amount: 4.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/side-of-meatballs/prod8250002",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 520,
+    caloriesMax: null,
+    caloriesBasis: "per side",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/side-of-meatballs/prod8250002",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Research serving text: Side order (PDF: 3 meatballs)"
   },
   {
     inventoryName: "Side of grilled chicken",
     displayName: "Side of Grilled Chicken",
     productId: "side-of-grilled-chicken",
+    officialName: "Side of Grilled Chicken",
+    isNewOfficialItem: false,
+    description: "A side of grilled chicken breast to add protein to a pasta, a salad, or another entrée.",
+    portionType: "side",
+    servingSize: "Side order",
+    prices: [
+      {
+        amount: 4.99,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/side-of-grilled-chicken/prod81780",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 130,
+    caloriesMax: null,
+    caloriesBasis: "per side",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/side-of-grilled-chicken/prod81780",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: null
   },
   {
     inventoryName: "Side of mashed potatoes",
     displayName: "Side of Mashed Potatoes",
     productId: "side-of-mashed-potatoes",
+    officialName: "Side of Mashed Potatoes (V)",
+    isNewOfficialItem: false,
+    description: "A side of creamy mashed potatoes, the same side served with Stuffed Chicken Marsala; a vegetarian option.",
+    portionType: "side",
+    servingSize: "Side order",
+    prices: [
+      {
+        amount: 3.79,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/side-of-mashed-potatoes-v/prod81673",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 200,
+    caloriesMax: null,
+    caloriesBasis: "per side",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/side-of-mashed-potatoes-v/prod81673",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: null
   },
   {
     inventoryName: "Side of broccoli",
     displayName: "Side of Broccoli",
     productId: "side-of-broccoli",
+    officialName: "Side of Broccoli (V)",
+    isNewOfficialItem: false,
+    description: "A side of parmesan garlic broccoli, the same vegetable served with the grilled chicken, salmon, and sirloin plates.",
+    portionType: "side",
+    servingSize: "Side order",
+    prices: [
+      {
+        amount: 3.79,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/side-of-broccoli-v/prod81842",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 150,
+    caloriesMax: null,
+    caloriesBasis: "per side",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/side-of-broccoli-v/prod81842",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: null
   },
   {
     inventoryName: "Side of alfredo sauce (large)",
     displayName: "Side of Alfredo Sauce (Large)",
     productId: "side-of-alfredo-sauce",
     variant: "large",
+    officialName: "Side of Alfredo Sauce (Large) (V)",
+    isNewOfficialItem: false,
+    description: "A large container of freshly made alfredo sauce for extra pasta sauce or breadstick dipping; breadsticks are not included.",
+    portionType: "side",
+    servingSize: "Large container; breadsticks not included",
+    prices: [
+      {
+        amount: 11.29,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/side-of-alfredo-sauce-large-v/prod15600002",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 1750,
+    caloriesMax: null,
+    caloriesBasis: "per large container",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/side-of-alfredo-sauce-large-v/prod15600002",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Research serving text: Large container; breadsticks not included (PDF: One pint (PDF catering sauce size; same values as the large side))"
   },
   {
     inventoryName: "Side of marinara sauce (large)",
     displayName: "Side of Marinara Sauce (Large)",
     productId: "side-of-marinara-sauce",
     variant: "large",
+    officialName: "Side of Marinara Sauce (Large) (V)",
+    isNewOfficialItem: false,
+    description: "A large container of freshly made marinara sauce for extra pasta sauce or breadstick dipping; breadsticks are not included.",
+    portionType: "side",
+    servingSize: "Large container; breadsticks not included",
+    prices: [
+      {
+        amount: 9.79,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/side-of-marinara-sauce-large-v/prod15600003",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 290,
+    caloriesMax: null,
+    caloriesBasis: "per large container",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/side-of-marinara-sauce-large-v/prod15600003",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Research serving text: Large container; breadsticks not included (PDF: One pint (PDF catering sauce size; same values as the large side))"
   },
   {
     inventoryName: "Side of meat sauce (large)",
     displayName: "Side of Meat Sauce (Large)",
     productId: "side-of-meat-sauce",
     variant: "large",
+    officialName: "Side of Meat Sauce (Large)",
+    isNewOfficialItem: false,
+    description: "A large container of freshly made meat sauce with beef and Italian sausage for pasta or dipping; no breadsticks included.",
+    portionType: "side",
+    servingSize: "Large container; breadsticks not included",
+    prices: [
+      {
+        amount: 9.79,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/side-of-meat-sauce-large/prod15600004",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 600,
+    caloriesMax: null,
+    caloriesBasis: "per large container",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/side-of-meat-sauce-large/prod15600004",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Research serving text: Large container; breadsticks not included (PDF: One pint (PDF catering sauce size; same values as the large side))"
   },
   {
     inventoryName: "Side of five cheese marinara sauce (Large)",
     displayName: "Side of Five Cheese Marinara Sauce (Large)",
     productId: "side-of-five-cheese-marinara-sauce",
     variant: "large",
+    officialName: "Side of Five Cheese Marinara Sauce (Large) (V)",
+    isNewOfficialItem: false,
+    description: "A large container of freshly made five cheese marinara for extra pasta sauce or breadstick dipping; breadsticks are not included.",
+    portionType: "side",
+    servingSize: "Large container; breadsticks not included",
+    prices: [
+      {
+        amount: 9.79,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/side-of-five-cheese-marinara-sauce-large-v/prod15600005",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 800,
+    caloriesMax: null,
+    caloriesBasis: "per large container",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/side-of-five-cheese-marinara-sauce-large-v/prod15600005",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Research serving text: Large container; breadsticks not included (PDF: One pint (PDF catering sauce size; same values as the large side))"
   },
+  {
+    inventoryName: null,
+    displayName: "Side of Crispy Shrimp Fritta",
+    productId: "side-of-crispy-shrimp-fritta",
+    officialName: "NEW! Side of Crispy Shrimp Fritta",
+    isNewOfficialItem: true,
+    description: "A side of shrimp lightly breaded in a crispy seasoned coating and fried golden, to add to any pasta or entrée.",
+    portionType: "side",
+    servingSize: "Side order",
+    prices: [
+      {
+        amount: 5.29,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/side-of-crispy-shrimp-fritta/prod0219000046",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 200,
+    caloriesMax: null,
+    caloriesBasis: "per side",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/side-of-crispy-shrimp-fritta/prod0219000046",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "limited-time",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Crispy Shrimp Fritta is labeled limited time / \"last chance\" on the official Never-Ending Pasta Bowl page | Listed on the Millenia online ordering menu | PDF check: Side card lists 200; the PDF topping line lists 220 and the CYOP panel lists 350 for 16 pieces. Portions are not stated, so the menu value is kept"
+  },
+  {
+    inventoryName: null,
+    displayName: "Side of Crispy Chicken Fritta",
+    productId: "side-of-crispy-chicken-fritta",
+    officialName: "Side of Crispy Chicken Fritta",
+    isNewOfficialItem: true,
+    description: "A side of crispy chicken fritta to add a crunchy fried chicken topping to any pasta, salad, or entrée on the menu.",
+    portionType: "side",
+    servingSize: "Side order (one piece, per the topping listing)",
+    prices: [
+      {
+        amount: 4.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/side-of-crispy-chicken-fritta/prod22800016",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 240,
+    caloriesMax: null,
+    caloriesBasis: "per side",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/side-of-crispy-chicken-fritta/prod22800016",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: null
+  },
+  {
+    inventoryName: null,
+    displayName: "Side of Italian Sausage",
+    productId: "italian-sausage",
+    officialName: "Side of Italian Sausage",
+    isNewOfficialItem: true,
+    description: "Two Italian sausage links served with homemade marinara, a side order for adding extra protein to pasta or entrées.",
+    portionType: "side",
+    servingSize: "2 Italian sausage links with marinara",
+    prices: [
+      {
+        amount: 4.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/side-of-italian-sausage/prod8250004",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 510,
+    caloriesMax: null,
+    caloriesBasis: "per side (2 links)",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/side-of-italian-sausage/prod8250004",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: null
+  }
 ]);

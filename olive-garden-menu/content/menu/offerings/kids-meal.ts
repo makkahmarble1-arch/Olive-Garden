@@ -1,60 +1,409 @@
 import { defineOfferings } from "@/lib/menu-data";
 
 /**
- * 16. Kids meal: 11 inventory entries (docs/MENU_INVENTORY.md).
- * Order = inventory order. Prices and calories stay empty/null until verified
- * (see docs/MENU_RESEARCH_PLAN.md). `inventoryName` is the owner's exact text.
+ * 16. Kids Meal: 11 inventory entries.
+ *
+ * Imported from research/menu/menu-research.json (final research, 2026-11-12;
+ * owner approved integration in Lesson 7.2). Source notes per value:
+ * research/menu/kids-meal/. Order = inventory order, new official items last.
+ * `inventoryName` is the owner's exact text (null only for new official items).
+ * Prices: online pickup, Olive Garden Orlando - Millenia Mall.
  */
 export const kidsMealOfferings = defineOfferings("kids-meal", [
   {
     inventoryName: "Kids Alfredo Pasta",
     displayName: "Kids Alfredo Pasta",
     productId: "kids-alfredo-pasta",
+    officialName: "Kids Alfredo Sauce with Choice of Pasta (V)",
+    isNewOfficialItem: false,
+    description: "Kid-size pasta with alfredo sauce, choosing fettuccine, small shells, or spaghetti, served with a side and 1% low-fat milk.",
+    portionType: "kids",
+    servingSize: "Kids meal",
+    prices: [
+      {
+        amount: 7.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/kids-alfredo-sauce-with-choice-of-pasta-v/prod340057",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 440,
+    caloriesMax: null,
+    caloriesBasis: "main dish; choice of pasta, side & milk 305-570 listed separately",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/kids-alfredo-sauce-with-choice-of-pasta-v/prod340057",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Kids meal for children under 12: includes a side and 1% low-fat milk; no soup or salad"
   },
-  { inventoryName: "Kids Pizza", displayName: "Kids Pizza", productId: "kids-pizza" },
+  {
+    inventoryName: "Kids Pizza",
+    displayName: "Kids Pizza",
+    productId: "kids-pizza",
+    officialName: "Kids Pizza",
+    isNewOfficialItem: false,
+    description: "A kid-size cheese or pepperoni pizza with marinara and mozzarella, served with a side and 1% low-fat milk.",
+    portionType: "kids",
+    servingSize: "Kids meal",
+    prices: [
+      {
+        amount: 7.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/kids-pizza/prod80723",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 400,
+    caloriesMax: null,
+    caloriesBasis: "cheese pizza; pepperoni not listed separately",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/kids-pizza/prod80723",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Kids meal for children under 12: includes a side and 1% low-fat milk; no soup or salad"
+  },
   {
     inventoryName: "Kids Chicken Fingers",
     displayName: "Kids Chicken Fingers",
     productId: "kids-chicken-fingers",
+    officialName: "Kids Chicken Fingers",
+    isNewOfficialItem: false,
+    description: "Lightly breaded chicken tenders for kids, served with a choice of side such as fries or grapes and a drink.",
+    portionType: "kids",
+    servingSize: "Kids meal",
+    prices: [
+      {
+        amount: 7.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/kids-chicken-fingers/prod80724",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 300,
+    caloriesMax: null,
+    caloriesBasis: "kids main dish; side and milk listed separately",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/kids-chicken-fingers/prod80724",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Kids meal for children under 12: includes a side and 1% low-fat milk; no soup or salad"
   },
   {
     inventoryName: "Kids Macaroni & Cheese",
     displayName: "Kids Macaroni & Cheese",
     productId: "kids-macaroni-and-cheese",
+    officialName: "Kids Macaroni & Cheese (V)",
+    isNewOfficialItem: false,
+    description: "Kid-size pasta shells in a creamy cheese sauce, served with a choice of side and 1% low-fat milk.",
+    portionType: "kids",
+    servingSize: "Kids meal",
+    prices: [
+      {
+        amount: 7.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/kids-macaroni-cheese-v/prod80721",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 360,
+    caloriesMax: null,
+    caloriesBasis: "kids main dish; side and milk listed separately",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/kids-macaroni-cheese-v/prod80721",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Kids meal for children under 12: includes a side and 1% low-fat milk; no soup or salad"
   },
   {
     inventoryName: "Kids Meat Sauce Pasta",
     displayName: "Kids Meat Sauce Pasta",
     productId: "kids-meat-sauce-pasta",
+    officialName: "Kids Meat Sauce with Choice of Pasta",
+    isNewOfficialItem: false,
+    description: "Kid-size pasta with meat sauce, choosing fettuccine, small shells, or spaghetti, served with a side and 1% low-fat milk.",
+    portionType: "kids",
+    servingSize: "Kids meal",
+    prices: [
+      {
+        amount: 7.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/kids-meat-sauce-with-choice-of-pasta/prod340059",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 110,
+    caloriesMax: null,
+    caloriesBasis: "sauce only; choice of pasta + side + milk listed as a range",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/kids-meat-sauce-with-choice-of-pasta/prod340059",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Kids meal for children under 12: includes a side and 1% low-fat milk; no soup or salad"
   },
   {
     inventoryName: "Kids Tomato Sauce Pasta",
     displayName: "Kids Tomato Sauce Pasta",
     productId: "kids-tomato-sauce-pasta",
+    officialName: "Kids Tomato Sauce with Choice of Pasta (V)",
+    isNewOfficialItem: false,
+    description: "Kid-size pasta with tomato sauce, choosing fettuccine, small shells, or spaghetti, served with a side and 1% low-fat milk.",
+    portionType: "kids",
+    servingSize: "Kids meal",
+    prices: [
+      {
+        amount: 7.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/kids-tomato-sauce-with-choice-of-pasta-v/prod340058",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 80,
+    caloriesMax: null,
+    caloriesBasis: "sauce only; choice of pasta + side + milk listed as a range",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/kids-tomato-sauce-with-choice-of-pasta-v/prod340058",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Kids meal for children under 12: includes a side and 1% low-fat milk; no soup or salad"
   },
   {
     inventoryName: "Kids Five Cheese Marinara Pasta",
     displayName: "Kids Five Cheese Marinara Pasta",
     productId: "kids-five-cheese-marinara-pasta",
+    officialName: "Kids Five Cheese Marinara with Choice of Pasta (V)",
+    isNewOfficialItem: false,
+    description: "Kid-size pasta with five cheese marinara, choosing fettuccine, small shells, or spaghetti, with a side and 1% low-fat milk.",
+    portionType: "kids",
+    servingSize: "Kids meal",
+    prices: [
+      {
+        amount: 7.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/kids-five-cheese-marinara-with-choice-of-pasta-v/prod2910022",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 150,
+    caloriesMax: null,
+    caloriesBasis: "sauce only; choice of pasta + side + milk listed as a range",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/kids-five-cheese-marinara-with-choice-of-pasta-v/prod2910022",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Kids meal for children under 12: includes a side and 1% low-fat milk; no soup or salad | PDF check (not-listed): Kids five cheese marinara sauce is not listed in the PDF kids section (only alfredo, meat, tomato)"
   },
   {
     inventoryName: "Kids Cheese Ravioli",
     displayName: "Kids Cheese Ravioli",
     productId: "kids-cheese-ravioli",
+    officialName: "Kids Cheese Ravioli (V)",
+    isNewOfficialItem: false,
+    description: "Kid-size cheese-filled ravioli with tomato sauce, served with a choice of side and 1% low-fat milk.",
+    portionType: "kids",
+    servingSize: "Kids meal",
+    prices: [
+      {
+        amount: 7.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/kids-cheese-ravioli-v/prod80722",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 340,
+    caloriesMax: null,
+    caloriesBasis: "kids main dish; side and milk listed separately",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/kids-cheese-ravioli-v/prod80722",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Kids meal for children under 12: includes a side and 1% low-fat milk; no soup or salad"
   },
   {
     inventoryName: "Kids Grilled Chicken with Rotini Pasta & Marinara",
     displayName: "Kids Grilled Chicken with Rotini Pasta & Marinara",
     productId: "kids-grilled-chicken-with-rotini-pasta-and-marinara",
+    officialName: "Kids Grilled Chicken with Rotini Pasta & Marinara",
+    isNewOfficialItem: false,
+    description: "A kids meal of grilled chicken breast with gluten-free rotini and marinara, plus grapes or broccoli and low-fat milk.",
+    portionType: "kids",
+    servingSize: "Kids meal",
+    prices: [
+      {
+        amount: 9.98,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/kids-grilled-chicken-with-rotini-pasta-marinara/prod7240045",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 430,
+    caloriesMax: null,
+    caloriesBasis: "kids main dish; side and milk listed separately",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/kids-grilled-chicken-with-rotini-pasta-marinara/prod7240045",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Kids meal for children under 12: includes a side and 1% low-fat milk; no soup or salad"
   },
   {
     inventoryName: "Kids Rotini with Marinara",
     displayName: "Kids Rotini with Marinara",
     productId: "kids-rotini-with-marinara",
+    officialName: "Kids Rotini with Marinara (V)",
+    isNewOfficialItem: false,
+    description: "A kids meal of gluten-free rotini with marinara sauce, served with grapes or broccoli and a 1% low-fat milk.",
+    portionType: "kids",
+    servingSize: "Kids meal",
+    prices: [
+      {
+        amount: 7.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/kids-rotini-with-marinara-v/prod7240046",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 260,
+    caloriesMax: null,
+    caloriesBasis: "kids main dish; side and milk listed separately",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/kids-rotini-with-marinara-v/prod7240046",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Kids meal for children under 12: includes a side and 1% low-fat milk; no soup or salad"
   },
   {
     inventoryName: "Kids Rotini with Meat Sauce",
     displayName: "Kids Rotini with Meat Sauce",
     productId: "kids-rotini-with-meat-sauce",
-  },
+    officialName: "Kids Rotini with Meat Sauce",
+    isNewOfficialItem: false,
+    description: "A kids meal of gluten-free rotini with meat sauce, served with grapes or broccoli and a 1% low-fat milk.",
+    portionType: "kids",
+    servingSize: "Kids meal",
+    prices: [
+      {
+        amount: 7.49,
+        unit: null,
+        locationId: "orlando-fl-millenia-mall",
+        sourceUrl: "https://www.olivegarden.com/menu/kids-rotini-with-meat-sauce/prod7240047",
+        sourceNote: "Online ordering, Order Type: Pickup",
+        checkedAt: "2026-11-12"
+      }
+    ],
+    priceNote: null,
+    options: [],
+    calories: 340,
+    caloriesMax: null,
+    caloriesBasis: "kids main dish; side and milk listed separately",
+    caloriesSourceUrl: "https://www.olivegarden.com/menu/kids-rotini-with-meat-sauce/prod7240047",
+    caloriesValueBasis: "official",
+    caloriesFormula: null,
+    caloriesNote: null,
+    calorieExtras: [],
+    availability: "available",
+    promotion: null,
+    regularPriceOfferingId: null,
+    status: "verified",
+    verifiedAt: "2026-11-12",
+    notes: "Kids meal for children under 12: includes a side and 1% low-fat milk; no soup or salad"
+  }
 ]);
