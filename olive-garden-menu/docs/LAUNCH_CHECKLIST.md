@@ -99,7 +99,7 @@ Reports: `docs/testing/` (`FINAL_WEBSITE_QA.md` and four detailed reports).
 
 - [x] Retention decided and published (2026-11-14): contact emails up to 12 months (with exceptions); ratings without fixed expiration (deletion on request or for moderation).
 - [ ] Owner: set a **monthly calendar reminder** for the mailbox review that deletes contact messages older than 12 months (`PRIVACY_DATA_INVENTORY.md` §5). The first deletions are due November 2027.
-- [ ] Owner: **professional legal review before launch** (recommended; `LEGAL_PAGES_REVIEW.md`). Add governing law only with that advice.
+- [x] Professional legal review: declined by the owner for now (2026-11-14). No governing law added.
 - [x] Legal pages show complete effective and updated dates (menu pages keep month-and-year).
 - [ ] After deploying to Vercel: confirm the hosting wording and regions in the Privacy Policy.
 - [ ] Before AdSense or analytics: follow `GOOGLE_ADSENSE_COMPLIANCE_CHECKLIST.md` §3-4. Planned CMP: Google's "Privacy & messaging"; verify its certification and the current requirements first; then the policy update, `ads.txt`, and the CSP review. No script is added before that.
@@ -108,3 +108,25 @@ Reports: `docs/testing/` (`FINAL_WEBSITE_QA.md` and four detailed reports).
 
 - [x] `/editorial-policy` and `/how-we-check-prices` published (`noindex` until launch), linked in the footer and from About, Contact, Disclaimer, and the homepage price bar. Tested: HTTP 200, proxy allows them, metadata, `WebPage` + `BreadcrumbList`, responsive 320-1920 px, 25 internal link targets with 0 broken.
 - [ ] When menu data is re-checked, the "last verified" month on `/how-we-check-prices` updates automatically from the data; review the page text only if the method changes.
+
+## 10. Lesson 9.8 compliance audit (2026-11-14)
+
+Reports:
+- `docs/GOOGLE_PUBLISHER_POLICY_AUDIT.md`
+- `docs/PRE_LAUNCH_COMPLIANCE_REPORT.md`
+- `docs/ADSENSE_ACTIVATION_PLAN.md`
+
+**Launch blockers:**
+- [x] About Us: founder section replaced by the Editorial Desk; page published (2026-11-14).
+- [x] GS Grilled Chicken Parmigiana photo replaced with a rotini photo (2026-11-14; minor: the chicken looks breaded).
+- [ ] Manual re-check of time-sensitive facts (§2) and the vote cleanup SQL (§2).
+- [x] Legal/trademark review: declined by the owner for now (2026-11-14). Keep the brand-safety safeguards (`PUBLISHER_IDENTITY.md`); no legal clearance is claimed.
+
+**Verified in this audit (local production build):**
+- [x] 25/25 pages 200, one H1, valid JSON-LD, unique metadata, 0 broken links, `noindex` + empty sitemap, 404/308 handling, security headers, no secrets in bundles, no ad or analytics scripts.
+- [x] Footer: 7 information links on all pages at 320-1440 px.
+- [x] Lighthouse Accessibility 100 on the information pages.
+
+**AdSense:** follow `ADSENSE_ACTIVATION_PLAN.md` only after launch. No publisher id, `ads.txt`, CMP, or ad script before then.
+
+- [x] Footer "Menu categories" row with all 17 category pages (owner decision 2026-11-14; tested 16/16).

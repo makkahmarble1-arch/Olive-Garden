@@ -21,15 +21,14 @@ export const metadata: Metadata = pageMetadata({
 /**
  * /about-us (Lesson 9.5): who publishes the site, what it covers, and how
  * menu information is researched. Facts only from docs/MENU_RESEARCH_PLAN.md
- * and the shared menu data; the founder profile comes from
- * content/site/publisher.ts and is never invented.
+ * and the shared menu data. Publisher: the Editorial Desk (owner decision
+ * 2026-11-14: no personal founder profile is published).
  */
 export default function AboutUsPage() {
   const categories = getAllMenuCategories();
   const listings = categories.reduce((sum, c) => sum + getOfferingsForCategory(c.id).length, 0);
   const checked = getMenuCheckDates();
   const lastVerified = checked ? formatMonthYear(checked.last) : null;
-  const founder = publisher.founder;
 
   return (
     <InfoPageLayout
@@ -47,8 +46,8 @@ export default function AboutUsPage() {
     >
       <InfoSection id="who-we-are" title="Who We Are">
         <p>
-          {siteConfig.name} is an informational website published by its founder and the {publisher.editorialTeam}. We
-          are not a restaurant, a delivery service, or part of Olive Garden. Our work is reading the official menu
+          {siteConfig.name} is an informational website published by the {publisher.editorialTeam}. We are not a
+          restaurant, a delivery service, or part of Olive Garden. Our work is reading the official menu
           carefully, recording what we find, and presenting it in a way that is easy to compare.
         </p>
         <p>
@@ -110,22 +109,13 @@ export default function AboutUsPage() {
         </p>
       </InfoSection>
 
-      <InfoSection id="meet-our-founder" title="Meet Our Founder">
-        {founder ? (
-          <>
-            <p className="font-display text-xl font-bold text-hero-deep">
-              {founder.name}
-              <span className="block font-sans text-base font-normal text-muted">{founder.role}</span>
-            </p>
-            {founder.bio.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </>
-        ) : (
-          <p className="rounded-lg border border-card-border bg-card-bg px-4 py-3 text-base leading-7 text-card-text">
-            The founder&apos;s profile will be published here soon.
-          </p>
-        )}
+      <InfoSection id="editorial-desk" title="Our Editorial Desk">
+        <p>
+          Our content is researched, written, and updated by the {publisher.editorialTeam}. The desk compares menu
+          information with Olive Garden&apos;s official menu and nutrition sources, records where every value comes from,
+          and reviews reader corrections before changing a page. We do not publish personal profiles or claim professional
+          credentials, and we do not present opinions as restaurant tasting experience.
+        </p>
       </InfoSection>
 
       <InfoSection id="editorial-standards" title="Our Editorial Standards">

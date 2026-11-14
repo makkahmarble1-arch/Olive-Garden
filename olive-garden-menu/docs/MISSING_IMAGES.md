@@ -39,7 +39,7 @@ Product IDs are from `content/menu/products.ts`. Photos are always supplied by t
 
 | Priority | Product (ID) | Class | Current image | Required correct appearance | Recommended filename | Official reference | Affected pages |
 |---|---|---|---|---|---|---|---|
-| 1 | Grilled Chicken Parmigiana, gluten-sensitive (`grilled-chicken-parmigiana`) | Differs (confirmed), in use by owner decision 2026-11-14: new photo shows **spaghetti** and broccoli | `/images/gluten-sensitive/grilled-chicken-parmigiana.webp` | Two grilled (not breaded) chicken breasts with marinara and melted Italian cheeses; spiral gluten-free rotini in marinara on the side. No fettuccine, cream sauce or bread | `public/images/gluten-sensitive/grilled-chicken-parmigiana.webp` | olivegarden.com/menu-listing/gluten-sensitive | `/` (Gluten Sensitive), `/gluten-sensitive` |
+| 1 | Grilled Chicken Parmigiana, gluten-sensitive (`grilled-chicken-parmigiana`) | **Replaced again 2026-11-14 (after Lesson 9.8):** new owner photo shows **rotini in marinara** (matches). Remaining minor difference: the chicken looks breaded (official: grilled, not breaded). Optional future replacement | `/images/gluten-sensitive/grilled-chicken-parmigiana.webp` | Two grilled (not breaded) chicken breasts with marinara and melted Italian cheeses; spiral gluten-free rotini in marinara on the side. No fettuccine, cream sauce or bread | `public/images/gluten-sensitive/grilled-chicken-parmigiana.webp` | olivegarden.com/menu-listing/gluten-sensitive | `/` (Gluten Sensitive), `/gluten-sensitive` |
 | 2 | 6 oz. Sirloin (`6-oz-sirloin`) | Differs (confirmed), in use by owner decision 2026-11-14: mashed potatoes and carrots | `/images/classic-entrees/6-oz-sirloin.webp` | Grilled 6 oz sirloin with garlic herb butter and parmesan garlic broccoli. No mashed potatoes | `public/images/classic-entrees/6-oz-sirloin.webp` | olivegarden.com/menu/classic-entrees; gluten-sensitive listing | `/` (Classic Entrees, Gluten Sensitive), `/classic-entrees`, `/gluten-sensitive` |
 | 3 | Herb-Grilled Salmon (`herb-grilled-salmon`) | Differs (confirmed), in use by owner decision 2026-11-14: rice, carrots and zucchini | `/images/classic-entrees/herb-grilled-salmon.webp` | Grilled salmon fillet with garlic herb butter and parmesan garlic broccoli. No potatoes or pasta | `public/images/classic-entrees/herb-grilled-salmon.webp` | olivegarden.com/menu/classic-entrees; gluten-sensitive listing | `/` (Classic Entrees, Gluten Sensitive), `/classic-entrees`, `/gluten-sensitive` |
 | 4 | Lasagna Combination, catering (`lasagna-combination`) | Differs (confirmed), in use by owner decision 2026-11-14: one plate with chicken parmigiana | `/images/catering/lasagna-combination.webp` | Catering spread: a pan of Lasagna Classico, a pan of Five Cheese Ziti al Forno or Fettuccine Alfredo, two jumbo house salads, breadsticks, a gallon of iced tea, a whole cake. No chicken parmigiana | `public/images/catering/lasagna-combination.webp` | olivegarden.com/catering | `/` (Catering), `/catering` |
@@ -241,3 +241,12 @@ All are 600 × 450 WebP. Details and alt text: `IMAGE_MANIFEST.md`.
 1. Put the originals in `image-staging/missing-images/` (or `image-staging/<category>/`).
 2. We check each one against the "Correct appearance" above, then optimize it to 600 × 450 WebP.
 3. Set `image` on the product in `content/menu/products.ts` (with `aiGenerated: true` for AI images), clear `imageIssue`, and update `IMAGE_MANIFEST.md`.
+
+## Update 2026-11-14 (after Lesson 9.8): GS Grilled Chicken Parmigiana
+
+- The owner supplied a new photo: `image-staging/missing-images/owner-photos-2026-11-14/grilled-chicken-parmigiana-rotini.png`, 1536 × 1024.
+- It was trimmed and fitted on white to 600 × 450 WebP (38 KB) and saved as `public/images/gluten-sensitive/grilled-chicken-parmigiana.webp`. The spaghetti photo it replaces is in git history.
+- **Matches:** rotini pasta in marinara, chicken with marinara and melted cheese.
+- **Still differs:** the chicken has a crumb-like crust (looks breaded). The official gluten-sensitive dish uses grilled, unbreaded chicken.
+- Alt text describes only what is shown: "Chicken topped with marinara and melted cheese, served with rotini pasta in marinara".
+- The launch blocker "spaghetti on a gluten-sensitive dish" is resolved. A photo with clearly grilled chicken would be ideal (optional).

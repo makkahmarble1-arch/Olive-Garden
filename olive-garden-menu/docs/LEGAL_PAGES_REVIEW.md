@@ -45,3 +45,10 @@
   - whether to add governing law and venue
   - the AdSense/consent text
 - No governing law or jurisdiction is stated until that review gives one. None has been invented.
+
+## Owner decision: no lawyer for now (2026-11-14)
+
+- Professional legal and trademark review is **declined at this stage**.
+- The pages remain written conservatively: no governing law, no guarantees, liability "to the extent permitted by applicable law".
+- Brand-safety rules are in `PUBLISHER_IDENTITY.md`.
+- Nothing here should be read as legal clearance. Reconsider a review if the site grows, starts earning significant revenue, or receives a complaint.

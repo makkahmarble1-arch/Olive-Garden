@@ -4,7 +4,7 @@ Pages about the website itself (trust, contact, legal). Status file: `content/si
 
 | Page | URL | Status (2026-11-14) | Missing before "published" |
 |---|---|---|---|
-| About Us | `/about-us` | **Preview** (built, linked in the footer, `noindex`, not in the sitemap) | Founder name, role, and biography approved by the owner (`PUBLISHER_IDENTITY.md`) |
+| About Us | `/about-us` | **Published** (2026-11-14: "Our Editorial Desk" replaces the founder section) | — |
 | Contact Us | `/contact-us` | **Published** (Lesson 9.5.4: Resend set up, inbox and Reply-To confirmed) | Add the Resend variables in Vercel before deploying (`CONTACT_FORM_SETUP.md`) |
 | Privacy Policy | `/privacy-policy` | **Published** (Lesson 9.6; `noindex` until launch) | Owner review items in `LEGAL_PAGES_REVIEW.md`; update before ads or analytics |
 | Terms and Conditions | `/terms-and-conditions` | **Published** (Lesson 9.6) | Owner review items (no governing law supplied) |
@@ -57,3 +57,9 @@ Send Us a Message (form) · Menu and Price Corrections · General Questions and 
   - Disclaimer → How We Check Prices
   - The new pages link to Contact, About, and Disclaimer
 - **Footer** (`siteConfig.infoLinks`): About Us, Contact Us, Editorial Policy, How We Check Prices, Privacy Policy, Terms and Conditions, Disclaimer.
+
+## Lesson 9.8 audit (2026-11-14)
+
+- All 7 information pages return 200; there are 25 main pages in total (`PRE_LAUNCH_COMPLIANCE_REPORT.md`).
+- About Us is the only page with a placeholder (founder). It must be finished (authorized profile) or reworded before launch, since ads cannot run on "under construction" screens.
+- Lighthouse on About, Contact, Privacy, and How We Check Prices: Accessibility 100, Best Practices 100. The SEO score is limited only by the pre-launch `noindex`.

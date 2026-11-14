@@ -24,9 +24,9 @@ export const infoPages: Record<"about" | "contact" | "editorial" | "prices" | "p
   about: {
     slug: "about-us",
     title: "About Us",
-    status: "preview",
+    // Published 2026-11-14: founder section replaced by the Editorial Desk (owner decision).
+    status: "published",
     updatedAt: "2026-11-14",
-    pending: "The founder profile will be added once the owner approves the public name and biography.",
   },
   contact: {
     slug: "contact-us",

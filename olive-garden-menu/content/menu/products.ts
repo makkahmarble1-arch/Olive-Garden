@@ -1490,11 +1490,12 @@ export const menuProducts: MenuProduct[] = [
     id: "grilled-chicken-parmigiana",
     name: "Grilled Chicken Parmigiana",
     description: null,
-    // Owner photo (2026-11-14), used by owner decision although it differs from the
-    // official dish: spaghetti instead of gluten-free rotini, plus broccoli. docs/MISSING_IMAGES.md section A.
+    // Owner photo replaced 2026-11-14 (Lesson 9.8 follow-up): rotini in marinara, as
+    // on the official gluten-sensitive plate. Remaining difference: the chicken looks
+    // breaded (official: grilled, not breaded). docs/MISSING_IMAGES.md.
     image: {
       src: "/images/gluten-sensitive/grilled-chicken-parmigiana.webp",
-      alt: "Grilled chicken parmigiana with marinara and melted cheese, spaghetti, and broccoli",
+      alt: "Chicken topped with marinara and melted cheese, served with rotini pasta in marinara",
       width: 600,
       height: 450,
       credit: "Site owner",

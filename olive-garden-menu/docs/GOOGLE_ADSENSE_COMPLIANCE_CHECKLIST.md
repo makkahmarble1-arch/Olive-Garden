@@ -57,3 +57,23 @@
 - [ ] Owner decision on the tool(s).
 - [ ] Consent: Google Consent Mode v2 with the same CMP for EEA/UK/CH. Clarity also needs a consent signal there.
 - [ ] Update the Privacy Policy analytics section and the cookie table before activation.
+
+## 5. Lesson 9.8 update (2026-11-14)
+
+- The full audit with references is in `GOOGLE_PUBLISHER_POLICY_AUDIT.md`. The step-by-step plan is in `ADSENSE_ACTIVATION_PLAN.md`, and blockers are in `PRE_LAUNCH_COMPLIANCE_REPORT.md`.
+- **Before applying** (from the audit):
+  - remove the About Us placeholder (no "under construction" screens)
+  - replace the misleading GS photo
+  - re-check time-sensitive offers
+  - legal review of the trademark in the domain and name
+
+### Analytics preparation (GA4 / Microsoft Clarity): not installed
+
+| Topic | Requirement / plan |
+|---|---|
+| Privacy disclosures | Before activation, the Privacy Policy "Analytics Services" section must name the tool, the data collected (pages, device and browser data, IP-derived location; Clarity: clicks, scrolls, session replay with masking), the cookies or storage it uses, retention, and opt-out links. Then update the "Last updated" date and `PRIVACY_DATA_INVENTORY.md` |
+| Consent | EEA/UK/CH: consent is needed before analytics cookies. Use the same CMP (Google Consent Mode v2 signals for GA4; Clarity's consent API). US: check state laws. Do not show a fake banner, and do not set cookies before consent where it is required |
+| Data collection configuration | GA4: data retention 2 months (the minimum) unless there is a reason for more; Google signals off unless needed; no personal data in URLs or events (the contact form sends none). Clarity: masking set to "Strict", so form fields are never recorded |
+| Script loading | Load through `next/script` (`afterInteractive`, or `lazyOnload` for Clarity) **only after consent where required**; keep the static pages static; one place (`app/layout.tsx`) behind an env switch |
+| Security headers | No CSP today. If one is added: allow `googletagmanager.com`, `google-analytics.com`, `*.clarity.ms`, and the CMP and ad domains. The Permissions-Policy does not block analytics. `Referrer-Policy: strict-origin-when-cross-origin` limits referrer data (acceptable) |
+| Performance | Each tag adds JavaScript (GA4 ~50-90 KB; Clarity ~30-60 KB plus recording). Measure Lighthouse and real-user data before and after; mobile homepage TBT is already high (option A) |

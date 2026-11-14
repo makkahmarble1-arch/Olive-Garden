@@ -96,11 +96,16 @@ where it is needed. Never fill gaps with invented data.
 
 - Site name: **Olive Garden Menu Prices** (owner-approved, Lesson 9.5,
   2026-11-14), defined only in `lib/site.ts`. Always paired with
-  non-affiliation disclaimers. Publisher: a real founder plus the "Olive
-  Garden Menu Prices Editorial Desk" (`content/site/publisher.ts`,
-  `docs/PUBLISHER_IDENTITY.md`). The founder profile stays `null` and the
-  contact email stays hidden (`verified: false`) until the owner supplies or
-  confirms them. Never invent people, credentials, addresses, or phone numbers.
+  non-affiliation disclaimers. Publisher: the "Olive
+  Garden Menu Prices Editorial Desk" only (`content/site/publisher.ts`,
+  `docs/PUBLISHER_IDENTITY.md`). Owner decision 2026-11-14: no personal founder
+  profile; `founder` stays `null` and is not rendered. Never publish a real
+  person's name, bio, photo, or credentials without the owner's written
+  confirmation of that person's authorization. Never invent people,
+  credentials, addresses, or phone numbers.
+  Trademark: the owner declined a lawyer for now. Keep the brand-safety
+  safeguards in `docs/PUBLISHER_IDENTITY.md` (independent branding, no official
+  logo, visible disclaimers, no affiliation claims) and never claim legal clearance.
 - Domain (owner decision 2026-11-13): **https://olivegardenmenuprices.us**.
   Still **never hardcode it** in code: it is set as `NEXT_PUBLIC_SITE_URL` in
   Vercel Production (fallback `http://localhost:3000`). Do not migrate,

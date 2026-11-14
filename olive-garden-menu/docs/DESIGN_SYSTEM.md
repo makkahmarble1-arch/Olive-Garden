@@ -72,7 +72,7 @@ Loaded with `next/font/google` (self-hosted at build, no extra npm package).
 | Component | Style |
 |---|---|
 | Header | White, bottom border, sticky; logo/site name left, nav right; mobile menu button (min 44x44px) |
-| Footer | `ink` background or `brand-tint`; category links, legal links, disclaimer text |
+| Footer | `brand-tint` background. Top row: site name + description, "Explore" (homepage sections), "About" (7 information/legal pages), "Official resources". Then a full-width "Menu categories" row with all category pages that exist (`getMenuCategoriesWithPages`): 2 columns on phones, 3 from `sm`, 4 from `lg`, links at least 44 px tall. Last: disclaimer and © line |
 | Primary button | `brand-dark` bg, white text, hover `brand-darker` |
 | Accent button | `brand` bg, `ink` text |
 | Links in text | `brand-dark`, underlined, visible focus ring |

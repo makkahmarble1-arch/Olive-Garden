@@ -1,14 +1,12 @@
 /**
  * Who publishes this website (docs/PUBLISHER_IDENTITY.md).
  *
- * Owner-approved (Lesson 9.5, 2026-11-14; editorial name updated in 9.5.4):
- * a real founder together with the "Olive Garden Menu Prices Editorial Desk".
- * A proposed founder name and role exist (docs/PUBLISHER_IDENTITY.md) but are
- * NOT published until the owner confirms authorization to use that real
- * person's identity and that the role is accurate. Nothing here may be invented:
- * the founder profile stays `null` until the owner supplies the exact public
- * name and biography, and the contact email is shown only after the owner
- * confirms the inbox exists and receives mail.
+ * Owner decision (2026-11-14, after Lesson 9.8): the publisher is the
+ * "Olive Garden Menu Prices Editorial Desk". No personal founder profile is
+ * published: `founder` stays null and is not rendered anywhere. Never add a
+ * real person's name, biography, photo, or credentials without the owner's
+ * written confirmation that the person authorized it. The contact email is
+ * shown only while `verified` is true.
  */
 
 export type FounderProfile = {

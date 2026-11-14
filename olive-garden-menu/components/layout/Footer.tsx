@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { cacheLife } from "next/cache";
 import { siteConfig } from "@/lib/site";
+import { getMenuCategoriesWithPages, menuCategoryPath } from "@/lib/content";
 import Container from "./Container";
 
 // With Cache Components, the current date must be read inside "use cache".
@@ -12,6 +13,8 @@ async function CurrentYear() {
 }
 
 export default function Footer() {
+  // Dedicated category pages that exist (same rule as the [category] route).
+  const categories = getMenuCategoriesWithPages();
   return (
     <footer className="mt-auto border-t border-line bg-brand-tint">
       <Container className="grid gap-8 py-10 sm:grid-cols-2 md:grid-cols-[2fr_1fr_1fr_1fr] md:py-12">
@@ -73,6 +76,30 @@ export default function Footer() {
           </ul>
         </nav>
       </Container>
+
+      {categories.length > 0 && (
+        <div className="border-t border-line">
+          <Container className="py-8">
+            <nav aria-labelledby="footer-menu-categories">
+              <p id="footer-menu-categories" className="text-sm font-semibold text-ink">
+                Menu categories
+              </p>
+              <ul className="mt-2 grid grid-cols-2 gap-x-6 sm:grid-cols-3 lg:grid-cols-4">
+                {categories.map((category) => (
+                  <li key={category.id}>
+                    <Link
+                      href={menuCategoryPath(category.slug)}
+                      className="inline-flex min-h-11 items-center text-sm text-brand-dark underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-brand-dark"
+                    >
+                      {category.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </Container>
+        </div>
+      )}
 
       <div className="border-t border-line">
         <Container className="space-y-2 py-6 text-xs leading-5 text-muted">

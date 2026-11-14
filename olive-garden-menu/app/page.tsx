@@ -94,6 +94,9 @@ export default function Home() {
         url: home,
         description:
           "Independent publisher of an informational Olive Garden menu and price guide. Not affiliated with Olive Garden or Darden Restaurants, Inc.",
+        // Real pages only; no logo, people, or credentials (docs/PUBLISHER_IDENTITY.md).
+        publishingPrinciples: `${siteConfig.url}/editorial-policy`,
+        contactPoint: { "@type": "ContactPoint", contactType: "website inquiries", url: `${siteConfig.url}/contact-us` },
       },
       {
         "@type": "WebPage",
