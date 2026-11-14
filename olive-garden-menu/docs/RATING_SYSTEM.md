@@ -68,7 +68,7 @@ Totals: **146 products → 131 rating keys** (15 products share). A14 is split p
 | File | Purpose |
 |---|---|
 | `lib/ratings.ts` | Server: `getRatingSummaries()` reads all 146 products with ONE `get_rating_summaries` call. `'use cache'`, `cacheLife("minutes")`, tag `ratings` (the voting API will refresh it) |
-| `app/api/ratings/route.ts` | `GET /api/ratings`: `{ available, ratings: { [productId]: { average, count } } }`, only products with votes. Prerendered, revalidates about every minute |
+| `app/api/ratings/route.ts` | `GET /api/ratings`: `{ available, ratings: { [productId]: { average, count } } }`, only products with votes. Runs per request since 2026-11-14 (section 9.6); the database is still read at most about once a minute (`"use cache"` in `lib/ratings.ts`), and success responses are CDN-cached for 60 s (`s-maxage=60, stale-while-revalidate=3540`) |
 | `lib/rating-types.ts` | Shared types |
 | `components/rating/rating-store.ts` | Browser: ONE `fetch("/api/ratings")` per page view, shared by every rating on the page (`useSyncExternalStore`, so no provider component is needed) |
 | `components/rating/StarRating.tsx` | Golden stars drawn with CSS (`og-star`, `og-star-btn` in `app/globals.css`, Lesson 7.5): 18 px outline + gold fill whose width is `--fill`, one element per star (smaller DOM). `starFillStyle()` and a display-only `StarRating` |
@@ -273,6 +273,18 @@ All tests that write votes ran in the isolated test environment (in-memory Postg
 
 ### 9.3 Test data cleanup (owner approval needed; nothing was deleted)
 
+**Update 2026-11-14 (Lesson 8.5.1):**
+- The owner approved removing only the 2 development votes.
+- `/api/ratings` now shows **3** rated dishes: the 2 test votes plus Breadsticks (3 stars, origin unknown).
+- The older file below would therefore delete nothing.
+- Use `supabase/maintenance/2026-11-14_remove_two_dev_test_votes.sql`:
+  - STEP 1 lists the 2 votes.
+  - STEP 2 deletes exactly those 2 (all-or-nothing).
+  - STEPS 3-4 confirm the totals: both dishes have count 0, and every summary matches its remaining votes.
+- The summary trigger (`apply_vote_to_summary`, also on DELETE) subtracts each deleted vote.
+- The Breadsticks vote stays until the owner decides.
+- Nothing was run from the code.
+
 The site has only run locally, so every vote in the real database comes from development. Found on 2026-11-13: **2 votes** (Family-Style Lasagna Bundle 1 star, Famous House Salad 4 stars).
 
 Safe procedure, removes only confirmed test votes (`supabase/maintenance/cleanup_test_votes.sql`):
@@ -286,6 +298,30 @@ Safe procedure, removes only confirmed test votes (`supabase/maintenance/cleanup
 Tested on a local copy: a wrong count or a count of 0 deleted nothing; the correct count removed only the 2 test votes and kept all genuine votes and totals.
 
 **Owner-approved cleanup (2026-11-13):** `supabase/maintenance/2026-11-13_remove_dev_test_votes.sql` removes exactly the 2 development votes (family-style-lasagna-bundle 1 star, famous-house-salad 4 stars, created 2026-11-13). It deletes only if the database holds exactly these 2 votes; otherwise nothing changes. Tested on local copies: 3/3 cases. It must be run by the owner in the SQL Editor, because no API key (not even the secret key) can reach `ratings_private` (by design).
+
+### 9.6 `/api/ratings` error handling fix (Lesson 8.5.1, 2026-11-14)
+
+**Problem:**
+- The route was prerendered and refreshed in the background.
+- When Supabase failed during a refresh, the error branch called `connection()`, which is not allowed during static revalidation ("Dynamic server usage: Route /api/ratings couldn't be rendered statically…").
+- Once the cached copy had expired, a request could get **HTTP 500** (seen once in the Lesson 8.5 audit).
+
+**Fix (`app/api/ratings/route.ts`):**
+- `await connection()` now runs first, so the handler runs per request.
+- `getRatingSummaries()` is unchanged (`"use cache"`, `cacheLife("minutes")`, tag refreshed by the vote API), so the database is still read at most about once a minute.
+- Success responses are CDN-cached as before: `public, s-maxage=60, stale-while-revalidate=3540`.
+- A database failure returns `{ available: false, keys: {}, ratings: {} }` with HTTP 200 and `Cache-Control: no-store`, for that request only. The next request tries again.
+- The browser shows "Ratings unavailable", never zero votes (`rating-store.ts` rejects `available: false`).
+
+Unchanged: the vote API, duplicate-vote protection, rate limits, RLS, and server-only keys. No error details or keys are sent to the browser.
+
+**Tests (production builds, no votes written):**
+
+| Case | Result |
+|---|---|
+| Normal (real database, read only) | 3 × HTTP 200, `available: true`, `Cache-Control: public, s-maxage=60, stale-while-revalidate=3540` |
+| Database unreachable (separate build with `NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:9`) | 3 × HTTP 200, `{"available":false,"keys":{},"ratings":{}}`, `Cache-Control: no-store`; homepage HTTP 200 |
+| Build output | `/api/ratings` is `ƒ` (dynamic); every page stays static/partial prerender |
 
 ### 9.4 Remaining limitations
 

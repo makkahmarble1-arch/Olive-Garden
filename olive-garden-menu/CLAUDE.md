@@ -151,6 +151,11 @@ where it is needed. Never fill gaps with invented data.
      "Not rated yet" when none), shared by homepage and category pages, with
      basic duplicate/spam protection and persistent storage. Built in its own
      lesson; architecture and database decided then.
+- **Approved design (final, owner-confirmed 2026-11-14, Lesson 8.5.1):**
+  - The premium menu card (`components/menu/MenuItemCard.tsx`, `docs/DESIGN_SYSTEM.md` 4.2) is the design for **every** menu card (commit `63ed27d`). It supersedes the Lesson 8.5 note against a global rollout.
+  - The dark olive homepage hero (4.1) is also approved.
+  - Do not revert, redesign, resize, or restyle either one without owner approval. Keep the approved font sizes and weights (descriptions at normal weight), the cream card background, olive colors, calorie pills, photo styling, and compact gold star ratings.
+- **Category status (2026-11-14, Lesson 8.5.1):** all 17 category pages are `published` (content status only). Pre-launch `noindex` stays on until `SITE_INDEXING=true` at launch.
 - Privacy Policy, author information, and final branding: later lessons
   (owner, 2026-11-13). Homepage performance: keep the current approach
   (option A, `docs/PERFORMANCE_AUDIT.md`).
@@ -246,6 +251,18 @@ Apply to the homepage, every category page, shared components, and all future pa
   and it has an entry in `content/menu/category-pages.ts`. Other paths 404.
   Owner approval is needed before a category becomes `"published"`.
 - Category breadcrumbs: `Home > Menu > {Category}`.
+- **HTTP 404 for unknown URLs: `proxy.ts`** (owner approval 2026-11-14).
+  - **What it checks:** only one-segment URLs (matcher `/:segment`). A segment is allowed if it is:
+    - a category with a page (read from `content/menu/categories.ts`, the same rule as `app/[category]`)
+    - a top-level `app/` folder (`APP_TOP_LEVEL_ROUTES`, read from the file system in `next.config.ts` at build/dev start)
+    - a file name with a dot (robots.txt, sitemap.xml, favicon.ico)
+  - **Anything else** is rewritten to an unmatched internal path, so it gets the normal 404 page with a real HTTP 404.
+  - **Untouched:** no database, no route list to maintain. `/`, API routes, `/_next`, images, and deeper paths never reach it.
+  - **Future routes:**
+    - A new static page folder (`app/about`, `app/blog`) works automatically; restart `npm run dev` after adding a top-level folder.
+    - A new category works automatically once its `contentStatus` is not `placeholder`.
+    - A new **dynamic** route (e.g. `app/blog/[slug]`, or another top-level `[param]`) can again return HTTP 200 for unknown slugs (streaming). Extend `proxy.ts` (matcher plus a check against that route's real slug data) in the same lesson that adds it.
+    - Never put an extensionless file at the top of `public/`.
 - `/design-preview` is a dev-only component preview (404 in production).
   Its sample data must never be imported into public pages.
 - Every page: unique `title`, `description`, self-canonical, Open Graph,

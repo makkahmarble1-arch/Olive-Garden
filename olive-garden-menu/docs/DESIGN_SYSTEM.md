@@ -108,6 +108,18 @@ Only the homepage hero is dark; the rest of the site keeps the light theme. Comp
 
 ### 4.2 Menu card (premium design, owner-approved for all cards 2026-11-14)
 
+**Final (owner confirmation, Lesson 8.5.1, 2026-11-14):** this is the permanent design for every menu card, as implemented in commit `63ed27d`. It supersedes the earlier Lesson 8.5 instruction not to roll it out globally. Do not revert, redesign, or resize it.
+
+Keep all of the following:
+- approved font sizes and weights (descriptions at normal weight 400)
+- cream card background and olive colors
+- amber calorie pills
+- photo styling
+- compact gold star ratings
+- the responsive grid
+
+The dark olive homepage hero (4.1) is approved and preserved in the same way.
+
 Every menu card uses this design: the homepage (all 17 category sections and Popular Menu Items) and the photo cards on category pages. It was first tested on the Family-Style Lasagna Bundle card, then approved for all cards. The earlier card design is in git history.
 
 | Part | Rule |

@@ -307,6 +307,7 @@ export const homepageFaqs: FaqItem[] = [
     question: "Does Olive Garden have gluten-free food?",
     answer:
       "It has a gluten-sensitive menu made without gluten-containing ingredients, but those dishes are not certified gluten-free and there is no separate fryer. The gluten-free rotini pasta meets the FDA gluten-free definition.",
+    link: { text: "Gluten-sensitive dishes, prices, and precautions", href: "/gluten-sensitive" },
   },
   {
     question: "How many calories are in Olive Garden breadsticks?",

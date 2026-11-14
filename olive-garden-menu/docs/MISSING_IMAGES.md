@@ -1,6 +1,6 @@
 # Missing Food Images
 
-**Audit date:** 2026-11-13 (Lesson 7.3 final, after the owner's AI images in `image-staging/missing-images/`)
+**Audit date:** 2026-11-13 (Lesson 7.3 final). **Consolidated:** 2026-11-14 (Lesson 8.5.1): see "Consolidated image replacement manifest" below for the single, prioritized list.
 **Scope:** every card on the homepage `/` (all 17 categories + Popular Menu Items). Live list of all image files: `IMAGE_MANIFEST.md`.
 
 ## Summary
@@ -11,11 +11,46 @@
 | Integrated | **24** of the first 25 (Homemade Soups trio retired) + 4 soup photos and 1 composite (2026-11-14) |
 | Of these, match the official dish | 14 |
 | Of these, differ from the official dish (used by owner decision, 2026-11-13) | 10 in use (section A; item 5 removed) |
-| Products still without an image | **4** (incorrect images removed 2026-11-14, section 00) |
-| "Photo coming soon" placeholders on the homepage | **6** (section 00; the 5 Homemade Soups placeholders were replaced on 2026-11-14) |
+| Products still without an image | **0** (the 4 removed images were replaced by new owner photos on 2026-11-14; they differ from the official dish, section 00) |
+| "Photo coming soon" placeholders on the homepage | **0** (2026-11-14) |
 | Broken images on the homepage | 0 |
 
 **Owner decision (2026-11-13):** "use the images I supplied". The 11 images in section A are used although they differ from the official dish. The "AI image" card label was removed by owner decision; since 2026-11-14 the public site does not mention AI at all (owner decision); the homepage only says the photos are supplied by the site owner and are not official Olive Garden photos. A corrected image can replace any of them later under the same file name; the prompts below are kept for that.
+
+## Consolidated image replacement manifest (Lesson 8.5.1, 2026-11-14)
+
+This is the single list of every open image issue. It was checked against our verified menu descriptions, the research notes, and the official pages named below. It supersedes the scattered notes in the sections below, which are kept as history.
+
+**Classes:**
+- **Missing:** an incorrect image was removed, so the card shows the "Photo coming soon" placeholder.
+- **Differs (confirmed):** the photo shows something the official item does not have. The owner decided to keep these in use on 2026-11-13.
+- **Optional:** a visual improvement only; the difference is not confirmed by an official source.
+- **Resolved:** no action needed.
+
+Product IDs are from `content/menu/products.ts`. Photos are always supplied by the owner and never generated or downloaded by us.
+
+| Priority | Product (ID) | Class | Current image | Required correct appearance | Recommended filename | Official reference | Affected pages |
+|---|---|---|---|---|---|---|---|
+| 1 | Grilled Chicken Parmigiana, gluten-sensitive (`grilled-chicken-parmigiana`) | Differs (confirmed), in use by owner decision 2026-11-14: new photo shows **spaghetti** and broccoli | `/images/gluten-sensitive/grilled-chicken-parmigiana.webp` | Two grilled (not breaded) chicken breasts with marinara and melted Italian cheeses; spiral gluten-free rotini in marinara on the side. No fettuccine, cream sauce or bread | `public/images/gluten-sensitive/grilled-chicken-parmigiana.webp` | olivegarden.com/menu-listing/gluten-sensitive | `/` (Gluten Sensitive), `/gluten-sensitive` |
+| 2 | 6 oz. Sirloin (`6-oz-sirloin`) | Differs (confirmed), in use by owner decision 2026-11-14: mashed potatoes and carrots | `/images/classic-entrees/6-oz-sirloin.webp` | Grilled 6 oz sirloin with garlic herb butter and parmesan garlic broccoli. No mashed potatoes | `public/images/classic-entrees/6-oz-sirloin.webp` | olivegarden.com/menu/classic-entrees; gluten-sensitive listing | `/` (Classic Entrees, Gluten Sensitive), `/classic-entrees`, `/gluten-sensitive` |
+| 3 | Herb-Grilled Salmon (`herb-grilled-salmon`) | Differs (confirmed), in use by owner decision 2026-11-14: rice, carrots and zucchini | `/images/classic-entrees/herb-grilled-salmon.webp` | Grilled salmon fillet with garlic herb butter and parmesan garlic broccoli. No potatoes or pasta | `public/images/classic-entrees/herb-grilled-salmon.webp` | olivegarden.com/menu/classic-entrees; gluten-sensitive listing | `/` (Classic Entrees, Gluten Sensitive), `/classic-entrees`, `/gluten-sensitive` |
+| 4 | Lasagna Combination, catering (`lasagna-combination`) | Differs (confirmed), in use by owner decision 2026-11-14: one plate with chicken parmigiana | `/images/catering/lasagna-combination.webp` | Catering spread: a pan of Lasagna Classico, a pan of Five Cheese Ziti al Forno or Fettuccine Alfredo, two jumbo house salads, breadsticks, a gallon of iced tea, a whole cake. No chicken parmigiana | `public/images/catering/lasagna-combination.webp` | olivegarden.com/catering | `/` (Catering), `/catering` |
+| — | Homemade Soups (`homemade-soups`) | **Resolved** 2026-11-14 | `/images/soups-salad-and-breadsticks/homemade-soups-four.webp` (owner photos of the 4 soups) | — | — | olivegarden.com/menu/homemade-soups/prod81927 | `/`, `/soups-salad-and-breadsticks`, `/family-style-meals`, `/catering` |
+| 5 | Side of Meatballs (`side-of-meatballs`) | Differs (confirmed): 4 meatballs, the official side has 3 | `/images/sides-sauces-and-extras/side-of-meatballs.webp` | Exactly 3 Italian meatballs in marinara in a small side dish | same file name | olivegarden.com/menu/sides-sauces-extras | `/`, `/sides-sauces-and-extras` |
+| 6 | Warm Italian Doughnuts (`warm-italian-doughnuts`) | Differs (confirmed): a cream dip is shown; official dips are raspberry or chocolate | `/images/desserts/warm-italian-doughnuts.webp` | Sugar-coated doughnuts with a raspberry or chocolate dipping sauce only | same file name | olivegarden.com/menu/desserts | `/`, `/desserts` |
+| 7 | 2-Liter Soda (`2-liter-soda`) | Differs (confirmed): 5 flavors with third-party labels; official choices are Coca-Cola, Diet Coke and Sprite | `/images/drink-menu/2-liter-soda.webp` | One to three 2-liter bottles of the official flavors (labels allowed only as the product sold) | same file name | olivegarden.com/menu/non-alcoholic-beverages | `/`, `/drink-menu`, `/non-alcoholic-beverages`, `/catering` |
+| 8 | Cappuccino (`cappuccino`) | Differs (research note, Batch 3): the photo shows cocoa; our research describes whipped cream and cinnamon. Confirm on the official item page before replacing | `/images/drink-menu/cappuccino.webp` | Cappuccino as served (per the official item page) | same file name | olivegarden.com/menu/non-alcoholic-beverages | `/`, `/drink-menu`, `/non-alcoholic-beverages` |
+| 9 | Kids meals (11 products, `kids-*`) | Differs (minor, confirmed): carrots or vegetable sticks shown; carrots are not an official kids side (grapes, broccoli, spaghetti with tomato sauce, mashed potatoes, french fries). The main dishes are correct. Kids Pizza (fruit cup) is close to grapes | `/images/kids-meal/<id>.webp` | The same main dish with one official side and a kids cup | same file names | olivegarden.com/menu/kids-meals-for-children-under-12 | `/`, `/kids-meal`, `/gluten-sensitive` (3 rotini meals) |
+| 10 | Zuppa Toscana (soup gallery photo; the separate `zuppa-toscana` product photo is fine) | **Optional:** bacon-like pieces are visible. Our verified description (sausage, russet potatoes, kale, creamy broth) does not mention bacon, but no official source was checked that rules it out, so this is not confirmed incorrect | `/images/soups-salad-and-breadsticks/zuppa-toscana-soup.webp` (also inside `homemade-soups-four.webp`) | Creamy broth with Italian sausage, russet potatoes and kale | same file name | olivegarden.com/menu/homemade-soups/prod81927 | `/soups-salad-and-breadsticks`, and the composite on `/`, `/family-style-meals`, `/catering` |
+| 11 | Chicken & Gnocchi (soup gallery photo) | **Optional:** looks thick, with sliced chicken on top. The ingredients (chicken, gnocchi, spinach, creamy broth) match; the look is a styling difference only | `/images/soups-salad-and-breadsticks/chicken-and-gnocchi-soup.webp` (also inside the composite) | Creamy soup with roasted chicken, gnocchi and spinach | same file name | olivegarden.com/menu/homemade-soups/prod81927 | as row 10 |
+
+**Counts:**
+- 0 missing, 0 placeholders (2026-11-14)
+- rows 1-4: new owner photos in use that still differ (row 1 is shown on a gluten-sensitive dish)
+- 4 confirmed differences kept by owner decision (rows 5-7 and 9); the cappuccino (row 8) needs official confirmation first
+- 2 optional improvements
+- the 11 section A items below remain in use by owner decision
+- Homemade Soups resolved
 
 **Hero image (checked):** `public/images/home/olive-garden-menu-spread.webp`, 1200 × 800 WebP, 98 KB, owner photo, HTTP 200, preloaded, alt text set. No action needed.
 
@@ -38,6 +73,16 @@
 The prompts below are updated with what went wrong in the supplied AI image ("Avoid").
 
 ## 00. Incorrect images removed (owner decision 2026-11-14): replacements needed
+
+**Update 2026-11-14 (later the same day):**
+- The owner supplied 4 new photos (originals in `image-staging/missing-images/owner-photos-2026-11-14/`).
+- They were converted to 600 × 450 WebP (49-55 KB), saved under the recommended file names below, and are now used on every card. **0 placeholders remain.**
+- All 4 still differ from the official dish, and the owner chose to use them anyway (owner decision 2026-11-14, after a warning):
+  - GS Grilled Chicken Parmigiana: **spaghetti** (not gluten-free) and broccoli instead of gluten-free rotini. This could mislead guests avoiding gluten, so it stays the top priority for a correct photo.
+  - 6 oz. Sirloin: mashed potatoes and carrots.
+  - Herb-Grilled Salmon: rice, carrots, and zucchini.
+  - Lasagna Combination: a single plate with chicken parmigiana instead of the catering spread.
+- The alt text describes what each photo shows. A correct photo can replace any of them later under the same file name, using the "Correct image needed" column.
 
 Found in the Batch 4 image audit. The image mapping was removed in `content/menu/products.ts` (`image: null`, reason in `imageIssue`), so every card shows the "Photo coming soon" placeholder with the same size; prices, calories, descriptions, and ratings are unchanged. The old files stay in `public/` (unused) until the owner approves deleting them. **The owner supplies the replacements.** Save each new photo under the recommended filename, set `image` again in `products.ts` (and `imageIssue: null`), then update this file and `IMAGE_MANIFEST.md`.
 

@@ -12,8 +12,8 @@ import type { CategoryPageContent } from "@/lib/types";
  * must be re-read whenever that data changes (CATEGORY_DEVELOPMENT_CHECKLIST.md D).
  * Values marked "calculated" are our arithmetic from official values.
  *
- * Internal links: existing category pages use "/<slug>"; categories without
- * a page yet link to their homepage section "/#<slug>" (update when they go live).
+ * Internal links: category pages use "/<slug>" (all 17 are published since
+ * 2026-11-14); "/#full-menu" is kept for intentional links to the full menu.
  */
 const NUTRITION_PDF = { label: "Olive Garden Nutrition Information (U.S. restaurants, PDF)", url: "https://media.olivegarden.com/en_us/pdf/olive_garden_nutrition.pdf" };
 const ORDER_ONLINE = { label: "Olive Garden: order online (To Go and Catering)", url: "https://www.olivegarden.com/order-online" };
@@ -229,7 +229,7 @@ export const categoryPages: CategoryPageContent[] = [
             type: "note",
             text: [
               "Planning an office lunch, party, or event instead of a family dinner? Olive Garden has a separate catering menu with larger combinations and delivery terms. See the ",
-              { text: "catering section of our full menu", href: "/#catering" },
+              { text: "Olive Garden catering menu", href: "/catering" },
               ".",
             ],
           },
@@ -273,6 +273,7 @@ export const categoryPages: CategoryPageContent[] = [
       { categoryId: "catering", text: "Feeding a party or office group instead? The catering menu is planned by headcount." },
       { categoryId: "classic-entrees", text: "Compare the single-plate dinner versions of these dishes." },
       { categoryId: "amazing-alfredos", text: "All Alfredo dishes side by side, from one plate to a family pan." },
+      { categoryId: "appetizers", text: "Shareable starters to add before the family meal." },
     ],
   },
 
@@ -706,9 +707,9 @@ export const categoryPages: CategoryPageContent[] = [
             type: "paragraph",
             text: [
               "The full three-way comparison for every dish is on the ",
-              { text: "lighter portions section", href: "/#lighter-portions" },
+              { text: "Olive Garden Lighter Portions menu", href: "/lighter-portions" },
               ", and all lunch plates are in the ",
-              { text: "lunch menu section", href: "/#lunch-menu" },
+              { text: "Olive Garden lunch menu", href: "/lunch-menu" },
               ".",
             ],
           },
@@ -771,6 +772,7 @@ export const categoryPages: CategoryPageContent[] = [
       { categoryId: "lighter-portions", text: "Smaller dinner plates on weekday evenings and weekends." },
       { categoryId: "amazing-alfredos", text: "Every Alfredo dish compared in one place." },
       { categoryId: "family-style-meals", text: "Pans and bundles that feed 4 to 12 at home." },
+      { categoryId: "appetizers", text: "Starters to share before your entrée." },
     ],
   },
 
@@ -904,7 +906,7 @@ export const categoryPages: CategoryPageContent[] = [
           {
             type: "list",
             items: [
-              ["Weekday lunch: smaller plates from $11.49, Monday to Friday until 3 PM. See the ", { text: "lunch menu section", href: "/#lunch-menu" }, "."],
+              ["Weekday lunch: smaller plates from $11.49, Monday to Friday until 3 PM. See the ", { text: "Olive Garden lunch menu", href: "/lunch-menu" }, "."],
               "Soup, salad, and breadsticks at a weekday lunch price of $9.99 instead of $13.49 at dinner.",
               "Lighter portions from $13.49 on weekday evenings and weekends.",
               "Never-Ending Pasta Bowl, listed as a limited-time special from $14.99.",
@@ -1425,7 +1427,7 @@ export const categoryPages: CategoryPageContent[] = [
             type: "paragraph",
             text: [
               "Planning food for a group or an office? Full trays, pasta stations, and combinations are on the ",
-              { text: "catering menu", href: "/#catering" },
+              { text: "catering menu", href: "/catering" },
               ".",
             ],
           },
@@ -1453,7 +1455,7 @@ export const categoryPages: CategoryPageContent[] = [
             type: "paragraph",
             text: [
               "Extra sauces and other add-ons are listed under ",
-              { text: "sides, sauces and extras", href: "/#sides-sauces-and-extras" },
+              { text: "sides, sauces and extras", href: "/sides-sauces-and-extras" },
               ". For a full calorie overview of every dish, see the ",
               { text: "full Olive Garden menu", href: "/#full-menu" },
               ".",
@@ -1487,7 +1489,7 @@ export const categoryPages: CategoryPageContent[] = [
             type: "paragraph",
             text: [
               "Need a gluten-sensitive option? Where available, Olive Garden offers Zuppa Toscana or a house salad without croutons with its ",
-              { text: "gluten-sensitive dishes", href: "/#gluten-sensitive" },
+              { text: "gluten-sensitive dishes", href: "/gluten-sensitive" },
               ", and leaves the breadsticks off unless you ask for them.",
             ],
           },
@@ -2205,7 +2207,7 @@ export const categoryPages: CategoryPageContent[] = [
             type: "paragraph",
             text: [
               "More gluten-sensitive dishes are listed in the ",
-              { text: "gluten-sensitive section of our full menu", href: "/#gluten-sensitive" },
+              { text: "Olive Garden gluten-sensitive menu", href: "/gluten-sensitive" },
               ".",
             ],
           },
@@ -2224,7 +2226,7 @@ export const categoryPages: CategoryPageContent[] = [
             type: "paragraph",
             text: [
               "Want more sauce on the side, or alfredo to take home? Large containers of marinara, meat sauce, five cheese marinara, and alfredo are listed under ",
-              { text: "sides, sauces and extras", href: "/#sides-sauces-and-extras" },
+              { text: "sides, sauces and extras", href: "/sides-sauces-and-extras" },
               ".",
             ],
           },
@@ -2310,7 +2312,7 @@ export const categoryPages: CategoryPageContent[] = [
             type: "paragraph",
             text: [
               "Planning for a group? Pans, trays, and combinations are on the ",
-              { text: "catering menu", href: "/#catering" },
+              { text: "catering menu", href: "/catering" },
               ", and every dish is on the ",
               { text: "full Olive Garden menu", href: "/#full-menu" },
               ".",
@@ -2926,7 +2928,7 @@ export const categoryPages: CategoryPageContent[] = [
             type: "paragraph",
             text: [
               "Chocolate Lasagna, Strawberry Cream Cake, and Warm Italian Doughnuts were not on the catering menu we checked. Full catering trays and combinations are in the ",
-              { text: "catering section of our full menu", href: "/#catering" },
+              { text: "Olive Garden catering menu", href: "/catering" },
               ", and take-home pans are on our ",
               { text: "Olive Garden family style meals", href: "/family-style-meals" },
               " page.",
@@ -2966,7 +2968,7 @@ export const categoryPages: CategoryPageContent[] = [
       {
         question: "Can you order Olive Garden desserts to go?",
         answer:
-          "Yes. All seven desserts were on the online ordering menu for pickup. The prices on this page are those online pickup prices.",
+          "Yes. All seven desserts were on the online ordering menu for pickup at the prices on this page. For a group, four of them also come as half or whole cakes on the catering menu.",
       },
       {
         question: "Does Olive Garden offer catering desserts?",
@@ -3635,9 +3637,9 @@ export const categoryPages: CategoryPageContent[] = [
             type: "paragraph",
             text: [
               "Planning a party? Gallons, 2-liter soda, and bottled water are also on the ",
-              { text: "catering menu", href: "/#catering" },
+              { text: "catering menu", href: "/catering" },
               ". Kids meals come with a drink choice that includes 1% milk, chocolate milk, raspberry lemonade, and soda; see the ",
-              { text: "kids menu section", href: "/#kids-meal" },
+              { text: "Olive Garden kids menu", href: "/kids-meal" },
               ".",
             ],
           },
@@ -4221,9 +4223,9 @@ export const categoryPages: CategoryPageContent[] = [
           "Olive Garden does not guarantee it. Its gluten-sensitive dishes are not tested to the FDA gluten-free limit, kitchens are shared, and there is no separate fryer. People with celiac disease should review the official allergen guide and talk to their server.",
       },
       {
-        question: "Does Olive Garden have gluten-sensitive kids meals?",
+        question: "Which Olive Garden soup and salad are gluten-sensitive?",
         answer:
-          "Yes, three: Grilled Chicken with Rotini Pasta & Marinara ($9.98), Rotini with Marinara ($7.49), and Rotini with Meat Sauce ($7.49), each with gluten-free rotini, a side, and 1% milk.",
+          "Zuppa Toscana (220 calories) and the Famous House Salad without croutons (110 calories) are the soup and salad on the gluten-sensitive menu, each $9.29 for online pickup. Ask for no croutons and no breadsticks, and remember the kitchen is shared.",
       },
       {
         question: "How can I order a gluten-sensitive meal at Olive Garden?",
@@ -4466,12 +4468,12 @@ export const categoryPages: CategoryPageContent[] = [
       {
         question: "Does Olive Garden offer gluten-sensitive kids meals?",
         answer:
-          "Yes. Three kids meals use gluten-free rotini and are on the gluten-sensitive menu. They are not guaranteed gluten-free because the kitchen is shared.",
+          "Yes, three: Grilled Chicken with Rotini Pasta & Marinara ($9.98), Rotini with Marinara ($7.49), and Rotini with Meat Sauce ($7.49). Each uses gluten-free rotini and comes with a side and 1% milk. They are on the gluten-sensitive menu but not guaranteed gluten-free, because the kitchen is shared.",
       },
       {
         question: "Can kids meals be ordered to go?",
         answer:
-          "Yes. All 11 kids meals were on the online ordering menu for pickup, and the prices on this page are those online pickup prices.",
+          "Yes. All 11 kids meals, including the three gluten-sensitive ones, were on the online ordering menu for pickup, and the prices on this page are those pickup prices. Each pickup kids meal still includes a side and a drink.",
       },
     ],
     related: [

@@ -613,21 +613,37 @@ export const menuProducts: MenuProduct[] = [
     id: "herb-grilled-salmon",
     name: "Herb-Grilled Salmon",
     description: null,
-    // Incorrect photo removed (owner decision 2026-11-14); placeholder until the owner
-    // supplies a correct image (docs/MISSING_IMAGES.md). The old file stays in /public.
-    image: null,
+    // Owner photo (2026-11-14), used by owner decision although it differs from the
+    // official dish: rice, carrots, and zucchini (official: parmesan garlic broccoli only). docs/MISSING_IMAGES.md section A.
+    image: {
+      src: "/images/classic-entrees/herb-grilled-salmon.webp",
+      alt: "Grilled salmon fillet with broccoli, carrots, zucchini, rice, and lemon",
+      width: 600,
+      height: 450,
+      credit: "Site owner",
+      license: "AI-generated illustration supplied by the site owner",
+      aiGenerated: true
+    },
     plannedImageSrc: "/images/classic-entrees/herb-grilled-salmon.webp",
-    imageIssue: "Replacement needed (owner decision 2026-11-14): the photo shows mashed potatoes; the official plate comes with parmesan garlic broccoli only."
+    imageIssue: null
   },
   {
     id: "6-oz-sirloin",
     name: "6 oz. Sirloin",
     description: null,
-    // Incorrect photo removed (owner decision 2026-11-14); placeholder until the owner
-    // supplies a correct image (docs/MISSING_IMAGES.md). The old file stays in /public.
-    image: null,
+    // Owner photo (2026-11-14), used by owner decision although it differs from the
+    // official dish: mashed potatoes and carrots (official: fettuccine alfredo or parmesan garlic broccoli). docs/MISSING_IMAGES.md section A.
+    image: {
+      src: "/images/classic-entrees/6-oz-sirloin.webp",
+      alt: "Grilled sirloin steak with mashed potatoes, broccoli, and carrots",
+      width: 600,
+      height: 450,
+      credit: "Site owner",
+      license: "AI-generated illustration supplied by the site owner",
+      aiGenerated: true
+    },
     plannedImageSrc: "/images/classic-entrees/6-oz-sirloin.webp",
-    imageIssue: "Replacement needed (owner decision 2026-11-14): the photo shows broccoli and mashed potatoes; the classic plate comes with fettuccine alfredo and the gluten-sensitive plate with parmesan garlic broccoli. Mashed potatoes are not served with either."
+    imageIssue: null
   },
   {
     id: "create-your-own-pasta",
@@ -1474,11 +1490,19 @@ export const menuProducts: MenuProduct[] = [
     id: "grilled-chicken-parmigiana",
     name: "Grilled Chicken Parmigiana",
     description: null,
-    // Incorrect photo removed (owner decision 2026-11-14); placeholder until the owner
-    // supplies a correct image (docs/MISSING_IMAGES.md). The old file stays in /public.
-    image: null,
+    // Owner photo (2026-11-14), used by owner decision although it differs from the
+    // official dish: spaghetti instead of gluten-free rotini, plus broccoli. docs/MISSING_IMAGES.md section A.
+    image: {
+      src: "/images/gluten-sensitive/grilled-chicken-parmigiana.webp",
+      alt: "Grilled chicken parmigiana with marinara and melted cheese, spaghetti, and broccoli",
+      width: 600,
+      height: 450,
+      credit: "Site owner",
+      license: "AI-generated illustration supplied by the site owner",
+      aiGenerated: true
+    },
     plannedImageSrc: "/images/gluten-sensitive/grilled-chicken-parmigiana.webp",
-    imageIssue: "Replacement needed (owner decision 2026-11-14): the photo shows fettuccine in a cream sauce, but the gluten-sensitive dish is served with gluten-free rotini in marinara. Misleading for a gluten-sensitive item."
+    imageIssue: null
   },
   {
     id: "rotini-pasta-with-marinara",
@@ -1754,11 +1778,19 @@ export const menuProducts: MenuProduct[] = [
     id: "lasagna-combination",
     name: "Lasagna Combination",
     description: null,
-    // Incorrect photo removed (owner decision 2026-11-14); placeholder until the owner
-    // supplies a correct image (docs/MISSING_IMAGES.md). The old file stays in /public.
-    image: null,
+    // Owner photo (2026-11-14), used by owner decision although it differs from the
+    // official dish: one plate with chicken parmigiana instead of the catering spread. docs/MISSING_IMAGES.md section A.
+    image: {
+      src: "/images/catering/lasagna-combination.webp",
+      alt: "Lasagna, chicken parmigiana, and fettuccine alfredo on a white plate",
+      width: 600,
+      height: 450,
+      credit: "Site owner",
+      license: "AI-generated illustration supplied by the site owner",
+      aiGenerated: true
+    },
     plannedImageSrc: "/images/catering/lasagna-combination.webp",
-    imageIssue: "Replacement needed (owner decision 2026-11-14): the photo shows chicken parmigiana, which is not part of the Lasagna Combination (Lasagna Classico pan + ziti or fettuccine alfredo pan, 2 jumbo salads, 24 breadsticks, gallon iced tea, whole cake)."
+    imageIssue: null
   },
   {
     id: "create-your-own-pasta-station",

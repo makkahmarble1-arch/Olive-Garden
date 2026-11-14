@@ -190,9 +190,9 @@ Open points for the owner:
 - [ ] Not published online, so the pages say so instead of guessing: a pickup minimum for catering, how the 10% / 5% delivery fee is calculated, adult ordering of kids meals, kids-eat-free offers.
 - [ ] Re-check before launch: catering "starting at" per-person prices and delivery rules (checked 2026-11-13), limited-time Pumpkin Cookie Butter Cheesecake.
 
-## F. Status of all 17 category pages (2026-11-14)
+## F. Status of all 17 category pages (2026-11-14, Lesson 8.5.1)
 
-All 17 pages are content-complete and development-complete (owner approval of Batch 4 on 2026-11-14). Pre-launch noindex stays on for every page.
+All 17 pages are content-complete and **published** (owner approval of all remaining pages, Lesson 8.5.1, 2026-11-14). "Published" is a content status only: it does not mean deployed or indexed. Pre-launch `noindex` stays on for every page until `SITE_INDEXING=true` is set at launch (owner approval).
 
 | # | Page | Status |
 |---:|---|---|
@@ -201,17 +201,30 @@ All 17 pages are content-complete and development-complete (owner approval of Ba
 | 3 | `/classic-entrees` | Published (Batch 1) |
 | 4 | `/buy-one-take-one` | Published (Batch 1) |
 | 5 | `/amazing-alfredos` | Published (Batch 1) |
-| 6 | `/soups-salad-and-breadsticks` | Preview (Batch 2) |
-| 7 | `/lighter-portions` | Preview (Batch 2) |
-| 8 | `/create-your-own-pasta` | Preview (Batch 2) |
-| 9 | `/lunch-menu` | Preview (Batch 2) |
-| 10 | `/desserts` | Preview (Batch 3) |
-| 11 | `/drink-menu` | Preview (Batch 3) |
-| 12 | `/sides-sauces-and-extras` | Preview (Batch 3) |
-| 13 | `/non-alcoholic-beverages` | Preview (Batch 3) |
-| 14 | `/wine-and-beer-to-go` | Preview (Batch 3) |
-| 15 | `/gluten-sensitive` | Preview (Batch 4) |
-| 16 | `/kids-meal` | Preview (Batch 4) |
-| 17 | `/catering` | Preview (Batch 4) |
+| 6 | `/soups-salad-and-breadsticks` | Published (Batch 2, 2026-11-14) |
+| 7 | `/lighter-portions` | Published (Batch 2, 2026-11-14) |
+| 8 | `/create-your-own-pasta` | Published (Batch 2, 2026-11-14) |
+| 9 | `/lunch-menu` | Published (Batch 2, 2026-11-14) |
+| 10 | `/desserts` | Published (Batch 3, 2026-11-14) |
+| 11 | `/drink-menu` | Published (Batch 3, 2026-11-14) |
+| 12 | `/sides-sauces-and-extras` | Published (Batch 3, 2026-11-14) |
+| 13 | `/non-alcoholic-beverages` | Published (Batch 3, 2026-11-14) |
+| 14 | `/wine-and-beer-to-go` | Published (Batch 3, 2026-11-14) |
+| 15 | `/gluten-sensitive` | Published (Batch 4, 2026-11-14) |
+| 16 | `/kids-meal` | Published (Batch 4, 2026-11-14) |
+| 17 | `/catering` | Published (Batch 4, 2026-11-14) |
 
-"Published" pages become indexable only when `SITE_INDEXING=true` is set at launch (owner approval). Preview pages stay `noindex` until the owner approves publishing them.
+Effects of publishing (verified on a production build, 2026-11-14):
+- The "Preview" notice is gone from the 12 pages.
+- Related Menus on every page now show all their planned targets.
+- All 18 pages still return HTTP 200 with `noindex, follow`, and the sitemap stays empty while indexing is off.
+
+### Lesson 8.5.1 corrections (2026-11-14)
+
+- [x] FAQ overlaps fixed:
+  - `/gluten-sensitive` "Does Olive Garden have gluten-sensitive kids meals?" was replaced by "Which Olive Garden soup and salad are gluten-sensitive?" (data values).
+  - The detailed kids answer (3 meals with prices) moved to `/kids-meal`.
+  - The homepage gluten FAQ now links to `/gluten-sensitive`.
+  - The desserts and kids to-go answers now have category-specific details.
+- [x] "Olive Garden Appetizers Menu" was added to the Related Menus of `/family-style-meals` and `/classic-entrees`.
+- [x] 13 inline links to homepage category sections (`/#catering`, `/#lunch-menu`, `/#lighter-portions`, `/#sides-sauces-and-extras`, `/#gluten-sensitive`, `/#kids-meal`) now point to the dedicated pages. The 4 `/#full-menu` links (intentional homepage navigation) are unchanged.
