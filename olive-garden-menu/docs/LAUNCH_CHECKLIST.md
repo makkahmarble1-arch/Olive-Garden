@@ -85,3 +85,26 @@ Reports: `docs/testing/` (`FINAL_WEBSITE_QA.md` and four detailed reports).
 - [x] Star touch areas widened where cards have room (27-36 px wide, 44 px tall; Lesson 8.6.1).
 - [ ] Manual: click the 21 external official links once (olivegarden.com blocks automated checks).
 - [ ] After deploying: repeat the HTTP status, rating (`npm run test:rating-api -- <domain>`), and Lighthouse checks on the live site; check once on a real iPhone and Android phone (Safari not tested locally).
+
+## 7. About Us and Contact Us (Lesson 9.5, 2026-11-14)
+
+- [x] `/about-us` and `/contact-us` built, linked in the footer, `noindex` (status `preview`), and tested.
+- [x] Site name changed to **Olive Garden Menu Prices** (`lib/site.ts`).
+- [ ] Owner: confirm authorization and accuracy for the proposed founder (Katherine Salom, Founder & Editor) and supply the approved biography (`docs/PUBLISHER_IDENTITY.md` §4). Then About Us → `published`.
+- [x] Resend configured locally (sending-only key, verified sending domain `mail.olivegardenmenuprices.us`). One end-to-end test email was received in the Inbox and Reply-To was checked (owner, 2026-11-14). Contact Us is `published` and the email is shown (Lesson 9.5.4).
+- [ ] Before deploying: add `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` to Vercel (Production, Sensitive). After deploying: send one labeled test from the live site and confirm it arrives.
+- [x] Privacy Policy, Terms and Conditions, and Disclaimer published (Lesson 9.6), and linked in the footer of every page. The Privacy Policy covers the rating cookie and hashes, the contact form (Resend, Hostinger mailbox), hosting, and planned AdSense/analytics.
+
+## 8. Legal and privacy (Lesson 9.6, 2026-11-14)
+
+- [x] Retention decided and published (2026-11-14): contact emails up to 12 months (with exceptions); ratings without fixed expiration (deletion on request or for moderation).
+- [ ] Owner: set a **monthly calendar reminder** for the mailbox review that deletes contact messages older than 12 months (`PRIVACY_DATA_INVENTORY.md` §5). The first deletions are due November 2027.
+- [ ] Owner: **professional legal review before launch** (recommended; `LEGAL_PAGES_REVIEW.md`). Add governing law only with that advice.
+- [x] Legal pages show complete effective and updated dates (menu pages keep month-and-year).
+- [ ] After deploying to Vercel: confirm the hosting wording and regions in the Privacy Policy.
+- [ ] Before AdSense or analytics: follow `GOOGLE_ADSENSE_COMPLIANCE_CHECKLIST.md` §3-4. Planned CMP: Google's "Privacy & messaging"; verify its certification and the current requirements first; then the policy update, `ads.txt`, and the CSP review. No script is added before that.
+
+## 9. Editorial pages (Lesson 9.7, 2026-11-14)
+
+- [x] `/editorial-policy` and `/how-we-check-prices` published (`noindex` until launch), linked in the footer and from About, Contact, Disclaimer, and the homepage price bar. Tested: HTTP 200, proxy allows them, metadata, `WebPage` + `BreadcrumbList`, responsive 320-1920 px, 25 internal link targets with 0 broken.
+- [ ] When menu data is re-checked, the "last verified" month on `/how-we-check-prices` updates automatically from the data; review the page text only if the method changes.

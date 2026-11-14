@@ -94,8 +94,13 @@ Full status table: "Owner decisions and pending information" in
 `docs/DEVELOPMENT_ROADMAP.md`. The owner supplies missing info in the phase
 where it is needed. Never fill gaps with invented data.
 
-- Site name: **Olive Garden Menu & Prices**, defined only in `lib/site.ts`
-  (branding may change later). Always paired with non-affiliation disclaimers.
+- Site name: **Olive Garden Menu Prices** (owner-approved, Lesson 9.5,
+  2026-11-14), defined only in `lib/site.ts`. Always paired with
+  non-affiliation disclaimers. Publisher: a real founder plus the "Olive
+  Garden Menu Prices Editorial Desk" (`content/site/publisher.ts`,
+  `docs/PUBLISHER_IDENTITY.md`). The founder profile stays `null` and the
+  contact email stays hidden (`verified: false`) until the owner supplies or
+  confirms them. Never invent people, credentials, addresses, or phone numbers.
 - Domain (owner decision 2026-11-13): **https://olivegardenmenuprices.us**.
   Still **never hardcode it** in code: it is set as `NEXT_PUBLIC_SITE_URL` in
   Vercel Production (fallback `http://localhost:3000`). Do not migrate,
@@ -133,10 +138,12 @@ where it is needed. Never fill gaps with invented data.
      Every file is listed in `docs/IMAGE_MANIFEST.md`. Owner-supplied
      AI-generated images are allowed (2026-11-13): mark them
      `aiGenerated: true` and list them in the manifest (internal record only).
-     **Never mention "AI-generated" anywhere on the public site** (owner
-     decision 2026-11-14): no card label, no note. Public text only says the
-     photos are supplied by the site owner, are not official Olive Garden
-     photos, and actual presentation may vary.
+     **Never mention "AI-generated" on cards or menu pages** (owner
+     decision 2026-11-14): no card label, no note there. Exception (owner
+     decision 2026-11-14, Lesson 9.6): the **Disclaimer page** discloses that
+     some food images are AI-generated illustrations. Elsewhere public text
+     only says the photos are supplied by the site owner, are not official
+     Olive Garden photos, and actual presentation may vary.
   3. **Popular Menu Items** (owner-chosen, fixed): Chicken Alfredo, Tour of
      Italy, Lasagna Classico, Chicken Parmigiana, Fettuccine Alfredo,
      Breadsticks. Shown with image, price, calories, and genuine visitor
@@ -273,8 +280,9 @@ Apply to the homepage, every category page, shared components, and all future pa
   owner approval) switches it on; never set it locally or in previews.
 - One `h1` per page; logical heading order.
 - JSON-LD via the shared `JsonLd` component, escaped with
-  `.replace(/</g, "\\u003c")`. Allowed: `WebSite`, `Organization` (this blog), `WebPage`,
-  `BreadcrumbList`, `BlogPosting`, `FAQPage` (only for visible FAQs).
+  `.replace(/</g, "\\u003c")`. Allowed: `WebSite`, `Organization` (this blog), `WebPage`
+  (and its subtypes `AboutPage`, `ContactPage`), `BreadcrumbList`, `BlogPosting`,
+  `FAQPage` (only for visible FAQs). No `Person` until the founder's details are approved.
   Not allowed: `Restaurant`, `Menu`, `Product`, `Offer`, `Review`, `AggregateRating`
   (visitor ratings are shown on the page, but not as structured data).
 - Sitemap `lastModified` uses real `updatedAt` dates, not `new Date()`.
@@ -287,3 +295,26 @@ Apply to the homepage, every category page, shared components, and all future pa
   slowing the page). `next/image` for images; `priority` only for the main
   above-the-fold image. The full-menu homepage must stay fast: lazy-load
   images below the fold.
+
+## Information pages and contact form (Lesson 9.5)
+
+- `/about-us` and `/contact-us` use `components/info/InfoPageLayout.tsx`. Their status is in `content/site/info-pages.ts`: `preview` means `noindex`, a notice on the page, and no sitemap entry. Plan: `docs/IMPORTANT_PAGES_PLAN.md`.
+- The contact form posts to `POST /api/contact` (same-origin, honeypot, timing check, in-memory rate limit, shared validation in `lib/contact.ts`) and sends email through Resend's HTTP API (`lib/contact-email.ts`, server-only, no npm package).
+- Env vars, all server only: `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL`. Without them the form is switched off and the API returns 503 `not_configured`.
+- Never fake a success. Never store messages (no Supabase) without owner approval. Never log message content.
+- Setup and tests: `docs/CONTACT_FORM_SETUP.md`.
+
+## Legal pages and privacy (Lesson 9.6)
+
+- `/privacy-policy`, `/terms-and-conditions`, `/disclaimer` use `InfoPageLayout` (with `showUpdated` and `toc`); all are linked in the footer.
+- They must describe only what the code actually does. Source of truth: `docs/PRIVACY_DATA_INVENTORY.md`.
+- Change both the inventory and the policy (and the real `updatedAt`) **before** adding cookies, providers, analytics, or ads.
+- Legal pages show **complete** "Effective date" and "Last updated" dates (`effectiveAt`/`updatedAt`; owner decision 2026-11-14). This is an exception to the month-year rule, which still applies to all menu and verification dates.
+- Retention (owner, 2026-11-14): contact emails up to 12 months (manual monthly mailbox review); ratings have no fixed expiration (manual deletion on request or for moderation). Do not describe these as automated.
+- AdSense, GA4, and Clarity are planned only. No script, no fake consent banner. Steps: `docs/GOOGLE_ADSENSE_COMPLIANCE_CHECKLIST.md`. Open legal items: `docs/LEGAL_PAGES_REVIEW.md`.
+
+## Editorial pages (Lesson 9.7)
+
+- `/editorial-policy` and `/how-we-check-prices` (`InfoPageLayout`; status in `content/site/info-pages.ts`) must stay in line with `docs/MENU_RESEARCH_PLAN.md` and the real data.
+- If the research method, labels, or calculations change, update these pages too. Never claim staff, credentials, firsthand dining, live price monitoring, or a fixed update schedule.
+- The homepage "How we check prices" link points to `/how-we-check-prices`.

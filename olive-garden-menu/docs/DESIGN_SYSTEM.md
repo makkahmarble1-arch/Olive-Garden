@@ -134,6 +134,16 @@ Every menu card uses this design: the homepage (all 17 category sections and Pop
 | Rating | Existing `RatingSummary` (18px gold stars, real votes only), centered, with a 1px `card-border` divider above it. Touch area (Lesson 8.6.1): every star button is 44 px tall. Its width follows the card's free space (container query on `.og-rating-box`): 24 px on narrow cards, 27-32 px on 2-column phones and wide desktop cards, at most 36 px, so the row stays compact. The visible star stays 18 px, buttons never overlap, and the keyboard focus ring sits on the button. Table rating cells keep 24 px |
 | Limitation | Cards in a grid row share the tallest card's height (existing grid behavior), so a short card has space above its rating row |
 
+### 4.3 Information pages (About Us, Contact Us; Lesson 9.5)
+
+| Part | Rule |
+|---|---|
+| Component | `components/info/InfoPageLayout.tsx` (+ `InfoSection`, `InfoLink`); server-rendered |
+| Heading band | `card-bg` cream background with a `card-border` line under it. It contains: the breadcrumb `Home / <Page>`; a small uppercase site name in `brand-dark`; the H1 in `font-display`, `hero-deep` (30 / 36 / 44 px); the intro in `card-text` (18 px, line height 2rem); and a "Preview" note in warning colors while the page is not published |
+| Legal pages (Lesson 9.6) | "Effective date" and "Last updated" as complete dates under the intro (`showUpdated`; legal pages only). An "On this page" box (`toc`: `card-bg`, `card-border`, numbered links in 2 columns from `sm`). H3 sub-headings in `font-display` 20 px `hero-deep` (`InfoSubheading`). Tables scroll inside their own box on phones |
+| Content | One column, max 60rem (960 px), no sidebar. H2 per section in `font-display` 24-28 px, separated by a thin `line` border. Body 17 px, line height 2rem, `ink`/85. Links `brand-dark`, underlined |
+| Contact form | Card like the menu cards (`card-bg`, `card-border`, 16 px radius, soft olive shadow). Fields white, 1 px `line` border, 12 px radius, at least 48 px tall; visible labels with "(required)"; error text in red-800 under the field with `aria-invalid`; primary button `brand-dark` with white text, 48 px tall |
+
 ## 5. Accessibility rules
 
 - Semantic HTML: `header`, `nav`, `main`, `article`, `footer`, `table` with `<th scope>`, `<caption>`.

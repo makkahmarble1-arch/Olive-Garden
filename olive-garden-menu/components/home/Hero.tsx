@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { ReactNode } from "react";
 import type { ImageRef } from "@/lib/types";
 import { formatMonthYear } from "@/lib/format";
@@ -194,12 +195,12 @@ export function PricingInfoBar({ checked }: { checked: { first: string; last: st
           </li>
           <li className={`${item} lg:pl-5`}>
             <BarIcon name="check" />
-            <a
-              href="#sources"
+            <Link
+              href="/how-we-check-prices"
               className="font-medium text-brand-dark underline underline-offset-4 hover:text-brand-darker focus-visible:outline-2 focus-visible:outline-brand-dark"
             >
               How we check prices
-            </a>
+            </Link>
           </li>
         </ul>
       </Container>

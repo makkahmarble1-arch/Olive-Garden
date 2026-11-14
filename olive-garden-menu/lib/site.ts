@@ -16,7 +16,8 @@ export type NavLink = {
 };
 
 export const siteConfig = {
-  name: "Olive Garden Menu & Prices",
+  // Owner-approved public name (Lesson 9.5, 2026-11-14).
+  name: "Olive Garden Menu Prices",
   tagline: "Independent menu & price guide",
   description:
     "An independent guide to the Olive Garden menu for US diners, with prices and calorie information as they are verified. Not affiliated with Olive Garden.",
@@ -59,6 +60,17 @@ export const siteConfig = {
     { label: "Deals", href: "/#lunch-specials-deals" },
     { label: "Hours", href: "/#hours" },
     { label: "FAQ", href: "/#faq" },
+  ] satisfies NavLink[],
+
+  // Information and legal pages about this website (footer). Only pages that exist.
+  infoLinks: [
+    { label: "About Us", href: "/about-us" },
+    { label: "Contact Us", href: "/contact-us" },
+    { label: "Editorial Policy", href: "/editorial-policy" },
+    { label: "How We Check Prices", href: "/how-we-check-prices" },
+    { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Terms and Conditions", href: "/terms-and-conditions" },
+    { label: "Disclaimer", href: "/disclaimer" },
   ] satisfies NavLink[],
 
   // Official Olive Garden pages listed in the footer (checked 2026-11-12).

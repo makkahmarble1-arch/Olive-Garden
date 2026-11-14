@@ -338,3 +338,20 @@ Unchanged: the vote API, duplicate-vote protection, rate limits, RLS, and server
 3. Privacy policy: mention the functional cookie `og_rv` (ratings only, no tracking) and that votes are stored as one-way hashes.
 4. After deploying: `npm run test:rating-api -- https://<domain>` from your computer (expects 20/20), then one real vote check and its cleanup.
 5. Keep the Supabase project active (Free Plan projects pause after about a week without activity).
+
+## 10. Privacy disclosure (Lesson 9.6, 2026-11-14)
+
+`/privacy-policy` describes the rating data as it works in the code:
+- the functional `og_rv` cookie (HttpOnly, Secure, SameSite=Strict, 400 days, set only after a rating)
+- the keyed visitor hash, rating value, dish, and timestamps in Supabase (United States)
+- daily-rotating keyed network hashes and visitor hashes in rate-limit counters (deleted after about 2 days when new ratings arrive)
+- no raw IP stored
+
+The hashed identifier is described as **pseudonymous**, not fully anonymous. Deletion requests: the owner can find a visitor's votes with `npm run rating:visitor-hash` and the visitor's cookie value (section 9.3). Ratings have no automatic retention limit yet (owner decision, `PRIVACY_DATA_INVENTORY.md` §4).
+
+## 11. Retention and deletion (owner decision 2026-11-14)
+
+- Ratings have **no fixed expiration**.
+- Deletion happens on a legitimate visitor request, matched through the visitor's cookie with `npm run rating:visitor-hash` plus SQL, or for moderation (automated, manipulated, or abusive ratings).
+- Both are manual owner tasks; the steps and SQL are in `PRIVACY_DATA_INVENTORY.md` §5.
+- Rate-limit counters are deleted automatically after about 2 days.

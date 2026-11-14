@@ -14,7 +14,7 @@ async function CurrentYear() {
 export default function Footer() {
   return (
     <footer className="mt-auto border-t border-line bg-brand-tint">
-      <Container className="grid gap-8 py-10 md:grid-cols-[2fr_1fr_1fr] md:py-12">
+      <Container className="grid gap-8 py-10 sm:grid-cols-2 md:grid-cols-[2fr_1fr_1fr_1fr] md:py-12">
         <div>
           <p className="font-display text-lg font-bold text-ink">{siteConfig.name}</p>
           <p className="mt-2 max-w-prose text-sm leading-6 text-muted">
@@ -26,6 +26,22 @@ export default function Footer() {
           <p className="text-sm font-semibold text-ink">Explore</p>
           <ul className="mt-2 space-y-1">
             {siteConfig.nav.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="inline-flex min-h-11 items-center text-sm text-brand-dark underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-brand-dark"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <nav aria-label="About this website">
+          <p className="text-sm font-semibold text-ink">About</p>
+          <ul className="mt-2 space-y-1">
+            {siteConfig.infoLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
