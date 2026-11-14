@@ -90,6 +90,38 @@ Loaded with `next/font/google` (self-hosted at build, no extra npm package).
 | FAQ | `<details>`/`<summary>` accordion, no JavaScript needed |
 | Related articles | 3 cards in a responsive grid |
 
+### 4.1 Homepage hero (premium design, owner-approved 2026-11-14)
+
+Only the homepage hero is dark; the rest of the site keeps the light theme. Component: `components/home/Hero.tsx` (server component, no client JavaScript, no background images).
+
+| Part | Rule |
+|---|---|
+| Background | `linear-gradient(135deg, #28370f → #556b12)` (darker under the text), plus two soft CSS radial glows (gold `#d4af37` ~18%, light olive `#d5e78a` ~12%) and a 1px gold hairline at the bottom. No patterns or image assets |
+| Tokens (`app/globals.css`) | `hero-deep` #28370f, `brand-dark` #556b12, `hero-highlight` #d5e78a, `hero-cta` #c4d95d, `hero-soft` #e5e9da, `gold` #d4af37. The light hero colors are only for use on the dark hero, never as text on white; `gold` is decorative only |
+| Badge | Small pill: info icon + "Independent Menu Guide · Not the official Olive Garden website", translucent white background, white/25 border, 12px text. Two lines on phones. The full disclaimer stays in the footer and Sources |
+| H1 | Text unchanged ("Olive Garden Menu with Prices & Calories 2026"), one `<h1>`; `font-display` (Fraunces, already loaded: no extra font request), semibold, white; "Menu with Prices" in `hero-highlight`. 48px desktop, ~42px tablet, ~31px mobile; `text-balance` |
+| Intro | Wording unchanged; `hero-soft`, 16-17px, line height ~1.75, max width ~40rem desktop |
+| Buttons | Same size (44px tall, 12px radius). Primary "Explore Full Menu ↓" → `#full-menu`: `hero-cta` fill, `hero-deep` text (8:1), hover `hero-highlight`. Secondary "Lunch Specials" → `#lunch-specials-deals`: transparent, white text, white/45 border, hover white/10. White focus outline |
+| Photo | Existing hero image, `next/image` with `preload`; 3:2 (no crop), 20px radius, white/20 border, soft dark shadow, thin gold frame behind it (≥640px). Desktop column ~0.75fr; tablet max width 34rem |
+| Layout | Desktop two columns (text 1.25fr, photo 0.75fr), `py-8`: hero height 378px at 1280px wide (was 445px, about 15% smaller). Tablet and mobile stacked |
+| Verification bar | White bar under the hero with small olive line icons: "USA · online pickup prices", "Last verified: {Month Year}" (from the data), "Prices may vary by location across the USA.", "How we check prices" link (`#sources`). Dividers on desktop, 2 columns on tablet, stacked on phones |
+
+### 4.2 Menu card (premium design, owner-approved for all cards 2026-11-14)
+
+Every menu card uses this design: the homepage (all 17 category sections and Popular Menu Items) and the photo cards on category pages. It was first tested on the Family-Style Lasagna Bundle card, then approved for all cards. The earlier card design is in git history.
+
+| Part | Rule |
+|---|---|
+| Implementation | `components/menu/MenuItemCard.tsx` with `PriceBlock` and `OptionPicker` (same shared data, nothing duplicated). Server-rendered; only the size selector and the rating run in the browser; no new dependencies |
+| Card | `card-bg` #fafbf5, 1px `card-border` #dce5ba, 16px radius, soft olive-tinted shadow; hover: border `brand-dark`/45 and a slightly deeper shadow (no movement) |
+| Photo | Full width, 4:3, top corners rounded by the card, same `next/image` sizes and lazy loading; "Photo coming soon" placeholder when no image. Short serving badges (up to 21 characters, e.g. "Serves 4–6", "One gallon, serves 12") sit on the top-left of the photo: `brand-dark`, white text, 6px radius. Longer serving descriptions (e.g. "Two chicken breasts + side of spaghetti") appear under the title as a small `brand-tint` pill so they never cover the food |
+| Title | Exact product name, `font-display`, `hero-deep` #28370f, left aligned |
+| Price row | Price in `brand-dark`; calorie pill `kcal-bg` #fff3e0 with `kcal-text` #9a5700 (5.2:1) and a small flame icon; wraps to two lines on narrow cards. Price basis ("per bundle (total)") below in small muted text |
+| Description | Exact wording, line height 1.6, `card-text` #525b48 (6.9:1) |
+| Typography (owner correction 2026-11-14) | **Font sizes are identical to the default card** (title 16px phone / 16.8px desktop, price 20px, calories 12px, price basis 12px, description 14px, badge 11.2px, rating text 12px). Weights: title 700, price 700, calories 600, description 400, price basis 400; the badge (500) and the rating text (400) keep the default weights |
+| Rating | Existing `RatingSummary` (18px gold stars, real votes only, 44px touch targets), centered, with a 1px `card-border` divider above it |
+| Limitation | Cards in a grid row share the tallest card's height (existing grid behavior), so a short card has space above its rating row |
+
 ## 5. Accessibility rules
 
 - Semantic HTML: `header`, `nav`, `main`, `article`, `footer`, `table` with `<th scope>`, `<caption>`.

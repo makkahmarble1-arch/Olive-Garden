@@ -22,6 +22,9 @@ type MenuItemCardProps = {
   showRating?: boolean;
 };
 
+/** Longest serving badge (characters) shown on the photo; longer ones go under the title. */
+const PHOTO_BADGE_MAX = 21;
+
 /** Food photo, or a clearly labeled placeholder with the same size. */
 function CardImage({ offering }: { offering: MenuOffering }) {
   const image = getOfferingImage(offering);
@@ -59,17 +62,25 @@ function CardImage({ offering }: { offering: MenuOffering }) {
 }
 
 /**
- * One menu item (approved card design Option C, compact version from the
- * owner's UI review): photo, name, serving badge, price + calorie badge,
- * short description, size selector, availability. Server component; only
- * the size selector runs in the browser.
+ * One menu item: the premium card design (owner-approved 2026-11-14 after the
+ * Family-Style Lasagna Bundle prototype; docs/DESIGN_SYSTEM.md 4.2). Cream
+ * card with a thin olive border, 4:3 photo with the serving badge(s) on its
+ * top-left corner, serif title, price + amber calorie pill, description, size
+ * selector, and the genuine visitor rating under a thin divider. Font sizes
+ * match the earlier card design. Server component; only the size selector
+ * and the rating run in the browser.
  */
 export default function MenuItemCard({ offering, searchable = false, showRating = true }: MenuItemCardProps) {
   const values = offeringValues(offering);
   const options = offeringOptions(offering);
   const priceTag = offering.promotion?.eligible ? "Add-on" : null;
   const availability = availabilityLabel(offering);
-  const badges = servingBadges(offering.servingSize);
+  // Short serving badges ("Serves 4–6") sit on the photo; longer descriptions
+  // ("Two chicken breasts + side of spaghetti") go under the title so they never
+  // cover the food.
+  const allBadges = servingBadges(offering.servingSize);
+  const badges = allBadges.filter((badge) => badge.length <= PHOTO_BADGE_MAX);
+  const textBadges = allBadges.filter((badge) => badge.length > PHOTO_BADGE_MAX);
   const regular = offering.regularPriceOfferingId ? getOffering(offering.regularPriceOfferingId) : undefined;
   const regularPrice = regular?.prices[0]?.amount;
 
@@ -79,18 +90,26 @@ export default function MenuItemCard({ offering, searchable = false, showRating 
       data-menu-item={searchable ? "" : undefined}
       data-search={searchable ? searchText(offering.displayName, offering.officialName, offering.inventoryName) : undefined}
     >
-      <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-sm transition-[border-color,box-shadow] duration-200 hover:border-brand/60 hover:shadow-md">
+      <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-card-border bg-card-bg shadow-[0_1px_2px_rgba(40,55,15,0.05),0_8px_20px_-14px_rgba(40,55,15,0.35)] transition-[border-color,box-shadow] duration-200 hover:border-brand-dark/45 hover:shadow-[0_1px_2px_rgba(40,55,15,0.06),0_12px_24px_-14px_rgba(40,55,15,0.45)]">
         <div className="relative aspect-[4/3] overflow-hidden bg-brand-tint">
           <CardImage offering={offering} />
-          {(availability || offering.isNewOfficialItem) && (
-            <p className="absolute top-2 left-2 flex flex-wrap gap-1">
+          {(badges.length > 0 || availability || offering.isNewOfficialItem) && (
+            <p className="absolute top-2 left-2 flex max-w-[calc(100%-1rem)] flex-wrap gap-1">
+              {badges.map((badge) => (
+                <span
+                  key={badge}
+                  className="rounded-md bg-brand-dark/95 px-2 py-0.5 text-[0.7rem] leading-5 font-medium text-white shadow-sm"
+                >
+                  {badge}
+                </span>
+              ))}
               {availability && (
-                <span className="rounded-full bg-warning-bg px-2 py-0.5 text-[0.7rem] font-semibold text-warning-text shadow-sm">
+                <span className="rounded-md bg-warning-bg px-2 py-0.5 text-[0.7rem] leading-5 font-semibold text-warning-text shadow-sm">
                   {availability}
                 </span>
               )}
               {offering.isNewOfficialItem && (
-                <span className="rounded-full bg-brand-dark px-2 py-0.5 text-[0.7rem] font-semibold text-white shadow-sm">
+                <span className="rounded-md bg-brand-dark px-2 py-0.5 text-[0.7rem] leading-5 font-semibold text-white shadow-sm">
                   New
                 </span>
               )}
@@ -98,14 +117,14 @@ export default function MenuItemCard({ offering, searchable = false, showRating 
           )}
         </div>
 
-        <div className="flex flex-1 flex-col gap-2 p-3 sm:p-4">
+        <div className="flex flex-1 flex-col gap-2 p-3 sm:gap-2.5 sm:p-4">
           <div>
-            <p className="font-display text-base leading-snug font-bold text-ink sm:text-[1.05rem]">
+            <p className="font-display text-base leading-snug font-bold text-hero-deep sm:text-[1.05rem]">
               {offering.displayName}
             </p>
-            {badges.length > 0 && (
+            {textBadges.length > 0 && (
               <p className="mt-1.5 flex flex-wrap gap-1">
-                {badges.map((badge) => (
+                {textBadges.map((badge) => (
                   <span
                     key={badge}
                     className="rounded-md bg-brand-tint px-1.5 py-0.5 text-[0.7rem] leading-4 font-medium text-brand-darker"
@@ -136,10 +155,12 @@ export default function MenuItemCard({ offering, searchable = false, showRating 
             </p>
           )}
 
-          {offering.description && <p className="text-sm leading-6 text-muted">{offering.description}</p>}
+          {offering.description && <p className="text-sm leading-[1.6] text-card-text">{offering.description}</p>}
 
           {showRating && (
-            <RatingSummary className="mt-auto pt-1" productId={offering.productId} itemName={offering.displayName} />
+            <div className="mt-auto border-t border-card-border pt-2.5">
+              <RatingSummary productId={offering.productId} itemName={offering.displayName} />
+            </div>
           )}
         </div>
       </div>

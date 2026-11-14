@@ -18,6 +18,27 @@
   --color-warning-text: #78350f;
   /* Rating stars only (graphic, never text: contrast on white is 2.15:1). */
   --color-star: #f59e0b;
+
+  /*
+   * Homepage hero only (owner-approved premium hero, 2026-11-14). Dark olive
+   * gradient #28370f -> #556b12 (brand-dark). Light colors are for use ON the
+   * dark hero; never as text on white.
+   */
+  --color-hero-deep: #28370f;
+  --color-hero-highlight: #d5e78a; /* H1 accent, large text on the dark gradient */
+  --color-hero-cta: #c4d95d; /* primary button fill (text: hero-deep, 8:1) */
+  --color-hero-soft: #e5e9da; /* intro text on the dark gradient */
+  --color-gold: #d4af37; /* decorative accents only, never text */
+
+  /*
+   * Premium menu card PROTOTYPE (owner request 2026-11-14): only the
+   * `variant="premium"` MenuItemCard uses these, until the owner approves it.
+   */
+  --color-card-bg: #fafbf5;
+  --color-card-border: #dce5ba;
+  --color-card-text: #525b48; /* description, 6.9:1 on card-bg */
+  --color-kcal-bg: #fff3e0;
+  --color-kcal-text: #9a5700; /* 5.2:1 on kcal-bg */
 }
 
 @theme inline {
