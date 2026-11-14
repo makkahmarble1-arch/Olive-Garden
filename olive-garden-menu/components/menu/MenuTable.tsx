@@ -2,11 +2,21 @@ import type { MenuItem } from "@/lib/types";
 import { formatNumber, formatPrice } from "@/lib/format";
 import VerificationBadge from "@/components/ui/VerificationBadge";
 import RatingSummary from "@/components/rating/RatingSummary";
+import {
+  tableCaptionClass,
+  tableClass,
+  tableHeadCellClass,
+  tableHeadClass,
+  tableRowClass,
+  tableWrapClass,
+} from "./table-styles";
 
 type MenuTableProps = {
   /** Visible table title, e.g. "Appetizer Prices and Calories". */
   caption: string;
   items: MenuItem[];
+  /** false = no visitor-rating column (e.g. promotion pages). Default true. */
+  showRatings?: boolean;
 };
 
 /** A value is shown only if it exists AND the item is verified (and still listed). */
@@ -63,9 +73,9 @@ function CaloriesBasis({ item }: { item: MenuItem }) {
  * table; from 640px up a real <table> is shown. Only one is visible at a
  * time, so screen readers never read both.
  */
-export default function MenuTable({ caption, items }: MenuTableProps) {
+export default function MenuTable({ caption, items, showRatings: ratingsAllowed = true }: MenuTableProps) {
   // The rating column appears only when rows are real products.
-  const showRatings = items.some((item) => item.productId);
+  const showRatings = ratingsAllowed && items.some((item) => item.productId);
   return (
     <>
       <div className="rounded-lg border border-line sm:hidden">
@@ -81,10 +91,10 @@ export default function MenuTable({ caption, items }: MenuTableProps) {
             {items.map((item, index) => (
               <li
                 key={`${item.name}-${index}`}
-                className="border-t border-line px-4 py-3"
+                className="border-t border-line px-4 py-3 odd:bg-white even:bg-brand-tint"
               >
                 <p className="font-medium text-ink">{item.name}</p>
-                {item.productId && (
+                {showRatings && item.productId && (
                   <RatingSummary align="start" className="mt-1" productId={item.productId} itemName={item.name} />
                 )}
                 {item.servingSize && (
@@ -127,25 +137,25 @@ export default function MenuTable({ caption, items }: MenuTableProps) {
         role="region"
         aria-label={caption}
         tabIndex={0}
-        className="hidden overflow-x-auto rounded-lg border border-line focus-visible:outline-2 focus-visible:outline-brand-dark sm:block"
+        className={`hidden sm:block ${tableWrapClass}`}
       >
-        <table className="w-full min-w-[22rem] border-collapse text-left">
-          <caption className="px-4 py-3 text-left font-display text-lg font-bold text-ink">
+        <table className={tableClass}>
+          <caption className={tableCaptionClass}>
             {caption}
           </caption>
-          <thead className="bg-brand-tint text-sm text-ink">
+          <thead className={tableHeadClass}>
             <tr>
-              <th scope="col" className="px-4 py-3 font-semibold">
+              <th scope="col" className={tableHeadCellClass}>
                 Item
               </th>
-              <th scope="col" className="px-4 py-3 text-right font-semibold">
+              <th scope="col" className={`${tableHeadCellClass} text-right`}>
                 Price
               </th>
-              <th scope="col" className="px-4 py-3 text-right font-semibold">
+              <th scope="col" className={`${tableHeadCellClass} text-right`}>
                 Calories
               </th>
               {showRatings && (
-                <th scope="col" className="px-4 py-3 font-semibold">
+                <th scope="col" className={tableHeadCellClass}>
                   Visitor rating
                 </th>
               )}
@@ -165,7 +175,7 @@ export default function MenuTable({ caption, items }: MenuTableProps) {
               items.map((item, index) => (
                 <tr
                   key={`${item.name}-${index}`}
-                  className="border-t border-line align-top"
+                  className={tableRowClass}
                 >
                   <th scope="row" className="px-4 py-3 font-medium text-ink">
                     {item.name}

@@ -13,6 +13,11 @@ Each item needs the owner's approval. Details: `HOMEPAGE_SEO_AUDIT.md`, `PERFORM
 
 ## 2. Before deploying
 
+- [x] Category pages: all 17 have complete content (Lesson 8, 2026-11-14). 5 are `published` (Batch 1), 12 are `preview` (Batches 2-4, development complete). Status table: `CATEGORY_DEVELOPMENT_CHECKLIST.md` section F.
+- [ ] Owner decides which `preview` pages become `published` before launch (only published pages are indexable and in the sitemap once `SITE_INDEXING=true`).
+- [ ] Replacement photos for 4 products whose incorrect images were removed (`MISSING_IMAGES.md` section 00; 6 homepage cards show the placeholder until then).
+- [ ] Re-check time-sensitive facts in a browser and update dates if they change: limited-time items (Never-Ending Soup, Salad & Breadsticks $9.99, Spicy Alfredo, Crispy Shrimp Fritta, Pumpkin Cookie Butter Cheesecake, Never-Ending Pasta Bowl), Buy One Take One / $6 Take Home status, catering "starting at" prices and delivery rules.
+
 - [ ] Remove the 2 development test votes: owner runs `supabase/maintenance/2026-11-13_remove_dev_test_votes.sql` in the Supabase SQL Editor (approved 2026-11-13; it deletes only if exactly those 2 votes exist). Then confirm 0 votes.
 - [ ] Privacy policy mentions the functional cookie `og_rv` (ratings only) and that votes are stored as one-way hashes.
 - [ ] `npm run lint`, `npx tsc --noEmit`, `npm run build`: all pass.

@@ -1,7 +1,8 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import type { MenuCategoryDef } from "@/lib/types";
-import { formatDate } from "@/lib/format";
+import { formatMonthYear } from "@/lib/format";
+import { siteConfig } from "@/lib/site";
 import { getCategoryCheckDate, hasCategoryPage, menuCategoryPath } from "@/lib/content";
 
 type MenuCategorySectionProps = {
@@ -49,10 +50,10 @@ export default function MenuCategorySection({
             {checked && (
               <>
                 {" "}
-                &middot; Prices checked <time dateTime={checked}>{formatDate(checked)}</time>
+                &middot; Prices verified <time dateTime={checked}>{formatMonthYear(checked)}</time>
               </>
             )}
-            {" "}&middot; Orlando, FL online pickup
+            {" "}&middot; {siteConfig.market} online pickup
           </p>
         </div>
         {hasCategoryPage(category) && (

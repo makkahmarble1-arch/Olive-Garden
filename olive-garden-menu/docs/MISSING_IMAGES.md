@@ -8,14 +8,14 @@
 | Measure | Count |
 |---|---:|
 | AI images supplied by the owner (`image-staging/missing-images/`) | 25 |
-| Integrated | **25** (all) |
+| Integrated | **24** of the first 25 (Homemade Soups trio retired) + 4 soup photos and 1 composite (2026-11-14) |
 | Of these, match the official dish | 14 |
-| Of these, differ from the official dish (used by owner decision, 2026-11-13) | 11 (section A) |
-| Products still without an image | **0** |
-| "Photo coming soon" placeholders on the homepage | **0** (was 42; counted on the rendered page) |
+| Of these, differ from the official dish (used by owner decision, 2026-11-13) | 10 in use (section A; item 5 removed) |
+| Products still without an image | **4** (incorrect images removed 2026-11-14, section 00) |
+| "Photo coming soon" placeholders on the homepage | **6** (section 00; the 5 Homemade Soups placeholders were replaced on 2026-11-14) |
 | Broken images on the homepage | 0 |
 
-**Owner decision (2026-11-13):** "use the images I supplied". The 11 images in section A are used although they differ from the official dish. The "AI image" card label was removed by owner decision; the homepage Sources section notes that some photos are AI-generated illustrations. A corrected image can replace any of them later under the same file name; the prompts below are kept for that.
+**Owner decision (2026-11-13):** "use the images I supplied". The 11 images in section A are used although they differ from the official dish. The "AI image" card label was removed by owner decision; since 2026-11-14 the public site does not mention AI at all (owner decision); the homepage only says the photos are supplied by the site owner and are not official Olive Garden photos. A corrected image can replace any of them later under the same file name; the prompts below are kept for that.
 
 **Hero image (checked):** `public/images/home/olive-garden-menu-spread.webp`, 1200 × 800 WebP, 98 KB, owner photo, HTTP 200, preloaded, alt text set. No action needed.
 
@@ -36,6 +36,29 @@
 > Photorealistic professional food photography, 4:3 landscape, 45-degree angle, soft natural daylight, sharp focus on the food, appetizing realistic colors, served on plain white restaurant dinnerware, clean pure white background (#FFFFFF), no text, no logo, no watermark, no people, no extra food items.
 
 The prompts below are updated with what went wrong in the supplied AI image ("Avoid").
+
+## 00. Incorrect images removed (owner decision 2026-11-14): replacements needed
+
+Found in the Batch 4 image audit. The image mapping was removed in `content/menu/products.ts` (`image: null`, reason in `imageIssue`), so every card shows the "Photo coming soon" placeholder with the same size; prices, calories, descriptions, and ratings are unchanged. The old files stay in `public/` (unused) until the owner approves deleting them. **The owner supplies the replacements.** Save each new photo under the recommended filename, set `image` again in `products.ts` (and `imageIssue: null`), then update this file and `IMAGE_MANIFEST.md`.
+
+| # | Product (ID) | Current incorrect image | Why it must be replaced | Correct image needed | Recommended filename | Affected pages |
+|---:|---|---|---|---|---|---|
+| 1 | Grilled Chicken Parmigiana, gluten-sensitive (`grilled-chicken-parmigiana`) | `/images/gluten-sensitive/grilled-chicken-parmigiana.webp` | Shows fettuccine in a cream sauce. The gluten-sensitive dish comes with gluten-free rotini in marinara; the photo could mislead guests avoiding gluten. **Highest priority.** | Two grilled (not breaded) chicken breasts topped with marinara and melted Italian cheeses, with spiral gluten-free rotini in marinara on the side. No fettuccine, no cream sauce, no bread. | `public/images/gluten-sensitive/grilled-chicken-parmigiana.webp` | Homepage (Gluten Sensitive section, 1 card); `/gluten-sensitive` (price table row) |
+| 2 | 6 oz. Sirloin (`6-oz-sirloin`, shared by the classic and gluten-sensitive plates) | `/images/classic-entrees/6-oz-sirloin.webp` | Shows broccoli and mashed potatoes. The classic plate comes with fettuccine alfredo and the gluten-sensitive plate with parmesan garlic broccoli; mashed potatoes come with neither. | A grilled 6 oz sirloin with garlic herb butter and a side of parmesan garlic broccoli (matches the gluten-sensitive plate; a separate photo with fettuccine alfredo could be added later for the classic plate). No mashed potatoes. | `public/images/classic-entrees/6-oz-sirloin.webp` | Homepage (Classic Entrees and Gluten Sensitive sections, 2 cards); `/classic-entrees` and `/gluten-sensitive` (price table rows) |
+| 3 | Herb-Grilled Salmon (`herb-grilled-salmon`, shared by the classic and gluten-sensitive menus) | `/images/classic-entrees/herb-grilled-salmon.webp` | Shows mashed potatoes; the official plate comes with parmesan garlic broccoli only. | A grilled salmon fillet topped with garlic herb butter, with parmesan garlic broccoli on the side. No mashed potatoes, no pasta. | `public/images/classic-entrees/herb-grilled-salmon.webp` | Homepage (Classic Entrees and Gluten Sensitive sections, 2 cards); `/classic-entrees` (was a photo card, now replaced by Shrimp Scampi) and `/gluten-sensitive` (price table rows) |
+| 4 | Lasagna Combination, catering (`lasagna-combination`) | `/images/catering/lasagna-combination.webp` | Shows chicken parmigiana, which is not part of this package. | A catering spread with a pan of Lasagna Classico, a pan of Five Cheese Ziti al Forno or Fettuccine Alfredo, two jumbo house salads, breadsticks, a gallon of iced tea, and a whole cake. No chicken parmigiana. | `public/images/catering/lasagna-combination.webp` | Homepage (Catering section, 1 card); `/catering` (price table row) |
+
+Placeholders now on the homepage: **6** cards (1 + 2 + 2 + 1).
+
+**Reviewed and kept (minor differences, optional replacement):** most kids meal photos show carrots next to the side (official kids sides: grapes, broccoli, spaghetti with tomato sauce, mashed potatoes, french fries); the main dishes are correct. Kids Chicken Fingers also shows vegetable sticks. Earlier optional notes (Side of Meatballs, 2-Liter Soda, Warm Italian Doughnuts, Cappuccino) are in `CATEGORY_DEVELOPMENT_CHECKLIST.md` (Batch 3).
+
+## 0. Homemade Soups replacement: done (2026-11-14)
+
+- **2026-11-13 (Option B):** the old AI image showed a cheese soup with bacon that is not on the menu; it was removed from every card and replaced by the "Photo coming soon" placeholder.
+- **2026-11-14:** the owner supplied one photo per soup (Minestrone, Pasta e Fagioli, Zuppa Toscana, Chicken & Gnocchi; originals in `image-staging/Soups, salad and breadsticks/four-soups-2026-11-14/`). They were converted to WebP (600 × 450, 51-53 KB each) and combined into a 2×2 composite, `homemade-soups-four.webp` (800 × 600, 101 KB), now used on all 5 Homemade Soups cards. The four single photos are shown as a soup gallery on `/soups-salad-and-breadsticks`, and the Homemade Soups photo card is back on that page.
+- **Placeholders left:** 0.
+- **Notes for the owner (optional replacement):** the Zuppa Toscana photo shows bacon pieces, and the Chicken & Gnocchi photo looks like a thick dish with sliced chicken on top; neither detail is in our verified descriptions. The alt text describes what each photo actually shows.
+- **Old file:** `homemade-soups.webp` is no longer used and stays in `public/` until the owner approves deleting it.
 
 ## A. Integrated, but different from the official dish (11 products, optional replacement)
 
@@ -60,19 +83,19 @@ The prompts below are updated with what went wrong in the supplied AI image ("Av
 - **AI image used (differs):** `Baked Ziti Feast with Classic Sides.png`: has an extra bowl of fettuccine alfredo that is not part of this bundle.
 - **Prompt:** "A family-style take-home dinner with exactly three parts: a large rectangular pan of baked ziti pasta in five cheese marinara with a golden browned melted cheese top, a large bowl of Italian house salad with croutons, black olives, tomatoes and pepperoncini, and a basket of twelve garlic breadsticks." + shared style. **Avoid:** any other pasta dish, fettuccine, alfredo.
 
-### 4. Grilled Chicken Parmigiana (gluten-sensitive)
+### 4. Grilled Chicken Parmigiana (gluten-sensitive) (REMOVED 2026-11-14: see section 00)
 - **Category:** Gluten Sensitive (1 card)
 - **File:** `grilled-chicken-parmigiana.webp` → `public/images/gluten-sensitive/`
 - **Correct appearance:** grilled (not breaded) chicken breasts topped with marinara and melted Italian cheeses, with **gluten-free rotini** in marinara.
 - **AI image used (differs):** `Grilled Chicken Parmigiana with Alfredo Fettuccine.png`: fettuccine alfredo (wrong pasta for a gluten-sensitive dish).
 - **Prompt:** "Two grilled chicken breasts with grill marks, not breaded, topped with marinara sauce and melted mozzarella, served with spiral rotini pasta in red marinara sauce on a white dinner plate." + shared style. **Avoid:** fettuccine, spaghetti, alfredo, breading.
 
-### 5. Homemade Soups
+### 5. Homemade Soups (REPLACED 2026-11-14 with owner photos: see section 0)
 - **Categories:** Soups, Salad and Breadsticks (one serving); Family-Style Meals and Catering (half gallon and gallon). 5 cards.
 - **File:** `homemade-soups.webp` → `public/images/soups-salad-and-breadsticks/`
 - **Correct appearance:** the **four** official soups in four bowls: Pasta e Fagioli, Zuppa Toscana, Minestrone, Chicken & Gnocchi.
 - **AI image used (differs):** `Trio of Homemade Soups with Garnishes.png`: three soups; one is a loaded potato soup (not on the menu); Pasta e Fagioli and Zuppa Toscana are missing.
-- **Prompt:** "Four white soup bowls in a row: Pasta e Fagioli with beans, ditalini pasta and ground beef in tomato broth; Zuppa Toscana with sliced Italian sausage, potato slices and kale in a creamy broth; Minestrone with vegetables, beans and small pasta in tomato broth; Chicken and Gnocchi soup with chicken, potato gnocchi and spinach in a creamy broth." + shared style. **Avoid:** cheddar, bacon, loaded potato soup, fewer than four bowls.
+- **Prompt:** "Four white soup bowls in a row: Pasta e Fagioli with white and red beans, small tubetti pasta, ground beef and tomatoes in broth; Zuppa Toscana with spicy Italian sausage, russet potatoes and kale in a creamy broth; Minestrone with vegetables, beans and pasta in tomato broth; Chicken and Gnocchi soup with roasted chicken, gnocchi and spinach in a creamy broth." + shared style. **Avoid:** cheddar, bacon, loaded potato soup, fewer than four bowls.
 
 ### 6. Italian Grilled Chicken Sandwich
 - **Category:** Lunch Menu (1 card)

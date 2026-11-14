@@ -1,7 +1,8 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import type { MenuOffering, ReferenceLocation } from "@/lib/types";
-import { formatDate } from "@/lib/format";
+import type { MenuOffering } from "@/lib/types";
+import { formatMonthYear } from "@/lib/format";
+import { siteConfig } from "@/lib/site";
 import { getMenuCategory, menuCategoryPath } from "@/lib/content";
 import { offeringValues } from "@/lib/menu-display";
 import {
@@ -22,7 +23,6 @@ import {
   orderNote,
   orderSteps,
   popularIntro,
-  referencePhone,
   savingsTips,
   weeklyHours,
 } from "@/content/home/homepage";
@@ -83,7 +83,7 @@ const td = "px-4 py-2.5 align-top";
 function Checked({ date }: { date: string }) {
   return (
     <p className="mt-3 text-sm text-muted">
-      Checked <time dateTime={date}>{formatDate(date)}</time> on Olive Garden&rsquo;s official website.
+      Verified <time dateTime={date}>{formatMonthYear(date)}</time> on Olive Garden&rsquo;s official website.
     </p>
   );
 }
@@ -145,7 +145,7 @@ export function DealsSection() {
         </table>
       </TableWrap>
       <p className="mt-3 text-sm text-muted">
-        Prices are online pickup prices at the Orlando, Florida reference restaurant.
+        Prices are online pickup prices from Olive Garden&rsquo;s official website. {siteConfig.locationNotice}
       </p>
       <Checked date={dealsCheckedAt} />
       <ul className="mt-5 max-w-3xl list-disc space-y-2 pl-5 leading-7 text-muted marker:text-brand-dark">
@@ -159,21 +159,21 @@ export function DealsSection() {
 
 /* ---------- 9. Hours ---------- */
 
-export function HoursSection({ location }: { location: ReferenceLocation }) {
+export function HoursSection() {
   return (
     <HomeSection
       id="hours"
       title="Olive Garden Hours — Opening & Closing Times"
       intro={
         <p>
-          Opening hours of the Orlando reference restaurant ({location.name}, {location.streetAddress}, phone{" "}
-          {referencePhone}). Lunch is served on weekdays; on weekends the dinner menu runs all day.
+          Opening hours we verified at one Olive Garden restaurant in the {siteConfig.market}. Hours are set by each
+          restaurant, so yours may differ. Lunch is served on weekdays; on weekends the dinner menu runs all day.
         </p>
       }
     >
       <TableWrap label="Weekly opening hours">
         <table className="w-full min-w-[30rem] border-collapse text-left text-sm">
-          <caption className="sr-only">Olive Garden {location.name} weekly hours</caption>
+          <caption className="sr-only">Olive Garden weekly hours at one U.S. restaurant</caption>
           <thead className="bg-brand-tint text-ink">
             <tr>
               <th scope="col" className={th}>Day</th>
@@ -200,8 +200,8 @@ export function HoursSection({ location }: { location: ReferenceLocation }) {
         ))}
       </ul>
       <p className="mt-3 text-sm text-muted">
-        Source: <ExternalLink href={location.officialUrl}>official restaurant page</ExternalLink>, checked{" "}
-        <time dateTime={hoursCheckedAt}>{formatDate(hoursCheckedAt)}</time>. Find your own restaurant&rsquo;s hours
+        Source: Olive Garden&rsquo;s official restaurant pages, verified{" "}
+        <time dateTime={hoursCheckedAt}>{formatMonthYear(hoursCheckedAt)}</time>. Find your own restaurant&rsquo;s hours
         with the <ExternalLink href={officialLinks.locator}>official restaurant locator</ExternalLink>.
       </p>
     </HomeSection>
@@ -241,8 +241,8 @@ export function HolidaySection() {
       </TableWrap>
       <p className="mt-4 max-w-3xl leading-7 text-muted">{holidayNote}</p>
       <p className="mt-3 text-sm text-muted">
-        Source: <ExternalLink href={officialLinks.faqs}>Olive Garden FAQs</ExternalLink>, checked{" "}
-        <time dateTime={hoursCheckedAt}>{formatDate(hoursCheckedAt)}</time>.
+        Source: <ExternalLink href={officialLinks.faqs}>Olive Garden FAQs</ExternalLink>, verified{" "}
+        <time dateTime={hoursCheckedAt}>{formatMonthYear(hoursCheckedAt)}</time>.
       </p>
     </HomeSection>
   );
@@ -366,7 +366,20 @@ export function FaqSection() {
                 +
               </span>
             </summary>
-            <p className="mt-1 pb-2 leading-7 text-muted">{faq.answer}</p>
+            <p className="mt-1 pb-2 leading-7 text-muted">
+              {faq.answer}
+              {faq.link && (
+                <>
+                  {" "}
+                  <Link
+                    href={faq.link.href}
+                    className="font-medium text-brand-dark underline underline-offset-4 hover:text-brand-darker focus-visible:outline-2 focus-visible:outline-brand-dark"
+                  >
+                    {faq.link.text}
+                  </Link>
+                </>
+              )}
+            </p>
           </details>
         ))}
       </div>

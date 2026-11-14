@@ -211,6 +211,8 @@ export type MenuCategoryDef = {
 export type FaqItem = {
   question: string;
   answer: string;
+  /** Optional link shown after the answer (e.g. to the category page that covers it in depth). */
+  link?: { text: string; href: string };
 };
 
 /**
@@ -219,23 +221,226 @@ export type FaqItem = {
  */
 export type CategoryPageContent = {
   categoryId: MenuCategoryId;
+  /**
+   * Owner-approved primary keyword (research/seo/KEYWORD_MASTER_MAP.md).
+   * Unique per page; used in the title/H1 naturally, never stuffed.
+   */
+  primaryKeyword: string;
+  /**
+   * Public title of this menu article, used wherever another page links to it
+   * (e.g. "Related Menus"): "Olive Garden Lunch Menu". Unique; no year.
+   */
+  menuTitle: string;
+  /** Approved secondary / semantic keywords (planning only, not rendered). */
+  secondaryKeywords?: string[];
+  /** One-sentence search intent this page answers (planning only). */
+  searchIntent?: string;
   /** <title> (the site name is added by the layout template). */
   metaTitle: string;
   metaDescription: string;
   h1: string;
   /** Short introduction paragraphs. No unverified menu claims. */
   intro: string[];
+  /** ISO date the written text was last reviewed (shown in the source note). */
+  contentReviewedAt?: string;
+  /** Visible H2 above the price table (outline heading). Omitted = hidden "Prices and calories" H2. */
+  tableHeading?: string;
+  /** Short paragraphs between the table heading and the table. */
+  tableIntro?: RichText[];
+  /** false = no visitor-rating column or photo-card ratings (e.g. promotion pages). Default true. */
+  showRatings?: boolean;
+  /**
+   * Table rows shown without a visitor rating, e.g. non-food merchandise
+   * (Cheese Grater). The item stays in the table; it can't be a photo card.
+   */
+  noRatingOfferingIds?: string[];
+  /**
+   * 3-5 offering ids shown as photo cards (must be in this category and have
+   * an image), or [] for no cards. Omitted = the first 5 items with an image.
+   */
+  featuredOfferingIds?: string[];
+  /** Heading (H3) of the photo cards inside the table section. */
+  featuredHeading?: string;
+  /** Category-specific sections after the table and photo cards (H2 each). */
+  sections?: CategorySection[];
+  /** Comparison tables built from the shared menu data (placed by a "comparison" block). */
+  comparisons?: ComparisonTableSpec[];
+  /** Create Your Own Pasta option tables (placed by an "optionTable" block). */
+  optionTables?: OptionTableSpec[];
+  /** Calculated example pasta builds (placed by a "pastaBuilds" block). */
+  pastaBuilds?: PastaBuildSpec[];
+  /** Static headcount plans (placed by a "servingPlan" block). */
+  servingPlans?: ServingPlanSpec[];
+  /**
+   * Offerings shown in the price table instead of the category's own items.
+   * Only for a category without its own offerings (Create Your Own Pasta,
+   * whose dish is listed under Classic Entrées). Ratings stay shared (by product).
+   */
+  tableOfferingIds?: string[];
   /** Caption of the price table. */
   tableCaption: string;
   /** Extra verified price details (other sizes, price type), shown under the table. */
   priceNotes: string[];
   /** Short notes about how calories are listed. */
   nutritionNotes: string[];
-  /** Official sources used for the values on the page. */
+  /**
+   * Complete record of the official sources used for this page (internal;
+   * not rendered). The public Sources section shows only `officialSource`
+   * and, when needed, `extraSource` (owner standard 2026-11-13).
+   */
   sources: { label: string; url: string }[];
+  /** Public official source: the Olive Garden website (default) or the nutrition PDF. */
+  officialSource?: "website" | "nutrition";
+  /** One extra official page shown publicly, only when an important claim needs it. Must be listed in `sources`. */
+  extraSource?: { label: string; url: string };
   faqs: FaqItem[];
-  /** Related categories with the reason to visit them (contextual links). */
+  /**
+   * Related menus with the reason to visit them. Shown under "Related Menus"
+   * with the target page's `menuTitle`; an entry appears only when its page
+   * is live (published, or preview on a preview page), so planned links show
+   * up automatically once that page is finished.
+   */
   related: { categoryId: MenuCategoryId; text: string }[];
+};
+
+/** A block inside a category section: article blocks plus comparison, option, and example-build tables. */
+export type CategoryBlock =
+  | ContentBlock
+  | { type: "comparison"; id: string }
+  | { type: "optionTable"; id: string }
+  | { type: "pastaBuilds"; id: string }
+  | { type: "servingPlan"; id: string }
+  /**
+   * Small photo grid of owner-supplied images (each listed in docs/IMAGE_MANIFEST.md),
+   * e.g. one photo per soup. `label` is the accessible name of the group.
+   */
+  | { type: "gallery"; label: string; images: (ImageRef & { caption: string })[] };
+
+/** A written section of a category page: rendered as an H2 with blocks. */
+export type CategorySection = {
+  /** Unique, lowercase-hyphenated id (anchor). */
+  id: string;
+  heading: string;
+  blocks: CategoryBlock[];
+};
+
+/**
+ * One column of a comparison table. Values come from the shared menu data
+ * (content/menu/), never typed into the page. "pricePerServing" and
+ * "priceDifference" are calculated and labeled "Calculated" on the page.
+ */
+export type ComparisonColumn =
+  /**
+   * `ref` = read the value from row.refs[ref] (another offering, e.g. the
+   * regular-size version of the row's dish) instead of the row's own offering.
+   * `missing` = note shown when the row has no such ref (e.g. "Not on the lunch menu").
+   */
+  | { kind: "price"; label?: string; ref?: string; missing?: string }
+  | { kind: "calories"; label?: string; ref?: string; missing?: string }
+  | { kind: "serving"; label?: string }
+  | { kind: "category"; label?: string }
+  /**
+   * price ÷ servings from the official serving size: row.servings (the
+   * upper number, default) or row.servingsMin (the lower number, use "min").
+   */
+  | { kind: "pricePerServing"; label?: string; use?: "min" | "max" }
+  /** price minus the price of row `baseRow` (0-based). */
+  | { kind: "priceDifference"; label?: string; baseRow: number }
+  /** calories minus the calories of row `baseRow` (single values only). */
+  | { kind: "caloriesDifference"; label?: string; baseRow: number }
+  /**
+   * Same-row difference between two versions of one dish (calculated):
+   * value of `ref` (default: the row's own offering, also written "main")
+   * minus value of `baseRef`. `percent` adds the change as a share of the base.
+   * Calories: single values only.
+   */
+  | { kind: "refDifference"; measure: "price" | "calories"; label: string; ref?: string; baseRef: string; percent?: boolean }
+  /** Short verified text per row, from row.text[key]. */
+  | { kind: "text"; label: string; key: string };
+
+/** Another offering used in the same comparison row (see ComparisonColumn `ref`). */
+export type ComparisonRef = { offeringId: string; option?: string };
+
+export type ComparisonRow = {
+  offeringId: string;
+  /** Row label; default = the offering's display name. */
+  label?: string;
+  /** Use this option (size/variant label) instead of the default price/calories. */
+  option?: string;
+  /** Other versions of the same dish, by key (e.g. { regular: {...}, lunch: {...} }). */
+  refs?: Record<string, ComparisonRef>;
+  /** Official number of servings (for pricePerServing), e.g. 6 for "Serves 4-6" (upper number). */
+  servings?: number;
+  /** Lower number of an official range, e.g. 4 for "Serves 4-6". */
+  servingsMin?: number;
+  text?: Record<string, string>;
+};
+
+export type ComparisonTableSpec = {
+  id: string;
+  caption: string;
+  columns: ComparisonColumn[];
+  rows: ComparisonRow[];
+  /** Notes under the table (e.g. how a calculation was made). */
+  notes?: RichText[];
+};
+
+/**
+ * A table of Create Your Own Pasta options (content/menu/create-your-own-pasta.ts):
+ * the official build options with their add-on prices and component calories.
+ * Also used for the soups, whose single-serving calories are listed as
+ * first-course options.
+ */
+export type OptionTableSpec = {
+  id: string;
+  caption: string;
+  rows: { optionId: string; label?: string; text?: Record<string, string> }[];
+  columns: (
+    | { kind: "price"; label?: string }
+    | { kind: "calories"; label?: string }
+    | { kind: "text"; label: string; key: string }
+    /** Calculated: the row's calories plus the listed options (count = how many of each, default 1). */
+    | { kind: "caloriesPlus"; label: string; add: { optionId: string; count?: number }[] }
+  )[];
+  notes?: RichText[];
+};
+
+/** One example Create Your Own Pasta order: every value is calculated from the official options. */
+export type PastaBuild = {
+  label: string;
+  pasta: string;
+  sauce: string;
+  toppings?: string[];
+  /** Included soup or salad (option id); shown in the full-meal column. */
+  firstCourse?: string;
+  /** Included breadsticks counted in the full-meal column (0-2). */
+  breadsticks?: number;
+};
+
+/**
+ * Static headcount plan (e.g. catering for 50 people): for each plan,
+ * units = guests ÷ servesPerUnit rounded UP (so the food is never short),
+ * subtotal = units × the shared price, per guest = subtotal ÷ guests. All calculated.
+ */
+export type ServingPlanSpec = {
+  id: string;
+  caption: string;
+  guests: number;
+  plans: {
+    label: string;
+    offeringId: string;
+    option?: string;
+    /** Official serving number used per unit (the LOWER number of a "serves 8-14" range). */
+    servesPerUnit: number;
+  }[];
+  notes?: RichText[];
+};
+
+export type PastaBuildSpec = {
+  id: string;
+  caption: string;
+  builds: PastaBuild[];
+  notes?: RichText[];
 };
 
 /** A heading on /menu that groups related categories. */

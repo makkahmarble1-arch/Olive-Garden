@@ -19,6 +19,9 @@ Planning docs (read the relevant one before working on a feature):
 - `docs/INTERNAL_LINKING.md`: navigation, breadcrumbs, contextual links
 - `docs/IMAGE_REQUIREMENTS.md`: image rules, folders, naming, specs
 - `docs/IMAGE_MANIFEST.md`: every image file, its folder, menu item, and alt text
+- `docs/CATEGORY_PAGE_ARCHITECTURE.md`, `docs/CATEGORY_CONTENT_STANDARDS.md`,
+  `docs/CATEGORY_DEVELOPMENT_CHECKLIST.md`: category page layout, writing
+  rules, and per-page steps (Lesson 8). Keyword research: `research/seo/`
 - `research/`: research notes per category (`appetizers/`) and the homepage
   competitor research (`homepage/`, original observations kept unchanged)
 
@@ -129,9 +132,11 @@ where it is needed. Never fill gaps with invented data.
      The owner provides all food images. Never generate or download them.
      Every file is listed in `docs/IMAGE_MANIFEST.md`. Owner-supplied
      AI-generated images are allowed (2026-11-13): mark them
-     `aiGenerated: true` and list them in the manifest. No "AI image" label
-     on cards (owner decision); the homepage Sources section has a general
-     note that some photos are AI-generated illustrations.
+     `aiGenerated: true` and list them in the manifest (internal record only).
+     **Never mention "AI-generated" anywhere on the public site** (owner
+     decision 2026-11-14): no card label, no note. Public text only says the
+     photos are supplied by the site owner, are not official Olive Garden
+     photos, and actual presentation may vary.
   3. **Popular Menu Items** (owner-chosen, fixed): Chicken Alfredo, Tour of
      Italy, Lasagna Classico, Chicken Parmigiana, Fettuccine Alfredo,
      Breadsticks. Shown with image, price, calories, and genuine visitor
@@ -139,7 +144,8 @@ where it is needed. Never fill gaps with invented data.
   4. **Social media:** footer links only with URLs the owner supplies.
   5. **Prices/calories:** reference restaurant **Olive Garden Orlando -
      Millenia Mall** (4101 Conroy Road, Orlando, FL 32839), **online pickup**
-     prices. Source priority and labels in `docs/MENU_RESEARCH_PLAN.md`
+     prices. This location is **internal only** (data, research, docs); it is
+     never shown on the public site (see "Public display standards" below). Source priority and labels in `docs/MENU_RESEARCH_PLAN.md`
      (official → official nutrition → calculated → labeled third-party estimate).
   6. **Ratings:** genuine 1-5 star visitor ratings (average + vote count,
      "Not rated yet" when none), shared by homepage and category pages, with
@@ -176,8 +182,8 @@ where it is needed. Never fill gaps with invented data.
   (in our own words) from verified official information.
 - Hours, holiday hours, lunch specials, and deals appear only when verified
   from an official source with a date; otherwise the section says so.
-- Every price table shows the "prices last checked" date and a note that
-  prices vary by location.
+- Every price table shows the month and year prices were last verified and
+  the note "Prices may vary by location across the USA."
 - Clearly separate verified data from placeholders in code and on the page.
 - Never present the site as official. Footer disclaimer on every page:
   not affiliated with Olive Garden or Darden Restaurants, Inc.
@@ -187,6 +193,37 @@ where it is needed. Never fill gaps with invented data.
 - Menu names: keep the owner's `inventoryName`; record official name
   differences separately. Never remove or merge items without permission.
 - Write helpful, natural content. No keyword stuffing.
+
+## Public display standards (owner-approved 2026-11-13, permanent)
+
+Apply to the homepage, every category page, shared components, and all future pages.
+
+1. **Location:** the public site shows the target country, **USA**, never the
+   reference restaurant (no Orlando, Florida, Millenia Mall, street address,
+   phone, or "at our Orlando restaurant" labels). Use `siteConfig.market` and
+   `siteConfig.locationNotice` ("Prices may vary by location across the USA.").
+   Never imply that all restaurants charge the same price. Neutral wording such
+   as "the prices we verified" or "the restaurant we checked" is fine. The
+   exact reference location stays in `content/menu/locations.ts`, offering
+   data, `research/`, and docs.
+2. **Dates:** public verification dates show **month and year only**
+   ("Last verified: November 2026") via `formatMonthYear()` (`lib/format.ts`),
+   in hero bars, section headers, source notes, and text. Keep full ISO dates in
+   data, research, `<time dateTime>`, JSON-LD `dateModified`, and the sitemap.
+   Never advance the month without a real re-check. (Event dates such as
+   holiday dates are not verification dates.)
+3. **Sources:** category pages end with a short "Sources" box
+   (`components/category/SourceNote`): one sentence, one official source
+   (Olive Garden website, or the nutrition PDF via `officialSource`), at most
+   one extra official page (`extraSource`) when an important claim needs it,
+   "Last verified: Month Year", and the disclaimer. The full source list stays
+   in `sources` (not rendered) and in `research/`.
+4. **Related Menus:** the section is titled "Related Menus"; cards use the
+   target page's real article title (`menuTitle`, e.g. "Olive Garden Lunch
+   Menu") and link to its URL. Only live pages are shown (published; preview
+   targets only from another preview page), never the page itself, never a
+   placeholder. Planned entries appear automatically when their page is finished
+   (`getRelatedMenus` in `lib/category-data.ts`).
 
 ## SEO rules
 

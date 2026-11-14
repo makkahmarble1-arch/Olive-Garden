@@ -160,7 +160,7 @@ export const glutenSensitiveOfferings = defineOfferings("gluten-sensitive", [
     productId: "6-oz-sirloin",
     officialName: "6 oz Sirloin",
     isNewOfficialItem: false,
-    description: "A grilled six-ounce sirloin topped with garlic herb butter, cooked to your chosen temperature and served with fettuccine alfredo.",
+    description: "A grilled six-ounce sirloin topped with garlic herb butter, cooked to your chosen temperature and served with parmesan garlic broccoli.",
     portionType: "regular",
     servingSize: "6 oz sirloin + parmesan garlic broccoli (regular plate comes with fettuccine alfredo, 980 cal)",
     prices: [

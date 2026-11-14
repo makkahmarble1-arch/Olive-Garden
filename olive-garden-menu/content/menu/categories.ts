@@ -26,7 +26,7 @@ export const menuCategories: MenuCategoryDef[] = [
     inventoryItemCount: 20,
     defaultPortionType: "family-style",
     featuredOnHomepage: true,
-    contentStatus: "placeholder",
+    contentStatus: "published",
     updatedAt: null,
   },
   {
@@ -54,7 +54,7 @@ export const menuCategories: MenuCategoryDef[] = [
     inventoryItemCount: 27,
     defaultPortionType: "regular",
     featuredOnHomepage: true,
-    contentStatus: "placeholder",
+    contentStatus: "published",
     updatedAt: null,
   },
   {
@@ -67,7 +67,7 @@ export const menuCategories: MenuCategoryDef[] = [
     inventoryItemCount: 7,
     defaultPortionType: "promotion",
     featuredOnHomepage: false,
-    contentStatus: "placeholder",
+    contentStatus: "published",
     updatedAt: null,
   },
   {
@@ -80,7 +80,7 @@ export const menuCategories: MenuCategoryDef[] = [
     inventoryItemCount: 5,
     defaultPortionType: "regular",
     featuredOnHomepage: false,
-    contentStatus: "placeholder",
+    contentStatus: "published",
     updatedAt: null,
   },
   {
@@ -93,7 +93,7 @@ export const menuCategories: MenuCategoryDef[] = [
     inventoryItemCount: 6,
     defaultPortionType: "regular",
     featuredOnHomepage: true,
-    contentStatus: "placeholder",
+    contentStatus: "preview",
     updatedAt: null,
   },
   {
@@ -106,7 +106,7 @@ export const menuCategories: MenuCategoryDef[] = [
     inventoryItemCount: 7,
     defaultPortionType: "lighter-portion",
     featuredOnHomepage: false,
-    contentStatus: "placeholder",
+    contentStatus: "preview",
     updatedAt: null,
   },
   {
@@ -119,7 +119,7 @@ export const menuCategories: MenuCategoryDef[] = [
     inventoryItemCount: 0,
     defaultPortionType: "regular",
     featuredOnHomepage: false,
-    contentStatus: "placeholder",
+    contentStatus: "preview",
     updatedAt: null,
   },
   {
@@ -132,7 +132,7 @@ export const menuCategories: MenuCategoryDef[] = [
     inventoryItemCount: 10,
     defaultPortionType: "lunch",
     featuredOnHomepage: false,
-    contentStatus: "placeholder",
+    contentStatus: "preview",
     updatedAt: null,
   },
   {
@@ -145,7 +145,7 @@ export const menuCategories: MenuCategoryDef[] = [
     inventoryItemCount: 6,
     defaultPortionType: "regular",
     featuredOnHomepage: true,
-    contentStatus: "placeholder",
+    contentStatus: "preview",
     updatedAt: null,
   },
   {
@@ -158,7 +158,7 @@ export const menuCategories: MenuCategoryDef[] = [
     inventoryItemCount: 12,
     defaultPortionType: "regular",
     featuredOnHomepage: false,
-    contentStatus: "placeholder",
+    contentStatus: "preview",
     updatedAt: null,
   },
   {
@@ -171,7 +171,7 @@ export const menuCategories: MenuCategoryDef[] = [
     inventoryItemCount: 9,
     defaultPortionType: "side",
     featuredOnHomepage: false,
-    contentStatus: "placeholder",
+    contentStatus: "preview",
     updatedAt: null,
   },
   {
@@ -184,7 +184,7 @@ export const menuCategories: MenuCategoryDef[] = [
     inventoryItemCount: 13,
     defaultPortionType: "regular",
     featuredOnHomepage: false,
-    contentStatus: "placeholder",
+    contentStatus: "preview",
     updatedAt: null,
   },
   {
@@ -197,7 +197,7 @@ export const menuCategories: MenuCategoryDef[] = [
     inventoryItemCount: 19,
     defaultPortionType: "to-go",
     featuredOnHomepage: false,
-    contentStatus: "placeholder",
+    contentStatus: "preview",
     updatedAt: null,
   },
   {
@@ -210,7 +210,7 @@ export const menuCategories: MenuCategoryDef[] = [
     inventoryItemCount: 10,
     defaultPortionType: "regular",
     featuredOnHomepage: false,
-    contentStatus: "placeholder",
+    contentStatus: "preview",
     updatedAt: null,
   },
   {
@@ -223,7 +223,7 @@ export const menuCategories: MenuCategoryDef[] = [
     inventoryItemCount: 11,
     defaultPortionType: "kids",
     featuredOnHomepage: true,
-    contentStatus: "placeholder",
+    contentStatus: "preview",
     updatedAt: null,
   },
   {
@@ -236,7 +236,7 @@ export const menuCategories: MenuCategoryDef[] = [
     inventoryItemCount: 38,
     defaultPortionType: "catering",
     featuredOnHomepage: false,
-    contentStatus: "placeholder",
+    contentStatus: "preview",
     updatedAt: null,
   },
 ];

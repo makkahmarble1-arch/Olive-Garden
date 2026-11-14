@@ -1,6 +1,7 @@
 import Image from "next/image";
-import type { ImageRef, ReferenceLocation } from "@/lib/types";
-import { formatDate } from "@/lib/format";
+import type { ImageRef } from "@/lib/types";
+import { formatMonthYear } from "@/lib/format";
+import { siteConfig } from "@/lib/site";
 import Container from "@/components/layout/Container";
 
 type HeroProps = {
@@ -58,27 +59,19 @@ export default function Hero({ title, intro, image }: HeroProps) {
   );
 }
 
-/** "November 11–12, 2026" or "November 12, 2026". */
+/** Month and year only (owner standard 2026-11-13): "November 2026" or "October – November 2026". */
 export function checkedRange(checked: { first: string; last: string }): string {
-  if (checked.first === checked.last) return formatDate(checked.last);
-  const first = formatDate(checked.first);
-  const last = formatDate(checked.last);
-  const [fMonth, fDay] = first.replace(",", "").split(" ");
-  const [lMonth, lDay, lYear] = last.replace(",", "").split(" ");
-  return fMonth === lMonth && first.endsWith(lYear) ? `${fMonth} ${fDay}–${lDay}, ${lYear}` : `${first} – ${last}`;
+  const first = formatMonthYear(checked.first);
+  const last = formatMonthYear(checked.last);
+  return first === last ? last : `${first} – ${last}`;
 }
 
 /**
- * Compact pricing facts under the hero: reference restaurant, real check
- * date, and the price-variation notice. Full method: the Sources section.
+ * Compact pricing facts under the hero: USA online pickup prices, month and
+ * year of the real check, and the price-variation notice. The reference
+ * restaurant is not shown publicly. Full method: the Sources section.
  */
-export function PricingInfoBar({
-  location,
-  checked,
-}: {
-  location: ReferenceLocation;
-  checked: { first: string; last: string } | null;
-}) {
+export function PricingInfoBar({ checked }: { checked: { first: string; last: string } | null }) {
   const item = "flex items-start gap-2";
   const dot = <span aria-hidden="true" className="mt-2 size-1.5 shrink-0 rounded-full bg-brand" />;
   return (
@@ -88,21 +81,20 @@ export function PricingInfoBar({
           <li className={item}>
             {dot}
             <span>
-              <strong className="font-semibold">Prices:</strong> online pickup at Olive Garden {location.name},{" "}
-              {location.city}, {location.state}
+              <strong className="font-semibold">Prices:</strong> online pickup prices, {siteConfig.market}
             </span>
           </li>
           {checked && (
             <li className={item}>
               {dot}
               <span>
-                <strong className="font-semibold">Last checked:</strong> {checkedRange(checked)}
+                <strong className="font-semibold">Last verified:</strong> {checkedRange(checked)}
               </span>
             </li>
           )}
           <li className={item}>
             {dot}
-            <span>Prices and items vary by location.</span>
+            <span>{siteConfig.locationNotice}</span>
           </li>
           <li className={item}>
             {dot}

@@ -11,6 +11,8 @@ import { createYourOwnPasta } from "@/content/menu/create-your-own-pasta";
 import { categoryPages } from "@/content/menu/category-pages";
 import { articles } from "@/content/articles";
 import { validateMenuData } from "./menu-validation";
+import { validateCategoryPages } from "./category-validation";
+import { homepageFaqs } from "@/content/home/homepage";
 import type {
   Article,
   ArticleCardData,
@@ -50,6 +52,16 @@ for (const page of categoryPages) {
     menuIssues.push(`${page.categoryId}: more than one entry in content/menu/category-pages.ts.`);
   }
 }
+
+menuIssues.push(
+  ...validateCategoryPages({
+    pages: categoryPages,
+    offerings: menuOfferings,
+    products: menuProducts,
+    homepageFaqs,
+    pastaOptions: createYourOwnPasta.options,
+  }),
+);
 
 if (menuIssues.length > 0) {
   throw new Error(`Menu data check failed:\n- ${menuIssues.join("\n- ")}`);

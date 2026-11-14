@@ -36,6 +36,20 @@ export const siteConfig = {
   priceNotice:
     "Prices vary by location and can change at any time. Always confirm with your local restaurant.",
 
+  /**
+   * Public location standard (owner, 2026-11-13): the site shows the target
+   * country only, never the reference restaurant (name, city, address).
+   * The exact reference location stays in content/menu/locations.ts and research/.
+   */
+  market: "USA",
+  locationNotice: "Prices may vary by location across the USA.",
+  /** Default official source shown in the short Sources section of every page. */
+  officialSource: { label: "Olive Garden", url: "https://www.olivegarden.com/" },
+  nutritionSource: {
+    label: "Olive Garden Nutrition Information (PDF)",
+    url: "https://media.olivegarden.com/en_us/pdf/olive_garden_nutrition.pdf",
+  },
+
   // Only link to sections/pages that exist. The full menu lives on the
   // homepage; /menu is noindex and not linked (redirect reviewed before launch).
   // Add "About", "Contact", and legal pages here once those routes exist.

@@ -132,7 +132,7 @@ still valid and harmless when it matches the page.)
   published category page, important internal pages, and official
   Olive Garden pages (ordering, nutrition, location) where helpful.
 - `/menu` links to every category page.
-- Each category page links to 2-5 related categories and 1-2 related guides.
+- Each category page links to 2-5 related menus and 1-2 related guides. The section is titled "Related Menus"; anchor text is the target's real article title (`menuTitle`, e.g. "Olive Garden Alfredo Menu"). Only live pages are linked (never placeholders, never the page itself); published pages never link to unapproved preview pages.
 - Each blog article links to the relevant category pages in the body and
   shows 3 related articles at the bottom.
 - Breadcrumbs on every page except the homepage.
@@ -145,7 +145,8 @@ still valid and harmless when it matches the page.)
 - Logical heading order (`h2` → `h3`), used to build the table of contents.
 - Short intro answering the main question first (e.g. price range).
 - Price tables near the top of category pages.
-- "Prices last checked: {date}" + "Prices vary by location" note.
+- "Last verified: {Month Year}" + "Prices may vary by location across the USA." (owner standard 2026-11-13). Public pages show the market (USA), never the reference restaurant; full dates stay machine-readable (`<time dateTime>`, JSON-LD `dateModified`, sitemap `lastmod`).
+- Short "Sources" section: one official source (+ at most one specific official page), no long link lists.
 - Write for people first: helpful, specific, honest. No filler or stuffing.
 - Show the author/editor name and the "last updated" date on articles (E-E-A-T).
 - Show each value's basis visibly ("Calculated", "Estimated", or a note

@@ -8,9 +8,7 @@ import {
   getMenuCheckDates,
   getOffering,
   getOfferingsForCategory,
-  getReferenceLocation,
 } from "@/lib/content";
-import { referenceLocations } from "@/content/menu/locations";
 import {
   categoryNotes,
   heroImage,
@@ -66,7 +64,6 @@ function offeringsById(ids: readonly string[]): MenuOffering[] {
 export default function Home() {
   const categories = getAllMenuCategories();
   const cyop = getCreateYourOwnPasta();
-  const location = getReferenceLocation(referenceLocations[0].id) ?? referenceLocations[0];
   const sections = categories.map((category) => ({
     category,
     offerings: getOfferingsForCategory(category.id),
@@ -123,7 +120,7 @@ export default function Home() {
     <>
       {/* 2-3. Hero (H1, short intro, food photo) and the pricing/verification facts */}
       <Hero title={H1} intro={heroIntro} image={heroImage} />
-      <PricingInfoBar location={location} checked={checkDates} />
+      <PricingInfoBar checked={checkDates} />
 
       {/* 4-6. Category navigation, search, and all 17 menu sections */}
       <div id="full-menu" className="scroll-mt-16">
@@ -166,7 +163,7 @@ export default function Home() {
       {/* 7-13. Supporting sections (seven H2s) */}
       <PopularSection offerings={offeringsById(popularOfferingIds)} />
       <DealsSection />
-      <HoursSection location={location} />
+      <HoursSection />
       <HolidaySection />
       <NutritionSection lowerCalorie={offeringsById(lowerCalorieOfferingIds)} />
       <OrderOnlineSection />

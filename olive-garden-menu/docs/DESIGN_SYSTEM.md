@@ -77,12 +77,14 @@ Loaded with `next/font/google` (self-hosted at build, no extra npm package).
 | Accent button | `brand` bg, `ink` text |
 | Links in text | `brand-dark`, underlined, visible focus ring |
 | Category card | White, `border`, image on top, title + price range |
-| Price table | Header row `brand-tint`; zebra rows optional; columns: Item, Price, Calories; price right-aligned; horizontally scrollable on mobile |
+| Price table | Header row `brand-dark` (olive) with white text; alternating white / `brand-tint` rows; columns: Item, Price, Calories (+ Visitor rating); price right-aligned; horizontally scrollable on mobile. Shared classes: `components/menu/table-styles.ts` (also used by comparison tables) |
 | "Not verified yet" badge | Warning colors, small pill (only while research is unfinished) |
 | "Calculated" / "Estimated" labels | Small text label next to the value, not color alone; style designed when the homepage is rebuilt (owner decision 5, 2026-11-12) |
 | Star rating | 1-5 stars + average + vote count as text ("4.3 · 120 votes"); "Not rated yet" when empty; keyboard-accessible, 44px touch targets; designed in the rating lesson (decision 6) |
 | Menu item (homepage) | Image (or labelled placeholder), name, price, calories, rating, short description, size options; designed when the homepage is rebuilt |
-| Price notice callout | `brand-tint` box with "Prices last checked {date}. Prices vary by location." |
+| Price notice callout | `brand-tint` box with "Prices last verified: {Month Year}" + "Prices may vary by location across the USA." (no reference restaurant, no day) |
+| Sources box (category pages) | Compact `brand-tint` box, H2 "Sources": one sentence, "Official source:" link (+ at most one "Also see:" link), "Last verified: {Month Year}", small disclaimer |
+| Related Menus | H2 "Related Menus"; white cards in a 1/2/3-column grid; card title = the linked page's article title (`menuTitle`, display font, `brand-dark`), one-line reason in `muted` |
 | Breadcrumbs | Small, `muted` text, `/` separators, current page not linked |
 | Table of contents | Box with `border`; collapsible on mobile (`<details>`) |
 | FAQ | `<details>`/`<summary>` accordion, no JavaScript needed |

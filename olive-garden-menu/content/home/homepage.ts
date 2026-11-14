@@ -49,11 +49,11 @@ export const heroImage: ImageRef = {
 
 /** How prices and calories are checked (shown in the Sources section). */
 export const methodNotes = [
-  "Prices are online pickup prices from Olive Garden's official ordering menu with one reference restaurant selected: Olive Garden Orlando – Millenia Mall, 4101 Conroy Road, Orlando, FL 32839. Dine-in prices were not checked and may differ.",
+  "Prices are online pickup prices from Olive Garden's official ordering menu, checked for one U.S. restaurant. Dine-in prices were not checked and may differ. Prices may vary by location across the USA.",
   "Calories come from the same official menu and were cross-checked against Olive Garden's nutrition guide. Where the two differ, the nutrition guide is used for the same portion.",
   "“Calculated” marks a total we added up from official values; the parts are shown next to it. “Estimated” would mark a value from a third-party site; none are used on this page.",
   "Prices, items, and availability vary by location and can change at any time. Always confirm with your restaurant.",
-  "Food photos are supplied by the site owner and are not official Olive Garden photos. Some are AI-generated illustrations; the actual restaurant presentation may vary.",
+  "Food photos are supplied by the site owner and are not official Olive Garden photos; the actual restaurant presentation may vary.",
 ];
 
 /* ---------- Short notes shown at the top of a category section ---------- */
@@ -173,7 +173,7 @@ export const deals: DealRow[] = [
 ];
 
 export const savingsTips = [
-  "Lunch is the cheapest time to eat: at the Orlando reference restaurant, lunch-size plates cost $2.50 to $9.30 less than the dinner portion of the same dish.",
+  "Lunch is the cheapest time to eat: at the prices we verified, lunch-size plates cost $2.50 to $9.30 less than the dinner portion of the same dish.",
   "Olive Garden offers a free dessert on your birthday when you dine in, and email club members get offers for their local restaurant.",
   "There is no rewards program and no group discount, and we found no coupon codes on official pages.",
 ];
@@ -228,7 +228,7 @@ export const holidayIntro =
   "Olive Garden restaurants close on Thanksgiving Day and Christmas Day. On the day before Thanksgiving and on Christmas Eve, the manager may close early, so call ahead for that day's closing time. On other holidays the dinner menu is served all day.";
 
 export const holidayNote =
-  "No holiday opening or closing times were posted for the Orlando reference restaurant when we checked. “Not announced” means exactly that: please confirm with your restaurant.";
+  "No holiday opening or closing times were posted for the restaurant we checked. “Not announced” means exactly that: please confirm with your restaurant.";
 
 /* ---------- Nutrition (research/homepage/nutrition-guide.md) ---------- */
 
@@ -271,7 +271,7 @@ export const orderSteps = [
 ];
 
 export const orderNote =
-  "At the Orlando reference restaurant, online orders are taken from 11 AM until 20 minutes before closing, with curbside pickup and delivery available.";
+  "At the restaurant we checked, online orders were taken from 11 AM until 20 minutes before closing, with curbside pickup and delivery available. Times vary by location.";
 
 /* ---------- FAQs (research/homepage/faqs.md) ---------- */
 
@@ -279,12 +279,13 @@ export const homepageFaqs: FaqItem[] = [
   {
     question: "How much does a meal at Olive Garden cost?",
     answer:
-      "At the Orlando, Florida reference restaurant, dinner entrées cost $13.99 to $26.49 for online pickup, lunch-size plates $11.49 to $12.49, and kids meals $7.49 to $9.98. Prices vary by location.",
+      "At the online pickup prices we verified, dinner entrées cost $13.99 to $26.49, lunch-size plates $11.49 to $12.49, and kids meals $7.49 to $9.98. Prices may vary by location across the USA.",
   },
   {
     question: "Do entrées come with soup or salad and breadsticks?",
     answer:
       "Yes. Dinner entrées, lunch plates, and lighter portions include soup or the house salad plus breadsticks. Kids meals and $6 Take Home entrées do not.",
+    link: { text: "What comes with each classic entrée", href: "/classic-entrees" },
   },
   {
     question: "When is the Olive Garden lunch menu served?",
@@ -299,7 +300,8 @@ export const homepageFaqs: FaqItem[] = [
   {
     question: "What is the $6 Take Home offer?",
     answer:
-      "When you buy any entrée, you can add a chilled Fettuccine Alfredo, Five Cheese Ziti al Forno, or Spaghetti with Meat Sauce to heat later for $6. It comes without soup, salad, or breadsticks.",
+      "Buy any entrée and add a chilled take-home pasta for $6, without soup, salad, or breadsticks.",
+    link: { text: "Eligible dishes, rules, and Buy One Take One status", href: "/buy-one-take-one" },
   },
   {
     question: "Does Olive Garden have gluten-free food?",
@@ -314,7 +316,7 @@ export const homepageFaqs: FaqItem[] = [
   {
     question: "Can I order Olive Garden online for pickup or delivery?",
     answer:
-      "Yes. On the official ordering page, choose To Go or Catering, pick your restaurant, and select pickup or delivery where offered. At the Orlando reference restaurant, online ordering closes 20 minutes before closing time.",
+      "Yes. On the official ordering page, choose To Go or Catering, pick your restaurant, and select pickup or delivery where offered. At the restaurant we checked, online ordering closed 20 minutes before closing time.",
   },
 ];
 
@@ -322,29 +324,24 @@ export const homepageFaqs: FaqItem[] = [
 
 export const homepageSources: (LinkItem & { note: string })[] = [
   {
-    label: "Olive Garden online ordering menu, Orlando – Millenia Mall (Pickup)",
+    label: "Olive Garden online ordering menu (Pickup)",
     href: officialLinks.menu,
-    note: "Prices, item names, sizes, and calories; checked November 11–12, 2026",
+    note: "Prices, item names, sizes, and calories; verified November 2026",
   },
   {
     label: "Olive Garden Nutrition Information (U.S. restaurants, PDF)",
     href: officialLinks.nutritionPdf,
-    note: "Calorie cross-check for every category; checked November 12, 2026",
-  },
-  {
-    label: "Olive Garden Orlando – Millenia Mall restaurant page",
-    href: officialLinks.referenceRestaurant,
-    note: "Hours and services; checked November 12, 2026",
+    note: "Calorie cross-check for every category; verified November 2026",
   },
   {
     label: "Olive Garden specials",
     href: officialLinks.specials,
-    note: "Current deals and offer terms; checked November 12, 2026",
+    note: "Current deals and offer terms; verified November 2026",
   },
   {
     label: "Olive Garden FAQs",
     href: officialLinks.faqs,
-    note: "Holiday closures, lunch hours, and policies; checked November 12, 2026",
+    note: "Holiday closures, lunch hours, and policies; verified November 2026",
   },
 ];
 
@@ -356,5 +353,4 @@ export const officialResourceLinks: LinkItem[] = [
   { label: "Official menu", href: officialLinks.menu },
   { label: "Nutrition information", href: officialLinks.nutrition },
   { label: "Catering", href: officialLinks.catering },
-  { label: "Orlando – Millenia Mall restaurant", href: officialLinks.referenceRestaurant },
 ];
