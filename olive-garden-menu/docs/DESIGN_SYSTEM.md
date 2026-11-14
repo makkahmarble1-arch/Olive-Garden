@@ -131,7 +131,7 @@ Every menu card uses this design: the homepage (all 17 category sections and Pop
 | Price row | Price in `brand-dark`; calorie pill `kcal-bg` #fff3e0 with `kcal-text` #9a5700 (5.2:1) and a small flame icon; wraps to two lines on narrow cards. Price basis ("per bundle (total)") below in small muted text |
 | Description | Exact wording, line height 1.6, `card-text` #525b48 (6.9:1) |
 | Typography (owner correction 2026-11-14) | **Font sizes are identical to the default card** (title 16px phone / 16.8px desktop, price 20px, calories 12px, price basis 12px, description 14px, badge 11.2px, rating text 12px). Weights: title 700, price 700, calories 600, description 400, price basis 400; the badge (500) and the rating text (400) keep the default weights |
-| Rating | Existing `RatingSummary` (18px gold stars, real votes only, 44px touch targets), centered, with a 1px `card-border` divider above it |
+| Rating | Existing `RatingSummary` (18px gold stars, real votes only), centered, with a 1px `card-border` divider above it. Touch area (Lesson 8.6.1): every star button is 44 px tall. Its width follows the card's free space (container query on `.og-rating-box`): 24 px on narrow cards, 27-32 px on 2-column phones and wide desktop cards, at most 36 px, so the row stays compact. The visible star stays 18 px, buttons never overlap, and the keyboard focus ring sits on the button. Table rating cells keep 24 px |
 | Limitation | Cards in a grid row share the tallest card's height (existing grid behavior), so a short card has space above its rating row |
 
 ## 5. Accessibility rules

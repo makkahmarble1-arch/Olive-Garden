@@ -228,3 +228,13 @@ Effects of publishing (verified on a production build, 2026-11-14):
   - The desserts and kids to-go answers now have category-specific details.
 - [x] "Olive Garden Appetizers Menu" was added to the Related Menus of `/family-style-meals` and `/classic-entrees`.
 - [x] 13 inline links to homepage category sections (`/#catering`, `/#lunch-menu`, `/#lighter-portions`, `/#sides-sauces-and-extras`, `/#gluten-sensitive`, `/#kids-meal`) now point to the dedicated pages. The 4 `/#full-menu` links (intentional homepage navigation) are unchanged.
+
+### Lesson 8.6 final QA (2026-11-14)
+
+- [x] All 17 category pages: HTTP 200, `published`, `noindex` (pre-launch), no empty or broken layouts.
+  - Tested at 320 and 1440 px (7 representative pages at all 7 widths, 320-1920 px).
+  - 0 horizontal overflow, 0 broken images, 0 console or hydration errors.
+- [x] Data on the homepage matches the shared data: 255 cards, 31 selectors / 84 options, 15 availability labels.
+- [x] Related Menus, breadcrumbs, Sources, and FAQs checked.
+- [x] Lighthouse Accessibility: 100 (catering, kids).
+- Details: `docs/testing/FUNCTIONAL_TEST_REPORT.md` and `RESPONSIVE_TEST_REPORT.md`.

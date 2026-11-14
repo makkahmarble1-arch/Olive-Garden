@@ -89,3 +89,11 @@ Options (not implemented; each needs owner approval):
 1. `npm run build` and then `npx next start -p 3200`.
 2. Lighthouse in Chrome DevTools: Mobile, Performance, Incognito, run 3 times and compare the median.
 3. After launch, use PageSpeed Insights on the live URL: its "field data" section is the real Core Web Vitals.
+
+## Lesson 8.6.1 update (2026-11-14)
+
+`content-visibility: auto` on the homepage menu sections was tested:
+- Benefit: search clear about 10x faster; Lighthouse TBT about halved; LCP unchanged.
+- Rejected, because it broke anchor jumps (headings off-screen, CLS 0.775 on a cold `/#kids-meal` load) and hid off-screen headings from the accessibility tree.
+
+**Option A stays.** Full results: `docs/testing/PERFORMANCE_TEST_REPORT.md` section 6.

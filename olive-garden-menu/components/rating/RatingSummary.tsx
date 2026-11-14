@@ -41,6 +41,7 @@ export default function RatingSummary({ productId, itemName, align = "center", c
   const [focusIndex, setFocusIndex] = useState(0);
   const [vote, setVote] = useState<VoteState>({ status: "idle" });
   const buttons = useRef<(HTMLButtonElement | null)[]>([]);
+  const submitting = useRef(false);
   const labelId = useId();
 
   // Hide the short feedback text again after a few seconds.
@@ -73,9 +74,13 @@ export default function RatingSummary({ productId, itemName, align = "center", c
   }
 
   async function choose(stars: number) {
-    if (vote.status === "submitting" || !VOTING_OPEN) return;
+    // The ref blocks a second click before React has re-rendered (Lesson 8.6).
+    if (submitting.current || vote.status === "submitting" || !VOTING_OPEN) return;
+    submitting.current = true;
     setVote({ status: "submitting", stars });
-    const result = await submitVote(productId, stars);
+    const result = await submitVote(productId, stars).finally(() => {
+      submitting.current = false;
+    });
     if (result.status === "saved") {
       // Updates every card that shares this rating key.
       applyVote(result.ratingKey, { average: result.average, count: result.count });
@@ -131,7 +136,9 @@ export default function RatingSummary({ productId, itemName, align = "center", c
             type="button"
             tabIndex={index === focusIndex ? 0 : -1}
             aria-label={`Rate ${stars} out of 5 stars`}
-            disabled={vote.status === "submitting"}
+            // aria-disabled (not disabled) keeps keyboard focus on the star while the
+            // vote is saved; choose() already ignores clicks while submitting.
+            aria-disabled={vote.status === "submitting"}
             onClick={() => choose(stars)}
             onMouseEnter={() => setHover(stars)}
             onFocus={() => setFocusIndex(index)}

@@ -72,3 +72,16 @@ Each item needs the owner's approval. Details: `HOMEPAGE_SEO_AUDIT.md`, `PERFORM
 - [ ] Keep the Supabase Free project active (it pauses after about a week without activity).
 - [ ] Re-check prices/calories on schedule and update the "last checked" dates (they drive `dateModified` and the sitemap `lastmod`).
 - [ ] Monitor Search Console (coverage, Core Web Vitals) and real-user performance before any of the performance options in `PERFORMANCE_AUDIT.md` §3.
+
+## 6. Lesson 8.6 final QA (2026-11-14)
+
+Reports: `docs/testing/` (`FINAL_WEBSITE_QA.md` and four detailed reports).
+
+- [x] Local production build: 18/18 pages 200, `noindex`; responsive 320-1920 px (71 loads, 0 overflow); data, search, navigation, and ratings (isolated DB) pass; Lighthouse Accessibility 100; no secrets in bundles; production dependencies: 0 vulnerabilities.
+- [x] Fixed: proxy soft 404 for dotted names and `/api` (now 404); star keyboard focus ring; focus kept after voting; double-submit guard.
+- [x] Mobile homepage performance: `content-visibility` was tested in Lesson 8.6.1 and rejected (anchor and accessibility regressions). **Option A kept** (`PERFORMANCE_TEST_REPORT.md` section 6). Measure real users after launch.
+- [x] Security headers + `poweredByHeader: false` (Lesson 8.6.1, verified locally). After deploying: check the live headers and HSTS. A CSP needs its own review before adding AdSense, GA4, or Clarity.
+- [ ] Dev-only `minimatch` warning (7 moderate): `npm audit fix` has no compatible fix (dry run: 0 changes). Re-check after `typescript-eslint` / `eslint-config-next` updates; no forced update.
+- [x] Star touch areas widened where cards have room (27-36 px wide, 44 px tall; Lesson 8.6.1).
+- [ ] Manual: click the 21 external official links once (olivegarden.com blocks automated checks).
+- [ ] After deploying: repeat the HTTP status, rating (`npm run test:rating-api -- <domain>`), and Lighthouse checks on the live site; check once on a real iPhone and Android phone (Safari not tested locally).

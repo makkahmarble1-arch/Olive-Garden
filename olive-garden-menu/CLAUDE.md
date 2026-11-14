@@ -254,8 +254,10 @@ Apply to the homepage, every category page, shared components, and all future pa
 - **HTTP 404 for unknown URLs: `proxy.ts`** (owner approval 2026-11-14).
   - **What it checks:** only one-segment URLs (matcher `/:segment`). A segment is allowed if it is:
     - a category with a page (read from `content/menu/categories.ts`, the same rule as `app/[category]`)
-    - a top-level `app/` folder (`APP_TOP_LEVEL_ROUTES`, read from the file system in `next.config.ts` at build/dev start)
-    - a file name with a dot (robots.txt, sitemap.xml, favicon.ico)
+    - a top-level `app/` folder that contains a `page` or `route` file (`APP_TOP_LEVEL_ROUTES`)
+    - a real top-level file: `public/` files and app metadata files such as robots.txt, sitemap.xml, favicon.ico (`APP_TOP_LEVEL_FILES`)
+    - a Next.js internal path starting with `_`
+    - Both lists are read from the file system in `next.config.ts` at build/dev start. Since Lesson 8.6 (fix F1), dotted names such as `/.env` or `/package.json` and folders without a page such as `/api` return 404.
   - **Anything else** is rewritten to an unmatched internal path, so it gets the normal 404 page with a real HTTP 404.
   - **Untouched:** no database, no route list to maintain. `/`, API routes, `/_next`, images, and deeper paths never reach it.
   - **Future routes:**

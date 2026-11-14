@@ -17,6 +17,14 @@
 
 **Owner decision (2026-11-13):** "use the images I supplied". The 11 images in section A are used although they differ from the official dish. The "AI image" card label was removed by owner decision; since 2026-11-14 the public site does not mention AI at all (owner decision); the homepage only says the photos are supplied by the site owner and are not official Olive Garden photos. A corrected image can replace any of them later under the same file name; the prompts below are kept for that.
 
+## QA check (Lesson 8.6, 2026-11-14)
+
+- 146 image paths are referenced in the data, and every file exists. They are WebP: 144 at 600 × 450, the soup composite at 800 × 600, and the hero at 1200 × 800. All are under 120 KB.
+- Broken images: 0 on 71 page loads. Homepage placeholders: 0. Alt text: 0 missing.
+- 238 of 239 homepage images lazy-load; the hero is preloaded.
+- Unused file: `soups-salad-and-breadsticks/homemade-soups.webp` (retired; kept until the owner approves deleting it).
+- The 4 owner photos of 2026-11-14 are in use, but they are **not resolved**: they still differ from the official dishes (rows 1-4 below). The GS Grilled Chicken Parmigiana photo shows spaghetti, so it remains the top priority for a correct photo.
+
 ## Consolidated image replacement manifest (Lesson 8.5.1, 2026-11-14)
 
 This is the single list of every open image issue. It was checked against our verified menu descriptions, the research notes, and the official pages named below. It supersedes the scattered notes in the sections below, which are kept as history.

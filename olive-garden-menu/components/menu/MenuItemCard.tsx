@@ -158,7 +158,7 @@ export default function MenuItemCard({ offering, searchable = false, showRating 
           {offering.description && <p className="text-sm leading-[1.6] text-card-text">{offering.description}</p>}
 
           {showRating && (
-            <div className="mt-auto border-t border-card-border pt-2.5">
+            <div className="og-rating-box mt-auto border-t border-card-border pt-2.5">
               <RatingSummary productId={offering.productId} itemName={offering.displayName} />
             </div>
           )}

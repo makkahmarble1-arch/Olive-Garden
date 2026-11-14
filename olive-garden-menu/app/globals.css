@@ -92,7 +92,7 @@ body {
     background: none;
     cursor: pointer;
   }
-  .og-star-btn:disabled {
+  .og-star-btn[aria-disabled="true"] {
     cursor: wait;
   }
   .og-star::before,
@@ -113,13 +113,32 @@ body {
     mask-image: var(--og-star-solid);
     background: linear-gradient(90deg, var(--color-star) var(--fill), transparent var(--fill));
   }
-  .og-star-btn:focus-visible {
-    outline: none;
+  /* Wider star touch areas on menu cards where the card has room (Lesson 8.6.1).
+     The visible star stays 18 px; only the button (hit area) gets wider
+     (27-36 px wide, always 44 px tall), and buttons never overlap. Capped at
+     36 px so the row stays compact (owner rule). Phones (< 640 px): stars sit above the count, so
+     the full card width is available. Larger screens: stars and the count
+     ("4.0 (12)", about 60 px) share one row. Tables keep 24 px buttons. */
+  .og-rating-box {
+    container-type: inline-size;
   }
-  .og-star-btn:focus-visible::before {
+  @media (max-width: 39.99rem) {
+    @container (min-width: 135px) { .og-star-btn { width: 1.6875rem; } }
+    @container (min-width: 140px) { .og-star-btn { width: 1.75rem; } }
+    @container (min-width: 160px) { .og-star-btn { width: 2rem; } }
+    @container (min-width: 190px) { .og-star-btn { width: 2.25rem; } }
+  }
+  @media (min-width: 40rem) {
+    @container (min-width: 210px) { .og-star-btn { width: 1.75rem; } }
+    @container (min-width: 230px) { .og-star-btn { width: 2rem; } }
+    @container (min-width: 250px) { .og-star-btn { width: 2.25rem; } }
+  }
+  /* Keyboard focus ring on the button itself: an outline on the masked
+     ::before star was clipped by the mask and never showed (Lesson 8.6). */
+  .og-star-btn:focus-visible {
     outline: 2px solid var(--color-brand-dark);
-    outline-offset: 1px;
-    border-radius: 2px;
+    outline-offset: -1px;
+    border-radius: 4px;
   }
   @media (forced-colors: active) {
     .og-star::before,
