@@ -1,8 +1,11 @@
+import Image from "next/image";
 import Link from "next/link";
 import { cacheLife } from "next/cache";
 import { siteConfig } from "@/lib/site";
-import { getMenuCategoriesWithPages, menuCategoryPath } from "@/lib/content";
+import { getFooterColumns } from "@/lib/navigation";
+import { publicContactEmail } from "@/content/site/publisher";
 import Container from "./Container";
+import BackToTopButton from "./BackToTopButton";
 
 // With Cache Components, the current date must be read inside "use cache".
 // The year is cached and refreshed daily.
@@ -12,104 +15,126 @@ async function CurrentYear() {
   return <>{new Date().getFullYear()}</>;
 }
 
-export default function Footer() {
-  // Dedicated category pages that exist (same rule as the [category] route).
-  const categories = getMenuCategoriesWithPages();
+/** Small decorative olive branch (aria-hidden), drawn in the current text color. */
+function OliveBranch({ className = "" }: { className?: string }) {
+  const leaves: [number, number, number][] = [
+    [26, 44, -28],
+    [44, 37, -36],
+    [62, 29, -30],
+    [80, 21, -40],
+    [98, 13, -32],
+  ];
   return (
-    <footer className="mt-auto border-t border-line bg-brand-tint">
-      <Container className="grid gap-8 py-10 sm:grid-cols-2 md:grid-cols-[2fr_1fr_1fr_1fr] md:py-12">
-        <div>
-          <p className="font-display text-lg font-bold text-ink">{siteConfig.name}</p>
-          <p className="mt-2 max-w-prose text-sm leading-6 text-muted">
-            {siteConfig.description}
-          </p>
-        </div>
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 120 60" className={className} fill="none">
+      <path d="M4 52C34 46 66 32 116 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      {leaves.map(([x, y, r]) => (
+        <g key={x}>
+          <ellipse cx={x} cy={y - 7} rx="9" ry="3.6" transform={`rotate(${r} ${x} ${y - 7})`} fill="currentColor" />
+          <ellipse cx={x + 6} cy={y + 5} rx="9" ry="3.6" transform={`rotate(${r + 50} ${x + 6} ${y + 5})`} fill="currentColor" />
+        </g>
+      ))}
+      <ellipse cx="70" cy="40" rx="4.5" ry="5.8" fill="currentColor" />
+    </svg>
+  );
+}
 
-        <nav aria-label="Footer">
-          <p className="text-sm font-semibold text-ink">Explore</p>
-          <ul className="mt-2 space-y-1">
-            {siteConfig.nav.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className="inline-flex min-h-11 items-center text-sm text-brand-dark underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-brand-dark"
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+const linkClass =
+  "inline-flex min-h-11 items-center gap-2 rounded-md text-[0.95rem] text-white underline-offset-4 transition-colors hover:text-hero-cta hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-hero-highlight motion-reduce:transition-none";
 
-        <nav aria-label="About this website">
-          <p className="text-sm font-semibold text-ink">About</p>
-          <ul className="mt-2 space-y-1">
-            {siteConfig.infoLinks.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className="inline-flex min-h-11 items-center text-sm text-brand-dark underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-brand-dark"
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+/**
+ * Global footer (docs/DESIGN_SYSTEM.md 4.5, 2026-11-15): brand column, three
+ * link columns from lib/navigation.ts, the independence disclaimer, and a
+ * copyright bar with "Back to top". Server component; only the Back-to-top
+ * button runs in the browser.
+ */
+export default function Footer() {
+  const columns = getFooterColumns();
+  const email = publicContactEmail();
 
-        <nav aria-label="Official Olive Garden resources">
-          <p className="text-sm font-semibold text-ink">Official resources</p>
-          <ul className="mt-2 space-y-1">
-            {siteConfig.officialLinks.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  target="_blank"
-                  rel="nofollow noopener"
-                  className="inline-flex min-h-11 items-center text-sm text-brand-dark underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-brand-dark"
-                >
-                  {link.label}
-                  <span className="sr-only"> (opens in a new tab)</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </Container>
+  return (
+    <footer className="mt-auto bg-hero-deep text-footer-text">
+      <div className="relative overflow-hidden">
+        <OliveBranch className="pointer-events-none absolute -top-2 -right-6 w-56 text-brand-dark/50 sm:w-72" />
+        <Container className="relative grid gap-x-8 gap-y-10 py-12 min-[360px]:grid-cols-2 md:py-14 lg:grid-cols-[1.35fr_1fr_1fr_1fr] lg:gap-x-0">
+          {/* Column 1: brand */}
+          <div className="min-[360px]:col-span-2 lg:col-span-1 lg:pr-10">
+            <Link
+              href="/"
+              aria-label={`${siteConfig.name} home`}
+              className="inline-flex items-center gap-3 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-hero-highlight"
+            >
+              {/* Same lockup as the header: icon on a cream tile (the icon is dark) + wordmark. */}
+              <span className="flex h-14 items-center rounded-xl bg-header-cream px-2.5 shadow-[0_2px_10px_rgba(0,0,0,0.25)]">
+                <Image src="/images/brand/logo-icon.webp" alt="" width={138} height={96} sizes="62px" className="h-11 w-auto" />
+              </span>
+              <span className="font-display text-xl leading-[1.05] font-bold text-white">
+                Olive Garden{" "}
+                <span className="block text-hero-highlight">Menu Prices</span>
+              </span>
+            </Link>
+            <p className="mt-5 max-w-sm text-[0.95rem] leading-7">
+              An independent menu guide featuring Olive Garden menu prices, calories, specials, and helpful dining
+              information.
+            </p>
+            {email ? (
+              <a href={`mailto:${email}`} className={`${linkClass} mt-3 max-w-full break-all`}>
+                <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" className="size-5 shrink-0 text-hero-highlight" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <path d="M3.5 6.5L12 13l8.5-6.5" />
+                </svg>
+                {email}
+              </a>
+            ) : (
+              <Link href="/contact-us" className={`${linkClass} mt-3`}>
+                Contact us
+              </Link>
+            )}
+          </div>
 
-      {categories.length > 0 && (
-        <div className="border-t border-line">
-          <Container className="py-8">
-            <nav aria-labelledby="footer-menu-categories">
-              <p id="footer-menu-categories" className="text-sm font-semibold text-ink">
-                Menu categories
-              </p>
-              <ul className="mt-2 grid grid-cols-2 gap-x-6 sm:grid-cols-3 lg:grid-cols-4">
-                {categories.map((category) => (
-                  <li key={category.id}>
-                    <Link
-                      href={menuCategoryPath(category.slug)}
-                      className="inline-flex min-h-11 items-center text-sm text-brand-dark underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-brand-dark"
-                    >
-                      {category.name}
+          {/* Columns 2-4: links */}
+          {columns.map((column, i) => (
+            <nav
+              key={column.heading}
+              aria-labelledby={`footer-col-${i}`}
+              className={`lg:border-l lg:border-brand-dark lg:px-8 ${i === 2 ? "min-[360px]:col-span-2 lg:col-span-1" : ""}`}
+            >
+              <h2 id={`footer-col-${i}`} className="font-display text-lg font-bold text-hero-highlight">
+                {column.heading}
+              </h2>
+              <span aria-hidden="true" className="mt-2 block h-0.5 w-10 rounded-full bg-brand" />
+              <ul className={`mt-3 ${i === 2 ? "grid min-[360px]:grid-cols-2 min-[360px]:gap-x-8 lg:grid-cols-1" : ""}`}>
+                {column.links.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className={linkClass}>
+                      {link.label}
                     </Link>
                   </li>
                 ))}
               </ul>
             </nav>
-          </Container>
-        </div>
-      )}
+          ))}
+        </Container>
 
-      <div className="border-t border-line">
-        <Container className="space-y-2 py-6 text-xs leading-5 text-muted">
-          <p>
-            <strong className="font-semibold text-ink">Disclaimer:</strong>{" "}
-            {siteConfig.disclaimer}
+        <Container className="relative pb-10">
+          <p className="flex items-start gap-3 rounded-xl border border-brand-dark bg-white/[0.04] px-5 py-4 text-sm leading-6">
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" className="mt-0.5 size-5 shrink-0 text-hero-highlight" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 11v5M12 7.5v.5" />
+            </svg>
+            <span>
+              {siteConfig.name} is an independent informational website and is not affiliated with or endorsed by Olive
+              Garden or Darden Restaurants.
+            </span>
           </p>
+        </Container>
+      </div>
+
+      <div className="border-t border-brand-dark/60 bg-footer-deep">
+        <Container className="flex flex-col items-center justify-between gap-3 py-4 text-center text-sm sm:flex-row sm:text-left">
           <p>
-            &copy; <CurrentYear /> {siteConfig.name}. All rights reserved.
+            &copy; <CurrentYear /> {siteConfig.name}. All Rights Reserved.
           </p>
+          <BackToTopButton />
         </Container>
       </div>
     </footer>

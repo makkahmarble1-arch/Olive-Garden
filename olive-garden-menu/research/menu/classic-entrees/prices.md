@@ -18,7 +18,7 @@
 | `classic-entrees--chicken-scampi` | Chicken Scampi | Chicken Scampi | $21.79 | — | Entrée | available | [link](https://www.olivegarden.com/menu/chicken-scampi/prod80476) |
 | `classic-entrees--chicken-and-shrimp-carbonara` | Chicken and shrimp carbonara | Chicken and Shrimp Carbonara | from $23.99 | Chicken & Shrimp Carbonara: $23.99 (1,370 cal); Chicken Carbonara: $23.99 (1,510 cal) | Entrée | available | [link](https://www.olivegarden.com/menu/chicken-and-shrimp-carbonara/prod80135) |
 | `classic-entrees--shrimp-scampi` | Shrimp Scampi | Shrimp Scampi | $21.79 | — | Entrée | available | [link](https://www.olivegarden.com/menu/shrimp-scampi/prod1390012) |
-| `classic-entrees--calabrian-steak-and-shrimp-bucatini` | Calabrian steak & shrimp bucatini | Calabrian Steak & Shrimp Bucatini | from $24.49 | Calabrian Steak & Shrimp Bucatini: $24.49 (1,220 cal); Calabrian Steak Bucatini: $26.49 (1,130 cal); Calabrian Shrimp Bucatini: $24.49 (1,040 cal) | Entrée; steak prepared medium | available | [link](https://www.olivegarden.com/menu/calabrian-steak-shrimp-bucatini/prod21350068) |
+| `classic-entrees--calabrian-steak-and-shrimp-bucatini` | Calabrian steak & shrimp bucatini | Calabrian Steak & Shrimp Bucatini | from $25.29 | Calabrian Steak & Shrimp Bucatini: $25.29 (1,220 cal); Calabrian Steak Bucatini: $27.29 (1,130 cal); Calabrian Shrimp Bucatini: $25.29 (1,040 cal) | Entrée; steak prepared medium | available | [link](https://www.olivegarden.com/menu/calabrian-steak-shrimp-bucatini/prod21350068) |
 | `classic-entrees--shrimp-carbonara` | Shrimp Carbonara | Shrimp Carbonara | $24.99 | — | Entrée | available | [link](https://www.olivegarden.com/menu/shrimp-carbonara/prod80501) |
 | `classic-entrees--tour-of-italy` | Tour of italy | Tour of Italy | $23.49 | — | Three dishes on one plate | available | [link](https://www.olivegarden.com/menu/tour-of-italy/prod80009) |
 | `classic-entrees--ravioli-carbonara` | Ravioli Carbonara | Ravioli Carbonara | $18.99 | — | Entrée | available | [link](https://www.olivegarden.com/menu/ravioli-carbonara/prod8320191) |
@@ -49,7 +49,7 @@
 - `classic-entrees--chicken-scampi`: Soup or salad and 2 breadsticks included (dine-in/pickup entrée)
 - `classic-entrees--chicken-and-shrimp-carbonara`: Soup or salad and 2 breadsticks included (dine-in/pickup entrée). Chicken Carbonara 1,510 is from the menu card only (not listed separately in the PDF)
 - `classic-entrees--shrimp-scampi`: Soup or salad and 2 breadsticks included (dine-in/pickup entrée)
-- `classic-entrees--calabrian-steak-and-shrimp-bucatini`: Soup or salad and 2 breadsticks included (dine-in/pickup entrée). Price re-checked on the item page (Millenia, Pickup) on 2026-11-12: $24.49 / $26.49 / $24.49. An earlier reading the same day and the menu card show "$25.29" (card) / $27.29; the item-page price is used. Re-check before publishing
+- `classic-entrees--calabrian-steak-and-shrimp-bucatini`: Re-checked 2026-11-18 on the item page (Millenia, Pickup): $25.29 / $27.29 / $25.29, matching the menu card "Starting at $25.29"; calories unchanged. Resolves the 2026-11-12 conflict (item page then showed $24.49 / $26.49 / $24.49).
 - `classic-entrees--shrimp-carbonara`: Soup or salad and 2 breadsticks included (dine-in/pickup entrée)
 - `classic-entrees--tour-of-italy`: Soup or salad and 2 breadsticks included (dine-in/pickup entrée)
 - `classic-entrees--ravioli-carbonara`: Soup or salad and 2 breadsticks included (dine-in/pickup entrée)

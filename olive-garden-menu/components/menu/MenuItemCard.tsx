@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { MenuOffering } from "@/lib/types";
 import { getMenuCategory, getOffering, getOfferingImage } from "@/lib/content";
 import { formatPrice } from "@/lib/format";
@@ -13,6 +14,7 @@ import {
 import PriceBlock from "./PriceBlock";
 import OptionPicker from "./OptionPicker";
 import RatingSummary from "@/components/rating/RatingSummary";
+import { productDetailHref } from "@/lib/product-pages";
 
 type MenuItemCardProps = {
   offering: MenuOffering;
@@ -83,6 +85,8 @@ export default function MenuItemCard({ offering, searchable = false, showRating 
   const textBadges = allBadges.filter((badge) => badge.length > PHOTO_BADGE_MAX);
   const regular = offering.regularPriceOfferingId ? getOffering(offering.regularPriceOfferingId) : undefined;
   const regularPrice = regular?.prices[0]?.amount;
+  // Detail page link only when that item's page is live (never to unfinished pages).
+  const detailHref = productDetailHref(offering.productId);
 
   return (
     <li
@@ -92,7 +96,14 @@ export default function MenuItemCard({ offering, searchable = false, showRating 
     >
       <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-card-border bg-card-bg shadow-[0_1px_2px_rgba(40,55,15,0.05),0_8px_20px_-14px_rgba(40,55,15,0.35)] transition-[border-color,box-shadow] duration-200 hover:border-brand-dark/45 hover:shadow-[0_1px_2px_rgba(40,55,15,0.06),0_12px_24px_-14px_rgba(40,55,15,0.45)]">
         <div className="relative aspect-[4/3] overflow-hidden bg-brand-tint">
-          <CardImage offering={offering} />
+          {detailHref ? (
+            // Same destination as the name link: hidden from keyboard and screen readers to avoid a duplicate stop.
+            <Link href={detailHref} tabIndex={-1} aria-hidden="true" className="block h-full w-full">
+              <CardImage offering={offering} />
+            </Link>
+          ) : (
+            <CardImage offering={offering} />
+          )}
           {(badges.length > 0 || availability || offering.isNewOfficialItem) && (
             <p className="absolute top-2 left-2 flex max-w-[calc(100%-1rem)] flex-wrap gap-1">
               {badges.map((badge) => (
@@ -120,7 +131,16 @@ export default function MenuItemCard({ offering, searchable = false, showRating 
         <div className="flex flex-1 flex-col gap-2 p-3 sm:gap-2.5 sm:p-4">
           <div>
             <p className="font-display text-base leading-snug font-bold text-hero-deep sm:text-[1.05rem]">
-              {offering.displayName}
+              {detailHref ? (
+                <Link
+                  href={detailHref}
+                  className="underline-offset-4 hover:text-brand-dark hover:underline focus-visible:outline-2 focus-visible:outline-brand-dark"
+                >
+                  {offering.displayName}
+                </Link>
+              ) : (
+                offering.displayName
+              )}
             </p>
             {textBadges.length > 0 && (
               <p className="mt-1.5 flex flex-wrap gap-1">
@@ -156,6 +176,16 @@ export default function MenuItemCard({ offering, searchable = false, showRating 
           )}
 
           {offering.description && <p className="text-sm leading-[1.6] text-card-text">{offering.description}</p>}
+
+          {detailHref && (
+            <Link
+              href={detailHref}
+              className="inline-flex min-h-11 items-center gap-1 self-start text-sm font-semibold text-brand-dark underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-brand-dark -my-2"
+            >
+              View details<span className="sr-only">: {offering.displayName}</span>
+              <span aria-hidden="true">&rarr;</span>
+            </Link>
+          )}
 
           {showRating && (
             <div className="og-rating-box mt-auto border-t border-card-border pt-2.5">

@@ -17,11 +17,15 @@ import {
  * the table explains that calculated values are ours, from official values.
  */
 export default function ComparisonTable({ table }: { table: ResolvedComparison }) {
-  // Readable columns: the table keeps a minimum width and scrolls sideways on phones.
-  const minWidthRem = Math.max(22, (table.headers.length + 1) * 8.5);
+  // Readable columns: the table keeps a minimum width and scrolls sideways on phones
+  // (compact tables with short cells fit a 320 px screen instead).
+  const minWidthRem = table.compact ? 17 : Math.max(22, (table.headers.length + 1) * 8.5);
+  // Compact tables use slightly narrower cell padding (12 px instead of 16 px) to fit 320 px phones.
+  const cellClass = table.compact ? tableCellClass.replace("px-4", "px-3") : tableCellClass;
+  const headCellClass = table.compact ? tableHeadCellClass.replace("px-4", "px-3") : tableHeadCellClass;
   return (
     <div className="space-y-3">
-      {table.headers.length > 2 && (
+      {table.headers.length > 2 && !table.compact && (
         <p className="text-xs text-muted sm:hidden">Scroll sideways to see all columns.</p>
       )}
       <div role="region" aria-label={table.caption} tabIndex={0} className={tableWrapClass}>
@@ -29,11 +33,11 @@ export default function ComparisonTable({ table }: { table: ResolvedComparison }
           <caption className={tableCaptionClass}>{table.caption}</caption>
           <thead className={tableHeadClass}>
             <tr>
-              <th scope="col" className={tableHeadCellClass}>
+              <th scope="col" className={headCellClass}>
                 {table.firstHeader ?? "Item"}
               </th>
               {table.headers.map((header) => (
-                <th key={header} scope="col" className={tableHeadCellClass}>
+                <th key={header} scope="col" className={headCellClass}>
                   {header}
                 </th>
               ))}
@@ -42,13 +46,13 @@ export default function ComparisonTable({ table }: { table: ResolvedComparison }
           <tbody>
             {table.rows.map((row) => (
               <tr key={row.label} className={tableRowClass}>
-                <th scope="row" className={`${tableCellClass} font-medium text-ink`}>
+                <th scope="row" className={`${cellClass} font-medium text-ink`}>
                   {row.label}
                 </th>
                 {row.cells.map((cell, i) => (
                   <td
                     key={i}
-                    className={`${tableCellClass} tabular-nums ${cell.isNote ? "text-sm text-muted" : "text-ink"} ${cell.text.length <= 12 ? "whitespace-nowrap" : ""}`}
+                    className={`${cellClass} tabular-nums ${cell.isNote ? "text-sm text-muted" : "text-ink"} ${cell.text.length <= 12 ? "whitespace-nowrap" : ""}`}
                   >
                     {cell.text}
                     {cell.calculated && (

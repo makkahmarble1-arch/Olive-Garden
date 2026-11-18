@@ -30,6 +30,7 @@ import Container from "@/components/layout/Container";
 import ExternalLink from "@/components/ui/ExternalLink";
 import MenuItemCard from "@/components/menu/MenuItemCard";
 import JsonLd from "@/components/seo/JsonLd";
+import { getPublishedGuides, guidePath } from "@/content/guides";
 
 /* ---------- Shared building blocks ---------- */
 
@@ -159,6 +160,22 @@ export function DealsSection() {
 
 /* ---------- 9. Hours ---------- */
 
+/** Link to the /hours guide (owner decision 2026-11-15), shown only while it is published. */
+function HoursGuideLink({ hash = "", label }: { hash?: string; label: string }) {
+  const guide = getPublishedGuides().find((g) => g.slug === "hours");
+  if (!guide) return null;
+  return (
+    <p className="mt-4">
+      <Link
+        href={`${guidePath(guide)}${hash}`}
+        className="font-semibold text-brand-dark underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-brand-dark"
+      >
+        {label} <span aria-hidden="true">&rarr;</span>
+      </Link>
+    </p>
+  );
+}
+
 export function HoursSection() {
   return (
     <HomeSection
@@ -204,6 +221,7 @@ export function HoursSection() {
         <time dateTime={hoursCheckedAt}>{formatMonthYear(hoursCheckedAt)}</time>. Find your own restaurant&rsquo;s hours
         with the <ExternalLink href={officialLinks.locator}>official restaurant locator</ExternalLink>.
       </p>
+      <HoursGuideLink label="See all Olive Garden hours" />
     </HomeSection>
   );
 }
@@ -244,6 +262,7 @@ export function HolidaySection() {
         Source: <ExternalLink href={officialLinks.faqs}>Olive Garden FAQs</ExternalLink>, verified{" "}
         <time dateTime={hoursCheckedAt}>{formatMonthYear(hoursCheckedAt)}</time>.
       </p>
+      <HoursGuideLink hash="#holiday-hours" label="See holiday hours for the whole year" />
     </HomeSection>
   );
 }

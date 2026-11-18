@@ -6,8 +6,7 @@ import { publisher } from "@/content/site/publisher";
 import InfoPageLayout, { InfoLink, InfoSection } from "@/components/info/InfoPageLayout";
 
 const page = infoPages.editorial;
-const DESCRIPTION =
-  "Learn about our editorial standards, menu research, fact-checking process, content updates and commitment to accurate information.";
+const DESCRIPTION = page.description;
 
 export const metadata: Metadata = pageMetadata({
   title: "Editorial Policy",

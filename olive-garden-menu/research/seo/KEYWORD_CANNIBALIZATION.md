@@ -76,3 +76,30 @@
   - Use category-specific H1s.
   - Add depth the homepage lacks (comparisons, rules, calculators, FAQs specific to that category).
 - **FAQs:** the same question must not appear on the homepage and on a category page. For example, "lunch hours" belongs to `/lunch-menu`; the homepage keeps only a short answer with a link, or drops it.
+
+## 7. Dinner Menu guide vs homepage, Lunch Menu, Classic Entrees, Lighter Portions (2026-11-15)
+- **`/dinner-menu`:**
+  - Primary keyword: **olive garden dinner menu**.
+  - Job: **the dinner-time guide**: when the dinner menu applies (weekdays from 3 PM, all day on weekends and holidays), price ranges for each section, the dinner-only smaller plate (lighter portions), calculated dinner-for-two orders, dinner specials, and a short lunch-vs-dinner summary.
+- **Homepage:** keeps "olive garden menu with prices" and every item. The dinner page shows no full item list and uses no homepage paragraphs. Its five photo cards reuse the homepage's popular dishes, framed as dinner picks.
+- **`/classic-entrees`:** keeps "olive garden classic entrees" and "olive garden dinner entrees" (its secondary keyword): the full list of 27 entrées and what each includes. The dinner page shows only an 11-row price ladder and links to it.
+- **`/lunch-menu`:** keeps "olive garden lunch vs dinner menu" with the dish-by-dish table. The dinner page has a short list under a different heading ("Lunch vs Dinner: What Changes at 3 PM") and links to the table.
+- **`/lighter-portions`:** keeps the regular vs lighter vs lunch table. The dinner page gives three examples and links to it.
+- **FAQs:** no question is repeated word for word from the homepage or the lunch page:
+  - "How much does dinner cost?" is dinner-specific, while the homepage asks about a meal in general.
+  - "What time does Olive Garden start serving dinner?" differs from the lunch questions.
+- **Navigation:** the header "Hours" dropdown keeps pointing to the homepage hours section. A future Hours article must not target "dinner hours" as its primary keyword; it should link to `/dinner-menu#dinner-hours`.
+
+## 8. Hours guide vs homepage, Lunch Menu, Dinner Menu (2026-11-15)
+- **`/hours`:**
+  - Primary keyword: **olive garden hours**.
+  - Job: **when restaurants are open**: opening and closing times, weekend and holiday hours, To Go cutoffs, how to check a local restaurant.
+- **Homepage:** keeps its short "Opening & Closing Hours" and "Holiday Hours" sections, which show one restaurant's week. `/hours` now owns the topic:
+  - The header Hours dropdown and the site search point to `/hours`.
+  - The homepage sections link to `/hours` (owner approval 2026-11-15). Trimming the homepage holiday FAQ remains optional for later.
+- **`/lunch-menu`:** keeps "lunch hours" in depth (lunch items, prices, weekend answer). `/hours` gives one table row and a link.
+- **`/dinner-menu`:** keeps "dinner hours" with its menu context. `/hours` gives one paragraph and a link; the dinner page links back to `/hours`.
+- **FAQs:**
+  - Hours questions ("What time does Olive Garden open / close", "open on Sundays", "Thanksgiving", "Christmas Day", "other holidays", "check local hours") live on `/hours`.
+  - "What time does Olive Garden stop serving lunch?" (`/hours`) is a short pointer. The full lunch timing questions stay on `/lunch-menu`, and "when does dinner start" on `/dinner-menu`.
+- **Future holiday articles** (e.g. Thanksgiving or Christmas Eve hours) need owner approval and their own intent. They must link to `/hours` and join the Hours dropdown through `navGroup: "hours"`.

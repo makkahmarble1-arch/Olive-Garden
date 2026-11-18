@@ -10,6 +10,8 @@ type SourceNoteProps = {
   extraSource?: Source;
   /** Latest real price check (ISO); shown as month and year only. */
   lastChecked: string | null;
+  /** First sentence (default: the menu wording). */
+  summary?: string;
 };
 
 function SourceLink({ source }: { source: Source }) {
@@ -33,15 +35,19 @@ function SourceLink({ source }: { source: Source }) {
  * independent-site disclaimer. The full source list and the exact
  * reference restaurant stay in content/menu/category-pages.ts and research/.
  */
-export default function SourceNote({ officialSource, extraSource, lastChecked }: SourceNoteProps) {
+export default function SourceNote({ officialSource, extraSource, lastChecked, summary }: SourceNoteProps) {
   return (
     <section aria-labelledby="sources" className="mt-14 max-w-3xl rounded-lg border border-line bg-brand-tint p-5 sm:p-6">
       <h2 id="sources" className="font-display text-xl font-bold text-ink">
         Sources
       </h2>
       <p className="mt-3 text-sm leading-6 text-ink">
-        Menu information is based on official Olive Garden resources. Prices and availability may vary by location
-        across the {siteConfig.market}. Values marked “Calc.” are our calculations from official values.
+        {summary ?? (
+          <>
+            Menu information is based on official Olive Garden resources. Prices and availability may vary by location
+            across the {siteConfig.market}. Values marked “Calc.” are our calculations from official values.
+          </>
+        )}
       </p>
       <ul className="mt-3 space-y-1.5 text-sm leading-6 text-ink">
         <li>

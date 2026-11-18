@@ -71,8 +71,8 @@ Loaded with `next/font/google` (self-hosted at build, no extra npm package).
 
 | Component | Style |
 |---|---|
-| Header | White, bottom border, sticky; logo/site name left, nav right; mobile menu button (min 44x44px) |
-| Footer | `brand-tint` background. Top row: site name + description, "Explore" (homepage sections), "About" (7 information/legal pages), "Official resources". Then a full-width "Menu categories" row with all category pages that exist (`getMenuCategoriesWithPages`): 2 columns on phones, 3 from `sm`, 4 from `lg`, links at least 44 px tall. Last: disclaimer and © line |
+| Header | See 4.4 (two-row premium header, 2026-11-15) |
+| Footer | See 4.5 (four-column dark olive footer, 2026-11-15) |
 | Primary button | `brand-dark` bg, white text, hover `brand-darker` |
 | Accent button | `brand` bg, `ink` text |
 | Links in text | `brand-dark`, underlined, visible focus ring |
@@ -84,7 +84,7 @@ Loaded with `next/font/google` (self-hosted at build, no extra npm package).
 | Menu item (homepage) | Image (or labelled placeholder), name, price, calories, rating, short description, size options; designed when the homepage is rebuilt |
 | Price notice callout | `brand-tint` box with "Prices last verified: {Month Year}" + "Prices may vary by location across the USA." (no reference restaurant, no day) |
 | Sources box (category pages) | Compact `brand-tint` box, H2 "Sources": one sentence, "Official source:" link (+ at most one "Also see:" link), "Last verified: {Month Year}", small disclaimer |
-| Related Menus | H2 "Related Menus"; white cards in a 1/2/3-column grid; card title = the linked page's article title (`menuTitle`, display font, `brand-dark`), one-line reason in `muted` |
+| Related Menus | H2 "Related Menus"; exactly 4 white cards: 4 columns in one row from `lg`, 2 x 2 from `sm`, stacked on phones (owner decision 2026-11-15); card title = the linked page's article title (`menuTitle`, display font, `brand-dark`), one-line reason in `muted` |
 | Breadcrumbs | Small, `muted` text, `/` separators, current page not linked |
 | Table of contents | Box with `border`; collapsible on mobile (`<details>`) |
 | FAQ | `<details>`/`<summary>` accordion, no JavaScript needed |
@@ -124,6 +124,7 @@ Every menu card uses this design: the homepage (all 17 category sections and Pop
 
 | Part | Rule |
 |---|---|
+| Detail link (2026-11-15) | Only when the item has a live page (`productDetailHref`): photo and name link to `/menu/{slug}`, plus "View details →" under the description. Otherwise the card is unchanged |
 | Implementation | `components/menu/MenuItemCard.tsx` with `PriceBlock` and `OptionPicker` (same shared data, nothing duplicated). Server-rendered; only the size selector and the rating run in the browser; no new dependencies |
 | Card | `card-bg` #fafbf5, 1px `card-border` #dce5ba, 16px radius, soft olive-tinted shadow; hover: border `brand-dark`/45 and a slightly deeper shadow (no movement) |
 | Photo | Full width, 4:3, top corners rounded by the card, same `next/image` sizes and lazy loading; "Photo coming soon" placeholder when no image. Short serving badges (up to 21 characters, e.g. "Serves 4–6", "One gallon, serves 12") sit on the top-left of the photo: `brand-dark`, white text, 6px radius. Longer serving descriptions (e.g. "Two chicken breasts + side of spaghetti") appear under the title as a small `brand-tint` pill so they never cover the food |
@@ -143,6 +144,52 @@ Every menu card uses this design: the homepage (all 17 category sections and Pop
 | Legal pages (Lesson 9.6) | "Effective date" and "Last updated" as complete dates under the intro (`showUpdated`; legal pages only). An "On this page" box (`toc`: `card-bg`, `card-border`, numbered links in 2 columns from `sm`). H3 sub-headings in `font-display` 20 px `hero-deep` (`InfoSubheading`). Tables scroll inside their own box on phones |
 | Content | One column, max 60rem (960 px), no sidebar. H2 per section in `font-display` 24-28 px, separated by a thin `line` border. Body 17 px, line height 2rem, `ink`/85. Links `brand-dark`, underlined |
 | Contact form | Card like the menu cards (`card-bg`, `card-border`, 16 px radius, soft olive shadow). Fields white, 1 px `line` border, 12 px radius, at least 48 px tall; visible labels with "(required)"; error text in red-800 under the field with `aria-invalid`; primary button `brand-dark` with white text, 48 px tall |
+
+### 4.4 Global header (owner-approved redesign, 2026-11-15)
+
+One implementation for every page: `components/layout/Header.tsx` (server), which uses `HeaderShell` (sticky + scroll shadow), `SiteSearch`, `DesktopNav`, and `MobileNav` (client). Navigation data comes from `lib/navigation.ts`, built from the category data and `content/site/info-pages.ts`; no link lists are typed by hand.
+
+| Part | Rule |
+|---|---|
+| Height | Fixed: 64 px below `lg`, 112 px from `lg` (64 + 48). Stored as `--header-h` in `globals.css`; used by `scroll-padding-top` and the homepage category chip bar (`top-[var(--header-h)]`) |
+| Row 1 | `header-cream` #FFFCF5, `card-border` line under it. Logo link on the left; search on the right (`lg` and up, max 28rem) |
+| Logo | Owner-approved **icon only**, cut from the owner's logo file: olive branch + open menu book with fork and knife (`public/images/brand/logo-icon.webp`, 138 × 96, 8 KB, transparent; original in `image-staging/logo/`). The owner's script lettering and "Italian Kitchen" tagline were **not** used (they resemble the official Olive Garden logo; owner decision 2026-11-15). Next to it is a 2-line wordmark "Olive Garden / Menu Prices" (Fraunces, `hero-deep` / `brand-dark`). The link is named "Olive Garden Menu Prices home". The old tagline was removed; independence stays visible on the homepage badge and in the footer |
+| Row 2 (`lg`+) | `brand-dark` #556B12 bar, white 15 px semibold links, 44 px tall. Hover white/12. **Active page:** `hero-highlight` #D5E78A background with `hero-deep` text. Visible white focus outline |
+| Items | Home · Full Menu ▾ · Lunch Menu · Dinner Menu · Specials & Deals ▾ · Hours ▾ · Catering · More ▾. Dinner Menu (added 2026-11-15) links to the `/dinner-menu` guide. Hours ▾ (2026-11-15): Opening & Closing Hours (`/hours`), Holiday Hours (`/hours#holiday-hours`), Lunch Hours, Dinner Hours, plus any published guide with `navGroup: "hours"` |
+| Dropdowns | White panel, `card-border`, 16 px radius, soft olive shadow. **Full Menu:** heading "Olive Garden Menu Categories", all category pages in 3 columns (`lg`) or 4 (`xl`), labels = the article title (`menuTitle`) without the leading "Olive Garden", plus "See the full menu with prices →". Open on click, Enter/Space, ArrowDown, or hover. Escape returns focus to the button; arrow keys move through the links; clicks outside and navigation close them |
+| Search | Pill input (white, `card-border`, 44 px), search icon, clear button, olive submit button. Placeholder "Search menus, prices, and more..." |
+| Mobile/tablet (< `lg`) | Logo, search button, menu button (44 × 44). Search opens a full-width row under the header (autofocus). The menu is a `brand-dark` panel with accordion sections (44 px+ targets), active page in `hero-highlight` |
+| Sticky | `position: sticky`; a soft shadow appears after scrolling; no layout shift (CLS 0) |
+| Motion | Only color, rotate, and shadow transitions; all off with `prefers-reduced-motion` |
+| Favicon | Simplified icon (2026-11-15): an open cream menu book with olive-green text lines and one light-olive leaf on a dark olive (#28370F) rounded square, no text. `app/icon.svg` (vector), `app/favicon.ico` (16/32/48, made from the SVG), `app/apple-icon.png` (180, full-bleed). Clear at 32 px, recognizable at 16 px. The old favicon is in `image-staging/logo/favicon-old.ico` |
+
+### 4.5 Global footer (owner-approved redesign, 2026-11-15)
+
+One footer for every page: `components/layout/Footer.tsx` (server). Its link columns come from `getFooterColumns()` in `lib/navigation.ts`; only `BackToTopButton.tsx` runs in the browser.
+
+| Part | Rule |
+|---|---|
+| Colors | Background `hero-deep` #28370F; bottom bar `footer-deep` #1D290A; headings `hero-highlight` #D5E78A; links white; body text `footer-text` #E2E8D5; hover `hero-cta` #C4D95D; dividers and borders `brand-dark` #556B12; short accent line under headings `brand` #A1B626 (decorative only, never text) |
+| Column 1 | Same logo lockup as the header (icon on a cream tile so the dark icon stays visible, plus the wordmark "Olive Garden / Menu Prices" in white / `hero-highlight`), linking home ("Olive Garden Menu Prices home"). Intro: "An independent menu guide featuring Olive Garden menu prices, calories, specials, and helpful dining information." Then the verified email (`publicContactEmail()`, mailto); if the email is ever unverified, a "Contact us" link replaces it |
+| Popular Menus | Full Menu (`/#full-menu`), Lunch Menu, Dinner Menu (the `/dinner-menu` guide, shown while it is published), Kids Menu, Catering Menu, Dessert Menu |
+| Explore More | Family Style Meals, Appetizers, Classic Entrees, Amazing Alfredos, Gluten-Sensitive Menu, Drinks Menu, Olive Garden Hours (`/hours`, added 2026-11-15) |
+| Important Links | About Us, Contact Us, Privacy Policy, Terms & Conditions, Disclaimer, Editorial Policy, How We Check Prices (only published info pages) |
+| Disclaimer | Box with a `brand-dark` border: "Olive Garden Menu Prices is an independent informational website and is not affiliated with or endorsed by Olive Garden or Darden Restaurants." No badge or official-looking seal |
+| Bottom bar | "© {year} Olive Garden Menu Prices. All Rights Reserved." (year cached daily) and a "Back to top" pill button: smooth scroll (instant with reduced motion), then focus moves to the header home link |
+| Layout | Desktop (`lg`+): 4 columns, thin `brand-dark` dividers between them. Tablet and phones from 360 px: logo column full width, then 2 columns; Important Links spans the full width with its links in 2 columns. Below 360 px: 1 column. No horizontal overflow at 320-1920 px |
+| Decoration | One faint olive branch (inline SVG, `aria-hidden`, `brand-dark` at 50%) in the top-right corner |
+| Accessibility | `<footer>`, each link column is a `<nav>` labelled by its `<h2>`; every link and the button are at least 44 px tall; focus outline `hero-highlight`; transitions off with `prefers-reduced-motion` |
+| Not allowed | Social links without owner-supplied URLs, newsletter forms, links to pages that do not exist, official logos |
+
+### 4.6 Menu item pages (2026-11-15, permanent premium standard)
+
+Full spec: `docs/product-pages/PRODUCT_PAGE_DESIGN.md`. Summary:
+
+- **Permanent owner requirement** for every menu item page and all future website improvements: visually attractive, colorful, professional, premium, informative, easy to navigate, mobile-friendly, genuinely useful. Never a plain text-heavy article layout.
+- Use: two-column cream product hero with a large rounded food photo, olive price badge, amber calorie badge, golden rating; icon quick-fact cards; elegant olive-header tables with alternating rows; colored icon tiles; rounded corners (`rounded-2xl`/`rounded-3xl`); subtle olive shadows; balanced whitespace; clear hierarchy.
+- Palette: primary olive `#a1b626` (fills only), dark olive `#28370F`, secondary green `#556B12`, light lime `#D5E78A`, warm cream `#FFFCF5`, white. Amber for calories (`kcal-*`), golden stars for ratings, accessible red for allergens (`allergen-*`, 6.9:1). No heavy gradients or animations.
+- Meaning never by color alone; text contrast ≥ 4.5:1; 44 px touch targets; no layout shift (fixed image ratios); only the hero photo is `priority`.
+- The approved header, footer, homepage hero and menu card stay unchanged. Only addition to the card: when the item's page is live, the photo and name link to it plus a small "View details →" link (rating stays outside the link).
 
 ## 5. Accessibility rules
 

@@ -5,8 +5,7 @@ import { infoPages } from "@/content/site/info-pages";
 import InfoPageLayout, { InfoLink, InfoSection } from "@/components/info/InfoPageLayout";
 
 const page = infoPages.terms;
-const DESCRIPTION =
-  "Read the terms governing the use of Olive Garden Menu Prices, including menu information, visitor ratings, content and external links.";
+const DESCRIPTION = page.description;
 
 export const metadata: Metadata = pageMetadata({
   title: "Terms and Conditions",

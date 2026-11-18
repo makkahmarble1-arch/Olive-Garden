@@ -7,8 +7,7 @@ import { infoPages } from "@/content/site/info-pages";
 import InfoPageLayout, { InfoLink, InfoSection } from "@/components/info/InfoPageLayout";
 
 const page = infoPages.prices;
-const DESCRIPTION =
-  "Discover how we research Olive Garden menu prices, verify calories, calculate comparisons and update restaurant menu information.";
+const DESCRIPTION = page.description;
 
 export const metadata: Metadata = pageMetadata({
   title: "How We Check Menu Prices",

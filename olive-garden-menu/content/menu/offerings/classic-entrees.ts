@@ -491,19 +491,19 @@ export const classicEntreesOfferings = defineOfferings("classic-entrees", [
     servingSize: "Entrée; steak prepared medium",
     prices: [
       {
-        amount: 24.49,
+        amount: 25.29,
         unit: null,
         locationId: "orlando-fl-millenia-mall",
         sourceUrl: "https://www.olivegarden.com/menu/calabrian-steak-shrimp-bucatini/prod21350068",
         sourceNote: "Online ordering, Order Type: Pickup",
-        checkedAt: "2026-11-12"
+        checkedAt: "2026-11-18"
       }
     ],
     priceNote: null,
     options: [
       {
         label: "Calabrian Steak & Shrimp Bucatini",
-        price: 24.49,
+        price: 25.29,
         calories: 1220,
         caloriesMax: null,
         caloriesUnit: "per entrée",
@@ -512,7 +512,7 @@ export const classicEntreesOfferings = defineOfferings("classic-entrees", [
       },
       {
         label: "Calabrian Steak Bucatini",
-        price: 26.49,
+        price: 27.29,
         calories: 1130,
         caloriesMax: null,
         caloriesUnit: "per entrée",
@@ -521,7 +521,7 @@ export const classicEntreesOfferings = defineOfferings("classic-entrees", [
       },
       {
         label: "Calabrian Shrimp Bucatini",
-        price: 24.49,
+        price: 25.29,
         calories: 1040,
         caloriesMax: null,
         caloriesUnit: "per entrée",
@@ -541,8 +541,8 @@ export const classicEntreesOfferings = defineOfferings("classic-entrees", [
     promotion: null,
     regularPriceOfferingId: null,
     status: "verified",
-    verifiedAt: "2026-11-12",
-    notes: "Soup or salad and 2 breadsticks included (dine-in/pickup entrée). Price re-checked on the item page (Millenia, Pickup) on 2026-11-12: $24.49 / $26.49 / $24.49. An earlier reading the same day and the menu card show \"$25.29\" (card) / $27.29; the item-page price is used. Re-check before publishing"
+    verifiedAt: "2026-11-18",
+    notes: "Soup or salad and 2 breadsticks included (dine-in/pickup entrée). Re-checked on the item page (Millenia, Pickup) on 2026-11-18: $25.29 / $27.29 / $25.29, matching the menu card \"Starting at $25.29\"; calories 1,220 / 1,130 / 1,040 unchanged. Resolves the 2026-11-12 conflict ($24.49 vs $25.29)."
   },
   {
     inventoryName: "Shrimp Carbonara",

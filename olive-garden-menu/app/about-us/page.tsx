@@ -8,8 +8,7 @@ import { publisher } from "@/content/site/publisher";
 import InfoPageLayout, { InfoLink, InfoSection } from "@/components/info/InfoPageLayout";
 
 const page = infoPages.about;
-const DESCRIPTION =
-  "Learn about Olive Garden Menu Prices, our independent menu research, pricing verification, nutrition information and editorial standards.";
+const DESCRIPTION = page.description;
 
 export const metadata: Metadata = pageMetadata({
   title: "About Us",

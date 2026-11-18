@@ -6,8 +6,7 @@ import { publicContactEmail } from "@/content/site/publisher";
 import InfoPageLayout, { InfoLink, InfoSection, InfoSubheading } from "@/components/info/InfoPageLayout";
 
 const page = infoPages.privacy;
-const DESCRIPTION =
-  "Learn how Olive Garden Menu Prices handles visitor information, cookies, anonymous ratings, contact messages, advertising and privacy choices.";
+const DESCRIPTION = page.description;
 
 export const metadata: Metadata = pageMetadata({
   title: "Privacy Policy",

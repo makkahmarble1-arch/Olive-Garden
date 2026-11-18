@@ -5,8 +5,7 @@ import { infoPages } from "@/content/site/info-pages";
 import InfoPageLayout, { InfoLink, InfoSection } from "@/components/info/InfoPageLayout";
 
 const page = infoPages.disclaimer;
-const DESCRIPTION =
-  "Read our independent website disclaimer covering menu prices, nutrition information, dietary limitations, food images and restaurant affiliation.";
+const DESCRIPTION = page.description;
 
 export const metadata: Metadata = pageMetadata({
   title: "Disclaimer",

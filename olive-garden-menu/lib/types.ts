@@ -300,8 +300,14 @@ export type CategoryPageContent = {
    * is live (published, or preview on a preview page), so planned links show
    * up automatically once that page is finished.
    */
-  related: { categoryId: MenuCategoryId; text: string }[];
+  related: RelatedMenuRef[];
 };
+
+/**
+ * One "Related Menus" card: a category page or a guide page (e.g. dinner-menu),
+ * with a short reason to visit. Each article lists exactly 4 (one row on desktop).
+ */
+export type RelatedMenuRef = { categoryId: MenuCategoryId; text: string } | { guide: string; text: string };
 
 /** A block inside a category section: article blocks plus comparison, option, and example-build tables. */
 export type CategoryBlock =
@@ -310,6 +316,12 @@ export type CategoryBlock =
   | { type: "optionTable"; id: string }
   | { type: "pastaBuilds"; id: string }
   | { type: "servingPlan"; id: string }
+  /** Price ranges per menu section (guide pages, e.g. the dinner menu). */
+  | { type: "priceOverview"; id: string }
+  /** Calculated example orders (guide pages). */
+  | { type: "mealExamples"; id: string }
+  /** A small table of verified facts typed in the guide (e.g. hours), same table design. */
+  | { type: "staticTable"; id: string }
   /**
    * Small photo grid of owner-supplied images (each listed in docs/IMAGE_MANIFEST.md),
    * e.g. one photo per soup. `label` is the accessible name of the group.
@@ -441,6 +453,403 @@ export type PastaBuildSpec = {
   caption: string;
   builds: PastaBuild[];
   notes?: RichText[];
+};
+
+/**
+ * Price overview by menu section (guide pages). Every number is read from the
+ * shared data: item count, lowest-highest price (including size options), and
+ * calorie range of the listed category's verified, available offerings.
+ */
+export type PriceOverviewSpec = {
+  id: string;
+  caption: string;
+  rows: {
+    categoryId: MenuCategoryId;
+    /** Row label; default = the category name. */
+    label?: string;
+    /** Only these offerings (default: every offering of the category). */
+    offeringIds?: string[];
+    /** When this part of the menu is served (verified wording). */
+    when: string;
+  }[];
+  notes?: RichText[];
+};
+
+/**
+ * Example orders whose totals are calculated from the shared prices
+ * (labeled "Calc." on the page). Food only: no tax, tip, drinks, or fees.
+ */
+export type MealExampleSpec = {
+  id: string;
+  caption: string;
+  examples: {
+    label: string;
+    /** Number of people the order is for (per-person column). */
+    people: number;
+    /** `label` = how the item is named in the row (default: option or display name). */
+    items: { offeringId: string; option?: string; quantity?: number; label?: string }[];
+  }[];
+  notes?: RichText[];
+};
+
+/**
+ * A table of verified non-menu facts (e.g. opening hours, holiday closures),
+ * rendered with the same table design as the comparison tables. Every value
+ * must be backed by the guide's fact log in research/. `{ text, note: true }`
+ * marks a cell that is a note, not a verified value (e.g. "Varies by location").
+ */
+export type StaticTableSpec = {
+  id: string;
+  caption: string;
+  firstHeader: string;
+  headers: string[];
+  rows: { label: string; cells: (string | { text: string; note: true })[] }[];
+  notes?: RichText[];
+  /** Short cells only: the table fits a 320 px phone without sideways scrolling. */
+  compact?: boolean;
+};
+
+/**
+ * A menu guide that is not one of the 17 menu categories (e.g. /dinner-menu):
+ * it reads the shared menu data, uses the category page components, and has
+ * its own static route. Registered in content/guides/index.ts.
+ */
+export type GuidePageContent = {
+  /** URL slug at the root (/dinner-menu). Must not clash with a category slug. */
+  slug: string;
+  /** Breadcrumb label, e.g. "Dinner Menu". */
+  name: string;
+  /** "published" = linked in the navigation, footer, search, sitemap (indexed only when SITE_INDEXING is on). */
+  status: "preview" | "published";
+  primaryKeyword: string;
+  secondaryKeywords?: string[];
+  searchIntent?: string;
+  /** Public article title used by links ("Olive Garden Dinner Menu"). */
+  menuTitle: string;
+  metaTitle: string;
+  metaDescription: string;
+  h1: string;
+  intro: string[];
+  /** ISO date the written text was last reviewed. */
+  contentReviewedAt: string;
+  /** Categories whose price checks define "Last verified" (latest date wins). */
+  checkedCategoryIds?: MenuCategoryId[];
+  /** Last official check of non-menu facts (e.g. hours); used with or without categories. */
+  verifiedAt?: string;
+  /** Extra facts bar entries (label: value). Menu guides show the section count and price basis instead. */
+  heroFacts?: { label: string; value: string }[];
+  /** Text of the facts bar link to the main table. Default "Jump to the price table". */
+  jumpLabel?: string;
+  /** Anchor id of the main table section. Default "prices". */
+  tableAnchor?: string;
+  /** Count shown in the facts bar, e.g. 7 "menu sections" (menu guides). */
+  countLabel?: string;
+  tableHeading: string;
+  tableIntro?: RichText[];
+  /** Main table at the top: a price overview (menu guides) or a static table id (e.g. weekly hours). */
+  overview?: PriceOverviewSpec;
+  mainStaticTableId?: string;
+  /** 3-5 offering ids shown as photo cards with shared ratings (optional). */
+  featuredOfferingIds?: string[];
+  featuredHeading?: string;
+  featuredIntro?: string;
+  staticTables?: StaticTableSpec[];
+  /** Kind shown in the site search ("Menu" default, or "Guide"). */
+  searchKind?: string;
+  /**
+   * Navigation group: published "hours" guides (e.g. a future holiday article)
+   * are listed automatically in the header's Hours dropdown under `navLabel`.
+   */
+  navGroup?: "hours";
+  navLabel?: string;
+  /** First sentence of the Sources box (default: the menu wording). */
+  sourceSummary?: string;
+  sections: CategorySection[];
+  comparisons?: ComparisonTableSpec[];
+  priceOverviews?: PriceOverviewSpec[];
+  mealExamples?: MealExampleSpec[];
+  sources: { label: string; url: string }[];
+  officialSource?: "website" | "nutrition";
+  extraSource?: { label: string; url: string };
+  faqs: FaqItem[];
+  related: RelatedMenuRef[];
+};
+
+/* ---------- Individual menu item pages (/menu/[slug]) ---------- */
+
+/**
+ * Product detail page status (docs/product-pages/PRODUCT_PAGE_ARCHITECTURE.md):
+ * "draft"     = being written: HTTP 404, never linked.
+ * "preview"   = sample awaiting owner approval: reachable in local development,
+ *               local `next start` and Vercel preview deployments (linked there
+ *               from cards, tables, search); HTTP 404 and never linked on the
+ *               production deployment. Always noindex, never in the sitemap.
+ * "published" = owner-approved: indexable once SITE_INDEXING is on, in the sitemap.
+ */
+export type ProductPageStatus = "draft" | "preview" | "published";
+
+/** Columns of the official U.S. nutrition guide, after calories (in printed order). */
+export type NutrientKey =
+  | "caloriesFromFat"
+  | "totalFat"
+  | "saturatedFat"
+  | "transFat"
+  | "cholesterol"
+  | "sodium"
+  | "totalCarbohydrates"
+  | "dietaryFiber"
+  | "sugars"
+  | "protein";
+
+/**
+ * A printed nutrition value: a number, or `{ lessThan: n }` for "less than n g/mg".
+ * In the data, `null` = the guide prints nothing for that cell. Zero is the number 0.
+ */
+export type NutrientAmount = number | { lessThan: number };
+
+/**
+ * Allergen columns of the official U.S. allergen guide, exactly as printed
+ * (dairy, eggs, fish, crustacean, mollusk, tree nuts, peanuts, wheat, gluten,
+ * soy, sesame, sulfites).
+ */
+export type AllergenId =
+  | "dairy"
+  | "eggs"
+  | "fish"
+  | "crustacean"
+  | "mollusk"
+  | "tree-nuts"
+  | "peanuts"
+  | "wheat"
+  | "gluten"
+  | "soy"
+  | "sesame"
+  | "sulfites";
+
+/** Content-readiness checklist (docs/product-pages/PRODUCT_CONTENT_CHECKLIST.md). */
+export type ProductChecklistKey =
+  | "verifiedProductInfo"
+  | "uniqueSearchIntent"
+  | "nutritionAndAllergens"
+  | "originalContent"
+  | "accurateImage"
+  | "internalLinks"
+  | "visualReview";
+
+/* ---------- Central official nutrition and allergen data (content/menu/nutrition/) ---------- */
+
+/** Official Olive Garden documents used for nutrition and allergen facts. */
+export type OfficialDocumentId = "us-nutrition-guide" | "us-allergen-guide" | "us-veg-vegan-guide";
+
+export type OfficialDocument = {
+  id: OfficialDocumentId;
+  title: string;
+  /** Official public URL (shown as the source link). */
+  url: string;
+  market: "USA";
+  /** Version/footer code printed in the document (e.g. "US_101926"), null until read. */
+  versionCode: string | null;
+  /** "not-received" = not read yet; "received" = a copy is available; "entered" = rows entered into the records. */
+  status: "not-received" | "received" | "entered";
+  /** How the copy was obtained (direct download, or supplied by the owner). */
+  obtainedBy: "direct" | "owner" | null;
+  /** ISO date the copy was obtained/read. */
+  receivedAt: string | null;
+  /** Local copy for the research record (research/official-sources/...), never served publicly. */
+  localCopy: string | null;
+};
+
+/** One row of the official U.S. nutrition guide, as printed (content/menu/nutrition/nutrition-guide.ts). */
+export type NutritionGuideRow = {
+  /** Stable id, e.g. "p2-fried-mozzarella"; add-on rows: "<parent id>--add-marinara". */
+  id: string;
+  /** PDF page number. */
+  page: number;
+  /** Section heading as printed (e.g. "APPETIZERS", "CATERING PANS (SERVES 4 - 6)"). */
+  section: string;
+  /** Row name exactly as printed. */
+  label: string;
+  /** For "add ..." rows (e.g. "add marinara"): the row it belongs to. */
+  addOnFor?: string;
+  values: { calories: number } & Record<NutrientKey, NutrientAmount | null>;
+};
+
+/** One row of the official U.S. allergen guide, as marked (content/menu/nutrition/allergen-guide.ts). */
+export type AllergenGuideRow = {
+  id: string;
+  page: number;
+  section: string;
+  label: string;
+  /** PREP columns: fried in soy oil / grilled (special cross-contact risk per the guide). */
+  prep: { friedInSoyOil: boolean; grilled: boolean };
+  /** Allergen columns marked "Y". Empty = the guide marks none. */
+  contains: AllergenId[];
+};
+
+/**
+ * How an offering relates to the official nutrition guide:
+ * - "exact"      = its own row, same name, serving and calories
+ * - "same-item"  = the same item under another row name or section (note explains)
+ * - "variants"   = versions (sauce, protein, size) with their own rows; `rowId` = the default version
+ * - "conflict"   = a row exists but its calories differ from our data (owner decision needed)
+ * - "generic"    = only a generic row exists (e.g. "Wine - Reds - Bottle")
+ * - "composite"  = made of several listed parts (bundle, soup + salad + breadsticks...)
+ * - "multi-row"  = several flavors/items, each with its own row
+ * - "not-in-guide" = no matching row; "not-applicable" = no calories in our data (promotion, merchandise)
+ */
+export type NutritionMapping = {
+  status: "exact" | "same-item" | "variants" | "conflict" | "generic" | "composite" | "multi-row" | "not-in-guide" | "not-applicable";
+  rowId?: string;
+  variantRowIds?: string[];
+  note?: string;
+};
+
+/** How an offering relates to the official allergen guide (statuses as for nutrition, plus "option-dependent" and "not-covered"). */
+export type AllergenMapping = {
+  status: "exact" | "same-item" | "option-dependent" | "composite" | "multi-row" | "not-in-guide" | "not-covered" | "not-applicable";
+  rowId?: string;
+  note?: string;
+};
+
+/** Resolved official nutrition for one offering (exact or same-item only). */
+export type OfferingNutrition = { mapping: NutritionMapping; row: NutritionGuideRow; addOns: NutritionGuideRow[]; document: OfficialDocument };
+
+/** Resolved official allergen marks for one offering (exact or same-item only). */
+export type OfferingAllergens = { mapping: AllergenMapping; row: AllergenGuideRow; document: OfficialDocument };
+
+/** "done" = complete; "partial" = usable but with documented gaps; "missing" = blocks publishing. */
+export type ChecklistState = "done" | "partial" | "missing";
+
+/**
+ * Written content of one menu item page. Prices, calories, images, category
+ * and the visitor rating are NOT stored here: they are read from the shared
+ * offering/product data (single source of truth). Only facts that exist
+ * nowhere else (full nutrition, allergens, ingredients, FAQs...) live here,
+ * each with its official source in `sources` and research/products/<slug>/.
+ */
+/**
+ * One genuinely different, officially listed version of a menu item (Phase 4,
+ * owner approval 2026-11-18), e.g. grilled vs crispy chicken. Price and
+ * calories must match the shared offering data; nutrition and allergen values
+ * come only from the version's own official rows (content/menu/nutrition/).
+ */
+export type ProductVersion = {
+  /** Stable key, lowercase-hyphenated (also the tab id). */
+  key: string;
+  /** Full official version name, e.g. "Chicken Alfredo with crispy chicken fritta". */
+  label: string;
+  /** Short tab label, e.g. "Crispy chicken". */
+  shortLabel: string;
+  /** One sentence in our own words (verified facts only). */
+  description: string;
+  price: number;
+  calories: number;
+  /** Official nutrition row of this version, or null when the guide has none (only calories are then shown). */
+  nutritionRowId: string | null;
+  /** Official allergen row of this version, or null when the guide does not list it separately. */
+  allergenRowId: string | null;
+};
+
+export type ProductPageContent = {
+  /** Canonical product id (content/menu/products.ts): also the shared rating key. */
+  productId: string;
+  /** URL slug: the page lives at /menu/{slug}. Lowercase-hyphenated, unique. */
+  slug: string;
+  status: ProductPageStatus;
+  /** Main offering: its price, calories, serving size and category drive the hero. */
+  primaryOfferingId: string;
+  /** Other sizes of the same product shown in the "Sizes" table (e.g. a catering tray). */
+  sizeOfferingIds?: string[];
+  /** Officially listed versions with their own rows (version selector). The first is shown by default. */
+  versions?: ProductVersion[];
+  /**
+   * Internal reason why the mapped owner photo is not shown on this page (only for a
+   * concrete, materially misleading mismatch; permanent owner image instruction).
+   * The hero then shows a labeled placeholder; the shared photo mapping is unchanged.
+   */
+  heroImageOmitted?: string;
+  primaryKeyword: string;
+  secondaryKeywords?: string[];
+  /** One-sentence search intent (planning only, not rendered). */
+  searchIntent: string;
+  metaTitle: string;
+  metaDescription: string;
+  h1: string;
+  /** Short hero description (original wording, verified facts only). */
+  summary: string;
+  /** Short serving line in the hero, e.g. "One appetizer order, served with marinara". */
+  servingSummary: string;
+  /** What one serving of the official values is called: "order" (default), "breadstick"... */
+  unitLabel?: string;
+  /** Note under the price card, e.g. "6 breadsticks, online pickup". Default "One order, online pickup". */
+  priceNote?: string;
+  /** ISO date the written text was last reviewed. */
+  contentReviewedAt: string;
+  about: { heading: string; paragraphs: RichText[] };
+  /** What comes with the item (verified only). Calories are official values or null. */
+  includes: { label: string; detail: string; calories: number | null }[];
+  /**
+   * Verified customization options only. Omit the field when none are
+   * verified: the page then shows no customization card at all (owner
+   * decision 2026-11-18: omit unverified customization information).
+   */
+  customizations?: { items: { label: string; detail: string }[] };
+  /** Extra offering (e.g. a large side sauce) suggested in the serving section. */
+  extraSauceOfferingId?: string;
+  nutrition: {
+    /**
+     * What the official values refer to, in our words, e.g. "One restaurant
+     * order, as served, without the dipping sauce". The values themselves and
+     * the included-sauce rows ("add marinara") come from the central official
+     * row of the primary offering (content/menu/nutrition/).
+     */
+    servingBasis: string;
+  };
+  ingredients: {
+    /** "partial" = only components named in official menu text (never a full recipe). */
+    completeness: "partial" | "complete";
+    items: { name: string; detail: string }[];
+    note: string;
+  };
+  /**
+   * Item-specific allergen text. The official marks (contains, fried in soy
+   * oil, grilled) come from the central allergen-guide row of the primary
+   * offering, and the guide's general cross-contact notes from
+   * content/menu/nutrition/documents.ts; neither is stored here.
+   */
+  allergens: {
+    /** Verified, item-relevant facts in our words (e.g. "made with mozzarella cheese"). */
+    facts: string[];
+    /** Official cross-contact facts (kitchen-wide). */
+    crossContact: string[];
+  };
+  /** Dietary labels exactly as the official menu shows them. */
+  dietary: { label: string; value: string; tone: "info" | "caution" }[];
+  /** Editorial pairing ideas (clearly labeled; not official combos). Offerings must have a photo. */
+  pairings: { offeringId: string; kind: "Appetizer" | "Entrée" | "Soup & salad" | "Drink" | "Side" | "Dessert"; reason: string }[];
+  /** 3-4 similar items shown with the approved menu card. */
+  relatedOfferingIds: string[];
+  /** Offerings compared in the calories/price chart (includes the primary offering). */
+  compareOfferingIds?: string[];
+  compareHeading?: string;
+  faqs: FaqItem[];
+  /** Full official source list (internal record). */
+  sources: { label: string; url: string }[];
+  /** Public "Sources" box: one official source plus at most one extra (owner standard). */
+  officialSource: { label: string; url: string };
+  extraSource?: { label: string; url: string };
+  /** Related Menus cards (exactly 4 live pages). */
+  related: RelatedMenuRef[];
+  checklist: Record<ProductChecklistKey, ChecklistState>;
+  /** ISO date the owner approved publishing; required for status "published". */
+  ownerApprovedAt: string | null;
+  /**
+   * Owner decision to publish despite a documented, disclosed gap (e.g. a
+   * version without an official nutrition row, drinks outside the allergen
+   * guide, no accurate photo). Lists the checklist items that may stay
+   * "partial"/"missing" when publishing; the gap itself stays visible on the page.
+   */
+  acceptedGaps?: { decidedAt: string; checklistKeys: ProductChecklistKey[]; reason: string };
 };
 
 /** A heading on /menu that groups related categories. */

@@ -1,40 +1,59 @@
+import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/lib/site";
+import { getMainNav } from "@/lib/navigation";
 import Container from "./Container";
-import MobileMenu from "./MobileMenu";
+import HeaderShell from "./HeaderShell";
+import SiteSearch from "./SiteSearch";
+import DesktopNav from "./DesktopNav";
+import MobileNav from "./MobileNav";
 
+/**
+ * Global header (docs/DESIGN_SYSTEM.md 4.4), one implementation for every page.
+ * Row 1 (cream): logo (owner icon + site name) and search. Row 2 (lg and up):
+ * dark olive navigation with dropdowns. Below lg: logo, search button, menu.
+ * Height is fixed per breakpoint (--header-h in globals.css) so sticky bars
+ * and anchor jumps line up.
+ */
 export default function Header() {
+  const items = getMainNav();
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-white/95 backdrop-blur">
-      <Container className="flex h-16 items-center justify-between gap-4">
-        {/* Text logo until the owner provides an approved logo. */}
-        <Link
-          href="/"
-          className="flex flex-col rounded-md leading-tight focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-dark"
-        >
-          <span className="font-display text-base font-bold text-ink min-[380px]:text-lg sm:text-xl">
-            {siteConfig.name}
-          </span>
-          <span className="text-xs text-muted">{siteConfig.tagline}</span>
-        </Link>
+    <HeaderShell>
+      <div className="border-b border-card-border">
+        <Container className="flex h-16 items-center justify-between gap-4 lg:gap-8">
+          <Link
+            href="/"
+            aria-label={`${siteConfig.name} home`}
+            className="flex shrink-0 items-center gap-2.5 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-dark"
+          >
+            <Image
+              src="/images/brand/logo-icon.webp"
+              alt=""
+              width={138}
+              height={96}
+              loading="eager"
+              sizes="66px"
+              className="h-10 w-auto sm:h-11"
+            />
+            <span className="font-display text-[1.05rem] leading-[1.05] font-bold text-hero-deep min-[400px]:text-lg sm:text-xl">
+              Olive Garden{" "}
+              <span className="block text-brand-dark">Menu Prices</span>
+            </span>
+          </Link>
 
-        <nav aria-label="Main" className="hidden md:block">
-          <ul className="flex items-center gap-1">
-            {siteConfig.nav.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className="inline-flex min-h-11 items-center rounded-md px-3 font-medium text-ink transition-colors hover:bg-brand-tint hover:text-brand-dark focus-visible:outline-2 focus-visible:outline-brand-dark"
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+          <div className="hidden w-full max-w-md lg:block">
+            <SiteSearch />
+          </div>
 
-        <MobileMenu links={siteConfig.nav} />
-      </Container>
-    </header>
+          <MobileNav items={items} />
+        </Container>
+      </div>
+
+      <div className="hidden bg-brand-dark lg:block">
+        <Container className="flex h-12 items-center">
+          <DesktopNav items={items} />
+        </Container>
+      </div>
+    </HeaderShell>
   );
 }

@@ -7,7 +7,7 @@ export type RelatedMenu = { title: string; href: string; text: string };
 /**
  * "Related Menus" (owner standard 2026-11-13): cards with the linked page's
  * real article title and a short reason to visit, plus a link to the full
- * menu. Only live pages are passed in (lib/category-data.ts
+ * menu. Four cards: one row on desktop, 2 x 2 on tablets, stacked on phones. Only live pages are passed in (lib/category-data.ts
  * getRelatedMenus), so there are no links to unfinished pages or to itself.
  */
 export default function RelatedCategories({ items }: { items: RelatedMenu[] }) {
@@ -15,7 +15,7 @@ export default function RelatedCategories({ items }: { items: RelatedMenu[] }) {
     <section aria-labelledby="related" className="mt-14 border-t border-line pt-10">
       <SectionHeading id="related" title="Related Menus" />
       {items.length > 0 && (
-        <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {items.map(({ title, href, text }) => (
             <li key={href} className="rounded-lg border border-line bg-white p-5">
               <Link

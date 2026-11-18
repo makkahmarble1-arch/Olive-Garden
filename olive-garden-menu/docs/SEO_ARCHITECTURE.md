@@ -9,6 +9,8 @@ clear search intent each.
 /                                   Homepage: primary indexable full-menu page (17 categories, all items) + planning info
 /menu                               Permanent redirect (308) to / (owner decision 2026-11-13); no page
 /[category]                         17 category pages at the root, e.g. /desserts, /lunch-menu
+/dinner-menu                        Dinner Menu guide (static route; content/guides/), 2026-11-15
+/hours                              Olive Garden Hours guide (static route; content/guides/), 2026-11-15
 /blog                               Blog index
 /blog/[slug]                        Blog articles (guides)
 /about                              About + editorial/price-checking policy
@@ -36,6 +38,40 @@ clear search intent each.
   (`/menu`, `/blog`, …) take priority; validation blocks reserved slugs.
 - Not built until the owner approves each page's verified content.
 
+### Menu item pages (2026-11-15)
+
+- Route: `app/menu/[slug]/page.tsx`, URL `/menu/{slug}` (lowercase-hyphenated,
+  normally the product id, e.g. `/menu/fried-mozzarella`).
+- `/menu` itself still **permanently redirects to `/`** (`next.config.ts`,
+  exact match only; `redirects()` run before `proxy.ts`, so item URLs are not
+  affected).
+- Status per page (`content/menu/product-pages/`): `draft` = 404; `preview` =
+  local development / Vercel previews only (linked there, `noindex`), **HTTP 404
+  and unlinked on the production deployment**, never in the sitemap or the
+  production search index; `published` = owner-approved, indexable only when
+  `SITE_INDEXING=true` (still off), in the sitemap.
+- Unknown or unfinished slugs return a **real HTTP 404**: `proxy.ts` matches
+  `/menu/:slug` and allows only live slugs (`liveProductSlugs`).
+- Breadcrumbs: `Home > Menu > {Category} > {Item}`.
+- Metadata via `pageMetadata()` (absolute title, self-canonical, Open Graph
+  `article` with the item photo, Twitter card).
+
+### Guide pages (2026-11-15)
+
+Menu topics that are not one of the 17 categories get a **guide page** at the root:
+- First guide: `/dinner-menu`. Olive Garden has no separate dinner menu, so it is not a category.
+- Content lives in `content/guides/` (`GuidePageContent`), and the page in its own static route (`app/dinner-menu/page.tsx`), rendered by `components/guide/GuidePageLayout.tsx` with the category components.
+- Prices, calories, photos, and ratings come only from the shared menu data. Tables are generated: the price overview by section and the calculated example orders.
+- Published guides appear automatically in:
+  - the header nav (an explicit entry in `getMainNav`)
+  - the footer "Popular Menus" column
+  - the site search index
+  - the sitemap (when `SITE_INDEXING=true`)
+- `proxy.ts` needs no change: a top-level folder with a `page` file is allowed automatically.
+- A guide slug may never equal a category slug (checked at build time in `content/guides/index.ts`).
+- Non-menu guides (e.g. `/hours`) use `staticTable` blocks: verified facts typed in the guide and backed by its fact log. They have no price overview or photo cards.
+- Guides with `navGroup: "hours"` (future holiday articles) join the header Hours dropdown automatically.
+
 ### Rules to avoid duplicate intent
 
 - **Homepage vs. `/menu` (final owner decision, 2026-11-12).**
@@ -61,9 +97,15 @@ clear search intent each.
   (`CONTENT_ARCHITECTURE.md` §4). No copied paragraphs; link instead.
 - **Placeholder pages are noindex** (`robots: { index: false }`) until
   approved content exists. `/design-preview` is dev-only (404 in production).
-- **No individual pages per menu item** (thin, near-duplicate content).
-  Items live in category tables. An item can get a blog guide only if it
-  has enough unique, helpful content.
+- **Individual menu item pages (owner decision 2026-11-15: approved permanent part of the architecture):** allowed only at
+  `/menu/{slug}`, only for items that pass
+  `docs/product-pages/PRODUCT_CONTENT_CHECKLIST.md` (verified facts, a
+  distinct item-level intent, nutrition/allergen guidance, original content,
+  an accurate photo, meaningful links). Never generated automatically for all
+  product ids; thin or near-duplicate item pages stay forbidden. First and
+  first page: `/menu/fried-mozzarella` (status `published` 2026-11-18;
+  indexed only when `SITE_INDEXING=true`). Architecture: `docs/product-pages/PRODUCT_PAGE_ARCHITECTURE.md`.
+  *Superseded:* "No individual pages per menu item" (2026-11-11).
 - **No separate "calories" pages per category.** Calories are a column in
   the same category table.
 - A blog article must not target the same intent as a category page.
@@ -103,6 +145,8 @@ Use one reusable `JsonLd` component.
 | Homepage | `WebSite`, `Organization` (the blog itself, not Olive Garden), `WebPage` (name, description, `dateModified` = last real price check, primary image) in one `@graph`; `FAQPage` only for the visible FAQ. No `Menu`/`MenuItem`/`Product`/`AggregateRating` even though the full menu and visitor ratings are shown |
 | `/menu` hub | `BreadcrumbList` |
 | Category pages | `BreadcrumbList` (`Home > Menu > Category`); `FAQPage` only if a visible FAQ exists |
+| Guide pages (`/dinner-menu`, `/hours`) | `WebPage`, `BreadcrumbList` (`Home > Menu > {Guide}`), `FAQPage` for the visible FAQ. Never `LocalBusiness`, `Restaurant`, or `OpeningHoursSpecification` on `/hours` (this site is not the restaurant) |
+| Menu item pages (`/menu/{slug}`) | `WebPage`, `BreadcrumbList` (`Home > Menu > {Category} > {Item}`), `FAQPage` for the visible FAQ. **No** `Product`, `Offer`, `MenuItem`, `NutritionInformation`, `Review`, or `AggregateRating` (the visitor rating is shown, never marked up) |
 | Blog articles | `BlogPosting` (headline, dates, author, image), `BreadcrumbList`, `FAQPage` if visible FAQ |
 | About / Contact / legal | `BreadcrumbList` |
 
@@ -118,6 +162,7 @@ still valid and harmless when it matches the page.)
 - `app/sitemap.ts` builds the list from the same data files used by the pages
   (published categories + blog posts), so new content is added automatically.
   Noindex pages (placeholders, preview category pages, `/menu`) are left out.
+  Menu item pages are added only when `published` (preview items are left out).
 - `lastModified` uses each item's real `updatedAt` date, never `new Date()`.
 - `app/robots.ts` allows all crawlers (except `/api/`) and points to `/sitemap.xml`.
 - **Indexing switch (Lesson 7.5):** `SITE_INDEXING=true` (Vercel Production only, at launch, owner approval) turns indexing on. Without it every page is `noindex, follow`, the sitemap is empty, and robots.txt does not list it. Page metadata comes from `pageMetadata()` in `lib/metadata.ts` (title, description, canonical, Open Graph, Twitter card, robots via `robotsFor()`).
@@ -132,7 +177,13 @@ still valid and harmless when it matches the page.)
   published category page, important internal pages, and official
   Olive Garden pages (ordering, nutrition, location) where helpful.
 - `/menu` links to every category page.
-- Each category page links to 2-5 related menus and 1-2 related guides. The section is titled "Related Menus"; anchor text is the target's real article title (`menuTitle`, e.g. "Olive Garden Alfredo Menu"). Only live pages are linked (never placeholders, never the page itself); published pages never link to unapproved preview pages.
+- Each category page and guide links to **exactly 4** related menus (owner decision 2026-11-15; one row on desktop), chosen as the most relevant pages, including guides such as `/dinner-menu`. The section is titled "Related Menus"; anchor text is the target's real article title (`menuTitle`, e.g. "Olive Garden Alfredo Menu"). Only live pages are linked (never placeholders, never the page itself); published pages never link to unapproved preview pages.
+- Menu item pages link to: their category (breadcrumb, hero chip, sizes
+  table), the homepage full menu, other categories in "Related Menus"
+  (exactly 4), pairing suggestions (category page, or the item page when
+  live), and 3-4 similar items (approved menu cards). Menu cards and price
+  table rows link an item's image/name to its page **only when that page is
+  live** (`productDetailHref()` in `lib/product-pages.ts`).
 - Each blog article links to the relevant category pages in the body and
   shows 3 related articles at the bottom.
 - Breadcrumbs on every page except the homepage.

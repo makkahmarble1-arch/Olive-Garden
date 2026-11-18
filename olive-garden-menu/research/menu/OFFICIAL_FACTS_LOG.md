@@ -169,3 +169,26 @@ Key findings:
 - /nutrition/vegetarian-and-vegan-options: definitions of vegetarian/vegan; cross-contact possible.
 - /catering: business catering "starting at $12 per person" with delivery and setup.
 - /contact-us redirects to /help.
+
+## Owner calorie decisions (2026-11-18)
+
+Evidence: owner-supplied U.S. Nutrition Information, footer US_101926
+(`research/official-sources/`), extracted and checked as described in
+`docs/product-pages/NUTRITION_DATA_REPORT.md`.
+
+| Offering | Before | Evidence | Decision |
+|---|---:|---|---|
+| `catering--sicilian-cheesecake` | 700 per slice (catering ordering card, 2026-11-12) | Guide p. 12, DESSERTS, "Sicilian Cheesecake with Strawberry Topping" = 730; the guide has no separate catering cake row; catering calories are per slice | **730 applied** (same dessert, same per-slice serving). Desserts page note updated |
+| `sides-sauces-and-extras--side-of-crispy-shrimp-fritta` | 200 (side ordering card, 2026-11-12) | Guide p. 5, CREATE YOUR OWN PASTA, "Crispy Shrimp Fritta" = 220, no piece count; the pasta-builder panel showed 350 for 16 pieces; the side card states no piece count | **Not applied.** The serving size cannot be confirmed from official sources. **Final owner decision (2026-11-18): keep 200.** Mapping stays `conflict` (documented), so the guide row is never shown as this side's nutrition |
+
+
+
+## Re-check 2026-11-18 (official site reachable again from our network)
+
+Restaurant shown on every page: Orlando - Millenia Mall, (407) 345-8331, Order Type: Pickup.
+
+| Item (URL) | Seen 2026-11-18 | Data before | Action |
+|---|---|---|---|
+| Calabrian Steak & Shrimp Bucatini (`/menu/calabrian-steak-shrimp-bucatini/prod21350068`) | "Starting at $25.29"; options Steak & Shrimp $25.29, Steak $27.29, Shrimp $25.29; 1,220 / 1,130 / 1,040 cal | $24.49 / $26.49 / $24.49 | Updated in `content/menu/offerings/classic-entrees.ts`, item page and the price-range prose (homepage, Classic Entrées page, Dinner Menu guide: $13.99 to $27.29). Conflict resolved. |
+| Spicy Alfredo Fettuccine (`/menu/spicy-alfredo-fettuccine/prod0219000037`) | Orderable, $17.49, 1,330 cal | $17.49, 1,330 | Still on the menu; no change. |
+| Limited Time Pumpkin Cookie Butter Cheesecake (V) (`/menu/limited-time-pumpkin-cookie-butter-cheesecake-v/prod20770014`) | Orderable, $9.79, 620 cal | $9.79, 620 | Still on the menu; no change. |

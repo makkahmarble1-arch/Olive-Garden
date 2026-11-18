@@ -31,7 +31,11 @@ function Gallery({ block }: { block: GalleryBlock }) {
 }
 
 /** Key of a resolved table in the layout's table map: "<block type>:<id>". */
-export const tableKey = (type: "comparison" | "optionTable" | "pastaBuilds" | "servingPlan", id: string) => `${type}:${id}`;
+export type TableBlockType = "comparison" | "optionTable" | "pastaBuilds" | "servingPlan" | "priceOverview" | "mealExamples" | "staticTable";
+export const tableKey = (type: TableBlockType, id: string) => `${type}:${id}`;
+const TABLE_BLOCKS: readonly string[] = ["comparison", "optionTable", "pastaBuilds", "servingPlan", "priceOverview", "mealExamples", "staticTable"];
+type TableBlock = Extract<CategoryBlock, { type: TableBlockType }>;
+const isTableBlock = (block: CategoryBlock): block is TableBlock => TABLE_BLOCKS.includes(block.type);
 
 /**
  * One category-specific section: an H2 plus article blocks (paragraphs,
@@ -55,7 +59,7 @@ export default function ContentSection({
   for (const block of section.blocks) {
     if (block.type === "gallery") {
       parts.push({ kind: "gallery", block });
-    } else if (block.type === "comparison" || block.type === "optionTable" || block.type === "pastaBuilds" || block.type === "servingPlan") {
+    } else if (isTableBlock(block)) {
       const table = tables.get(tableKey(block.type, block.id));
       if (!table) throw new Error(`Section "${section.id}": unknown ${block.type} "${block.id}".`);
       parts.push({ kind: "table", table });

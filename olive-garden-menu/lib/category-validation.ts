@@ -51,8 +51,10 @@ export function validateCategoryPages(input: {
       issues.push(`${where}: extraSource must also be listed in sources.`);
     }
     for (const r of page.related) {
-      if (r.categoryId === page.categoryId) issues.push(`${where}: related must not link the page to itself.`);
+      if ("categoryId" in r && r.categoryId === page.categoryId) issues.push(`${where}: related must not link the page to itself.`);
     }
+    // Owner decision 2026-11-15: exactly 4 Related Menus, shown in one row on desktop.
+    if (page.related.length !== 4) issues.push(`${where}: related must list exactly 4 menus (now ${page.related.length}).`);
     for (const text of [page.metaTitle, page.h1]) {
       if (norm(text).includes(HOMEPAGE_PHRASE)) issues.push(`${where}: "${text}" uses the homepage phrase "Olive Garden Menu with Prices".`);
     }

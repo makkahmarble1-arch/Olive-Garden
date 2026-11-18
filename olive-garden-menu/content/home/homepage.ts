@@ -279,7 +279,7 @@ export const homepageFaqs: FaqItem[] = [
   {
     question: "How much does a meal at Olive Garden cost?",
     answer:
-      "At the online pickup prices we verified, dinner entrées cost $13.99 to $26.49, lunch-size plates $11.49 to $12.49, and kids meals $7.49 to $9.98. Prices may vary by location across the USA.",
+      "At the online pickup prices we verified, dinner entrées cost $13.99 to $27.29, lunch-size plates $11.49 to $12.49, and kids meals $7.49 to $9.98. Prices may vary by location across the USA.",
   },
   {
     question: "Do entrées come with soup or salad and breadsticks?",

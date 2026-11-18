@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { menuCategories } from "@/content/menu/categories";
+import { liveProductSlugs } from "@/content/menu/product-pages/registry";
 
 /**
  * Real HTTP 404 for unknown one-segment URLs (owner approval 2026-11-14,
@@ -37,13 +38,27 @@ const KNOWN_SEGMENTS = new Set<string>([
 /** Internal path that matches no route (two segments, so not app/[category]). */
 const NOT_FOUND_PATH = "/_not-found-page/404";
 
+/**
+ * Menu item pages (app/menu/[slug], 2026-11-15): only live product pages
+ * (status "preview" or "published" in content/menu/product-pages) exist.
+ * Any other /menu/<slug> gets the same real HTTP 404. "/menu" itself is
+ * redirected to "/" by next.config.ts before this proxy runs.
+ */
+const PRODUCT_SLUGS = new Set<string>(liveProductSlugs);
+const MENU_ITEM = /^\/menu\/([^/]+)$/;
+
 export function proxy(request: NextRequest) {
-  const segment = request.nextUrl.pathname.slice(1);
+  const path = request.nextUrl.pathname;
+  const item = MENU_ITEM.exec(path);
+  if (item) {
+    return PRODUCT_SLUGS.has(item[1]) ? NextResponse.next() : NextResponse.rewrite(new URL(NOT_FOUND_PATH, request.url));
+  }
+  const segment = path.slice(1);
   if (segment.startsWith("_") || KNOWN_SEGMENTS.has(segment)) return NextResponse.next();
   return NextResponse.rewrite(new URL(NOT_FOUND_PATH, request.url));
 }
 
 export const config = {
-  // Exactly one path segment ("/" itself and deeper paths are not matched).
-  matcher: "/:segment",
+  // One-segment paths, plus /menu/<slug> (menu item pages). "/" and other deeper paths are not matched.
+  matcher: ["/:segment", "/menu/:slug"],
 };

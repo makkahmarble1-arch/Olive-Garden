@@ -61,3 +61,29 @@ Category pages should **not** use the generic phrase "Olive Garden menu with pri
 - **Year modifiers** ("2026") appear in many observed suggestions. Use them only if the page is genuinely re-checked for that year.
 - **"pdf" modifiers** are frequent (menu pdf, catering pdf, gluten free pdf). We do not publish menu PDFs. Pages can link to official PDFs where they exist (nutrition, allergen guide).
 - **Recipe and copycat queries** (alfredo sauce recipe, breadsticks recipe, sangria recipe) are a different intent and are not targeted.
+
+## Guide pages (not menu categories)
+| URL | Primary keyword | Key secondary keywords | Main intent | Unique focus | Research |
+|---|---|---|---|---|---|
+| `/hours` (2026-11-15) | olive garden hours | hours today, opening hours, closing time, what time does olive garden open / close, sunday / saturday hours, holiday hours, is olive garden open on thanksgiving / christmas, hours near me, hours of operation, takeout hours (all [Observed]) | Local / informational | Common opening and closing times from official listings, lunch and dinner menu times, a holiday table (official vs not announced), To Go cutoffs, how to use the official locator. No live "open now" | `hours/` |
+| `/dinner-menu` (2026-11-15) | olive garden dinner menu | dinner menu with prices, dinner prices, dinner hours / menu time, what time does olive garden open for dinner, lunch vs dinner (portions, size, prices), dinner specials, dinner for two, dinner menu to go (all [Observed] in autocomplete) | Commercial / local | When dinner applies, price ranges by section, dinner-only lighter portions, calculated dinner-for-two costs, lunch-vs-dinner rules. No full item lists | `dinner-menu/` |
+
+- Olive Garden has no separate dinner menu, so `/dinner-menu` is a **guide** built from the shared data (`content/guides/`), not an 18th category. The 17 approved categories and the inventory are unchanged.
+- The homepage keeps "olive garden menu with prices". The dinner page's title starts with "Olive Garden Dinner Menu".
+
+## Menu item pages (`/menu/{slug}`, 2026-11-15)
+
+Each item page owns the item-level intent; the category page keeps the
+category intent and links down to it. Pages only after
+`docs/product-pages/PRODUCT_CONTENT_CHECKLIST.md`.
+
+| URL | Primary keyword | Secondary keywords | Main intent | Unique focus | Status |
+|---|---|---|---|---|---|
+| `/menu/fried-mozzarella` | olive garden fried mozzarella | fried mozzarella price, fried mozzarella calories, mozzarella sticks, fried mozzarella sauce, fried mozzarella catering | Informational / pre-order | One item: price, calories with/without marinara, sauce, catering tray (30 pieces), allergen guidance, vegetarian label, pairings | `published` 2026-11-18 (noindex until launch) |
+
+- Cannibalization: `/appetizers` targets "olive garden appetizers" (all starters
+  compared). The item page must not repeat the appetizer comparison text; it
+  shows a calories chart from the shared data and links back to `/appetizers`.
+- Keywords were chosen from the item's own attributes and common query
+  patterns on competitor item pages; no new SERP export was made for this item.
+

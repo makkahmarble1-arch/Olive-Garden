@@ -40,7 +40,7 @@ Calories as shown on the official online ordering menu for each item (Olive Gard
 | `catering--chicken-fingers` | 1,340 | per catering item (total) | ketchup 170 | — | official | match (PDF 1,340, p. 24) |
 | `catering--italian-meatballs` | 1,710 | per catering item (total) | — | — | official | match (PDF 1,710, p. 25) |
 | `catering--broccoli` | 610 | per catering item (total) | — | — | official | match (PDF 610, p. 24) |
-| `catering--sicilian-cheesecake` | 700 | per slice | — | — | official | conflict: menu value kept (PDF 730, p. 12). Catering card lists 700 per slice; the PDF has no catering cake line, only the 730 dessert slice. Menu value kept; owner review |
+| `catering--sicilian-cheesecake` | 730 | per slice | — | — | official | **Owner decision 2026-11-18:** official nutrition guide US_101926 p. 12 (one slice of Sicilian Cheesecake with Strawberry Topping) = 730; replaces the 700 shown on the catering ordering card (2026-11-12). Same dessert, same per-slice basis. |
 | `catering--gallon-iced-teas-and-raspberry-lemonade` | 40-1,760 | per gallon, depends on flavor | — | — | official | resolved: PDF value used (PDF 40-1,760, p. 25). Menu lists Gallon Raspberry Lemonade 1,810; PDF lists 1,760 |
 | `catering--san-pellegrino-sparkling-1-liter-bottle` | 0 | per bottle | — | — | official | match (PDF 0, p. 19) |
 | `catering--acqua-panna-spring-1-liter-bottle` | 0 | per bottle | — | — | official | match (PDF 0, p. 19) |

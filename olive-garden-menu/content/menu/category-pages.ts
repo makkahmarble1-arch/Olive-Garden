@@ -490,11 +490,10 @@ export const categoryPages: CategoryPageContent[] = [
       },
     ],
     related: [
-      { categoryId: "catering", text: "Need appetizers for a group? See the catering trays and sauces." },
-      { categoryId: "sides-sauces-and-extras", text: "Extra dipping sauce or a side for the table." },
       { categoryId: "classic-entrees", text: "Choose a dinner entrée to follow your starter." },
-      { categoryId: "family-style-meals", text: "Feeding a group at home? Family bundles come with salad and breadsticks." },
+      { guide: "dinner-menu", text: "Plan the whole dinner: hours, prices by section, and dinner for two." },
       { categoryId: "soups-salad-and-breadsticks", text: "Soups, the house salad, and breadsticks as a meal." },
+      { categoryId: "sides-sauces-and-extras", text: "Extra dipping sauce or a side for the table." },
     ],
   },
 
@@ -519,7 +518,7 @@ export const categoryPages: CategoryPageContent[] = [
       "Compare Olive Garden classic entrees, dinner prices, calories, chicken, seafood and pasta dishes, plus available portion sizes.",
     h1: "Olive Garden Classic Entrees Menu with Prices 2026",
     intro: [
-      "Olive Garden’s classic entrées are its regular dinner plates. They cost $13.99 to $26.49 for online pickup, and each one comes with soup or salad and two breadsticks.",
+      "Olive Garden’s classic entrées are its regular dinner plates. They cost $13.99 to $27.29 for online pickup, and each one comes with soup or salad and two breadsticks.",
       "The table lists all 28 items in this section, including Create Your Own Pasta and the family lasagna bundle that Olive Garden places here. Below it you will find what each plate includes, the vegetarian choices, and how dinner portions compare with the smaller lighter and lunch versions.",
     ],
     contentReviewedAt: REVIEWED,
@@ -527,7 +526,6 @@ export const categoryPages: CategoryPageContent[] = [
     tableCaption: "Olive Garden Classic Entrees: Prices and Calories",
     priceNotes: [
       "Prices are online pickup prices from Olive Garden’s official website, checked in November 2026, and may vary by location across the USA. Dine-in prices were not checked.",
-      "Calabrian Steak & Shrimp Bucatini: the item page showed $24.49 (steak and shrimp or shrimp only) and $26.49 (steak only); the menu card showed $25.29 that day, so check the price at your restaurant.",
       "Spicy Alfredo Fettuccine is a limited-time item.",
     ],
     nutritionNotes: [
@@ -655,7 +653,7 @@ export const categoryPages: CategoryPageContent[] = [
         blocks: [
           {
             type: "paragraph",
-            text: "Chicken dishes make up the largest group, from the breaded Chicken Parmigiana to the grilled Chicken Margherita. On the seafood side, Shrimp Scampi has 490 calories, tied with Spaghetti with Marinara for the fewest of any classic entrée. The highest-priced plates were the Calabrian bucatini ($24.49 to $26.49), Shrimp Tortelloni Alfredo ($25.79), and Shrimp Carbonara ($24.99).",
+            text: "Chicken dishes make up the largest group, from the breaded Chicken Parmigiana to the grilled Chicken Margherita. On the seafood side, Shrimp Scampi has 490 calories, tied with Spaghetti with Marinara for the fewest of any classic entrée. The highest-priced plates were the Calabrian bucatini ($25.29 to $27.29), Shrimp Tortelloni Alfredo ($25.79), and Shrimp Carbonara ($24.99).",
           },
           { type: "comparison", id: "entree-types" },
           {
@@ -729,7 +727,9 @@ export const categoryPages: CategoryPageContent[] = [
             text: [
               "Feeding several people? A family-size pan can cost less per person. Compare them on ",
               { text: "family style meals", href: "/family-style-meals" },
-              ".",
+              ". For dinner hours, prices for every part of the dinner menu, and example dinner-for-two costs, see our ",
+              { text: "Olive Garden dinner menu", href: "/dinner-menu" },
+              " guide.",
             ],
           },
         ],
@@ -768,11 +768,10 @@ export const categoryPages: CategoryPageContent[] = [
       },
     ],
     related: [
+      { guide: "dinner-menu", text: "When dinner starts, dinner prices by section, and what a dinner for two costs." },
       { categoryId: "lunch-menu", text: "Smaller plates at lunch prices, Monday to Friday until 3 PM." },
       { categoryId: "lighter-portions", text: "Smaller dinner plates on weekday evenings and weekends." },
       { categoryId: "amazing-alfredos", text: "Every Alfredo dish compared in one place." },
-      { categoryId: "family-style-meals", text: "Pans and bundles that feed 4 to 12 at home." },
-      { categoryId: "appetizers", text: "Starters to share before your entrée." },
     ],
   },
 
@@ -1195,12 +1194,10 @@ export const categoryPages: CategoryPageContent[] = [
       },
     ],
     related: [
-      { categoryId: "family-style-meals", text: "Alfredo pans and the Chicken Alfredo bundle for 4 to 6." },
+      { categoryId: "classic-entrees", text: "Every regular dinner entrée with prices and calories." },
       { categoryId: "lunch-menu", text: "Lunch-size Alfredo plates, Monday to Friday until 3 PM." },
       { categoryId: "lighter-portions", text: "Smaller Alfredo plates for evenings and weekends." },
-      { categoryId: "sides-sauces-and-extras", text: "Large alfredo sauce and other extras." },
-      { categoryId: "classic-entrees", text: "Every regular dinner entrée with prices and calories." },
-      { categoryId: "create-your-own-pasta", text: "Build your own pasta plate with your choice of sauce." },
+      { categoryId: "family-style-meals", text: "Alfredo pans and the Chicken Alfredo bundle for 4 to 6." },
     ],
   },
   /* =====================================================================
@@ -1541,9 +1538,8 @@ export const categoryPages: CategoryPageContent[] = [
     related: [
       { categoryId: "lunch-menu", text: "Lunch-size plates and sandwiches, Monday to Friday until 3 PM." },
       { categoryId: "classic-entrees", text: "Full dinner entrées, each with soup or salad and breadsticks." },
+      { guide: "dinner-menu", text: "Dinner hours and prices, when soup and salad cost $13.49." },
       { categoryId: "sides-sauces-and-extras", text: "Extra sauces, sides, and add-ons for your meal." },
-      { categoryId: "catering", text: "Soups, salads, and breadsticks for groups and events." },
-      { categoryId: "family-style-meals", text: "Soup by the half gallon or gallon, plus the jumbo salad." },
     ],
   },
 
@@ -1933,6 +1929,7 @@ export const categoryPages: CategoryPageContent[] = [
     related: [
       { categoryId: "classic-entrees", text: "The full-size dinner versions of these dishes." },
       { categoryId: "lunch-menu", text: "The same plate sizes for $2 less, weekdays until 3 PM." },
+      { guide: "dinner-menu", text: "Everything served after 3 PM and on weekends, with dinner prices." },
       { categoryId: "amazing-alfredos", text: "Every Alfredo dish compared, from lunch plates to family pans." },
     ],
   },
@@ -2362,12 +2359,10 @@ export const categoryPages: CategoryPageContent[] = [
       },
     ],
     related: [
-      { categoryId: "gluten-sensitive", text: "Dishes made without gluten-containing ingredients." },
-      { categoryId: "sides-sauces-and-extras", text: "Extra sauces, toppings, and sides." },
-      { categoryId: "amazing-alfredos", text: "Alfredo dishes, which are not part of the pasta builder." },
-      { categoryId: "catering", text: "The Create Your Own Pasta Station for groups of 10 or more." },
       { categoryId: "classic-entrees", text: "Regular entrées, including Spaghetti & Meatballs." },
-      { categoryId: "family-style-meals", text: "Pasta pans for 4 to 6 people." },
+      { categoryId: "amazing-alfredos", text: "Alfredo dishes, which are not part of the pasta builder." },
+      { categoryId: "sides-sauces-and-extras", text: "Extra sauces, toppings, and sides." },
+      { categoryId: "gluten-sensitive", text: "Dishes made without gluten-containing ingredients." },
     ],
   },
 
@@ -2652,7 +2647,9 @@ export const categoryPages: CategoryPageContent[] = [
               { text: "classic entrées page", href: "/classic-entrees" },
               ". Lunch-size Fettuccine Alfredo and Spicy Alfredo are also compared with every other Alfredo dish on the ",
               { text: "Olive Garden Alfredo menu", href: "/amazing-alfredos" },
-              ".",
+              ". When dinner starts and what dinner costs are covered in our ",
+              { text: "Olive Garden dinner menu", href: "/dinner-menu" },
+              " guide.",
             ],
           },
         ],
@@ -2742,10 +2739,10 @@ export const categoryPages: CategoryPageContent[] = [
       },
     ],
     related: [
+      { guide: "dinner-menu", text: "What changes after 3 PM: dinner hours, prices, and portions." },
       { categoryId: "lighter-portions", text: "The same plate sizes after 3 PM and on weekends." },
       { categoryId: "soups-salad-and-breadsticks", text: "The $9.99 weekday soup and salad offer and its refill rules." },
       { categoryId: "classic-entrees", text: "Full-size dinner plates and their prices." },
-      { categoryId: "amazing-alfredos", text: "Every Alfredo dish, including lunch-size plates." },
     ],
   },
   /* =====================================================================
@@ -2838,7 +2835,7 @@ export const categoryPages: CategoryPageContent[] = [
           { offeringId: "catering--pumpkin-cookie-butter-cheesecake", label: "Pumpkin Cookie Butter Cheesecake, whole (limited time)", option: "Whole cake (serves 10)", servings: 10 },
         ],
         notes: [
-          "Per-serving prices divide the price by Olive Garden’s own serving count. The catering Sicilian Cheesecake is listed at 700 calories per slice; the restaurant dessert at 730.",
+          "Per-serving prices divide the price by Olive Garden’s own serving count. Catering cake calories are per slice; Olive Garden’s nutrition guide lists a Sicilian Cheesecake slice at 730 calories.",
         ],
       },
     ],
@@ -2977,10 +2974,10 @@ export const categoryPages: CategoryPageContent[] = [
       },
     ],
     related: [
-      { categoryId: "catering", text: "Half and whole cakes alongside trays and combinations for groups." },
       { categoryId: "drink-menu", text: "Coffee, lemonade, and other drinks to go with dessert." },
-      { categoryId: "family-style-meals", text: "Take-home dinners for 4 to 12 people." },
       { categoryId: "wine-and-beer-to-go", text: "Sweet wines such as Moscato and Roscato by the bottle." },
+      { categoryId: "catering", text: "Half and whole cakes alongside trays and combinations for groups." },
+      { guide: "dinner-menu", text: "Desserts and drinks as part of a dinner out, with dinner-for-two costs." },
     ],
   },
 
@@ -3194,6 +3191,7 @@ export const categoryPages: CategoryPageContent[] = [
       { categoryId: "non-alcoholic-beverages", text: "Every alcohol-free drink with calories and sizes." },
       { categoryId: "wine-and-beer-to-go", text: "Wine bottles and beer to go, with prices and rules." },
       { categoryId: "desserts", text: "Desserts to go with your coffee or drink." },
+      { guide: "dinner-menu", text: "Dinner prices and hours to plan drinks with your meal." },
     ],
   },
 
@@ -3940,6 +3938,7 @@ export const categoryPages: CategoryPageContent[] = [
       { categoryId: "drink-menu", text: "Every drink type, including dine-in cocktails." },
       { categoryId: "non-alcoholic-beverages", text: "Lemonades, iced teas, soda, and coffee." },
       { categoryId: "desserts", text: "Desserts to enjoy with a sweet wine." },
+      { guide: "dinner-menu", text: "Dinner hours and prices to pair with a bottle of wine." },
     ],
   },
   /* =====================================================================
@@ -4894,7 +4893,6 @@ export const categoryPages: CategoryPageContent[] = [
       { categoryId: "appetizers", text: "Starters in single-order sizes." },
       { categoryId: "desserts", text: "Desserts by the slice." },
       { categoryId: "create-your-own-pasta", text: "The single-plate pasta builder." },
-      { categoryId: "non-alcoholic-beverages", text: "Drinks with calories and gallon sizes." },
     ],
   },
 ];

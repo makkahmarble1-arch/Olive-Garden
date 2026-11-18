@@ -17,6 +17,7 @@ import {
   toMenuTableItem,
 } from "@/lib/content";
 import { referenceLocations } from "@/content/menu/locations";
+import { guidePages, guidePath } from "@/content/guides";
 import { formatNumber, formatPrice } from "@/lib/format";
 import type {
   CategoryPageContent,
@@ -24,6 +25,11 @@ import type {
   ComparisonRow,
   ComparisonTableSpec,
   CustomizationOption,
+  GuidePageContent,
+  MealExampleSpec,
+  PriceOverviewSpec,
+  RelatedMenuRef,
+  StaticTableSpec,
   MenuCategoryDef,
   MenuItem,
   MenuOffering,
@@ -87,22 +93,37 @@ export function getFeaturedOfferings(content: CategoryPageContent, offerings: Me
 
 /* ---------- Related Menus ---------- */
 
+/** "Related Menus" shows at most this many cards: one row on desktop (owner decision 2026-11-15). */
+export const RELATED_MENUS_MAX = 4;
+
 /**
- * Related menus that can be linked right now (owner standard 2026-11-13):
- * the target has a finished page (published; preview targets only from
- * another preview page), it is not this page, and the card shows the
- * target's real article title (`menuTitle`). Planned entries for pages not
- * finished yet stay in the content and appear automatically later.
+ * Resolves "Related Menus" cards (owner standard 2026-11-13): the target has a
+ * finished page (published; preview category targets only from a preview
+ * page), it is not this page, and the card shows the target's real article
+ * title (`menuTitle`). Planned entries for unfinished pages stay in the
+ * content and appear automatically later. At most RELATED_MENUS_MAX cards.
  */
-export function getRelatedMenus(category: MenuCategoryDef, content: CategoryPageContent): { title: string; href: string; text: string }[] {
-  const fromPreview = category.contentStatus !== "published";
-  return content.related.flatMap((r) => {
+export function resolveRelatedMenus(
+  refs: RelatedMenuRef[],
+  self: { path: string; isPreview: boolean },
+): { title: string; href: string; text: string }[] {
+  const cards = refs.flatMap((r) => {
+    if ("guide" in r) {
+      const guide = guidePages.find((g) => g.slug === r.guide);
+      if (!guide || guide.status !== "published" || guidePath(guide) === self.path) return [];
+      return [{ title: guide.menuTitle, href: guidePath(guide), text: r.text }];
+    }
     const target = getMenuCategory(r.categoryId);
     const targetContent = getCategoryPageContent(r.categoryId);
-    if (!target || !targetContent || target.id === category.id) return [];
-    const live = target.contentStatus === "published" || (fromPreview && target.contentStatus === "preview");
+    if (!target || !targetContent || menuCategoryPath(target.slug) === self.path) return [];
+    const live = target.contentStatus === "published" || (self.isPreview && target.contentStatus === "preview");
     return live ? [{ title: targetContent.menuTitle, href: menuCategoryPath(target.slug), text: r.text }] : [];
   });
+  return cards.slice(0, RELATED_MENUS_MAX);
+}
+
+export function getRelatedMenus(category: MenuCategoryDef, content: CategoryPageContent): { title: string; href: string; text: string }[] {
+  return resolveRelatedMenus(content.related, { path: menuCategoryPath(category.slug), isPreview: category.contentStatus !== "published" });
 }
 
 /* ---------- Comparison tables ---------- */
@@ -125,6 +146,8 @@ export type ResolvedComparison = {
   hasCalculated: boolean;
   /** What calculated cells are based on (shown in the "Calc." note). Default: prices and serving sizes. */
   calcBasis?: string;
+  /** Short cells: smaller minimum width, so the table fits phones without scrolling. */
+  compact?: boolean;
   notes: ComparisonTableSpec["notes"];
 };
 
@@ -426,4 +449,140 @@ export function resolveServingPlan(spec: ServingPlanSpec): ResolvedComparison {
     calcBasis: "official prices and serving sizes (food only: no tax, delivery fee, or tip)",
     notes: spec.notes,
   };
+}
+
+/* ---------- Guide pages (e.g. /dinner-menu) ---------- */
+
+/** Every verified price of an offering: the default price and each size/variant option. */
+function verifiedPrices(offering: MenuOffering): number[] {
+  if (offering.status !== "verified") return [];
+  const own = offering.prices[0]?.amount;
+  return [...(own != null ? [own] : []), ...offering.options.map((o) => o.price).filter((p): p is number => p != null)];
+}
+
+/** Calories of the item's standard serving (its own value or range; other sizes are not mixed in). */
+function verifiedCalories(offering: MenuOffering): number[] {
+  if (offering.status !== "verified") return [];
+  // With size options, the first option is the standard order (e.g. 6 breadsticks = 840, not 140 per breadstick).
+  const first = offering.options[0];
+  if (first && first.calories != null) return [first.calories, ...(first.caloriesMax != null ? [first.caloriesMax] : [])];
+  if (offering.calories === null) return [];
+  return [offering.calories, ...(offering.caloriesMax != null ? [offering.caloriesMax] : [])];
+}
+
+const range = (values: number[], fmt: (n: number) => string) => {
+  if (values.length === 0) return null;
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  return min === max ? fmt(min) : `${fmt(min)}–${fmt(max)}`;
+};
+
+/**
+ * Price ranges per menu section, read from the shared data (verified and
+ * currently listed offerings only; "unavailable" and "not-listed" are skipped).
+ */
+export function resolvePriceOverview(spec: PriceOverviewSpec): ResolvedComparison {
+  const rows = spec.rows.map((row) => {
+    const category = getMenuCategory(row.categoryId);
+    if (!category) throw new Error(`Price overview "${spec.id}": unknown category "${row.categoryId}".`);
+    const all = row.offeringIds
+      ? row.offeringIds.map((id) => {
+          const o = getOffering(id);
+          if (!o) throw new Error(`Price overview "${spec.id}": unknown offering "${id}".`);
+          return o;
+        })
+      : getOfferingsForCategory(row.categoryId);
+    const listed = all.filter((o) => o.status === "verified" && (o.availability === "available" || o.availability === "limited-time"));
+    if (listed.length === 0) throw new Error(`Price overview "${spec.id}": no verified items for "${row.categoryId}".`);
+    const prices = range(listed.flatMap(verifiedPrices), formatPrice);
+    const calories = range(listed.flatMap(verifiedCalories), formatNumber);
+    return {
+      label: row.label ?? category.name,
+      cells: [
+        { text: String(listed.length) },
+        prices ? { text: prices } : { text: "Not verified yet", isNote: true },
+        calories ? { text: calories } : { text: "Not listed", isNote: true },
+        { text: row.when },
+      ],
+    };
+  });
+  return {
+    id: spec.id,
+    caption: spec.caption,
+    firstHeader: "Menu section",
+    headers: ["Items", "Price range", "Calories", "When it is served"],
+    rows,
+    hasCalculated: false,
+    notes: spec.notes,
+  };
+}
+
+/** Example orders: totals and per-person cost calculated from the shared prices. */
+export function resolveMealExamples(spec: MealExampleSpec): ResolvedComparison {
+  const rows = spec.examples.map((example) => {
+    const parts = example.items.map((item) => {
+      const offering = getOffering(item.offeringId);
+      if (!offering) throw new Error(`Meal examples "${spec.id}": unknown offering "${item.offeringId}".`);
+      const v = rowValues(offering, item.option);
+      if (v.price === null) throw new Error(`Meal examples "${spec.id}": "${item.offeringId}" has no verified price.`);
+      const quantity = item.quantity ?? 1;
+      const name = item.option ?? offering.displayName;
+      const shown = item.label ?? name;
+      return { label: quantity > 1 ? `${quantity} × ${shown}` : shown, price: v.price, quantity };
+    });
+    const total = Math.round(parts.reduce((sum, p) => sum + p.price * p.quantity, 0) * 100) / 100;
+    const perPerson = Math.round((total / example.people) * 100) / 100;
+    const formula = parts.map((p) => (p.quantity > 1 ? `${p.quantity} × ${formatPrice(p.price)}` : formatPrice(p.price))).join(" + ");
+    return {
+      label: example.label,
+      cells: [
+        { text: parts.map((p) => p.label).join(" + ") },
+        { text: formatPrice(total), calculated: formula },
+        example.people > 1 ? { text: formatPrice(perPerson), calculated: `${formatPrice(total)} ÷ ${example.people}` } : { text: formatPrice(total) },
+      ],
+    };
+  });
+  return {
+    id: spec.id,
+    caption: spec.caption,
+    firstHeader: "Example",
+    headers: ["What you order", "Food total", "Per person"],
+    rows,
+    hasCalculated: true,
+    calcBasis: "official online pickup prices (food only: no drinks, tax, fees, or tip)",
+    notes: spec.notes,
+  };
+}
+
+/** Latest real check of the guide's facts (ISO): its categories' price checks and `verifiedAt`, or null. */
+export function getGuideCheckDate(guide: GuidePageContent): string | null {
+  const dates = [...(guide.checkedCategoryIds ?? []).map((id) => getCategoryCheckDate(id)), guide.verifiedAt ?? null].filter(
+    (d): d is string => Boolean(d),
+  );
+  return dates.length ? dates.sort().at(-1)! : null;
+}
+
+/** A static facts table (e.g. hours) in the shared table design. */
+export function resolveStaticTable(spec: StaticTableSpec): ResolvedComparison {
+  for (const row of spec.rows) {
+    if (row.cells.length !== spec.headers.length) throw new Error(`Static table "${spec.id}": row "${row.label}" needs ${spec.headers.length} cells.`);
+  }
+  return {
+    id: spec.id,
+    caption: spec.caption,
+    firstHeader: spec.firstHeader,
+    headers: spec.headers,
+    rows: spec.rows.map((row) => ({
+      label: row.label,
+      cells: row.cells.map((c) => (typeof c === "string" ? { text: c } : { text: c.text, isNote: true })),
+    })),
+    hasCalculated: false,
+    notes: spec.notes,
+    compact: spec.compact,
+  };
+}
+
+/** Related Menus of a guide page (same rules as category pages). */
+export function getGuideRelatedMenus(guide: GuidePageContent): { title: string; href: string; text: string }[] {
+  return resolveRelatedMenus(guide.related, { path: guidePath(guide), isPreview: guide.status !== "published" });
 }

@@ -42,7 +42,9 @@ Related docs: `MENU_PAGE_OUTLINES.md`, `MENU_RESEARCH_PLAN.md`,
 7. **Price benchmark: Olive Garden Orlando - Millenia Mall**, 4101 Conroy
    Road, Orlando, FL 32839 (approved 2026-11-11), **online pickup** prices
    (`MENU_RESEARCH_PLAN.md` §3).
-8. **No individual pages per menu item** (unchanged).
+8. **Individual menu item pages:** superseded on 2026-11-15 (owner request):
+   allowed at `/menu/{slug}` only after `docs/product-pages/PRODUCT_CONTENT_CHECKLIST.md`;
+   first sample `/menu/fried-mozzarella`. Never generated for every product.
 9. **Homepage = primary indexable full-menu page** (owner decision,
    2026-11-12): all 17 categories and every offering, using one shared
    structured data source with the category pages

@@ -44,3 +44,6 @@ next-env.d.ts
 # owner's original/staging images (large originals, kept locally only;
 # optimized copies live in public/images/)
 /image-staging/
+
+# Official Olive Garden PDFs supplied by the owner (research copies, not redistributed)
+/research/official-sources/*.pdf

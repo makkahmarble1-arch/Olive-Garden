@@ -65,7 +65,7 @@ export const aliasCases: AliasCase[] = [
     question: "Sicilian Cheesecake with Strawberry Topping vs. Sicilian Cheesecake (Catering): same product, different topping or format?",
     offeringIds: ["desserts--sicilian-cheesecake-with-strawberry-topping", "catering--sicilian-cheesecake"],
     status: "shared-data",
-    decision: "same dish, different portion: Both are ricotta cheesecake on a shortbread crust with strawberry sauce (700 cal per slice). Dessert slice vs half/whole catering cake. Shared product data and photo; values separate.",
+    decision: "same dish, different portion: Both are ricotta cheesecake on a shortbread crust with strawberry sauce (730 cal per slice, official nutrition guide; owner decision 2026-11-18). Dessert slice vs half/whole catering cake. Shared product data and photo; values separate.",
   },
   {
     id: "A8",

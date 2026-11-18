@@ -130,3 +130,115 @@ Reports:
 **AdSense:** follow `ADSENSE_ACTIVATION_PLAN.md` only after launch. No publisher id, `ads.txt`, CMP, or ad script before then.
 
 - [x] Footer "Menu categories" row with all 17 category pages (owner decision 2026-11-14; tested 16/16).
+
+## 11. Header redesign (2026-11-15, not committed yet)
+
+- [x] Two-row premium header with logo icon, global search, dropdown navigation, mobile menu, and sticky shadow (`DESIGN_SYSTEM.md` 4.4).
+- [x] Tested on a production build:
+  - layout at 320/375/390/768/1024/1440/1920 px
+  - dropdowns: click, hover, keyboard, Escape, click-outside
+  - search: 14 queries including typos, keyboard, clear, no results, mobile
+  - sticky header and anchors; active page
+  - Lighthouse Accessibility 100, CLS 0
+  - 25 pages 200, 0 broken links
+  - result: 64/64 browser checks
+- [ ] Future articles to add to the navigation when written: **Dinner Menu** (hidden now) and a dedicated **Hours** article (Hours points to homepage sections now). Add them in `lib/navigation.ts` and the search index.
+- [x] Simpler favicon (2026-11-15): menu book + olive leaf on dark olive, no text (`app/icon.svg`, `favicon.ico` 16/32/48, `apple-icon.png`).
+- [ ] Owner review of the header before committing.
+
+## 12. Footer redesign (2026-11-15, not committed yet)
+
+- [x] Four-column dark olive footer: brand + email, Popular Menus, Explore More, Important Links, independence disclaimer, copyright bar with Back to top (`DESIGN_SYSTEM.md` 4.5).
+- [x] It replaces the old footer, including its "Menu categories" row (all 17 categories stay reachable through the header Full Menu dropdown) and "Official resources" links (not part of the approved design).
+- [x] Tested on a production build:
+  - link labels and URLs exactly as approved, no Dinner Menu
+  - colors, dividers, logo and email
+  - layout at 320/340/375/390/430/768/820/1024/1280/1440/1920 px, no overflow, all targets 44 px+
+  - keyboard order through all 21 footer controls, visible focus
+  - Back to top: keyboard, focus to the header logo, instant jump with reduced motion
+  - favicon links in the head (ico, svg, apple) all 200
+  - no console errors
+  - result: 35/35 checks
+- [x] 25 pages: HTTP 200, one H1, footer disclaimer on every page, 0 broken internal links.
+- [x] **Dinner Menu** published (2026-11-15) and added to the header, mobile menu, footer, and search (see §13).
+- [x] **Hours** published (2026-11-15) and added to the header Hours dropdown, mobile menu, footer, and search (see §15).
+- [ ] Owner review of the header and footer before committing.
+
+## 13. Dinner Menu guide (2026-11-15, not committed yet)
+
+- [x] Research: `research/seo/dinner-menu/` (keyword research, SERP analysis, content outline, fact verification).
+- [x] `/dinner-menu` built as a guide page (`content/guides/dinner-menu.ts`): shared data only, no new products, prices, or ratings.
+- [x] Integrated:
+  - header (desktop and mobile)
+  - footer "Popular Menus"
+  - site search
+  - sitemap (once indexing is on)
+  - proxy allows it automatically
+- [x] Metadata: title and H1 "Olive Garden Dinner Menu with Prices 2026", unique description, self-canonical, Open Graph, `WebPage` + `BreadcrumbList` + `FAQPage`; `noindex` until `SITE_INDEXING=true`.
+- [x] Tested: see the report of 2026-11-15 (26 pages 200, links, responsive, search, navigation).
+- [ ] Before launch, re-check the official FAQ, location hours, and specials in a normal browser. olivegarden.com blocked automated checks on 2026-11-15.
+- [ ] Optional: People Also Ask research in Chrome (not available this time).
+- [ ] Owner review of the Dinner Menu page before committing.
+
+## 14. Related Menus and dinner links (2026-11-15, owner-approved, not committed yet)
+
+- [x] Owner approved: `/dinner-menu` published (content status; indexing still off), and contextual links to it from Lunch Menu ("lunch vs dinner") and Classic Entrees ("budget dinner entrées").
+- [x] Related Menus: exactly 4 most relevant cards on all 18 articles (17 categories + Dinner Menu), one row on desktop, 2 x 2 on tablets, stacked on phones. `/dinner-menu` is a card on Appetizers, Classic Entrees, Soup/Salad/Breadsticks, Lighter Portions, Lunch, Desserts, Drink Menu, and Wine & Beer.
+- [x] Tested: 18 articles at 1440 px (4 cards, one row, no self-link, all links 200), 768/390/320 px layouts, 26 pages 200, 0 broken links.
+- [ ] Re-check the official FAQ, hours, and specials in a normal browser before launch (owner-approved step, still to do).
+
+## 15. Hours guide (2026-11-15, not committed yet)
+
+- [x] Research: `research/seo/hours/` (keyword research, SERP analysis, content outline, fact verification).
+- [x] `/hours` built as a guide page:
+  - weekly hours table, lunch and dinner times, a 15-row holiday table (official vs "Not announced"), To Go cutoffs, and how to use the official locator
+  - no live "open now" status, no location request, no LocalBusiness or Restaurant schema
+- [x] Integrated:
+  - header Hours dropdown (desktop and mobile)
+  - footer "Explore More"
+  - search: the guide, plus "Holiday Hours" pointing to `/hours#holiday-hours`
+  - sitemap (once indexing is on)
+  - the proxy allows it automatically
+  - the Dinner Menu now links to `/hours`
+- [x] Ready for future holiday articles: a published guide with `navGroup: "hours"` joins the Hours dropdown. Nothing was created.
+- [ ] Before launch, re-check the FAQ and two or three restaurant pages in a normal browser. olivegarden.com blocks automated checks.
+- [x] Owner approved (2026-11-15): the homepage Hours and Holiday Hours sections link to `/hours` and `/hours#holiday-hours`.
+- [ ] Owner review of the Hours page before committing.
+
+## 16. Menu item pages: Fried Mozzarella sample (2026-11-15, not committed yet)
+
+- [x] Competitor research: `docs/product-pages/COMPETITOR_ANALYSIS.md`.
+- [x] Architecture, data structure, design, checklist: `docs/product-pages/`.
+- [x] `/menu/[slug]` route; `/menu/fried-mozzarella` **published 2026-11-18** (noindex and sitemap-empty until `SITE_INDEXING=true`).
+- [x] Owner decisions 2026-11-15: item pages are permanent architecture; preview pages hidden on the production deployment (tested with `VERCEL_ENV=production`: 404, 0 links, 0 search entries); publishing needs approval + visual review + verified data (build check); indexing stays off.
+- [x] Central nutrition/allergen data store (`content/menu/nutrition/`, `lib/nutrition-data.ts`).
+- [x] Owner supplied the official U.S. Nutrition Information and Allergen Guide PDFs (US_101926, 2026-11-15, `research/official-sources/`, git-ignored).
+- [x] 2026-11-18: all 303 nutrition and 112 allergen rows entered centrally; all 231 offerings mapped with a status; build checks calories against the guide. Reports in `docs/product-pages/`.
+- [x] Fried Mozzarella: 800 calories confirmed (same serving, sauce separate); full nutrition + allergens on the page; desktop and mobile (320-1920 px) checked, no page overflow.
+- [x] Owner decision 2026-11-18: catering Sicilian Cheesecake 730 (applied; same dessert, per slice).
+- [x] Side of Crispy Shrimp Fritta: final owner decision 2026-11-18 = keep 200 (serving size of the guide row not confirmable).
+- [x] Owner approved the sample design 2026-11-18 → `ownerApprovedAt: "2026-11-18"`, `visualReview: "done"`; all checks passed (incl. production-deployment mode) → status `published`.
+- [x] Unverified customization omitted; no vegetarian suitability claims; price kept as last verified November 2026.
+- [x] Phase 1 batch 1 built 2026-11-18 as `preview`: Calamari, Toasted Ravioli, Stuffed Ziti Fritta, Breadsticks (fact logs in `research/products/<slug>/`).
+- [ ] Owner review of batch 1 → approval date, `visualReview: "done"`, `published`.
+- [ ] Owner supplies replacement photos (Italian Grilled Chicken Sandwich, Side of Meatballs) → convert to optimized WebP and integrate.
+- [ ] Phase 1 batch 2: Meatballs Parmigiana, Spinach-Artichoke Dip, Lasagna Fritta, Shrimp Fritto Misto.
+- [ ] Optional: owner supplies the vegetarian/vegan PDF to confirm the vegetarian wording.
+- [x] Real HTTP 404 for other `/menu/<slug>` URLs (`proxy.ts`); `/menu` still 308 → `/`.
+- [x] Menu cards (homepage, appetizers) and price-table names link to the page; search returns it first.
+- [x] Same rating key as the cards (`fried-mozzarella`); no database change.
+- [x] Structured data: WebPage, BreadcrumbList, FAQPage only.
+- [ ] **Re-verify from a U.S. network** (official site blocked ours on 2026-11-15): price, full nutrition (fat, sodium, carbs, protein…), and the U.S. allergen guide marks; then fill `nutrition.values`, `allergens` and set the checklist to `done`.
+- [ ] Owner review and approval of the sample page → status `published`.
+- [x] Item-page phase complete (2026-11-18): **77 pages** (1 published, 76 preview); 8 with the Phase 4 version selector (owner-approved layout); inventory and reasons in `docs/product-pages/PRODUCT_INVENTORY.md`; open points in `research/products/PENDING.md`.
+- [x] QA 2026-11-18 (local `next start`): all 77 pages HTTP 200, one H1, self-canonical, `noindex`, unique titles, descriptions 70-175 characters, JSON-LD only WebPage/BreadcrumbList/FAQPage, no reference-location or "AI" wording, Related Menus present, version selector + "all versions" table on the 8 version pages, placeholder on the photo-less page; homepage links all 77 pages; search index lists all 77; `GET /api/ratings` 200 (no test votes); unknown `/menu/<slug>` 404, `/menu` 308; sitemap empty while indexing is off.
+- [x] Production simulation (`VERCEL_ENV=production` build): only `/menu/fried-mozzarella` is live, linked and searchable; preview pages 404.
+- [x] Responsive check in Chrome at desktop and 390 px (version tabs wrap, no horizontal scroll).
+- [x] Final review 2026-11-18 (`research/products/FINAL_REVIEW.md`): headless-Chrome QA of all 77 pages at 390 px and 1280 px (0 failures), 96 internal links OK, search ranking OK; 2 small fixes (size-card units, "per entrée"); screenshots in `research/products/review-screenshots/`. 63 pages ready, 13 with documented blockers.
+- [x] Owner decisions 2026-11-18: the 13 pages with documented gaps may be published with their disclosures (`acceptedGaps`); publish dry run 0 issues.
+- [x] **Owner visual approval 2026-11-18** ("haan"): all 76 preview pages are now `published` (`approvals.ts`, `registry.ts`; 4 standalone page files updated). Build check: 0 issues.
+  - QA: 77/77 pages OK, browser QA at 390/1280 px 0 failures, 96 links OK.
+  - Production simulation: 77/77 pages HTTP 200, 77 homepage links, 77 search entries, `noindex`, sitemap empty while indexing is off.
+- [ ] At launch: `SITE_INDEXING=true` (owner approval); then the 77 item pages enter the sitemap automatically.
+- [x] Re-checked 2026-11-18 (official site reachable again): Calabrian Bucatini price conflict resolved ($25.29 / $27.29 / $25.29, data updated); Spicy Alfredo and Pumpkin Cookie Butter Cheesecake still on the menu (limited time: re-check periodically).
+

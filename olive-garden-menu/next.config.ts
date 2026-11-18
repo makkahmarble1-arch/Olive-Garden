@@ -74,6 +74,10 @@ const nextConfig: NextConfig = {
     // Comma-separated lists for proxy.ts (route and file names only, no secrets).
     APP_TOP_LEVEL_ROUTES: topLevelAppRoutes().join(","),
     APP_TOP_LEVEL_FILES: topLevelFiles().join(","),
+    // "1" only when Vercel builds the Production deployment. Preview menu item
+    // pages are then hidden (404, no links, no search entry); see
+    // content/menu/product-pages/index.ts (owner decision 2026-11-15).
+    PRODUCTION_DEPLOYMENT: process.env.VERCEL_ENV === "production" ? "1" : "",
   },
   // Owner decision 2026-11-13: the homepage is the only full-menu page, so
   // the old /menu hub permanently redirects there (308 = permanent).

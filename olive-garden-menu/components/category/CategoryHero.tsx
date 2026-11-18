@@ -5,11 +5,17 @@ type CategoryHeroProps = {
   /** The page's only H1 (search-intent focused). */
   h1: string;
   intro: string[];
-  itemCount: number;
+  /** Omitted = no count in the facts bar (non-menu guides). */
+  itemCount?: number;
   /** What the count means. Default "items". */
   countLabel?: string;
   lastChecked: string | null;
-  orderType: string;
+  /** Omitted = no price line (non-menu guides). */
+  orderType?: string;
+  /** Extra facts (label: value) after the defaults, e.g. for the hours guide. */
+  extraFacts?: { label: string; value: string }[];
+  /** Text of the link to the main table. */
+  jumpLabel?: string;
   /** Anchor of the price table (skip link for the facts bar). */
   tableId: string;
   /** Unpublished pages show a clear preview notice. */
@@ -30,6 +36,8 @@ export default function CategoryHero({
   countLabel = "items",
   lastChecked,
   orderType,
+  extraFacts = [],
+  jumpLabel = "Jump to the price table",
   tableId,
   isPreview,
 }: CategoryHeroProps) {
@@ -48,25 +56,34 @@ export default function CategoryHero({
         aria-label="About these prices"
         className="mt-6 flex flex-wrap gap-x-6 gap-y-2 rounded-lg border border-line bg-brand-tint px-4 py-3 text-sm leading-6 text-ink"
       >
-        <li>
-          <strong className="font-semibold">{itemCount}</strong> {countLabel}
-        </li>
+        {itemCount !== undefined && (
+          <li>
+            <strong className="font-semibold">{itemCount}</strong> {countLabel}
+          </li>
+        )}
         {lastChecked && (
           <li>
             <strong className="font-semibold">Last verified:</strong>{" "}
             <time dateTime={lastChecked}>{formatMonthYear(lastChecked)}</time>
           </li>
         )}
-        <li>
-          <strong className="font-semibold">Prices:</strong> {orderType.toLowerCase()}, {siteConfig.market}.{" "}
-          {siteConfig.locationNotice}
-        </li>
+        {orderType && (
+          <li>
+            <strong className="font-semibold">Prices:</strong> {orderType.toLowerCase()}, {siteConfig.market}.{" "}
+            {siteConfig.locationNotice}
+          </li>
+        )}
+        {extraFacts.map((fact) => (
+          <li key={fact.label}>
+            <strong className="font-semibold">{fact.label}:</strong> {fact.value}
+          </li>
+        ))}
         <li>
           <a
             href={`#${tableId}`}
             className="font-medium text-brand-dark underline underline-offset-4 hover:text-brand-darker focus-visible:outline-2 focus-visible:outline-brand-dark"
           >
-            Jump to the price table
+            {jumpLabel}
           </a>
         </li>
       </ul>

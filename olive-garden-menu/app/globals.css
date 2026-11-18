@@ -35,10 +35,19 @@
    * `variant="premium"` MenuItemCard uses these, until the owner approves it.
    */
   --color-card-bg: #fafbf5;
+  --color-header-cream: #fffcf5;
+  /* Footer (2026-11-15): background = hero-deep #28370f, links white, headings hero-highlight, hover hero-cta, dividers brand-dark */
+  --color-footer-deep: #1d290a; /* bottom copyright bar */
+  --color-footer-text: #e2e8d5; /* footer body text (11:1 on hero-deep) */
   --color-card-border: #dce5ba;
   --color-card-text: #525b48; /* description, 6.9:1 on card-bg */
   --color-kcal-bg: #fff3e0;
   --color-kcal-text: #9a5700; /* 5.2:1 on kcal-bg */
+  /* Menu item pages (2026-11-15, docs/product-pages/PRODUCT_PAGE_DESIGN.md) */
+  --color-kcal-bar: #f59e0b; /* calorie bars (graphic only, never text) */
+  --color-allergen-bg: #fdecea;
+  --color-allergen-border: #f5c2bd;
+  --color-allergen-text: #9b1c1c; /* 6.9:1 on allergen-bg */
 }
 
 @theme inline {
@@ -46,9 +55,20 @@
   --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
 }
 
+:root {
+  /* Height of the sticky global header: one row below lg, two rows from lg
+     (64px + 48px). Sticky bars and anchor jumps are placed below it. */
+  --header-h: 4rem;
+}
+@media (min-width: 64rem) {
+  :root {
+    --header-h: 7rem;
+  }
+}
+
 html {
   /* Keeps anchored sections visible below the sticky header. */
-  scroll-padding-top: 5rem;
+  scroll-padding-top: calc(var(--header-h) + 1rem);
 }
 
 @media (prefers-reduced-motion: no-preference) {

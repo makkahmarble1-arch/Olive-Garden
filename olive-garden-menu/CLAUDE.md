@@ -241,11 +241,18 @@ Apply to the homepage, every category page, shared components, and all future pa
    targets only from another preview page), never the page itself, never a
    placeholder. Planned entries appear automatically when their page is finished
    (`getRelatedMenus` in `lib/category-data.ts`).
+   **Exactly 4 cards per article, one row on desktop** (owner decision
+   2026-11-15; 2 x 2 on tablets, stacked on phones). Choose the 4 most relevant
+   pages; a guide such as `/dinner-menu` can be a card (`{ guide: "dinner-menu" }`).
+   Validation fails if a category page does not list exactly 4.
 
 ## SEO rules
 
 - One search intent per URL. Before creating a page, check that no existing
-  page targets the same intent. No per-item pages, no separate calorie pages.
+  page targets the same intent. No separate calorie pages. Individual menu
+  item pages at `/menu/{slug}` are an **approved permanent part of the
+  architecture** (owner decision 2026-11-15, supersedes "no per-item pages"),
+  each only after the content checklist (see "Menu item pages" below).
 - The homepage is the only indexable full-menu page ("Olive Garden menu
   with prices and calories"). `/menu` permanently redirects to `/`
   (owner decision 2026-11-13, see `docs/SEO_ARCHITECTURE.md`).
@@ -264,7 +271,8 @@ Apply to the homepage, every category page, shared components, and all future pa
   Owner approval is needed before a category becomes `"published"`.
 - Category breadcrumbs: `Home > Menu > {Category}`.
 - **HTTP 404 for unknown URLs: `proxy.ts`** (owner approval 2026-11-14).
-  - **What it checks:** only one-segment URLs (matcher `/:segment`). A segment is allowed if it is:
+  - Also matches `/menu/:slug` (2026-11-15): only live menu item slugs pass (`liveProductSlugs`), everything else is a real 404.
+  - **What it checks:** one-segment URLs (matcher `/:segment`). A segment is allowed if it is:
     - a category with a page (read from `content/menu/categories.ts`, the same rule as `app/[category]`)
     - a top-level `app/` folder that contains a `page` or `route` file (`APP_TOP_LEVEL_ROUTES`)
     - a real top-level file: `public/` files and app metadata files such as robots.txt, sitemap.xml, favicon.ico (`APP_TOP_LEVEL_FILES`)
@@ -323,3 +331,87 @@ Apply to the homepage, every category page, shared components, and all future pa
 - `/editorial-policy` and `/how-we-check-prices` (`InfoPageLayout`; status in `content/site/info-pages.ts`) must stay in line with `docs/MENU_RESEARCH_PLAN.md` and the real data.
 - If the research method, labels, or calculations change, update these pages too. Never claim staff, credentials, firsthand dining, live price monitoring, or a fixed update schedule.
 - The homepage "How we check prices" link points to `/how-we-check-prices`.
+
+## Global header, navigation, and site search (2026-11-15)
+
+- **One header** for all pages: `components/layout/Header.tsx` (layout), specified in `docs/DESIGN_SYSTEM.md` 4.4.
+- The navigation comes from `lib/navigation.ts`, which is built from the category data, `content/guides/`, and `content/site/info-pages.ts`. Never hardcode a link to a page that does not exist; hide items without a destination.
+- **Site search:**
+  - `app/api/search-index/route.ts` builds a small static index: titles, short descriptions, keywords, and URLs of published pages and key homepage sections. It holds no article bodies, no drafts, and no admin or API routes.
+  - `components/layout/SiteSearch.tsx` loads the index once, on first use, and ranks it with `lib/site-search.ts` (partial words, small typos; no dependency, no external service).
+- **Adding a page:**
+  - New category pages, and info pages with `status: "published"`, appear in the navigation and search automatically.
+  - A new article type (e.g. a Dinner Menu or Hours article) needs an entry in `lib/navigation.ts` and in the search-index route once it is published.
+  - Top-level routes need no `proxy.ts` change.
+- **Header height** is `--header-h` (`globals.css`). If the header height changes, keep this value equal, because sticky bars and anchor offsets depend on it.
+- **Logo:** use only the owner's icon (menu book + olive branch, `public/images/brand/logo-icon.webp`). Never use the owner logo's script lettering or "Italian Kitchen" tagline, or anything resembling the official Olive Garden logo (brand safety, `docs/PUBLISHER_IDENTITY.md`).
+
+## Global footer (2026-11-15)
+
+- **One footer** for all pages: `components/layout/Footer.tsx`, specified in `docs/DESIGN_SYSTEM.md` 4.5.
+- Its link columns come from `getFooterColumns()` in `lib/navigation.ts`. Change footer links there, never in the component. Category links appear only if the category page exists; info links only if the page is `published`.
+- **Dinner Menu** is the `/dinner-menu` guide (see "Guide pages" below). It appears in the header, footer, and search while its status is `published`.
+- The footer disclaimer text is fixed (owner-approved): "Olive Garden Menu Prices is an independent informational website and is not affiliated with or endorsed by Olive Garden or Darden Restaurants." It must stay on every page.
+- No social links (only with owner-supplied URLs), no newsletter, no links to pages that do not exist.
+- **Favicon:** `app/icon.svg`, `app/favicon.ico`, `app/apple-icon.png` (simplified menu book + olive leaf, no text).
+
+## Guide pages: Dinner Menu (2026-11-15)
+
+- **`/dinner-menu` is a guide, not a category.** Olive Garden has no separate dinner menu, so the 17 approved categories and the inventory stay unchanged.
+  - Content: `content/guides/dinner-menu.ts` (`GuidePageContent`), registered in `content/guides/index.ts`.
+  - Route: `app/dinner-menu/page.tsx`. Layout: `components/guide/GuidePageLayout.tsx`, which uses the category components, so the design is identical.
+- **Data:** only the shared menu data (existing offering ids, images, and rating groups). The section price overview (`priceOverview`) and the example orders (`mealExamples`, labeled "Calc.") are generated in `lib/category-data.ts`.
+  - Prose numbers must match the data. When prices change, update the guide text too; the fact log is `research/seo/dinner-menu/FACT_VERIFICATION.md`.
+- **Its own intent:** dinner time, dinner prices by section, dinner for two, dinner specials, and short lunch-vs-dinner rules.
+  - Never copy the full entrée list (`/classic-entrees`), the lunch-vs-dinner table (`/lunch-menu`), or the lighter-portions table (`/lighter-portions`); link to them instead.
+  - Rules: `research/seo/KEYWORD_CANNIBALIZATION.md` §7.
+- **A published guide automatically appears in** the footer, the search index, and the sitemap. The header needs an entry in `getMainNav`.
+  - No `proxy.ts` change is needed.
+  - A guide slug must never equal a category slug (build check).
+- **Hours:** see "Guide pages: Hours" below.
+
+## Guide pages: Hours (2026-11-15)
+
+- **`/hours`** is a guide (`content/guides/hours.ts`, route `app/hours/page.tsx`).
+  - It has static tables (`staticTable` blocks): weekly hours, lunch and dinner menu times, holidays, and To Go cutoffs. It has no prices and no photos.
+  - Fact log: `research/seo/hours/FACT_VERIFICATION.md`.
+- **Hours rules:**
+  - Each restaurant sets its own hours. Show only what official Olive Garden listings and the FAQ show, never as guaranteed nationwide.
+  - No "open now" status, no visitor location, no time-zone logic.
+  - Holidays: only the official closures (Thanksgiving Day, Christmas Day) and the "may close early" days (the day before Thanksgiving, Christmas Eve) are facts. Everything else is "Not announced" or "Varies by location". Never invent holiday times.
+  - Never use `LocalBusiness`, `Restaurant`, or `OpeningHoursSpecification` schema.
+- **Navigation:**
+  - The header Hours dropdown points to `/hours`, `/hours#holiday-hours`, Lunch Hours, and Dinner Hours.
+  - A future holiday article (owner approval needed) is a guide with `navGroup: "hours"` and `navLabel`; it then appears in that dropdown automatically.
+  - The footer lists "Olive Garden Hours" under Explore More.
+- **Homepage:** its Hours and Holiday Hours sections stay, and end with links to `/hours` and `/hours#holiday-hours` (owner approval 2026-11-15; shown only while the guide is published).
+
+## Menu item pages (owner decisions of 2026-11-15)
+
+- **Permanent architecture:** individual item pages at `/menu/{slug}` (`app/menu/[slug]/page.tsx`). First page: `/menu/fried-mozzarella`, **`published` on 2026-11-18** (owner approval of design and data; `ownerApprovedAt: "2026-11-18"`). Status on 2026-11-18 (item-page phase complete): **all 77 pages are `published`**. The owner confirmed visual approval of the remaining 76 on 2026-11-18; the approval dates are in `content/menu/product-pages/approvals.ts` and the four standalone page files. Indexing stays off.
+  - Coverage of all 146 products, with the reason for each product without a page: `docs/product-pages/PRODUCT_INVENTORY.md`. Open points: `research/products/PENDING.md`.
+  - Drinks use `allergensNotListed`, because the allergen guide does not cover to-go drinks. Version selector entries may have `nutritionRowId`/`allergenRowId` = null when the guide does not list a version; they then show calories only, with a clear disclosure.
+  - **Version-aware layout** (Phase 4, owner approval 2026-11-18): dishes with officially listed versions get one page with `versions`. Each version has its own price, calories, nutrition row and allergen row. The UI is a selector plus an "all versions" table (`components/product/VersionSection.tsx`, `VersionSelector.tsx`), and a build check verifies every version against the shared data. Never merge genuinely different dishes.
+  - **`heroImageOmitted`:** replaces a materially misleading photo with a labeled placeholder on the item page only (gluten-sensitive Grilled Chicken Parmigiana).
+  - **Owner decisions 2026-11-18:** 13 pages may be published with disclosed gaps, recorded per page as `acceptedGaps`: the gluten-sensitive placeholder, 3 versions without official rows, and 9 drinks outside the allergen guide, whose notice says "not allergen-free". These pages were published with their disclosures after the owner's visual approval on 2026-11-18. **Future pages:** publish only after the owner's actual approval, by adding the slug to `approvals.ts` and setting it to `published` in `registry.ts`. Next pages follow `docs/product-pages/PRODUCT_DEVELOPMENT_PLAN.md`, one small batch at a time, each with owner approval. Never generate pages for every product id. Do not commit or push without the owner's request.
+- Docs: `docs/product-pages/` (`PRODUCT_PAGE_ARCHITECTURE.md`, `PRODUCT_DATA_STRUCTURE.md`, `PRODUCT_PAGE_DESIGN.md`, `PRODUCT_CONTENT_CHECKLIST.md`, `NUTRITION_ALLERGEN_DATA.md`, `COMPETITOR_ANALYSIS.md`). Fact log per item: `research/products/<slug>/FACT_VERIFICATION.md`.
+- **Plan and inventory:** `docs/product-pages/PRODUCT_DEVELOPMENT_PLAN.md` (67 candidates in 7 phases) and `PRODUCT_ELIGIBILITY_REPORT.md`.
+- **Visibility:** `draft` = 404 everywhere. `preview` = reachable and linked (cards, price tables, search) only in local development, local `next start`, and Vercel preview deployments; on the **production deployment** (`VERCEL_ENV=production`, flag `PRODUCTION_DEPLOYMENT` in `next.config.ts`) it is HTTP 404, unlinked, and not in search. `published` = live everywhere and in the sitemap; indexed only when `SITE_INDEXING=true` (stays **off**).
+- **Publishing** needs owner approval (`ownerApprovedAt`), owner visual review, verified product information, every checklist item `done`, and the official nutrition + allergen records (build check in `lib/product-pages.ts`).
+- Data: one file per item in `content/menu/product-pages/`. Prices, calories, serving sizes, photos, category and rating key are always read from the shared offerings/products.
+- **Central official nutrition and allergen data** (`content/menu/nutrition/`, `lib/nutrition-data.ts`, docs `docs/product-pages/NUTRITION_ALLERGEN_DATA.md`): every row of the owner-supplied U.S. Nutrition Information (303 rows) and Allergen Guide (112 rows), both **US_101926**, stored once with PDF page numbers; `offering-map.ts` gives every one of the 231 offerings a status (exact, same-item, variants, conflict, generic, composite, multi-row, not-in-guide...). Only `exact`/`same-item` rows are shown as an item's official values. `null` = not printed (never zero); "less than" values are kept. The files are GENERATED by `research/nutrition-extraction/` (re-run for a new PDF version; never hand-edit values). Owner PDFs live in `research/official-sources/` (git-ignored). Never use third-party or Canadian values.
+- **Calories must agree:** the build fails if an exact/same-item official row's calories differ from the calories shown on the site. Such a case is marked `conflict` and needs an owner decision; never change existing menu calories without approval. Owner decision 2026-11-18: catering Sicilian Cheesecake now 730 per slice (official, same dessert and serving). Side of Crispy Shrimp Fritta: final owner decision 2026-11-18 = keep 200 (the guide's 220 is a pasta-topping row with no piece count); its mapping stays `conflict` (documented), not shown as official nutrition. Fried Mozzarella 800 matches the guide.
+- Content: allergens appear as "contains" only from the official row (plus "fried in soy oil"/"grilled" prep marks, the "not marked" list, and the guide's cross-contact notes); ingredient lists are "partial" unless complete; pairings are labeled editorial. No order/cart buttons. Structured data: `WebPage`, `BreadcrumbList`, `FAQPage` only.
+- **Permanent design requirement** (owner, 2026-11-15): every item page and future improvement must be visually attractive, colorful, professional, premium, informative, easy to navigate, mobile-friendly and useful, never a plain text-heavy layout. Spec: `docs/DESIGN_SYSTEM.md` 4.6 and `docs/product-pages/PRODUCT_PAGE_DESIGN.md`.
+- Reports: `docs/product-pages/PRODUCT_INVENTORY.md`, `NUTRITION_DATA_REPORT.md`, `ALLERGEN_DATA_REPORT.md`, `PRODUCT_ELIGIBILITY_REPORT.md` (58 data-ready products; pages only after the sample is approved, one at a time).
+- Fried Mozzarella (2026-11-18): published; official nutrition and allergens integrated; price $9.79 kept as last verified November 2026 (not re-checked, never claim a fresh check); unverified customization omitted (the `customizations` field is optional and only verified options render); no vegetarian suitability claims beyond Olive Garden's own (V) label. Indexing stays off (`SITE_INDEXING` unset).
+- Local testing: the owner's own `npm run dev` may already be running on port 3000. Use it for visual checks; run at most one extra server (e.g. `next start -p 3100`) and stop it right after. The machine has ~8 GB RAM; parallel dev + build + start servers caused the 2026-11-15 out-of-memory stop.
+
+- Layout options (2026-11-18): `unitLabel` (e.g. "breadstick") and `priceNote` adapt the wording; size options of the primary offering appear in a "pack sizes" table; several included sauces get one nutrition column each; empty "What comes with it" and unverified customization cards are not rendered. Item fact logs can be generated with `research/nutrition-extraction/factlog.js <slug>` and must then be reviewed.
+- **Item page images (permanent owner instruction, 2026-11-18; supersedes the earlier mandatory image review):**
+  - Reuse all existing owner-provided menu item images as mapped in `content/menu/products.ts`, and preserve the mappings.
+  - Do not repeatedly review images or request replacements, and do not block item pages because of routine image review.
+  - Request a new image only for a new menu item that has no owner-provided image.
+  - Flag only concrete, materially misleading mismatches.
+  - Never generate, download, or replace images automatically.
+  - If the owner sends a new photo anyway: convert it to WebP (`docs/IMAGE_REQUIREMENTS.md`), list it in `docs/IMAGE_MANIFEST.md`, and keep the same mapping.

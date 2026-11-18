@@ -44,7 +44,7 @@ export default function CategoryNav({ categories }: CategoryNavProps) {
   return (
     <nav
       aria-label="Menu categories"
-      className="sticky top-16 z-30 -mx-4 border-y border-line bg-white/95 backdrop-blur sm:-mx-6"
+      className="sticky top-[var(--header-h)] z-30 -mx-4 border-y border-line bg-white/95 backdrop-blur sm:-mx-6"
     >
       <ul ref={listRef} className="flex gap-2 overflow-x-auto px-4 py-2 [scrollbar-width:thin] sm:px-6">
         {categories.map((category) => {

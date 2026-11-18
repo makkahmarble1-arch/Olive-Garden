@@ -1,7 +1,9 @@
 import type { MenuItem } from "@/lib/types";
 import { formatNumber, formatPrice } from "@/lib/format";
 import VerificationBadge from "@/components/ui/VerificationBadge";
+import Link from "next/link";
 import RatingSummary from "@/components/rating/RatingSummary";
+import { productDetailHref } from "@/lib/product-pages";
 import {
   tableCaptionClass,
   tableClass,
@@ -93,7 +95,9 @@ export default function MenuTable({ caption, items, showRatings: ratingsAllowed 
                 key={`${item.name}-${index}`}
                 className="border-t border-line px-4 py-3 odd:bg-white even:bg-brand-tint"
               >
-                <p className="font-medium text-ink">{item.name}</p>
+                <p className="font-medium text-ink">
+                  <ItemName item={item} />
+                </p>
                 {showRatings && item.productId && (
                   <RatingSummary align="start" className="mt-1" productId={item.productId} itemName={item.name} />
                 )}
@@ -178,7 +182,7 @@ export default function MenuTable({ caption, items, showRatings: ratingsAllowed 
                   className={tableRowClass}
                 >
                   <th scope="row" className="px-4 py-3 font-medium text-ink">
-                    {item.name}
+                    <ItemName item={item} />
                     {item.servingSize && (
                       <span className="mt-0.5 block text-sm font-normal text-muted">
                         {item.servingSize}
@@ -219,5 +223,19 @@ export default function MenuTable({ caption, items, showRatings: ratingsAllowed 
         </table>
       </div>
     </>
+  );
+}
+
+/** Item name, linked to its menu item page when that page is live (never to unfinished pages). */
+function ItemName({ item }: { item: MenuItem }) {
+  const href = item.productId ? productDetailHref(item.productId) : null;
+  if (!href) return <>{item.name}</>;
+  return (
+    <Link
+      href={href}
+      className="text-brand-dark underline underline-offset-4 hover:text-brand-darker focus-visible:outline-2 focus-visible:outline-brand-dark"
+    >
+      {item.name}
+    </Link>
   );
 }

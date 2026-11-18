@@ -66,3 +66,9 @@ The owner has decided **not to hire a lawyer at this stage**. A professional tra
 | Transparent publisher | "Olive Garden Menu Prices Editorial Desk", About Us, Editorial Policy, a working contact form, and a verified email |
 
 If Olive Garden or Darden ever raises a concern, respond promptly and reconsider the name or domain. Record any such contact here.
+
+## 6. Logo (2026-11-15)
+
+- The owner supplied a logo with script lettering ("…Garden Menu") and the tagline "ITALIAN KITCHEN", which is Olive Garden's own tagline and close to its official logo style.
+- To keep the brand-safety safeguards, the owner chose to use **only the icon**: an olive branch with an open menu book and fork and knife.
+- The wordmark is written in the site's own font. The full original file is kept in `image-staging/logo/` and is not used on the site.

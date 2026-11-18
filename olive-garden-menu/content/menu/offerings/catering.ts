@@ -1453,10 +1453,10 @@ export const cateringOfferings = defineOfferings("catering", [
         caloriesFormula: null
       }
     ],
-    calories: 700,
+    calories: 730,
     caloriesMax: null,
     caloriesBasis: "per slice",
-    caloriesSourceUrl: "https://www.olivegarden.com/menu/sicilian-cheesecake/prod1450062",
+    caloriesSourceUrl: "https://media.olivegarden.com/en_us/pdf/olive_garden_nutrition.pdf",
     caloriesValueBasis: "official",
     caloriesFormula: null,
     caloriesNote: null,
@@ -1466,7 +1466,7 @@ export const cateringOfferings = defineOfferings("catering", [
     regularPriceOfferingId: null,
     status: "verified",
     verifiedAt: "2026-11-12",
-    notes: "Catering | PDF check: Catering card lists 700 per slice; the PDF has no catering cake line, only the 730 dessert slice. Menu value kept; owner review"
+    notes: "Catering | Owner decision 2026-11-18: official nutrition guide US_101926 p. 12 (Sicilian Cheesecake with Strawberry Topping, one slice) = 730 per slice; replaces the 700 shown on the catering ordering card (2026-11-12). Same dessert, same per-slice serving."
   },
   {
     inventoryName: "Gallon Iced Teas & Raspberry Lemonade",

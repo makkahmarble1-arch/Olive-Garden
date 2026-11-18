@@ -24,7 +24,7 @@
 ## Conflicts and flags
 
 - Lunch hours: RESOLVED. The official specials page (Never-Ending Soup, Salad & Breadsticks, $9.99, Mon-Fri until 3 PM), the location page (lunch 11 AM-3 PM), and the Lunch section agree on 3 PM; only the Weekday Lunch Special card says 2:30 PM. 3 PM is used, and the site should still say "check with the restaurant".
-- Calabrian Steak & Shrimp Bucatini: the menu card shows "Starting at $25.29", the item page (Millenia, Pickup, re-checked 2026-11-12) shows $24.49 / $26.49 / $24.49. Item-page prices used; re-check before publishing.
+- ~~Calabrian Steak & Shrimp Bucatini price conflict~~ **Resolved 2026-11-18:** item page and menu card agree on $25.29 / $27.29 / $25.29 (Millenia, Pickup); data updated in `content/menu/offerings/classic-entrees.ts`.
 - Kids age: menu says "children under 12"; the official FAQ says "ages 12 & under".
 - Dipping Sauces with Breadsticks: menu card calories differ from the nutrition PDF; calculated totals used (owner decision).
 - `drink-menu--mango-passion-fruit-iced-tea` / `non-alcoholic-beverages--...`: marked "CURRENTLY UNAVAILABLE" at Millenia (not assumed discontinued).

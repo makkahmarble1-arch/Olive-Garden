@@ -8,8 +8,7 @@ import InfoPageLayout, { InfoLink, InfoSection } from "@/components/info/InfoPag
 import ContactForm from "@/components/contact/ContactForm";
 
 const page = infoPages.contact;
-const DESCRIPTION =
-  "Contact Olive Garden Menu Prices with menu corrections, pricing updates, nutrition questions, website feedback or business inquiries.";
+const DESCRIPTION = page.description;
 
 export const metadata: Metadata = pageMetadata({
   title: "Contact Us",
