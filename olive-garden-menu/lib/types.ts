@@ -406,7 +406,8 @@ export type ComparisonTableSpec = {
 export type OptionTableSpec = {
   id: string;
   caption: string;
-  rows: { optionId: string; label?: string; text?: Record<string, string> }[];
+  /** productId: links the row label to that item's page while the page is live. */
+  rows: { optionId: string; label?: string; text?: Record<string, string>; productId?: string }[];
   columns: (
     | { kind: "price"; label?: string }
     | { kind: "calories"; label?: string }
@@ -762,6 +763,21 @@ export type ProductPageContent = {
   sizeOfferingIds?: string[];
   /** Officially listed versions with their own rows (version selector). The first is shown by default. */
   versions?: ProductVersion[];
+  /**
+   * The same dish sold under another product record in another size or menu
+   * section (catering trays, family pans, the gluten-sensitive listing of a
+   * kids meal). Shown in the sizes table; their menu cards link to this page.
+   * Owner decision 2026-11-19: covered through the existing page, never merged.
+   */
+  equivalentOfferingIds?: string[];
+  /** Rating group to show when the page's product has none of its own (e.g. a soup inside "Homemade Soups"). */
+  ratingProductId?: string;
+  /** Shown in the nutrition section when Olive Garden publishes no nutrition row for this item (why, in our words). */
+  nutritionUnavailableNote?: string;
+  /** Shown in the allergen card when the official allergen guide has no row for this item. Never implies "allergen-free". */
+  allergenUnavailableNote?: string;
+  /** Bundles and combinations: what is included, linked to the item pages where they exist. */
+  components?: { label: string; quantity: string; offeringId?: string; note?: string }[];
   /**
    * Internal reason why the mapped owner photo is not shown on this page (only for a
    * concrete, materially misleading mismatch; permanent owner image instruction).

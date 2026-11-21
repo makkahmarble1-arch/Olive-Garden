@@ -25,6 +25,8 @@ export const PRODUCT_SECTIONS = [
  */
 export default function ProductHero({ data }: { data: ProductPageData }) {
   const { page, primary, category, price, calories, lastChecked } = data;
+  // Single-version pages whose calories depend on a choice (kids pasta, combinations...) show the official range.
+  const calText = !page.versions?.length && primary.caloriesMax ? `${formatNumber(calories)}–${formatNumber(primary.caloriesMax)}` : formatNumber(calories);
   // A materially misleading photo is left out on the item page (owner instruction 2026-11-18).
   const image = page.heroImageOmitted ? null : getOfferingImage(primary);
 
@@ -74,7 +76,7 @@ export default function ProductHero({ data }: { data: ProductPageData }) {
             {page.h1}
           </h1>
 
-          <RatingSummary productId={page.productId} itemName={primary.displayName} align="start" />
+          <RatingSummary productId={page.ratingProductId ?? page.productId} itemName={primary.displayName} align="start" />
 
           <div className="flex flex-wrap items-stretch gap-2.5 sm:gap-3">
             <p className="flex flex-col justify-center rounded-2xl bg-brand-dark px-3.5 py-2.5 text-white sm:px-4 shadow-sm">
@@ -85,7 +87,7 @@ export default function ProductHero({ data }: { data: ProductPageData }) {
               <span className="text-[0.7rem] font-semibold tracking-wide uppercase">Calories</span>
               <span className="inline-flex items-center gap-1.5 text-2xl leading-8 font-bold tabular-nums sm:text-3xl sm:leading-9">
                 <Icon name="flame" className="size-6" />
-                {formatNumber(calories)}
+                {calText}
               </span>
             </p>
             <p className="flex min-w-[9rem] flex-1 flex-col justify-center text-xs leading-5 text-muted">

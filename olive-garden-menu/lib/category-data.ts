@@ -142,7 +142,8 @@ export type ResolvedComparison = {
   headers: string[];
   /** Header of the first (row label) column. Default "Item". */
   firstHeader?: string;
-  rows: { label: string; cells: ComparisonCell[] }[];
+  /** productId: the label links to that item's page while it is live. */
+  rows: { label: string; cells: ComparisonCell[]; productId?: string }[];
   hasCalculated: boolean;
   /** What calculated cells are based on (shown in the "Calc." note). Default: prices and serving sizes. */
   calcBasis?: string;
@@ -338,7 +339,7 @@ export function resolveOptionTable(spec: OptionTableSpec): ResolvedComparison {
         }
       }
     });
-    return { label: row.label ?? option.name, cells };
+    return { label: row.label ?? option.name, cells, productId: row.productId };
   });
   return {
     id: spec.id,

@@ -1,6 +1,12 @@
 import { getCategoryPageContent, getMenuCategoriesWithPages, menuCategoryPath, menuPath } from "@/lib/content";
 import { infoPages, infoPagePath } from "@/content/site/info-pages";
 import { getPublishedGuides, guidePath } from "@/content/guides";
+import { isToolPageLive, nutritionCalculatorPage, toolPath } from "@/content/tools/nutrition-calculator";
+
+/** Nutrition Calculator link while the tool is live (preview: not on the production deployment). */
+function calculatorLink(): NavChild[] {
+  return isToolPageLive(nutritionCalculatorPage) ? [{ label: "Nutrition Calculator", href: toolPath(nutritionCalculatorPage) }] : [];
+}
 
 /**
  * Main navigation of the global header (docs/DESIGN_SYSTEM.md 4.4), built from
@@ -84,6 +90,7 @@ export function getMainNav(): NavItem[] {
     children: [
       { label: "Popular Menu Items", href: "/#popular-menu-items" },
       { label: "Nutrition & Dietary Options", href: "/#nutrition" },
+      ...calculatorLink(),
       { label: "How to Order Online", href: "/#order-online" },
       { label: "FAQ", href: "/#faq" },
       ...published("prices"),
@@ -129,7 +136,7 @@ export function getFooterColumns(): FooterColumn[] {
         ["Gluten-Sensitive Menu", "gluten-sensitive"],
         ["Drinks Menu", "drink-menu"],
         ["Olive Garden Hours", "hours"],
-      ]),
+      ]).concat(calculatorLink()),
     },
     {
       heading: "Important Links",

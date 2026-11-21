@@ -18,6 +18,7 @@ import AllergenSection from "./AllergenSection";
 import ServingSection from "./ServingSection";
 import PairingSection from "./PairingSection";
 import VersionSection from "./VersionSection";
+import ComponentsSection from "./ComponentsSection";
 
 /**
  * Reusable layout of every menu item page (/menu/[slug]).
@@ -97,6 +98,7 @@ export default function ProductPageLayout({ data }: { data: ProductPageData }) {
           </div>
         </section>
 
+        <ComponentsSection data={data} />
         <NutritionSection data={data} />
         <AllergenSection data={data} />
         <ServingSection data={data} />

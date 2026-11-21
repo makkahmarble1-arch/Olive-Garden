@@ -8,8 +8,12 @@
 import { officialDocuments } from "@/content/menu/nutrition/documents";
 import { nutritionGuideRows } from "@/content/menu/nutrition/nutrition-guide";
 import { allergenGuideRows } from "@/content/menu/nutrition/allergen-guide";
-import { offeringAllergenMap, offeringNutritionMap } from "@/content/menu/nutrition/offering-map";
-import { menuOfferings } from "@/content/menu/offerings";
+import { offeringAllergenMap as generatedAllergenMap, offeringNutritionMap as generatedNutritionMap } from "@/content/menu/nutrition/offering-map";
+import { allOfferings as menuOfferings, detailAllergenMap, detailNutritionMap } from "@/content/menu/detail-items";
+
+/** Generated map of the 231 menu offerings plus the hand-listed detail-only records (row ids only). */
+const offeringNutritionMap = { ...generatedNutritionMap, ...detailNutritionMap };
+const offeringAllergenMap = { ...generatedAllergenMap, ...detailAllergenMap };
 import type {
   AllergenMapping,
   NutrientAmount,

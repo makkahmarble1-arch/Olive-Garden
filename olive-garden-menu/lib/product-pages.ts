@@ -12,7 +12,7 @@ import { productPageRegistry } from "@/content/menu/product-pages/registry";
 import { getMenuCategory, getMenuProduct, getOffering, getOfferingImage, menuCategoryPath } from "./content";
 import { resolveRelatedMenus } from "./category-data";
 import { formatPrice } from "./format";
-import { getAllergensForRow, getNutritionForRow, getOfferingAllergens, getOfferingNutrition } from "./nutrition-data";
+import { getAllergenMapping, getAllergensForRow, getNutritionForRow, getOfferingAllergens, getOfferingNutrition } from "./nutrition-data";
 import type { MenuCategoryDef, MenuOffering, OfferingAllergens, OfferingNutrition, ProductChecklistKey, ProductPageContent, ProductVersion } from "./types";
 
 export function productPath(slug: string): string {
@@ -39,7 +39,10 @@ export function getRenderableProductPages(): ProductPageContent[] {
  * cards: never links to an unfinished page.
  */
 export function productDetailHref(productId: string): string | null {
-  const page = productPages.find((p) => p.productId === productId && isLiveProductPage(p));
+  const page =
+    productPages.find((p) => p.productId === productId && isLiveProductPage(p)) ??
+    // Same dish under another product record (catering tray, family pan...): link to the page that covers it.
+    productPages.find((p) => isLiveProductPage(p) && (p.equivalentOfferingIds ?? []).some((id) => getOffering(id)?.productId === productId));
   return page ? productPath(page.slug) : null;
 }
 
@@ -95,7 +98,7 @@ export function getProductPageData(page: ProductPageContent): ProductPageData {
   const base = versions[0];
   const price = base ? base.price : primary.prices[0]?.amount;
   if (price === undefined || primary.calories === null) throw new Error(`Product page ${page.slug}: primary offering needs a verified price and calories.`);
-  const sizes = (page.sizeOfferingIds ?? []).map((id) => requireOffering(id, page.slug));
+  const sizes = [...(page.sizeOfferingIds ?? []), ...(page.equivalentOfferingIds ?? [])].map((id) => requireOffering(id, page.slug));
   const dates = [primary, ...sizes]
     .flatMap((o) => [o.verifiedAt, ...o.prices.map((p) => p.checkedAt)])
     .filter((d): d is string => d !== null)
@@ -171,6 +174,24 @@ export function validateProductPages(pages: readonly ProductPageContent[]): stri
     for (const id of page.sizeOfferingIds ?? []) {
       const o = getOffering(id);
       if (!o || o.productId !== page.productId) issues.push(`${at}: size "${id}" must be an offering of the same product.`);
+    }
+    for (const id of page.equivalentOfferingIds ?? []) {
+      const o = getOffering(id);
+      if (!o) issues.push(`${at}: unknown equivalent offering "${id}".`);
+      else if (o.productId === page.productId) issues.push(`${at}: equivalent "${id}" belongs to the page's own product (use sizeOfferingIds).`);
+      else if (pages.some((p) => p.productId === o.productId)) issues.push(`${at}: equivalent "${id}" already has its own page.`);
+    }
+    for (const c of page.components ?? []) {
+      if (c.offeringId && !getOffering(c.offeringId)) issues.push(`${at}: component "${c.label}" has unknown offering "${c.offeringId}".`);
+    }
+    if (!getOfferingNutrition(page.primaryOfferingId) && !page.versions && !page.nutritionUnavailableNote) {
+      issues.push(`${at}: no official nutrition row; add nutritionUnavailableNote (disclosure).`);
+    }
+    if (!getOfferingAllergens(page.primaryOfferingId) && !page.versions && !page.allergenUnavailableNote && getAllergenMapping(page.primaryOfferingId)?.status !== "not-covered") {
+      issues.push(`${at}: no official allergen row; add allergenUnavailableNote (disclosure).`);
+    }
+    if (page.allergenUnavailableNote && /allergen[- ]free|safe for/i.test(page.allergenUnavailableNote.replace(/not mean[^.]*allergen-free/i, ""))) {
+      issues.push(`${at}: allergen note must not imply allergen safety.`);
     }
     for (const id of [...page.relatedOfferingIds, ...page.pairings.map((p) => p.offeringId)]) {
       const o = getOffering(id);

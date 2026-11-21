@@ -1307,21 +1307,25 @@ export const categoryPages: CategoryPageContent[] = [
         rows: [
           {
             optionId: "create-your-own-pasta--option--first-course--minestrone-soup",
+            productId: "minestrone-soup",
             label: "Minestrone (V)",
             text: { inside: "Vegetables, beans, and pasta in a tomato broth", style: "Brothy, vegetarian" },
           },
           {
             optionId: "create-your-own-pasta--option--first-course--pasta-e-fagioli-soup",
+            productId: "pasta-e-fagioli-soup",
             label: "Pasta e Fagioli",
             text: { inside: "White and red beans, ground beef, tomatoes, and small tubetti pasta", style: "Brothy, with beef" },
           },
           {
             optionId: "create-your-own-pasta--option--first-course--zuppa-toscana-soup",
+            productId: "zuppa-toscana",
             label: "Zuppa Toscana",
             text: { inside: "Spicy Italian sausage, kale, and russet potatoes", style: "Creamy; made without gluten-containing ingredients" },
           },
           {
             optionId: "create-your-own-pasta--option--first-course--chicken-gnocchi-soup",
+            productId: "chicken-and-gnocchi-soup",
             label: "Chicken & Gnocchi",
             text: { inside: "Roasted chicken, gnocchi, and spinach", style: "Creamy" },
           },
@@ -4279,7 +4283,7 @@ export const categoryPages: CategoryPageContent[] = [
       "The pasta meals let you choose fettuccine, small shells, or spaghetti.",
     ],
     nutritionNotes: [
-      "Read the calorie basis under each item. For the pasta meals sold by sauce (meat sauce, tomato sauce, five cheese marinara), the number is the sauce only; the pasta, side, and milk together add 305 to 570 calories. For other meals, the side and the milk are listed separately (1% milk is 100 calories).",
+      "Read the calorie basis under each item. For the pasta meals sold by sauce (alfredo, meat sauce, tomato sauce, five cheese marinara), the number is the main dish: our calculation of the kids pasta you choose (spaghetti 170, small shells 210, or fettuccine 220 calories, from Olive Garden’s nutrition guide) plus the sauce. For every meal, the side and the milk are listed separately (1% milk is 100 calories).",
     ],
     featuredOfferingIds: [
       "kids-meal--kids-pizza",
@@ -4305,12 +4309,12 @@ export const categoryPages: CategoryPageContent[] = [
           { offeringId: "kids-meal--kids-grilled-chicken-with-rotini-pasta-and-marinara", label: "Kids Grilled Chicken with Rotini & Marinara", text: { type: "Chicken and pasta", covers: "Main dish" } },
           { offeringId: "kids-meal--kids-macaroni-and-cheese", text: { type: "Pasta", covers: "Main dish" } },
           { offeringId: "kids-meal--kids-cheese-ravioli", text: { type: "Pasta", covers: "Main dish" } },
-          { offeringId: "kids-meal--kids-alfredo-pasta", text: { type: "Pasta", covers: "As listed; pasta, side, and milk listed separately" } },
+          { offeringId: "kids-meal--kids-alfredo-pasta", text: { type: "Pasta", covers: "Main dish (Calc.: pasta + sauce)" } },
           { offeringId: "kids-meal--kids-rotini-with-marinara", text: { type: "Pasta (gluten-free rotini)", covers: "Main dish" } },
           { offeringId: "kids-meal--kids-rotini-with-meat-sauce", text: { type: "Pasta (gluten-free rotini)", covers: "Main dish" } },
-          { offeringId: "kids-meal--kids-meat-sauce-pasta", text: { type: "Pasta", covers: "Sauce only" } },
-          { offeringId: "kids-meal--kids-five-cheese-marinara-pasta", text: { type: "Pasta", covers: "Sauce only" } },
-          { offeringId: "kids-meal--kids-tomato-sauce-pasta", text: { type: "Pasta", covers: "Sauce only" } },
+          { offeringId: "kids-meal--kids-meat-sauce-pasta", text: { type: "Pasta", covers: "Main dish (Calc.: pasta + sauce)" } },
+          { offeringId: "kids-meal--kids-five-cheese-marinara-pasta", text: { type: "Pasta", covers: "Main dish (Calc.: pasta + sauce)" } },
+          { offeringId: "kids-meal--kids-tomato-sauce-pasta", text: { type: "Pasta", covers: "Main dish (Calc.: pasta + sauce)" } },
         ],
         notes: ["The calories are not all measured the same way, so compare them only within the same “What the calories cover” group."],
       },

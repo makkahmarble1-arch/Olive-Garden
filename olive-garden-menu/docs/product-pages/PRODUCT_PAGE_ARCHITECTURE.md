@@ -108,6 +108,17 @@ facts that exist nowhere else. The build check fails if:
 - **What it allows:** when publishing, only the listed checklist keys may stay `partial`/`missing`. `visualReview` can never be accepted this way.
 - **Approvals:** owner visual approvals go in `content/menu/product-pages/approvals.ts` (slug → date of the actual approval). The status goes in `registry.ts`. Both are changed only after the owner confirms.
 
+## 5d. Complete coverage tools (owner decisions 2026-11-19)
+
+- **Detail-only records** (`content/menu/detail-items.ts`): distinct items that exist only as a choice of an inventory entry (the three soups). They have product + offering records and official row mappings, are read through `getOffering`/`getMenuProduct`, and are never listed in a category, so the locked 210 + 21 inventory is unchanged.
+- **`equivalentOfferingIds`:** the same dish under another product record (catering tray, family pan, gluten-sensitive listing). Shown in the sizes table; cards of that product link to this page. Never merged; rating keys unchanged. Build check: must belong to another product without its own page.
+- **`ratingProductId`:** rating group for a product without its own (soups use `homemade-soups`).
+- **`nutritionUnavailableNote` / `allergenUnavailableNote`:** required disclosure when no official nutrition / allergen row exists. The allergen note must never imply allergen safety (build check).
+- **`components`:** "What's Included" for bundles and combinations, from the official serving text; links to the parts' pages; Olive Garden's own totals are shown, never a re-added sum.
+- Single-version pages whose calories depend on a choice show the official range (e.g. 610-660).
+- Option-table rows on category pages can link to an item page with `productId` (used for the four soups).
+- Fact logs: `research/nutrition-extraction/factlog-coverage.js <slug>...`.
+
 ## 6. Ratings
 
 The page uses `RatingSummary` with the product id (`fried-mozzarella`), the

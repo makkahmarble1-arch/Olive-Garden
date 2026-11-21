@@ -298,6 +298,8 @@ export const finalPages: ProductPageContent[] = [
 
   itemPage({
     slug: "side-of-marinara-sauce",
+    // Same dish as a catering tray / family pan / other listing (owner decision 2026-11-19).
+    equivalentOfferingIds: ["catering--marinara-dipping-sauce"],
     primaryOfferingId: "sides-sauces-and-extras--side-of-marinara-sauce--large",
     primaryKeyword: "olive garden marinara sauce",
     secondaryKeywords: ["olive garden marinara to go", "side of marinara sauce price", "olive garden marinara calories"],
@@ -340,6 +342,8 @@ export const finalPages: ProductPageContent[] = [
 
   itemPage({
     slug: "side-of-meat-sauce",
+    // Same dish as a catering tray / family pan / other listing (owner decision 2026-11-19).
+    equivalentOfferingIds: ["catering--meat-dipping-sauce"],
     primaryOfferingId: "sides-sauces-and-extras--side-of-meat-sauce--large",
     primaryKeyword: "olive garden meat sauce",
     secondaryKeywords: ["olive garden meat sauce to go", "side of meat sauce price", "olive garden meat sauce calories"],
@@ -384,6 +388,8 @@ export const finalPages: ProductPageContent[] = [
 
   itemPage({
     slug: "side-of-five-cheese-marinara-sauce",
+    // Same dish as a catering tray / family pan / other listing (owner decision 2026-11-19).
+    equivalentOfferingIds: ["catering--five-cheese-marinara-dipping-sauce"],
     primaryOfferingId: "sides-sauces-and-extras--side-of-five-cheese-marinara-sauce--large",
     primaryKeyword: "olive garden five cheese marinara",
     secondaryKeywords: ["five cheese marinara to go", "five cheese marinara calories", "side of five cheese marinara price"],

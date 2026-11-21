@@ -5,6 +5,8 @@ import { infoPagePath, infoPages } from "@/content/site/info-pages";
 import { getPublishedGuides, guidePath } from "@/content/guides";
 import { getGuideCheckDate } from "@/lib/category-data";
 import { getLiveProductPages, getProductPageData, productPath } from "@/lib/product-pages";
+import { nutritionCalculatorPage, toolPath } from "@/content/tools/nutrition-calculator";
+import { getCalculatorData } from "@/lib/calculator-data";
 
 /**
  * /sitemap.xml (docs/SEO_ARCHITECTURE.md §4): only indexable, canonical
@@ -41,5 +43,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       const { lastChecked } = getProductPageData(page);
       return { url: `${siteConfig.url}${productPath(page.slug)}`, lastModified: page.contentReviewedAt > lastChecked ? page.contentReviewedAt : lastChecked };
     });
-  return [home, ...categories, ...guides, ...items, ...info];
+  // Nutrition Calculator: only once the owner has approved it ("published"), never as a preview.
+  const tools =
+    nutritionCalculatorPage.status === "published"
+      ? [(() => {
+          const checked = getCalculatorData().lastChecked;
+          const reviewed = nutritionCalculatorPage.contentReviewedAt;
+          return { url: `${siteConfig.url}${toolPath(nutritionCalculatorPage)}`, lastModified: checked && checked > reviewed ? checked : reviewed };
+        })()]
+      : [];
+  return [home, ...categories, ...guides, ...items, ...tools, ...info];
 }

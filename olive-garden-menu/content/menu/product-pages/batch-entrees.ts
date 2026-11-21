@@ -346,6 +346,8 @@ export const entreePages: ProductPageContent[] = [
 
   itemPage({
     slug: "spaghetti-with-marinara",
+    // Same dish as a catering tray / family pan / other listing (owner decision 2026-11-19).
+    equivalentOfferingIds: ["family-style-meals--spaghetti-with-marinara-sauce", "catering--spaghetti-with-marinara-sauce"],
     primaryOfferingId: "classic-entrees--spaghetti-with-marinara",
     primaryKeyword: "olive garden spaghetti with marinara",
     secondaryKeywords: ["spaghetti marinara price", "spaghetti marinara calories", "vegetarian pasta olive garden"],

@@ -21,3 +21,18 @@ Calories as shown on the official online ordering menu for each item (Olive Gard
 Cross-checked against the official nutrition PDF (footer code US_101926) on 2026-11-12. Where the menu card and the PDF differ, the PDF value is used unless the row says otherwise; the menu value is kept in menu-research.json (menuCardValue).
 
 PDF kids sides: grapes 40, broccoli 150, spaghetti with tomato sauce 180, mashed potatoes 200, french fries 290 (menu cards say sides 35-250).
+
+## Correction 2026-11-19: kids pasta calories (owner request)
+
+The four "Kids ... with Choice of Pasta" entries showed only the sauce calories. They now show the kids main dish, calculated from official rows (U.S. Nutrition Information US_101926, p. 12-13): kids spaghetti 170, small shells 210, fettuccine 220, plus the sauce.
+
+| Item | Sauce | Spaghetti | Small shells | Fettuccine |
+|---|---|---:|---:|---:|
+| Kids Alfredo | alfredo 440 (guide) | 610 | 650 | 660 |
+| Kids Meat Sauce | meat sauce 110 (guide) | 280 | 320 | 330 |
+| Kids Tomato Sauce | tomato sauce 80 (guide) | 250 | 290 | 300 |
+| Kids Five Cheese Marinara | 150 (online menu) | 320 | 360 | 370 |
+
+Labeled "Calc." on the site; side and milk are not included. The online menu shows the sauce plus a separate 305-570 range for pasta, side and milk.
+
+**Unresolved:** the guide has no kids five cheese marinara row, so its 150 comes from the online menu item page (documented conflict; owner may decide).

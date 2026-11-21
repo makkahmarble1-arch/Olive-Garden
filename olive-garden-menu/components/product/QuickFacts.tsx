@@ -18,11 +18,13 @@ const TONES: Record<Fact["tone"], string> = {
  */
 export default function QuickFacts({ data }: { data: ProductPageData }) {
   const { page, primary, category, price, calories, sizes } = data;
+  // Single-version pages whose calories depend on a choice (kids pasta, combinations...) show the official range.
+  const calText = !page.versions?.length && primary.caloriesMax ? `${formatNumber(calories)}–${formatNumber(primary.caloriesMax)}` : formatNumber(calories);
   const sauces = page.includes;
   const sauceCalories = sauces.map((s) => s.calories);
   const facts: Fact[] = [
     { icon: "tag", label: "Price", value: formatPrice(price), note: page.priceNote ?? `One ${page.unitLabel ?? "order"}, online pickup`, tone: "olive" },
-    { icon: "flame", label: "Calories", value: `${formatNumber(calories)} Cal`, note: primary.caloriesBasis ?? "As served", tone: "amber" },
+    { icon: "flame", label: "Calories", value: `${calText} Cal`, note: primary.caloriesBasis ?? "As served", tone: "amber" },
   ];
   if (sauces.length > 0) {
     facts.push({
@@ -53,7 +55,9 @@ export default function QuickFacts({ data }: { data: ProductPageData }) {
   };
   for (const size of sizes) {
     if (size.servingSize) {
-      const [label, per] = SIZE_LABEL[size.portionType] ?? ["Other size", ""];
+      const [label, perUnit] = SIZE_LABEL[size.portionType] ?? ["Other size", ""];
+      // Soups by the gallon and bundles are not pans or trays: show the price alone.
+      const per = /gallon/i.test(size.servingSize) || /bundle|combination/i.test(size.officialName ?? "") ? "" : perUnit;
       const price = size.prices[0] ? formatPrice(size.prices[0].amount) : "";
       facts.push({ icon: "users", label, value: size.servingSize.replace(/(\d)-(\d)/g, "$1–$2"), note: price && per ? (per.startsWith("per ") ? `${price} ${per}` : `${price}, ${per}`) : price, tone: "lime" });
     }
@@ -66,7 +70,7 @@ export default function QuickFacts({ data }: { data: ProductPageData }) {
       </h2>
       <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
         {facts.map((fact) => (
-          <li key={fact.label} className="flex flex-col gap-2 rounded-2xl border border-card-border bg-white p-3.5 shadow-[0_6px_18px_-14px_rgba(40,55,15,0.5)] sm:p-4">
+          <li key={`${fact.label}-${fact.value}`} className="flex flex-col gap-2 rounded-2xl border border-card-border bg-white p-3.5 shadow-[0_6px_18px_-14px_rgba(40,55,15,0.5)] sm:p-4">
             <span className={`grid size-9 place-items-center rounded-xl ${TONES[fact.tone]}`}>
               <Icon name={fact.icon} className="size-5" />
             </span>

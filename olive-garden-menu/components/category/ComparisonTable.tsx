@@ -1,4 +1,6 @@
+import Link from "next/link";
 import RichText from "@/components/content/RichText";
+import { productDetailHref } from "@/lib/product-pages";
 import type { ResolvedComparison } from "@/lib/category-data";
 import {
   tableCaptionClass,
@@ -47,7 +49,7 @@ export default function ComparisonTable({ table }: { table: ResolvedComparison }
             {table.rows.map((row) => (
               <tr key={row.label} className={tableRowClass}>
                 <th scope="row" className={`${cellClass} font-medium text-ink`}>
-                  {row.label}
+                  <RowLabel label={row.label} productId={row.productId} />
                 </th>
                 {row.cells.map((cell, i) => (
                   <td
@@ -83,5 +85,19 @@ export default function ComparisonTable({ table }: { table: ResolvedComparison }
         </ul>
       )}
     </div>
+  );
+}
+
+/** Row label, linked to the item's page when that page is live (never to unfinished pages). */
+function RowLabel({ label, productId }: { label: string; productId?: string }) {
+  const href = productId ? productDetailHref(productId) : null;
+  if (!href) return <>{label}</>;
+  return (
+    <Link
+      href={href}
+      className="text-brand-dark underline underline-offset-4 hover:text-brand-darker focus-visible:outline-2 focus-visible:outline-brand-dark"
+    >
+      {label}
+    </Link>
   );
 }

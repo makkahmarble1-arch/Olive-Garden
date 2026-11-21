@@ -33,6 +33,8 @@ const addFaq = {
 export const sidePages: ProductPageContent[] = [
   itemPage({
     slug: "side-of-grilled-chicken",
+    // Same dish as a catering tray / family pan / other listing (owner decision 2026-11-19).
+    equivalentOfferingIds: ["catering--grilled-chicken-breasts"],
     primaryOfferingId: "sides-sauces-and-extras--side-of-grilled-chicken",
     primaryKeyword: "olive garden side of grilled chicken",
     secondaryKeywords: ["side of grilled chicken price", "side of grilled chicken calories", "add chicken olive garden"],
@@ -74,6 +76,8 @@ export const sidePages: ProductPageContent[] = [
 
   itemPage({
     slug: "side-of-meatballs",
+    // Same dish as a catering tray / family pan / other listing (owner decision 2026-11-19).
+    equivalentOfferingIds: ["catering--italian-meatballs"],
     primaryOfferingId: "sides-sauces-and-extras--side-of-meatballs",
     primaryKeyword: "olive garden side of meatballs",
     secondaryKeywords: ["side of meatballs price", "side of meatballs calories", "olive garden meatballs"],
@@ -207,6 +211,8 @@ export const sidePages: ProductPageContent[] = [
 
   itemPage({
     slug: "side-of-broccoli",
+    // Same dish as a catering tray / family pan / other listing (owner decision 2026-11-19).
+    equivalentOfferingIds: ["catering--broccoli"],
     primaryOfferingId: "sides-sauces-and-extras--side-of-broccoli",
     primaryKeyword: "olive garden broccoli",
     secondaryKeywords: ["side of broccoli price", "parmesan garlic broccoli calories", "olive garden vegetable side"],
@@ -252,6 +258,8 @@ export const sidePages: ProductPageContent[] = [
 
   itemPage({
     slug: "side-of-alfredo-sauce",
+    // Same dish as a catering tray / family pan / other listing (owner decision 2026-11-19).
+    equivalentOfferingIds: ["catering--alfredo-dipping-sauce"],
     primaryOfferingId: "sides-sauces-and-extras--side-of-alfredo-sauce--large",
     primaryKeyword: "olive garden alfredo sauce",
     secondaryKeywords: ["olive garden extra alfredo sauce price", "side of alfredo sauce calories", "olive garden alfredo sauce to go"],

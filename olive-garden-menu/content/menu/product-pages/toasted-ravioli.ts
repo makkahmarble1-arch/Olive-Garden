@@ -16,6 +16,8 @@ const ALLERGEN_PDF = "https://media.olivegarden.com/en_us/pdf/allergen_guide.pdf
 export const toastedRavioliPage: ProductPageContent = {
   productId: "toasted-ravioli",
   slug: "toasted-ravioli",
+  // Same dish as a catering tray / family pan / other listing (owner decision 2026-11-19).
+  equivalentOfferingIds: ["catering--toasted-beef-ravioli"],
   // Phase 1 batch: local development and testing only until the owner approves it.
   status: pageStatus("toasted-ravioli"),
   primaryOfferingId: "appetizers--toasted-ravioli",

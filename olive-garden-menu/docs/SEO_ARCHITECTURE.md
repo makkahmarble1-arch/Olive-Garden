@@ -72,6 +72,15 @@ Menu topics that are not one of the 17 categories get a **guide page** at the ro
 - Non-menu guides (e.g. `/hours`) use `staticTable` blocks: verified facts typed in the guide and backed by its fact log. They have no price overview or photo cards.
 - Guides with `navGroup: "hours"` (future holiday articles) join the header Hours dropdown automatically.
 
+### Tool pages: Nutrition & Meal Price Calculator (Improvement 7, 2026-11-20)
+
+- URL **`/nutrition-calculator`** (root, static route). Intent: an interactive tool to add up a meal's estimated price and nutrition. No other page targets it: the homepage "Nutrition & Dietary Options" section, category pages and item pages show values per dish, never a meal total. Primary keyword "olive garden nutrition calculator"; secondary: calorie calculator, meal calculator, meal price calculator, macros.
+- Content and status: `content/tools/nutrition-calculator.ts`. **Published 2026-11-20 (owner approval);** indexed only when `SITE_INDEXING=true`. While it was a preview it was reachable and linked (header "More" dropdown, footer "Explore More", site search, kind "Tool") only locally and on Vercel preview deployments; HTTP 404 and unlinked on the production deployment (same rule as preview item pages, `isToolPageLive`). `published` needs the owner's approval date.
+- Metadata via `pageMetadata()`: unique title "Olive Garden Nutrition Calculator: Meal Calories & Price", unique description, self-canonical, `noindex` while preview (and while `SITE_INDEXING` is off). One H1. Breadcrumbs: Home > Nutrition Calculator.
+- Structured data: `WebPage`, `BreadcrumbList`, `FAQPage` (visible FAQs only). No `WebApplication`, `Product`, `Offer` or `Menu` schema.
+- Sitemap: prepared in `app/sitemap.ts`; the URL is added automatically once the status is `published` (and indexing is on).
+- Internal links from the tool: each item's page ("Details"), the official nutrition and allergen guides, and 4 Related Menus cards.
+
 ### Rules to avoid duplicate intent
 
 - **Homepage vs. `/menu` (final owner decision, 2026-11-12).**
@@ -163,6 +172,7 @@ still valid and harmless when it matches the page.)
   (published categories + blog posts), so new content is added automatically.
   Noindex pages (placeholders, preview category pages, `/menu`) are left out.
   Menu item pages are added only when `published` (preview items are left out).
+  The Nutrition Calculator (`/nutrition-calculator`) is added only when `published`.
 - `lastModified` uses each item's real `updatedAt` date, never `new Date()`.
 - `app/robots.ts` allows all crawlers (except `/api/`) and points to `/sitemap.xml`.
 - **Indexing switch (Lesson 7.5):** `SITE_INDEXING=true` (Vercel Production only, at launch, owner approval) turns indexing on. Without it every page is `noindex, follow`, the sitemap is empty, and robots.txt does not list it. Page metadata comes from `pageMetadata()` in `lib/metadata.ts` (title, description, canonical, Open Graph, Twitter card, robots via `robotsFor()`).

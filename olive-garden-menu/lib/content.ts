@@ -5,6 +5,7 @@
 import { inventoryTotals, menuCategories, menuCategoryGroups } from "@/content/menu/categories";
 import { menuProducts } from "@/content/menu/products";
 import { menuOfferings } from "@/content/menu/offerings";
+import { allOfferings, detailProducts } from "@/content/menu/detail-items";
 import { referenceLocations, referenceMarket } from "@/content/menu/locations";
 import { aliasCases } from "@/content/menu/aliases";
 import { createYourOwnPasta } from "@/content/menu/create-your-own-pasta";
@@ -163,16 +164,17 @@ export function getAllMenuProductIds(): string[] {
 }
 
 export function getMenuProduct(productId: string): MenuProduct | undefined {
-  return menuProducts.find((p) => p.id === productId);
+  // Detail-only products (single soups...) are found too, but never listed in a category.
+  return menuProducts.find((p) => p.id === productId) ?? detailProducts.find((p) => p.id === productId);
 }
 
 /** Every offering of a product (e.g. regular, lunch, family-style, catering). */
 export function getOfferingsForProduct(productId: string): MenuOffering[] {
-  return menuOfferings.filter((o) => o.productId === productId);
+  return allOfferings.filter((o) => o.productId === productId);
 }
 
 export function getOffering(id: string): MenuOffering | undefined {
-  return menuOfferings.find((o) => o.id === id);
+  return allOfferings.find((o) => o.id === id);
 }
 
 /** Photo to show for an offering: its own photo, else the shared product photo (or null). */

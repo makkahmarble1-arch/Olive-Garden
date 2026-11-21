@@ -234,6 +234,8 @@ export const gsKidsPages: ProductPageContent[] = [
 
   itemPage({
     slug: "kids-chicken-fingers",
+    // Same dish as a catering tray / family pan / other listing (owner decision 2026-11-19).
+    equivalentOfferingIds: ["catering--chicken-fingers"],
     primaryOfferingId: "kids-meal--kids-chicken-fingers",
     primaryKeyword: "olive garden kids chicken fingers",
     secondaryKeywords: ["olive garden chicken tenders kids", "kids chicken fingers calories", "kids chicken fingers price"],

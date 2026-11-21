@@ -110,6 +110,8 @@ export default function NutritionSection({ data }: { data: ProductPageData }) {
   const share = Math.round((calories / DAILY_REFERENCE) * 100);
   const maxCompare = Math.max(...compare.map((o) => o.calories ?? 0), 1);
   const basis = page.nutrition.servingBasis;
+  // Single-version pages whose calories depend on a choice (kids pasta, combinations...) show the official range.
+  const calText = !page.versions?.length && primary.caloriesMax ? `${formatNumber(calories)}–${formatNumber(primary.caloriesMax)}` : formatNumber(calories);
   const unit = page.unitLabel ?? "order";
 
   return (
@@ -117,7 +119,13 @@ export default function NutritionSection({ data }: { data: ProductPageData }) {
       <SectionHeading
         id="nutrition"
         title={`${name} Nutrition Facts`}
-        intro={`Values for ${basis.charAt(0).toLowerCase()}${basis.slice(1)}, from Olive Garden’s official U.S. nutrition guide.`}
+        intro={`Values for ${basis.charAt(0).toLowerCase()}${basis.slice(1)}, ${
+          row
+            ? "from Olive Garden’s official U.S. nutrition guide"
+            : primary.caloriesValueBasis === "calculated"
+              ? "our calculation from Olive Garden’s official values"
+              : "as listed by Olive Garden"
+        }.`}
       />
 
       <div className="mt-6 grid gap-5 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
@@ -127,13 +135,13 @@ export default function NutritionSection({ data }: { data: ProductPageData }) {
             <Icon name="flame" className="size-5" />
             Calories per {unit}
           </p>
-          <p className="mt-2 font-display text-5xl leading-none font-bold text-kcal-text tabular-nums">{formatNumber(calories)}</p>
+          <p className="mt-2 font-display text-5xl leading-none font-bold text-kcal-text tabular-nums">{calText}</p>
           <div className="mt-5">
             <div className="h-3 overflow-hidden rounded-full bg-white/80 ring-1 ring-kcal-text/15" aria-hidden="true">
               <div className="h-full rounded-full bg-kcal-bar" style={{ width: `${Math.min(share, 100)}%` }} />
             </div>
             <p className="mt-2 text-sm leading-6 text-ink">
-              About <strong className="font-semibold">{share}%</strong> of a {formatNumber(DAILY_REFERENCE)}-calorie day{" "}
+              {calText === formatNumber(calories) ? "About" : "From about"} <strong className="font-semibold">{share}%</strong> of a {formatNumber(DAILY_REFERENCE)}-calorie day{" "}
               <span className="text-muted">(Calc.)</span>. Olive Garden’s nutrition guide uses 2,000 calories a day for
               general nutrition advice; calorie needs vary.
             </p>
@@ -206,7 +214,7 @@ export default function NutritionSection({ data }: { data: ProductPageData }) {
                   <th scope="row" className={`${CELL} font-semibold text-ink`}>
                     Calories
                   </th>
-                  <td className={`${CELL} text-right min-[360px]:whitespace-nowrap font-semibold tabular-nums`}>{formatNumber(calories)}</td>
+                  <td className={`${CELL} text-right min-[360px]:whitespace-nowrap font-semibold tabular-nums`}>{calText}</td>
                   {row &&
                     addOns.map((a) => (
                       <td key={a.id} className={`${CELL} text-right min-[360px]:whitespace-nowrap font-semibold tabular-nums`}>
@@ -248,9 +256,17 @@ export default function NutritionSection({ data }: { data: ProductPageData }) {
             <div role="note" className="flex gap-3 rounded-2xl border border-line bg-brand-tint p-4 text-sm leading-6 text-ink">
               <Icon name="info" className="mt-0.5 size-5 text-brand-dark" />
               <p>
-                <strong className="font-semibold">Full breakdown not verified yet.</strong> Fat, sodium, carbohydrates,
-                protein and the other values are listed in Olive Garden’s nutrition guide, but we have not entered them
-                for this item, so we do not show numbers.{" "}
+                {page.nutritionUnavailableNote ? (
+                  <>
+                    <strong className="font-semibold">Detailed nutrition not available.</strong> {page.nutritionUnavailableNote}{" "}
+                  </>
+                ) : (
+                  <>
+                    <strong className="font-semibold">Full breakdown not verified yet.</strong> Fat, sodium, carbohydrates,
+                    protein and the other values are listed in Olive Garden’s nutrition guide, but we have not entered them
+                    for this item, so we do not show numbers.{" "}
+                  </>
+                )}
                 <a
                   href={siteConfig.nutritionSource.url}
                   rel="nofollow noopener"

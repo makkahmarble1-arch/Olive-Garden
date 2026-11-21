@@ -127,7 +127,9 @@ export default function AllergenSection({ data }: { data: ProductPageData }) {
           ) : (
             <p className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-allergen-border bg-white px-3 py-1 text-xs font-semibold text-allergen-text">
               <Icon name="info" className="size-4" />
-              {getAllergenMapping(primary.id)?.status === "not-covered"
+              {page.allergenUnavailableNote
+                ? page.allergenUnavailableNote
+                : getAllergenMapping(primary.id)?.status === "not-covered"
                 ? "Olive Garden’s official U.S. allergen guide does not cover this drink. This does not mean it is allergen-free; ask your server if you have an allergy."
                 : "Official allergen list not verified yet"}
             </p>

@@ -21,7 +21,7 @@ Each item needs the owner's approval. Details: `HOMEPAGE_SEO_AUDIT.md`, `PERFORM
 ## 2. Before deploying
 
 - [x] Category pages: all 17 have complete content and are `published` (owner approval, Lesson 8.5.1, 2026-11-14). Status table: `CATEGORY_DEVELOPMENT_CHECKLIST.md` section F. They stay `noindex` until `SITE_INDEXING=true`.
-- [ ] Replacement photos for 4 products whose incorrect images were removed (priority order in `MISSING_IMAGES.md`, "Consolidated image replacement manifest"; 6 homepage cards show the placeholder until then). Optional replacements are listed there too.
+- [x] ~~Replacement photos for 4 products whose incorrect images were removed~~ Resolved: `MISSING_IMAGES.md` shows 0 products without an image and 0 placeholders (owner photos 2026-11-14); routine replacement requests are superseded by the permanent image instruction of 2026-11-18. Original note: (priority order in `MISSING_IMAGES.md`, "Consolidated image replacement manifest"; 6 homepage cards show the placeholder until then). Optional replacements are listed there too.
 - [ ] **Pre-launch fact verification (manual, official sources, in a browser).** Last checked November 2026. Not re-verified since: change a value or a verification date only after a real check.
   - [ ] Buy One Take One: is it still available?
   - [ ] $6 Take Home: which dishes are eligible?
@@ -33,9 +33,9 @@ Each item needs the owner's approval. Details: `HOMEPAGE_SEO_AUDIT.md`, `PERFORM
   - [ ] Non-alcoholic beverage refill policy (currently stated as not verified)
   - [ ] Other limited-time items: Spicy Alfredo, Crispy Shrimp Fritta, Pumpkin Cookie Butter Cheesecake, Never-Ending Pasta Bowl, and any other time-sensitive value
 
-- [ ] Remove the 2 development test votes: the owner runs `supabase/maintenance/2026-11-14_remove_two_dev_test_votes.sql` in the Supabase SQL Editor, steps 1-4 (approved again 2026-11-14). It deletes only those 2 votes. A third vote (Breadsticks, 3 stars) appeared on 2026-11-14 and is kept; the owner decides whether it is genuine. The older 2026-11-13 file would now delete nothing, because it requires exactly 2 votes in total.
+- [x] **Owner decision 2026-11-20: keep the 2 development test votes as they are** (no deletion; `/menu/family-style-lasagna-bundle` shows "1.0 (1)"). Do not ask again; the SQL file stays available if the owner decides otherwise. Original note: remove the 2 development test votes: the owner runs `supabase/maintenance/2026-11-14_remove_two_dev_test_votes.sql` in the Supabase SQL Editor, steps 1-4 (approved again 2026-11-14). It deletes only those 2 votes. A third vote (Breadsticks, 3 stars) appeared on 2026-11-14 and is kept; the owner decides whether it is genuine. The older 2026-11-13 file would now delete nothing, because it requires exactly 2 votes in total.
 - [ ] Privacy policy mentions the functional cookie `og_rv` (ratings only) and that votes are stored as one-way hashes.
-- [ ] `npm run lint`, `npx tsc --noEmit`, `npm run build`: all pass.
+- [x] `npm run lint`, `npx tsc --noEmit`, `npm run build`: all pass (re-run 2026-11-19 after publishing all 122 item pages; repeat before every push).
 - [x] Local commit "Complete homepage, menu data, images, ratings and SEO foundation" (2026-11-13; env files, secrets, and `image-staging/` excluded).
 - [ ] Push to GitHub (owner request; `.env.local` stays git-ignored, check `git status`).
 
@@ -220,16 +220,16 @@ Reports:
 - [x] Owner approved the sample design 2026-11-18 → `ownerApprovedAt: "2026-11-18"`, `visualReview: "done"`; all checks passed (incl. production-deployment mode) → status `published`.
 - [x] Unverified customization omitted; no vegetarian suitability claims; price kept as last verified November 2026.
 - [x] Phase 1 batch 1 built 2026-11-18 as `preview`: Calamari, Toasted Ravioli, Stuffed Ziti Fritta, Breadsticks (fact logs in `research/products/<slug>/`).
-- [ ] Owner review of batch 1 → approval date, `visualReview: "done"`, `published`.
-- [ ] Owner supplies replacement photos (Italian Grilled Chicken Sandwich, Side of Meatballs) → convert to optimized WebP and integrate.
-- [ ] Phase 1 batch 2: Meatballs Parmigiana, Spinach-Artichoke Dip, Lasagna Fritta, Shrimp Fritto Misto.
+- [x] Owner review of batch 1 → published (superseded: all item pages published 2026-11-18/19).
+- [x] ~~Owner supplies replacement photos (Italian Grilled Chicken Sandwich, Side of Meatballs)~~ Superseded by the permanent image instruction (2026-11-18): reuse existing owner photos, no repeated replacement requests.
+- [x] Phase 1 batch 2 done (part of the 77 pages published 2026-11-18).
 - [ ] Optional: owner supplies the vegetarian/vegan PDF to confirm the vegetarian wording.
 - [x] Real HTTP 404 for other `/menu/<slug>` URLs (`proxy.ts`); `/menu` still 308 → `/`.
 - [x] Menu cards (homepage, appetizers) and price-table names link to the page; search returns it first.
 - [x] Same rating key as the cards (`fried-mozzarella`); no database change.
 - [x] Structured data: WebPage, BreadcrumbList, FAQPage only.
-- [ ] **Re-verify from a U.S. network** (official site blocked ours on 2026-11-15): price, full nutrition (fat, sodium, carbs, protein…), and the U.S. allergen guide marks; then fill `nutrition.values`, `allergens` and set the checklist to `done`.
-- [ ] Owner review and approval of the sample page → status `published`.
+- [x] **Re-verify from a U.S. network** (done for Fried Mozzarella 2026-11-18 with the official U.S. PDFs; original note follows) (official site blocked ours on 2026-11-15): price, full nutrition (fat, sodium, carbs, protein…), and the U.S. allergen guide marks; then fill `nutrition.values`, `allergens` and set the checklist to `done`.
+- [x] Owner review and approval of the sample page → status `published` (2026-11-18).
 - [x] Item-page phase complete (2026-11-18): **77 pages** (1 published, 76 preview); 8 with the Phase 4 version selector (owner-approved layout); inventory and reasons in `docs/product-pages/PRODUCT_INVENTORY.md`; open points in `research/products/PENDING.md`.
 - [x] QA 2026-11-18 (local `next start`): all 77 pages HTTP 200, one H1, self-canonical, `noindex`, unique titles, descriptions 70-175 characters, JSON-LD only WebPage/BreadcrumbList/FAQPage, no reference-location or "AI" wording, Related Menus present, version selector + "all versions" table on the 8 version pages, placeholder on the photo-less page; homepage links all 77 pages; search index lists all 77; `GET /api/ratings` 200 (no test votes); unknown `/menu/<slug>` 404, `/menu` 308; sitemap empty while indexing is off.
 - [x] Production simulation (`VERCEL_ENV=production` build): only `/menu/fried-mozzarella` is live, linked and searchable; preview pages 404.
@@ -239,6 +239,18 @@ Reports:
 - [x] **Owner visual approval 2026-11-18** ("haan"): all 76 preview pages are now `published` (`approvals.ts`, `registry.ts`; 4 standalone page files updated). Build check: 0 issues.
   - QA: 77/77 pages OK, browser QA at 390/1280 px 0 failures, 96 links OK.
   - Production simulation: 77/77 pages HTTP 200, 77 homepage links, 77 search entries, `noindex`, sitemap empty while indexing is off.
-- [ ] At launch: `SITE_INDEXING=true` (owner approval); then the 77 item pages enter the sitemap automatically.
+- [x] Complete menu coverage round 2026-11-19: 45 new item pages (soups, wines, beers, drinks, kids, bundles) built as `preview`; QA 122/122, browser QA 0 failures.
+- [x] Owner visual approval of the 45 coverage pages (2026-11-19): all 122 item pages `published`.
+- [ ] At launch: `SITE_INDEXING=true` (owner approval); then every published item page enters the sitemap automatically.
 - [x] Re-checked 2026-11-18 (official site reachable again): Calabrian Bucatini price conflict resolved ($25.29 / $27.29 / $25.29, data updated); Spicy Alfredo and Pumpkin Cookie Butter Cheesecake still on the menu (limited time: re-check periodically).
+
+## 17. Nutrition & Meal Price Calculator (Improvement 7, 2026-11-20, not committed yet)
+
+- [x] `/nutrition-calculator` built as `preview` (docs in `docs/tools/`); integrated in the header "More" dropdown, footer "Explore More" and site search while live; sitemap entry prepared for `published`.
+- [x] `npm run test:calculator`, TypeScript, ESLint, production build, browser tests at 390/768/1280 px (results: `docs/tools/NUTRITION_CALCULATOR_TEST_REPORT.md`).
+- [x] Owner approval 2026-11-20 ("approve ha"): `status: "published"`, `ownerApprovedAt: "2026-11-20"`. Owner decision: Buy One Take One / $6 Take Home entries stay out of the calculator.
+- [ ] At launch: with `SITE_INDEXING=true` the calculator enters the sitemap automatically (check `/sitemap.xml`).
+- [x] Production simulation (`VERCEL_ENV=production` build, 2026-11-20): `/nutrition-calculator` HTTP 404, no header/footer/search link, not in the sitemap.
+- [ ] After deploying a preview: check the page once on a real phone.
+- [ ] When prices or calories are re-checked: re-run `npm run test:calculator` (named examples) and the build.
 

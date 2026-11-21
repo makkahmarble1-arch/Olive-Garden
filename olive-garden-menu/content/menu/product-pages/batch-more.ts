@@ -738,6 +738,8 @@ export const morePages: ProductPageContent[] = [
 
   itemPage({
     slug: "famous-house-salad",
+    // Same dish as a catering tray / family pan / other listing (owner decision 2026-11-19).
+    equivalentOfferingIds: ["gluten-sensitive--famous-house-salad-without-croutons"],
     primaryOfferingId: SALAD,
     sizeOfferingIds: ["family-style-meals--famous-house-salad"],
     primaryKeyword: "olive garden salad",

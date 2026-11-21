@@ -12,10 +12,11 @@
  * pairings, product-specific FAQs). docs/product-pages/PRODUCT_DATA_STRUCTURE.md.
  */
 import type { AllergenGuideRow, FaqItem, NutritionGuideRow, ProductPageContent, ProductVersion, RelatedMenuRef } from "@/lib/types";
-import { menuOfferings } from "@/content/menu/offerings";
+import { allOfferings as menuOfferings } from "@/content/menu/detail-items";
 import { nutritionGuideRows } from "@/content/menu/nutrition/nutrition-guide";
 import { allergenGuideRows } from "@/content/menu/nutrition/allergen-guide";
-import { offeringAllergenMap, offeringNutritionMap } from "@/content/menu/nutrition/offering-map";
+import { offeringAllergenMap as generatedAllergenMap, offeringNutritionMap as generatedNutritionMap } from "@/content/menu/nutrition/offering-map";
+import { detailAllergenMap, detailNutritionMap } from "@/content/menu/detail-items";
 import { pageStatus, type ProductSlug } from "./registry";
 import { ownerApprovals } from "./approvals";
 
@@ -58,6 +59,16 @@ export type ItemPageInput = {
    * the page says so instead of showing allergen marks (offering-map status "not-covered").
    */
   allergensNotListed?: boolean;
+  /** Same dish under another product record (catering tray, family pan...), shown in the sizes table. */
+  equivalentOfferingIds?: string[];
+  /** Rating group when the product has none of its own (e.g. a single soup of "Homemade Soups"). */
+  ratingProductId?: string;
+  /** Disclosure when Olive Garden publishes no nutrition row for this item. */
+  nutritionUnavailableNote?: string;
+  /** Disclosure when the official allergen guide has no row for this item (never implies allergen-free). */
+  allergenUnavailableNote?: string;
+  /** Bundles and combinations: what is included. */
+  components?: ProductPageContent["components"];
   /** Internal reason the mapped photo is not shown (materially misleading only). */
   heroImageOmitted?: string;
   primaryKeyword: string;
@@ -124,8 +135,8 @@ export function itemPage(input: ItemPageInput): ProductPageContent {
   const price = o.prices[0];
   if (!price || o.calories === null) throw new Error(`itemPage(${input.slug}): needs a verified price and calories`);
   const versions = input.versions ?? [];
-  const nm = offeringNutritionMap[o.id];
-  const am = offeringAllergenMap[o.id];
+  const nm = generatedNutritionMap[o.id] ?? detailNutritionMap[o.id];
+  const am = generatedAllergenMap[o.id] ?? detailAllergenMap[o.id];
   // Version pages read the default (first) version's own rows; other pages the offering's row.
   const row = versions.length
     ? nutritionGuideRows.find((r) => r.id === versions[0].nutritionRowId)
@@ -133,8 +144,8 @@ export function itemPage(input: ItemPageInput): ProductPageContent {
   const arow = versions.length
     ? allergenGuideRows.find((r) => r.id === versions[0].allergenRowId)
     : ["exact", "same-item"].includes(am?.status) ? allergenGuideRows.find((r) => r.id === am?.rowId) : undefined;
-  if (!row) throw new Error(`itemPage(${input.slug}): needs an official nutrition row (exact/same-item or the default version's row)`);
-  if (!arow && !(input.allergensNotListed && am?.status === "not-covered")) {
+  if (!row && !input.nutritionUnavailableNote) throw new Error(`itemPage(${input.slug}): needs an official nutrition row, or nutritionUnavailableNote (disclosure)`);
+  if (!arow && !input.allergenUnavailableNote && !(input.allergensNotListed && am?.status === "not-covered")) {
     throw new Error(`itemPage(${input.slug}): needs an official allergen row (or allergensNotListed for items the guide does not cover)`);
   }
   const vRows = versions.map((v) => ({
@@ -147,12 +158,12 @@ export function itemPage(input: ItemPageInput): ProductPageContent {
   const anyFried = allARows.some((r) => r.prep.friedInSoyOil);
   const anyGrilled = allARows.some((r) => r.prep.grilled);
   const includes = input.includes ?? [];
-  const addOns = nutritionGuideRows.filter((r) => r.addOnFor === row.id);
+  const addOns = row ? nutritionGuideRows.filter((r) => r.addOnFor === row.id) : [];
   const included = addOns.filter((a) => includes.some((i) => a.label.toLowerCase().includes(i.label.toLowerCase().replace(/ sauce$/, ""))));
   const name = o.displayName;
   // Classic entrées are counted "per entrée" (matches the hero's calorie basis).
   const unit = input.unitLabel ?? (input.entreeFirstCourse ? "entrée" : "order");
-  const v = row.values;
+  const v = row?.values ?? ({} as Partial<NutritionGuideRow["values"]>);
   const g = (x: unknown) => (typeof x === "number" ? num(x) : null);
 
   // ---- standard FAQs (numbers straight from the data)
@@ -175,10 +186,12 @@ export function itemPage(input: ItemPageInput): ProductPageContent {
     answer: `It depends on the version. Olive Garden lists ${versionList(({ v, n }) => `${v.label} at ${num(v.calories)} calories${n && typeof n.values.protein === "number" ? ` (${num(n.values.protein)} g protein)` : ""}`)}.${vRows.some((x) => !x.n) ? " The full nutrition breakdown is published only for the versions shown with a table on this page." : ""}`,
   } : {
     question: `How many calories are in Olive Garden ${name}?`,
-    answer: `${unit === "order" ? "One order" : `One ${unit}`} has ${num(o.calories)} calories according to Olive Garden’s U.S. nutrition guide${macro.length ? `, with ${list(macro)}` : ""}.${withSauce}`,
+    answer: row
+      ? `${unit === "order" ? "One order" : `One ${unit}`} has ${num(o.calories)} calories according to Olive Garden’s U.S. nutrition guide${macro.length ? `, with ${list(macro)}` : ""}.${withSauce}`
+      : `Olive Garden lists ${o.caloriesMax ? `${num(o.calories)} to ${num(o.caloriesMax)}` : num(o.calories)} calories ${o.caloriesBasis ?? `per ${unit}`}${o.caloriesValueBasis === "calculated" ? " (our calculation from official values)" : ""}. ${input.nutritionUnavailableNote ?? ""}`.trim(),
   };
   const prep = arow ? ([arow.prep.friedInSoyOil && "fried in soy oil", arow.prep.grilled && "cooked on the grill"].filter(Boolean) as string[]) : [];
-  const allergenFaq: FaqItem = versions.length ? {
+  const allergenFaq: FaqItem = versions.length && vRows.some((x) => x.a) ? {
     question: `What allergens are in Olive Garden ${name}?`,
     answer: `${versionList(({ v, a }) => (a ? `Olive Garden’s U.S. allergen guide lists ${v.label} as containing ${list(a.contains.map((x) => ALLERGEN_NAMES[x]))}` : `the guide does not list ${v.label} separately`))}. Shared kitchens mean cross-contact is possible, so tell your server about any allergy before ordering.`,
   } : !arow ? {
@@ -209,7 +222,7 @@ export function itemPage(input: ItemPageInput): ProductPageContent {
       tone: "caution",
     });
   } else if (!arow) {
-    dietary.push({ label: "Allergen guide", value: "Not listed (the guide does not cover to-go drinks)", tone: "caution" });
+    dietary.push({ label: "Allergen guide", value: "Not listed in the official allergen guide", tone: "caution" });
   } else {
     dietary.push({
       label: "Preparation",
@@ -233,6 +246,11 @@ export function itemPage(input: ItemPageInput): ProductPageContent {
     sizeOfferingIds: input.sizeOfferingIds,
     versions: input.versions,
     heroImageOmitted: input.heroImageOmitted,
+    equivalentOfferingIds: input.equivalentOfferingIds,
+    ratingProductId: input.ratingProductId,
+    nutritionUnavailableNote: input.nutritionUnavailableNote,
+    allergenUnavailableNote: input.allergenUnavailableNote,
+    components: input.components,
     primaryKeyword: input.primaryKeyword,
     secondaryKeywords: input.secondaryKeywords,
     searchIntent: `A diner wants the price, calories, nutrition and allergen information for Olive Garden's ${name}.`,
@@ -272,7 +290,7 @@ export function itemPage(input: ItemPageInput): ProductPageContent {
       verifiedProductInfo: "done",
       uniqueSearchIntent: "done",
       // Version pages: "done" only when every version has its own official rows.
-      nutritionAndAllergens: !arow || vRows.some((x) => !x.n || !x.a) ? "partial" : "done",
+      nutritionAndAllergens: !row || !arow || vRows.some((x) => !x.n || !x.a) ? "partial" : "done",
       originalContent: "done",
       // Photo checked visually before the page was added (fact log).
       accurateImage: input.heroImageOmitted ? "missing" : "done",

@@ -1,6 +1,6 @@
 # Item pages: open points (combined list)
 
-**Updated:** 2026-11-18, end of the item-page phase.
+**Updated:** 2026-11-19, complete menu coverage round (45 new `preview` pages, see `docs/product-pages/PRODUCT_INVENTORY.md`).
 
 **Built and published:** 77 pages, all `published` on 2026-11-18 after the owner's visual approval. List: `content/menu/product-pages/registry.ts`.
 
@@ -42,3 +42,11 @@ Recorded per page as `acceptedGaps` (date, checklist key, reason). The build che
 
 1. ~~Visual approval~~ **Done 2026-11-18:** all 76 pages approved and published.
 2. Optional: a photo of grilled, unbreaded chicken with gluten-free rotini for the gluten-sensitive Grilled Chicken Parmigiana; per-soup pages if wanted.
+
+## 4. Complete coverage round (2026-11-19): resolved
+
+Owner approval 2026-11-19 ("1.2.3.4 approve"):
+- [x] Visual approval of the 45 new pages: added to `approvals.ts`, `published` in `registry.ts` (122 published in total).
+- [x] Kids Five Cheese Marinara Pasta: the 150-calorie sauce value from the online menu is accepted (the guide has no kids row; documented, calculated total shown).
+- [x] Soups keep the shared `homemade-soups` rating group (no database change).
+- [x] Prices of the new pages stay "last verified November 2026" (checked 2026-11-12; not re-checked, never claim a fresh check).

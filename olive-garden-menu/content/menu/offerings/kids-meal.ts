@@ -30,14 +30,42 @@ export const kidsMealOfferings = defineOfferings("kids-meal", [
       }
     ],
     priceNote: null,
-    options: [],
-    calories: 440,
-    caloriesMax: null,
-    caloriesBasis: "main dish; choice of pasta, side & milk 305-570 listed separately",
+    options: [
+      {
+        label: "Spaghetti with alfredo sauce",
+        price: 7.49,
+        calories: 610,
+        caloriesMax: null,
+        caloriesUnit: "per kids main dish",
+        caloriesBasis: "calculated",
+        caloriesFormula: "spaghetti 170 + alfredo sauce 440"
+      },
+      {
+        label: "Small Shells with alfredo sauce",
+        price: 7.49,
+        calories: 650,
+        caloriesMax: null,
+        caloriesUnit: "per kids main dish",
+        caloriesBasis: "calculated",
+        caloriesFormula: "small shells 210 + alfredo sauce 440"
+      },
+      {
+        label: "Fettuccine with alfredo sauce",
+        price: 7.49,
+        calories: 660,
+        caloriesMax: null,
+        caloriesUnit: "per kids main dish",
+        caloriesBasis: "calculated",
+        caloriesFormula: "fettuccine 220 + alfredo sauce 440"
+      }
+    ],
+    calories: 610,
+    caloriesMax: 660,
+    caloriesBasis: "kids main dish (pasta + alfredo sauce), depends on the pasta; side and milk extra",
     caloriesSourceUrl: "https://www.olivegarden.com/menu/kids-alfredo-sauce-with-choice-of-pasta-v/prod340057",
-    caloriesValueBasis: "official",
-    caloriesFormula: null,
-    caloriesNote: null,
+    caloriesValueBasis: "calculated",
+    caloriesFormula: "kids pasta 170-220 (spaghetti 170, small shells 210, fettuccine 220; guide p. 12-13) + alfredo sauce 440 (guide p. 13 “Alfredo Sauce” 440)",
+    caloriesNote: "Corrected 2026-11-19 (owner request): the previous value was the sauce alone. The online menu lists the sauce and a separate 305-570 range for pasta, side and milk.",
     calorieExtras: [],
     availability: "available",
     promotion: null,
@@ -174,14 +202,42 @@ export const kidsMealOfferings = defineOfferings("kids-meal", [
       }
     ],
     priceNote: null,
-    options: [],
-    calories: 110,
-    caloriesMax: null,
-    caloriesBasis: "sauce only; choice of pasta + side + milk listed as a range",
+    options: [
+      {
+        label: "Spaghetti with meat sauce",
+        price: 7.49,
+        calories: 280,
+        caloriesMax: null,
+        caloriesUnit: "per kids main dish",
+        caloriesBasis: "calculated",
+        caloriesFormula: "spaghetti 170 + meat sauce 110"
+      },
+      {
+        label: "Small Shells with meat sauce",
+        price: 7.49,
+        calories: 320,
+        caloriesMax: null,
+        caloriesUnit: "per kids main dish",
+        caloriesBasis: "calculated",
+        caloriesFormula: "small shells 210 + meat sauce 110"
+      },
+      {
+        label: "Fettuccine with meat sauce",
+        price: 7.49,
+        calories: 330,
+        caloriesMax: null,
+        caloriesUnit: "per kids main dish",
+        caloriesBasis: "calculated",
+        caloriesFormula: "fettuccine 220 + meat sauce 110"
+      }
+    ],
+    calories: 280,
+    caloriesMax: 330,
+    caloriesBasis: "kids main dish (pasta + meat sauce), depends on the pasta; side and milk extra",
     caloriesSourceUrl: "https://www.olivegarden.com/menu/kids-meat-sauce-with-choice-of-pasta/prod340059",
-    caloriesValueBasis: "official",
-    caloriesFormula: null,
-    caloriesNote: null,
+    caloriesValueBasis: "calculated",
+    caloriesFormula: "kids pasta 170-220 (spaghetti 170, small shells 210, fettuccine 220; guide p. 12-13) + meat sauce 110 (guide p. 13 “Meat Sauce” 110)",
+    caloriesNote: "Corrected 2026-11-19 (owner request): the previous value was the sauce alone. The online menu lists the sauce and a separate 305-570 range for pasta, side and milk.",
     calorieExtras: [],
     availability: "available",
     promotion: null,
@@ -210,14 +266,42 @@ export const kidsMealOfferings = defineOfferings("kids-meal", [
       }
     ],
     priceNote: null,
-    options: [],
-    calories: 80,
-    caloriesMax: null,
-    caloriesBasis: "sauce only; choice of pasta + side + milk listed as a range",
+    options: [
+      {
+        label: "Spaghetti with tomato sauce",
+        price: 7.49,
+        calories: 250,
+        caloriesMax: null,
+        caloriesUnit: "per kids main dish",
+        caloriesBasis: "calculated",
+        caloriesFormula: "spaghetti 170 + tomato sauce 80"
+      },
+      {
+        label: "Small Shells with tomato sauce",
+        price: 7.49,
+        calories: 290,
+        caloriesMax: null,
+        caloriesUnit: "per kids main dish",
+        caloriesBasis: "calculated",
+        caloriesFormula: "small shells 210 + tomato sauce 80"
+      },
+      {
+        label: "Fettuccine with tomato sauce",
+        price: 7.49,
+        calories: 300,
+        caloriesMax: null,
+        caloriesUnit: "per kids main dish",
+        caloriesBasis: "calculated",
+        caloriesFormula: "fettuccine 220 + tomato sauce 80"
+      }
+    ],
+    calories: 250,
+    caloriesMax: 300,
+    caloriesBasis: "kids main dish (pasta + tomato sauce), depends on the pasta; side and milk extra",
     caloriesSourceUrl: "https://www.olivegarden.com/menu/kids-tomato-sauce-with-choice-of-pasta-v/prod340058",
-    caloriesValueBasis: "official",
-    caloriesFormula: null,
-    caloriesNote: null,
+    caloriesValueBasis: "calculated",
+    caloriesFormula: "kids pasta 170-220 (spaghetti 170, small shells 210, fettuccine 220; guide p. 12-13) + tomato sauce 80 (guide p. 13 “Tomato Sauce” 80)",
+    caloriesNote: "Corrected 2026-11-19 (owner request): the previous value was the sauce alone. The online menu lists the sauce and a separate 305-570 range for pasta, side and milk.",
     calorieExtras: [],
     availability: "available",
     promotion: null,
@@ -246,14 +330,42 @@ export const kidsMealOfferings = defineOfferings("kids-meal", [
       }
     ],
     priceNote: null,
-    options: [],
-    calories: 150,
-    caloriesMax: null,
-    caloriesBasis: "sauce only; choice of pasta + side + milk listed as a range",
+    options: [
+      {
+        label: "Spaghetti with five cheese marinara",
+        price: 7.49,
+        calories: 320,
+        caloriesMax: null,
+        caloriesUnit: "per kids main dish",
+        caloriesBasis: "calculated",
+        caloriesFormula: "spaghetti 170 + five cheese marinara 150"
+      },
+      {
+        label: "Small Shells with five cheese marinara",
+        price: 7.49,
+        calories: 360,
+        caloriesMax: null,
+        caloriesUnit: "per kids main dish",
+        caloriesBasis: "calculated",
+        caloriesFormula: "small shells 210 + five cheese marinara 150"
+      },
+      {
+        label: "Fettuccine with five cheese marinara",
+        price: 7.49,
+        calories: 370,
+        caloriesMax: null,
+        caloriesUnit: "per kids main dish",
+        caloriesBasis: "calculated",
+        caloriesFormula: "fettuccine 220 + five cheese marinara 150"
+      }
+    ],
+    calories: 320,
+    caloriesMax: 370,
+    caloriesBasis: "kids main dish (pasta + five cheese marinara), depends on the pasta; side and milk extra",
     caloriesSourceUrl: "https://www.olivegarden.com/menu/kids-five-cheese-marinara-with-choice-of-pasta-v/prod2910022",
-    caloriesValueBasis: "official",
-    caloriesFormula: null,
-    caloriesNote: null,
+    caloriesValueBasis: "calculated",
+    caloriesFormula: "kids pasta 170-220 (spaghetti 170, small shells 210, fettuccine 220; guide p. 12-13) + five cheese marinara 150 (online menu item page 150 (the guide has no kids five cheese marinara row))",
+    caloriesNote: "Corrected 2026-11-19 (owner request): the previous value was the sauce alone. The online menu lists the sauce and a separate 305-570 range for pasta, side and milk.",
     calorieExtras: [],
     availability: "available",
     promotion: null,

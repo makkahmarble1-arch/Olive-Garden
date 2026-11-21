@@ -27,6 +27,8 @@
 
 ## Consolidated image replacement manifest (Lesson 8.5.1, 2026-11-14)
 
+**Owner decision 2026-11-20:** the 2-Liter Soda photo (`2-liter-soda`) also shows Fanta and Dr Pepper, which the item does not offer (Coke, Diet Coke, Sprite). Keep it in use; no replacement request.
+
 This is the single list of every open image issue. It was checked against our verified menu descriptions, the research notes, and the official pages named below. It supersedes the scattered notes in the sections below, which are kept as history.
 
 **Classes:**

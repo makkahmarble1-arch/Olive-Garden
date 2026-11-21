@@ -164,7 +164,7 @@ export default function VersionSelector({ versions, unit }: { versions: VersionV
               <p className="flex items-center gap-1.5 text-sm font-semibold text-allergen-text">
                 <Icon name="alert" className="size-4" />
                 {!v.allergensListed
-                  ? "Olive Garden’s U.S. allergen guide does not list this version separately. Ask your server before ordering."
+                  ? "Olive Garden’s U.S. allergen guide has no row for this version. This does not mean it is allergen-free; ask your server before ordering."
                   : v.contains.length > 0
                     ? "Contains, per Olive Garden’s U.S. allergen guide:"
                     : "No listed allergens marked in the guide"}

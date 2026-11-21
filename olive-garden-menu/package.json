@@ -9,6 +9,7 @@
     "lint": "eslint",
     "check:supabase": "node scripts/check-supabase.mjs",
     "test:rating-api": "node scripts/test-rating-api.mjs",
+    "test:calculator": "node scripts/test-calculator.cjs",
     "rating:visitor-hash": "node scripts/rating-visitor-hash.mjs"
   },
   "dependencies": {

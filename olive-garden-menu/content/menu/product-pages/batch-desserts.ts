@@ -194,6 +194,8 @@ export const dessertPages: ProductPageContent[] = [
 
   itemPage({
     slug: "sicilian-cheesecake-with-strawberry-topping",
+    // Same dish as a catering tray / family pan / other listing (owner decision 2026-11-19).
+    equivalentOfferingIds: ["catering--sicilian-cheesecake"],
     primaryOfferingId: "desserts--sicilian-cheesecake-with-strawberry-topping",
     primaryKeyword: "olive garden sicilian cheesecake",
     secondaryKeywords: ["sicilian cheesecake price", "sicilian cheesecake calories", "olive garden cheesecake", "ricotta cheesecake"],

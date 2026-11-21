@@ -13,6 +13,7 @@ import { morePages } from "./batch-more";
 import { sidePages } from "./batch-sides";
 import { versionPages } from "./batch-versions";
 import { finalPages } from "./batch-final";
+import { coveragePages } from "./batch-coverage";
 
 /**
  * All individual menu item pages (/menu/[slug]).
@@ -37,6 +38,7 @@ export const productPages: readonly ProductPageContent[] = [
   ...sidePages,
   ...versionPages,
   ...finalPages,
+  ...coveragePages,
 ];
 
 export { isLiveProductPage, isProductionDeployment, liveProductSlugs } from "./registry";

@@ -191,6 +191,18 @@ Full spec: `docs/product-pages/PRODUCT_PAGE_DESIGN.md`. Summary:
 - Meaning never by color alone; text contrast ≥ 4.5:1; 44 px touch targets; no layout shift (fixed image ratios); only the hero photo is `priority`.
 - The approved header, footer, homepage hero and menu card stay unchanged. Only addition to the card: when the item's page is live, the photo and name link to it plus a small "View details →" link (rating stays outside the link).
 
+### 4.7 Nutrition & Meal Price Calculator (Improvement 7, 2026-11-20, waiting for owner review)
+
+Page `/nutrition-calculator` (`app/nutrition-calculator/page.tsx`, `components/calculator/NutritionCalculator.tsx`). Same palette and premium standard as 4.6; the header, footer, menu card and homepage hero are unchanged.
+
+- **Hero:** dark olive gradient banner (`hero-deep` → `brand-dark`), white H1, `hero-soft` intro, three lime-number fact tiles (items, versions, items with full nutrition), month-year "Prices last verified" line.
+- **Desktop (≥ 1024 px):** two columns, 7 : 5. Left: **Build Your Meal** cream card (`header-cream`): search field (clear button, Escape clears), native category `<select>`, item cards (80 px owner photo, Fraunces name, olive price pill, amber calorie pill, "Full nutrition" lime pill or "Calories only" tint pill, Bundle / Limited time tags, serving line, "Portion or version" select, Details link, lime **Add** button). 24 items per page with "Show more". Right: sticky **Your Meal** white card with an olive gradient header and item-count pill, lines with − / + quantity and × remove (all 44 px), totals: olive price tile, amber calorie tile, four nutrient tiles (protein, carbs, total fat, sodium), price disclosure box, Reset button (allergen red outline).
+- **Partial totals (owner request 2026-11-20, no warning look):** each tile shows its value plus a small muted line, "All 3 items" or "1 of 3 items"; one lime-tint info box, "How these totals are counted", names the dishes without an exact official value (dish names only) and says their price and calories are still counted, plus a tip to open the item page. "Not listed" when nothing is known (never "0"); "≤" when "less than" values are included; calorie ranges as "1,260–2,100". The PDF and print view use the same wording ("Includes 1 of 3 items").
+- **Phones and tablets (< 1024 px):** one column (builder first, meal second); a fixed bottom bar (cream, blurred) shows items, price and calories with a "View meal" button once the meal has an item. The page gets extra bottom padding so the bar never covers content. No horizontal scrolling (checked at 390 px).
+- **Download PDF / Print** (2026-11-20): two 48 px buttons under the totals (filled olive "Download PDF", outlined "Print"), shown only when the meal has items. The PDF and the print view use the same look: dark olive header band, olive table header, cream striped rows, amber "Incomplete" totals, small muted notes and disclaimer.
+- **Below the tool:** "How the Calculator Works" cards with icon tiles (the allergen card uses the allergen red palette), FAQ accordion, Sources box, Related Menus (4 cards).
+- Accessibility: every control has a visible label or an `aria-label` naming the item; a polite live region announces additions and removals; focus rings `brand-dark`; meaning never by color alone (text pills say "Incomplete", "Calories only").
+
 ## 5. Accessibility rules
 
 - Semantic HTML: `header`, `nav`, `main`, `article`, `footer`, `table` with `<th scope>`, `<caption>`.

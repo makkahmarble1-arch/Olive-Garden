@@ -4,6 +4,7 @@ import { getPublishedGuides, guidePath } from "@/content/guides";
 import type { SearchEntry } from "@/lib/site-search";
 import { getLiveProductPages, productPath } from "@/lib/product-pages";
 import { getMenuCategory, getOffering } from "@/lib/content";
+import { isToolPageLive, nutritionCalculatorPage, toolPath } from "@/content/tools/nutrition-calculator";
 
 /**
  * GET /api/search-index: the small static index for the header search
@@ -74,6 +75,18 @@ export function GET() {
     ["Frequently Asked Questions", "Answers to common questions about the menu.", "/#faq", ["faq", "questions"]],
   ];
   for (const [title, description, url, keywords] of sections) entries.push({ title, description, url, kind: "Homepage section", keywords });
+
+  // Nutrition & Meal Price Calculator (tool page), while it is live.
+  if (isToolPageLive(nutritionCalculatorPage)) {
+    const tool = nutritionCalculatorPage;
+    entries.push({
+      title: tool.h1,
+      description: tool.metaDescription,
+      url: toolPath(tool),
+      kind: "Tool",
+      keywords: [tool.name, tool.primaryKeyword, ...tool.secondaryKeywords, "calorie counter", "macros", "protein", "meal planner", "meal cost"],
+    });
+  }
 
   for (const page of Object.values(infoPages)) {
     if (page.status !== "published") continue;

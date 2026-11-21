@@ -232,7 +232,7 @@ export default function ServingSection({ data }: { data: ProductPageData }) {
                       {o.prices[0] ? formatPrice(o.prices[0].amount) : "Not listed"}
                     </td>
                     <td className={`${tableCellClass} text-right whitespace-nowrap tabular-nums`}>
-                      {o.calories !== null ? formatNumber(o.calories) : "Not listed"}
+                      {o.calories !== null ? `${formatNumber(o.calories)}${o.caloriesMax ? `–${formatNumber(o.caloriesMax)}` : ""}` : "Not listed"}
                     </td>
                     <td className={`${tableCellClass} text-muted`}>{calc.length > 0 ? calc.join(" · ") : (o.portionType === "regular" && /appetizer/i.test(o.servingSize ?? "")) ? "Piece count not stated" : "—"}</td>
                   </tr>

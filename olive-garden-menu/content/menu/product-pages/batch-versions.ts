@@ -276,6 +276,8 @@ export const versionPages: ProductPageContent[] = [
 
   itemPage({
     slug: "cheese-ravioli",
+    // Same dish as a catering tray / family pan / other listing (owner decision 2026-11-19).
+    equivalentOfferingIds: ["family-style-meals--cheese-ravioli-with-meat-or-marinara-sauce", "catering--cheese-ravioli-with-marinara-or-meat-sauce"],
     primaryOfferingId: "classic-entrees--cheese-ravioli",
     sizeOfferingIds: ["lunch-menu--cheese-ravioli", "lighter-portions--cheese-ravioli"],
     versions: [

@@ -3,6 +3,30 @@
 **Generated:** 2026-11-18 from `content/menu/` and the central official data
 (`content/menu/nutrition/`, PDFs US_101926). Re-generate after data changes.
 
+## Complete menu coverage round (owner decisions 2026-11-19)
+
+**45 new pages, built as `preview` and published 2026-11-19 after the owner's visual approval.** Total: **122 pages, all `published`** (indexing still off).
+
+- **Soups (3):** Chicken & Gnocchi, Pasta e Fagioli, Minestrone. Detail-only product records in `content/menu/detail-items.ts` (bowl + half gallon + gallon, official rows p. 4 / 21-22); no new homepage cards (the 210 + 21 inventory is unchanged). Rating group: the existing `homemade-soups` (rating data unchanged). Linked from the soups table on `/soups-salad-and-breadsticks` and from search.
+- **Wines (14) and beers (6):** bottle/beer price and menu calories; the guide has only generic values by type (disclosed); the allergen guide does not cover them (disclosed, "not allergen-free").
+- **Simple drinks (7):** fountain drinks, sweet tea, unsweet tea (no guide row, disclosed), 2-liter soda (3 versions, official p. 25 rows), gallons (7 versions; sweet-tea gallon has no row), San Pellegrino, Acqua Panna.
+- **Kids (7):** 4 kids pastas with calculated main-dish calories (pasta + sauce), Kids Rotini with Marinara / Meat Sauce and Kids Grilled Chicken with Rotini (official rows; the gluten-sensitive listings are linked as the same dish).
+- **Bundles and combinations (8):** 4 family-style bundles (lasagna with its large size), Chicken Parmigiana and Lasagna Combinations, Create Your Own Pasta Station (official row p. 24), Dipping Sauces with Breadsticks (calculated). "What's Included" section (`components/product/ComponentsSection.tsx`) lists the official parts with links; totals are Olive Garden's own, never re-added.
+- **Catering and pan versions (14 + 3 same-dish listings):** covered on existing pages through `equivalentOfferingIds` (sizes table + card links); nothing merged.
+- **Kids pasta calories corrected** in `content/menu/offerings/kids-meal.ts`: before, only the sauce was shown. Now pasta + sauce (Calc.): alfredo 610-660, meat sauce 280-330, tomato sauce 250-300, five cheese marinara 320-370. Unresolved: the guide has no kids five cheese marinara row (150 from the online menu is used, documented).
+
+**Coverage after this round (2026-11-19):** 149 products (146 + 3 detail-only soups). 122 have their own page; 17 more are covered on another page (same dish as a catering tray, family pan or gluten-sensitive listing); 27 versions on 10 version-aware pages. 217 of 231 offerings link to an item page.
+
+**Products without an item page (10), each with its reason:**
+- `homemade-soups` (group of four choices): every soup has its own page; the group is covered by `/soups-salad-and-breadsticks`.
+- `soup-salad-and-breadsticks`, `soup-salad-and-breadsticks-lunch`, `weekday-lunch-special`: the meal is the dedicated category page `/soups-salad-and-breadsticks` (no duplicate page).
+- `create-your-own-pasta`: builder covered by the category page `/create-your-own-pasta`.
+- `large-salad`, `rigatoni-alla-vodka`, `four-cheese-manicotti-with-marinara`: not on the current online menu.
+- `side-of-crispy-shrimp-fritta`: calorie conflict (owner decision: keep 200, mapping `conflict`).
+- `cheese-grater`: merchandise, not a menu item.
+
+The tables below are the 2026-11-18 snapshot.
+
 ## Item page status (2026-11-18, end of the item-page phase)
 
 - **146 unique products:**
