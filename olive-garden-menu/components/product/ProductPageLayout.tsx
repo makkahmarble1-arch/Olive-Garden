@@ -87,7 +87,7 @@ export default function ProductPageLayout({ data }: { data: ProductPageData }) {
               <p className="font-display text-lg font-bold text-hero-highlight">Good to know</p>
               <ul className="mt-3 space-y-3 text-sm leading-6">
                 <li>Prices shown are online pickup prices. Dine-in prices were not checked and may differ.</li>
-                <li>{siteConfig.locationNotice} Confirm with your local restaurant.</li>
+                <li>{siteConfig.locationNotice}</li>
                 <li>
                   {page.includes.length > 0
                     ? `Calories are for one ${page.unitLabel ?? "order"} as served; the dipping ${page.includes.length > 1 ? "sauces are" : "sauce is"} listed separately.`

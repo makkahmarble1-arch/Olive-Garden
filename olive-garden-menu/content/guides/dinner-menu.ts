@@ -139,7 +139,7 @@ export const dinnerMenuGuide: GuidePageContent = {
         {
           type: "note",
           text: [
-            "Olive Garden’s FAQ says some regional variations apply, so check your restaurant’s page on the official site before you go. Opening times and holiday hours are on our ",
+            "Olive Garden’s FAQ says some regional variations apply. Opening times and holiday hours are on our ",
             { text: "Olive Garden hours", href: "/hours" },
             " guide.",
           ],
@@ -455,7 +455,7 @@ export const dinnerMenuGuide: GuidePageContent = {
     {
       question: "Is the Olive Garden dinner menu available all day?",
       answer:
-        "On weekends and holidays, yes. On weekdays, the dinner menu takes over from the lunch menu at 3 PM and runs until closing. Olive Garden notes some regional variations, so check with your restaurant.",
+        "On weekends and holidays, yes. On weekdays, the dinner menu takes over from the lunch menu at 3 PM and runs until closing. Olive Garden notes some regional variations.",
     },
     {
       question: "Is there a separate Olive Garden dinner menu?",

@@ -2,6 +2,7 @@ import { getCategoryPageContent, getMenuCategoriesWithPages, menuCategoryPath, m
 import { infoPages, infoPagePath } from "@/content/site/info-pages";
 import { getPublishedGuides, guidePath } from "@/content/guides";
 import { isToolPageLive, nutritionCalculatorPage, toolPath } from "@/content/tools/nutrition-calculator";
+import { MENU_PDF_SECTION_HREF } from "@/lib/menu-pdf-info";
 
 /** Nutrition Calculator link while the tool is live (preview: not on the production deployment). */
 function calculatorLink(): NavChild[] {
@@ -91,6 +92,7 @@ export function getMainNav(): NavItem[] {
       { label: "Popular Menu Items", href: "/#popular-menu-items" },
       { label: "Nutrition & Dietary Options", href: "/#nutrition" },
       ...calculatorLink(),
+      { label: "Menu PDF", href: MENU_PDF_SECTION_HREF },
       { label: "How to Order Online", href: "/#order-online" },
       { label: "FAQ", href: "/#faq" },
       ...published("prices"),
@@ -123,6 +125,7 @@ export function getFooterColumns(): FooterColumn[] {
       heading: "Popular Menus",
       links: [
         { label: "Full Menu", href: menuPath },
+        { label: "Menu PDF", href: MENU_PDF_SECTION_HREF },
         ...pick([["Lunch Menu", "lunch-menu"], ["Dinner Menu", "dinner-menu"], ["Kids Menu", "kids-meal"], ["Catering Menu", "catering"], ["Dessert Menu", "desserts"]]),
       ],
     },

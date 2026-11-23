@@ -267,16 +267,6 @@ export default function NutritionSection({ data }: { data: ProductPageData }) {
                     for this item, so we do not show numbers.{" "}
                   </>
                 )}
-                <a
-                  href={siteConfig.nutritionSource.url}
-                  rel="nofollow noopener"
-                  target="_blank"
-                  className="font-medium text-brand-dark underline underline-offset-4 hover:text-brand-darker focus-visible:outline-2 focus-visible:outline-brand-dark"
-                >
-                  Open the official nutrition guide (PDF)
-                  <span className="sr-only"> (opens in a new tab)</span>
-                </a>
-                .
               </p>
             </div>
           )}

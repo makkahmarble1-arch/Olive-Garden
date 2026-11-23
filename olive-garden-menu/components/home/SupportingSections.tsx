@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import type { MenuOffering } from "@/lib/types";
 import { formatMonthYear } from "@/lib/format";
 import { siteConfig } from "@/lib/site";
-import { getMenuCategory, menuCategoryPath } from "@/lib/content";
+import { getMenuCategory, menuCategoryPath, menuPath } from "@/lib/content";
 import { offeringValues } from "@/lib/menu-display";
 import {
   deals,
@@ -17,9 +17,7 @@ import {
   hoursCheckedAt,
   hoursNotes,
   nutritionParagraphs,
-  nutritionResources,
   officialLinks,
-  officialResourceLinks,
   orderNote,
   orderSteps,
   popularIntro,
@@ -33,6 +31,28 @@ import JsonLd from "@/components/seo/JsonLd";
 import { getPublishedGuides, guidePath } from "@/content/guides";
 
 /* ---------- Shared building blocks ---------- */
+
+/**
+ * Owner decision 2026-11-21: helpful sections link to pages on this site, not
+ * to external sites. Only citations (Sources) keep their official links.
+ */
+const internalLinkClass =
+  "font-medium text-brand-dark underline underline-offset-4 hover:text-brand-darker focus-visible:outline-2 focus-visible:outline-brand-dark";
+
+const nutritionHelpLinks = [
+  { label: "Nutrition calculator", href: "/nutrition-calculator" },
+  { label: "Gluten-free menu", href: "/gluten-sensitive" },
+  { label: "Lighter portions", href: "/lighter-portions" },
+  { label: "Kids menu", href: "/kids-meal" },
+];
+
+const helpfulGuideLinks = [
+  { label: "Olive Garden dinner menu", href: "/dinner-menu" },
+  { label: "Olive Garden hours", href: "/hours" },
+  { label: "Nutrition calculator", href: "/nutrition-calculator" },
+  { label: "Menu with prices (PDF)", href: "/downloads/olive-garden-menu-with-prices.pdf" },
+  { label: "How we check prices", href: "/how-we-check-prices" },
+];
 
 function HomeSection({
   id,
@@ -133,9 +153,7 @@ export function DealsSection() {
             {deals.map((deal) => (
               <tr key={deal.name} className="border-t border-line">
                 <th scope="row" className={`${td} font-semibold text-ink`}>
-                  <ExternalLink href={deal.sourceUrl} className="font-semibold">
-                    {deal.name}
-                  </ExternalLink>
+                  {deal.name}
                 </th>
                 <td className={`${td} font-semibold whitespace-nowrap text-ink tabular-nums`}>{deal.price}</td>
                 <td className={`${td} text-ink`}>{deal.when}</td>
@@ -218,8 +236,8 @@ export function HoursSection() {
       </ul>
       <p className="mt-3 text-sm text-muted">
         Source: Olive Garden&rsquo;s official restaurant pages, verified{" "}
-        <time dateTime={hoursCheckedAt}>{formatMonthYear(hoursCheckedAt)}</time>. Find your own restaurant&rsquo;s hours
-        with the <ExternalLink href={officialLinks.locator}>official restaurant locator</ExternalLink>.
+        <time dateTime={hoursCheckedAt}>{formatMonthYear(hoursCheckedAt)}</time>. Your own restaurant&rsquo;s page on
+        Olive Garden&rsquo;s website shows its exact hours.
       </p>
       <HoursGuideLink label="See all Olive Garden hours" />
     </HomeSection>
@@ -249,7 +267,7 @@ export function HolidaySection() {
                 <td className={td}>
                   <span className={row.confirmed ? "font-semibold text-ink" : "text-muted"}>{row.status}</span>
                   <span className="block text-xs text-muted">
-                    {row.confirmed ? "Confirmed by Olive Garden" : "Check with your restaurant"}
+                    {row.confirmed ? "Confirmed by Olive Garden" : "Not announced by Olive Garden"}
                   </span>
                 </td>
               </tr>
@@ -259,7 +277,7 @@ export function HolidaySection() {
       </TableWrap>
       <p className="mt-4 max-w-3xl leading-7 text-muted">{holidayNote}</p>
       <p className="mt-3 text-sm text-muted">
-        Source: <ExternalLink href={officialLinks.faqs}>Olive Garden FAQs</ExternalLink>, verified{" "}
+        Source: Olive Garden FAQs, verified{" "}
         <time dateTime={hoursCheckedAt}>{formatMonthYear(hoursCheckedAt)}</time>.
       </p>
       <HoursGuideLink hash="#holiday-hours" label="See holiday hours for the whole year" />
@@ -316,11 +334,13 @@ export function NutritionSection({ lowerCalorie }: { lowerCalorie: MenuOffering[
         </p>
       </div>
 
-      <p className="mt-6 font-semibold text-ink">Official nutrition and allergen resources</p>
+      <p className="mt-6 font-semibold text-ink">More nutrition help on this site</p>
       <ul className="mt-2 flex flex-wrap gap-x-6 gap-y-2">
-        {nutritionResources.map((link) => (
+        {nutritionHelpLinks.map((link) => (
           <li key={link.href}>
-            <ExternalLink href={link.href}>{link.label}</ExternalLink>
+            <Link href={link.href} className={internalLinkClass}>
+              {link.label}
+            </Link>
           </li>
         ))}
       </ul>
@@ -353,9 +373,15 @@ export function OrderOnlineSection() {
       </ol>
       <p className="mt-4 max-w-3xl leading-7 text-muted">{orderNote}</p>
       <p className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
-        <ExternalLink href={officialLinks.orderOnline}>Official ordering page</ExternalLink>
-        <ExternalLink href={officialLinks.locator}>Find a restaurant</ExternalLink>
-        <ExternalLink href={officialLinks.catering}>Catering</ExternalLink>
+        <Link href={menuPath} className={internalLinkClass}>
+          Plan your order with prices
+        </Link>
+        <Link href="/hours" className={internalLinkClass}>
+          Ordering hours
+        </Link>
+        <Link href="/catering" className={internalLinkClass}>
+          Catering menu
+        </Link>
       </p>
     </HomeSection>
   );
@@ -430,11 +456,13 @@ export function ImportantLinks({ categoryPages }: { categoryPages: { slug: strin
           <p className="mt-2 text-sm text-muted">More category guides are added as they are completed.</p>
         </div>
         <div>
-          <p className="font-display text-lg font-bold text-ink">Official Olive Garden resources</p>
+          <p className="font-display text-lg font-bold text-ink">More helpful guides</p>
           <ul className="mt-3 grid gap-x-6 sm:grid-cols-2">
-            {officialResourceLinks.map((link) => (
+            {helpfulGuideLinks.map((link) => (
               <li key={link.href} className="flex min-h-11 items-center">
-                <ExternalLink href={link.href}>{link.label}</ExternalLink>
+                <Link href={link.href} className={internalLinkClass}>
+                  {link.label}
+                </Link>
               </li>
             ))}
           </ul>
@@ -460,11 +488,15 @@ export function SourcesList() {
         <ul className="mt-3 space-y-2 text-sm leading-6 text-muted">
           {homepageSources.map((source) => (
             <li key={source.href}>
-              <ExternalLink href={source.href}>{source.label}</ExternalLink>
+              <span className="font-medium text-ink">{source.label}</span>
               <span className="block">{source.note}</span>
             </li>
           ))}
         </ul>
+        {/* The one external link on the page (owner decision 2026-11-21). */}
+        <p className="mt-3 text-sm leading-6 text-muted">
+          All of these are published on the <ExternalLink href={officialLinks.website}>Olive Garden website</ExternalLink>.
+        </p>
         <p className="mt-4 text-sm leading-6 text-muted">
           No third-party (estimated) values are used on this page. Our research notes record the source and check
           date of every value.

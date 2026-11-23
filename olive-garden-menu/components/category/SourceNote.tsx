@@ -49,15 +49,25 @@ export default function SourceNote({ officialSource, extraSource, lastChecked, s
           </>
         )}
       </p>
+      {/*
+        Owner decision 2026-11-21: one external link per page, the Olive Garden
+        website. Specific documents (nutrition or allergen PDFs, FAQ, locator)
+        are named as plain text, never linked.
+      */}
       <ul className="mt-3 space-y-1.5 text-sm leading-6 text-ink">
         <li>
-          <strong className="font-semibold">Official source:</strong> <SourceLink source={officialSource} />
+          <strong className="font-semibold">Official source:</strong> <SourceLink source={siteConfig.officialSource} />
         </li>
-        {extraSource && (
-          <li>
-            <strong className="font-semibold">Also see:</strong> <SourceLink source={extraSource} />
-          </li>
-        )}
+        {(() => {
+          const named = [officialSource, extraSource].filter(
+            (s): s is Source => Boolean(s) && s!.url !== siteConfig.officialSource.url,
+          );
+          return named.length > 0 ? (
+            <li>
+              <strong className="font-semibold">Also checked:</strong> {named.map((s) => s.label).join("; ")}
+            </li>
+          ) : null;
+        })()}
         {lastChecked && (
           <li>
             <strong className="font-semibold">Last verified:</strong>{" "}

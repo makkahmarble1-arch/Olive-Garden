@@ -304,7 +304,7 @@ const CATERING_RELATED: RelatedMenuRef[] = [
 const BUNDLE_NUTRITION =
   "Olive Garden lists only the total calories for this order. Its nutrition guide lists the parts separately, not the order as a whole, so fat, sodium, carbohydrate and protein totals are not shown.";
 const BUNDLE_ALLERGEN =
-  "Olive Garden’s U.S. allergen guide does not cover family-style and catering orders. This does not mean they are allergen-free; check each dish’s own page and ask the restaurant about any allergy.";
+  "Olive Garden’s U.S. allergen guide does not cover family-style and catering orders. This does not mean they are allergen-free; check each dish’s own page and tell your server about any allergy.";
 const SALAD_PAN = "family-style-meals--famous-house-salad";
 const STICKS = "family-style-meals--breadsticks";
 const BUNDLE_PAIRINGS: ProductPageContent["pairings"] = [
@@ -426,7 +426,7 @@ export const coveragePages: ProductPageContent[] = [
     compareHeading: "How fountain drinks compare with other drinks",
     faqs: [
       { question: "Does Olive Garden serve Coke or Pepsi?", answer: "The to-go fountain drinks on Olive Garden’s online menu are Coca-Cola products (Coke, Diet Coke, Coke Zero Sugar, Sprite) plus Dr Pepper and ginger ale." },
-      { question: "Are soda refills free at Olive Garden?", answer: "Olive Garden’s online menu does not state a refill policy for to-go drinks, so check with your restaurant." },
+      { question: "Are soda refills free at Olive Garden?", answer: "Olive Garden’s online menu does not state a refill policy for to-go drinks." },
     ],
     related: DRINK_RELATED,
   }),
@@ -945,7 +945,7 @@ export const coveragePages: ProductPageContent[] = [
     compareHeading: "How the ziti bundle compares with other family bundles",
     faqs: [
       { question: "Which Olive Garden family bundle is the cheapest?", answer: "At the prices we checked, the Five Cheese Ziti al Forno Bundle was the lowest-priced of the four family bundles for 4 to 6 people." },
-      { question: "Is the ziti bundle vegetarian?", answer: "Olive Garden marks Five Cheese Ziti al Forno itself with its vegetarian (V) label, but it does not label the bundle; ask the restaurant if this matters to you." },
+      { question: "Is the ziti bundle vegetarian?", answer: "Olive Garden marks Five Cheese Ziti al Forno itself with its vegetarian (V) label, but it does not label the bundle." },
     ],
     related: FAMILY_RELATED,
   }),

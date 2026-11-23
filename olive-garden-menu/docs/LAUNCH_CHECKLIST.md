@@ -244,6 +244,14 @@ Reports:
 - [ ] At launch: `SITE_INDEXING=true` (owner approval); then every published item page enters the sitemap automatically.
 - [x] Re-checked 2026-11-18 (official site reachable again): Calabrian Bucatini price conflict resolved ($25.29 / $27.29 / $25.29, data updated); Spicy Alfredo and Pumpkin Cookie Butter Cheesecake still on the menu (limited time: re-check periodically).
 
+## 18. Homepage Menu PDF (Improvement 8, 2026-11-21, not committed yet)
+
+- [x] Section `/#menu-pdf` and the build-time PDF `/downloads/olive-garden-menu-with-prices.pdf` (docs in `docs/tools/MENU_PDF_*.md`); header, footer and search entries.
+- [x] `npm run test:menu-pdf`, TypeScript, ESLint, production build, browser tests (results in `MENU_PDF_TEST_REPORT.md`).
+- [ ] Owner review of the section and the PDF.
+- [ ] After deploying: download, view and print once on a real phone and a desktop browser; check that the PDF response has `X-Robots-Tag: noindex`.
+- [ ] When the logo or the homepage hero photo changes: `node scripts/menu-pdf-assets.mjs`.
+
 ## 17. Nutrition & Meal Price Calculator (Improvement 7, 2026-11-20, not committed yet)
 
 - [x] `/nutrition-calculator` built as `preview` (docs in `docs/tools/`); integrated in the header "More" dropdown, footer "Explore More" and site search while live; sitemap entry prepared for `published`.
@@ -253,4 +261,27 @@ Reports:
 - [x] Production simulation (`VERCEL_ENV=production` build, 2026-11-20): `/nutrition-calculator` HTTP 404, no header/footer/search link, not in the sitemap.
 - [ ] After deploying a preview: check the page once on a real phone.
 - [ ] When prices or calories are re-checked: re-run `npm run test:calculator` (named examples) and the build.
+
+## 19. Launch readiness (owner decision 2026-11-22: launch the completed site)
+
+**Launch scope (150 pages, checked from the real route inventory):** homepage `/` (with `#menu-pdf`), 17 category pages, `/dinner-menu`, `/hours`, `/nutrition-calculator`, 122 `/menu/{slug}` item pages (all `published`), 7 information/legal pages (`/about-us`, `/contact-us`, `/privacy-policy`, `/terms-and-conditions`, `/disclaimer`, `/editorial-policy`, `/how-we-check-prices`, all `published`). Plus the static file `/downloads/olive-garden-menu-with-prices.pdf` (always `noindex`). No preview, draft or placeholder pages remain; `/design-preview`, `/menu-pdf`, `/coupons`, `/blog`, `/downloads` are 404; `/menu` is a 308 to `/`. **POST-LAUNCH** (not part of this launch, no routes created): coupons/promo codes, Never-Ending Pasta Bowl article, holiday hours articles, blog, Specials & Deals article, more calculators/tools, Menu PDF owner review and real-device checks; details in `docs/POST_LAUNCH_ROADMAP.md`.
+
+**Checks run 2026-11-22 (local, sequential):**
+- [x] TypeScript clean, ESLint clean, `npm run test:calculator` 26/26, `npm run test:menu-pdf` 13/13, production build 167 routes.
+- [x] Audit of all 150 pages (normal build): HTTP 200, one H1, unique titles, descriptions 50-180 characters, self-canonical, footer disclaimer, allowed JSON-LD only, no reference location; 151 internal links, 0 broken; 404 checks OK; every article page has exactly one external link (`https://www.olivegarden.com/`) and no redirect wording.
+- [x] Launch simulation (`VERCEL_ENV=production SITE_INDEXING=true NEXT_PUBLIC_SITE_URL=https://olivegardenmenuprices.us`): 150/150 pages `index, follow` with canonicals on the domain; sitemap = exactly those 150 URLs; robots.txt allows crawling (except `/api/`) and announces the sitemap; the PDF stays `noindex` with a canonical to the homepage.
+- [x] Indexing switch made production-only (`lib/site.ts`): `SITE_INDEXING=true` without the Production deployment stays `noindex` (checked for all four combinations).
+- [x] No secrets in the pending changes; `.env.local` git-ignored.
+
+**Before launch (owner, in Vercel/DNS; blockers):**
+- [ ] Choose ONE Vercel project for the site (two projects deploy this repository: `olive-garden` and `olive-garden-menu-prices`).
+- [ ] In that project, Production environment variables: `NEXT_PUBLIC_SITE_URL=https://olivegardenmenuprices.us`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`, `RATING_HASH_SECRET`, `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` (2026-11-22 the `olive-garden-menu-prices` production showed canonical `http://localhost:3000`, ratings unavailable and the contact form switched off, so these are missing there). Do **not** add `SITE_INDEXING` yet.
+- [ ] Add the domain `olivegardenmenuprices.us` (and `www`) to that Vercel project and point DNS to Vercel. Today the domain serves the owner's WordPress site; switching DNS replaces it (owner decision).
+- [ ] Owner review of the Menu PDF section (Improvement 8), then commit and push.
+- [ ] After deploying: canonical shows the domain, `/api/ratings` returns `available: true`, the contact form is enabled (send one labeled test), PDF downloads.
+
+**Indexing activation (only after the above, owner approval):**
+- [ ] Vercel → Project → Settings → Environment Variables → add `SITE_INDEXING` = `true` for **Production only** → redeploy Production.
+- [ ] Check `https://olivegardenmenuprices.us/robots.txt` (announces the sitemap), `/sitemap.xml` (150 URLs), and a page's `<meta name="robots" content="index, follow">`.
+- [ ] Google Search Console: add the Domain property (DNS TXT), submit `https://olivegardenmenuprices.us/sitemap.xml`, request indexing for the homepage.
 

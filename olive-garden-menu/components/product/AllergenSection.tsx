@@ -1,5 +1,4 @@
 import SectionHeading from "@/components/ui/SectionHeading";
-import { officialLinks } from "@/content/home/homepage";
 import { allergenGuideNotes } from "@/content/menu/nutrition/documents";
 import { formatMonthYear } from "@/lib/format";
 import { getAllergenMapping } from "@/lib/nutrition-data";
@@ -24,20 +23,6 @@ export const ALLERGEN_LABELS: Record<AllergenId, string> = {
 };
 const ALL_ALLERGENS = Object.keys(ALLERGEN_LABELS) as AllergenId[];
 
-function OfficialLink({ href, children }: { href: string; children: string }) {
-  return (
-    <a
-      href={href}
-      rel="nofollow noopener"
-      target="_blank"
-      className="inline-flex min-h-11 items-center gap-1.5 font-semibold text-allergen-text underline underline-offset-4 hover:no-underline focus-visible:outline-2 focus-visible:outline-allergen-text"
-    >
-      <Icon name="link" className="size-4" />
-      {children}
-      <span className="sr-only"> (opens in a new tab)</span>
-    </a>
-  );
-}
 
 /**
  * Ingredients, allergens and dietary labels (docs/product-pages/PRODUCT_PAGE_DESIGN.md §6).
@@ -46,7 +31,7 @@ function OfficialLink({ href, children }: { href: string; children: string }) {
  *   (content/menu/nutrition/): "contains" chips, the guide's other columns as
  *   "not marked", and the prep marks (fried in soy oil / grilled). Every
  *   status is written in words, never shown by color alone. Without an
- *   official row the card says so and links to the guide.
+ *   official row the card says so (no external links: owner decision 2026-11-21).
  * - Dietary: official labels exactly as the menu shows them.
  */
 export default function AllergenSection({ data }: { data: ProductPageData }) {
@@ -134,10 +119,10 @@ export default function AllergenSection({ data }: { data: ProductPageData }) {
                 : "Official allergen list not verified yet"}
             </p>
           )}
-          <div className="mt-3 flex flex-col">
-            <OfficialLink href={officialLinks.allergenPdf}>Official allergen guide (PDF)</OfficialLink>
-            <OfficialLink href={officialLinks.allergens}>Olive Garden food allergy information</OfficialLink>
-          </div>
+          <p className="mt-3 text-sm leading-6 text-allergen-text">
+            <strong className="font-semibold">Have an allergy?</strong> Tell your server before you order, and Olive
+            Garden will flag your order for the kitchen. Kitchens are shared, so cross-contact is possible.
+          </p>
         </div>
 
         {/* Ingredients */}
@@ -214,7 +199,7 @@ export default function AllergenSection({ data }: { data: ProductPageData }) {
         </ul>
         <p className="mt-3 text-sm leading-6 text-ink">
           <strong className="font-semibold text-allergen-text">Before you order:</strong> this page is general
-          information. Recipes and suppliers can change, so check Olive Garden’s current allergen guide and tell your
+          information. Recipes and suppliers can change, so tell your
           server about any food allergy before ordering {primary.displayName}.
         </p>
       </div>

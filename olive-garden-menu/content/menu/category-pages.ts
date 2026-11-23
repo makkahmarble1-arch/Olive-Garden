@@ -216,7 +216,7 @@ export const categoryPages: CategoryPageContent[] = [
             type: "list",
             ordered: true,
             items: [
-              ["Open Olive Garden’s ", { text: "online ordering page", href: "https://www.olivegarden.com/order-online" }, " and choose To Go."],
+              "Order online and choose To Go.",
               "Pick your restaurant, then choose pickup or delivery where your restaurant offers it.",
               "Add a bundle, or a pan plus the salad, soup, or breadsticks you want, and check the price shown for your location.",
             ],
@@ -406,11 +406,7 @@ export const categoryPages: CategoryPageContent[] = [
           },
           {
             type: "paragraph",
-            text: [
-              "Fried Mozzarella, Stuffed Ziti Fritta, and Spinach-Artichoke Dip do not list meat in their descriptions, but they are not marked (V) on the online menu we checked, so we do not call them vegetarian. For ingredient details, see Olive Garden’s ",
-              { text: "vegetarian and vegan menu (PDF)", href: "https://media.olivegarden.com/en_us/pdf/olive-garden-veg-vegan.pdf" },
-              " or ask your server.",
-            ],
+            text: "Fried Mozzarella, Stuffed Ziti Fritta, and Spinach-Artichoke Dip do not list meat in their descriptions, but they are not marked (V) on the online menu we checked, so we do not call them vegetarian. If you avoid meat, ask your server about the ingredients.",
           },
         ],
       },
@@ -683,11 +679,7 @@ export const categoryPages: CategoryPageContent[] = [
           },
           {
             type: "paragraph",
-            text: [
-              "Dishes without the (V) mark are not listed as vegetarian here. For full ingredient details, see Olive Garden’s ",
-              { text: "vegetarian and vegan menu (PDF)", href: "https://media.olivegarden.com/en_us/pdf/olive-garden-veg-vegan.pdf" },
-              ".",
-            ],
+            text: "Dishes without the (V) mark are not listed as vegetarian here. If you avoid meat, ask your server about the ingredients.",
           },
         ],
       },
@@ -841,9 +833,7 @@ export const categoryPages: CategoryPageContent[] = [
           {
             type: "note",
             text: [
-              "Prices quoted for Buy One Take One on other websites (for example “from $14.99”) come from earlier campaigns and are not current offers. If the promotion returns, Olive Garden announces it on its ",
-              { text: "specials page", href: "https://www.olivegarden.com/specials" },
-              ".",
+              "Prices quoted for Buy One Take One on other websites (for example “from $14.99”) come from earlier campaigns and are not current offers. If the promotion returns, we will update this page once we have verified the new offer.",
             ],
           },
         ],
@@ -1872,13 +1862,13 @@ export const categoryPages: CategoryPageContent[] = [
             items: [
               "Monday to Friday: from 3 PM, when the lunch menu ends, until closing.",
               "Saturday and Sunday: all day.",
-              "Holidays: Olive Garden serves its dinner menu all day on holidays, but the pages we checked do not say whether lighter portions are included. Ask your restaurant.",
+              "Holidays: Olive Garden serves its dinner menu all day on holidays, but the pages we checked do not say whether lighter portions are included.",
               "Online ordering: lighter portions were on the online pickup menu. At the restaurant we checked, online orders closed 20 minutes before closing time.",
             ],
           },
           {
             type: "note",
-            text: "Times were checked in November 2026. Hours, prices, and menus can differ by restaurant across the USA, so check your own location before you go.",
+            text: "Times were checked in November 2026. Hours, prices, and menus can differ by restaurant across the USA.",
           },
           {
             type: "paragraph",
@@ -2307,7 +2297,7 @@ export const categoryPages: CategoryPageContent[] = [
           { type: "subheading", text: "Is Create Your Own Pasta unlimited?" },
           {
             type: "paragraph",
-            text: "No. Create Your Own Pasta is one plate. Olive Garden’s Never-Ending Pasta Bowl is a separate, limited-time promotion: in November 2026, it started at $14.99, refills were for dine-in guests only, and its sauce list included Alfredo. Check Olive Garden’s specials page to see whether it is running now.",
+            text: "No. Create Your Own Pasta is one plate. Olive Garden’s Never-Ending Pasta Bowl is a separate, limited-time promotion: in November 2026, it started at $14.99, refills were for dine-in guests only, and its sauce list included Alfredo. It may not be running now.",
           },
           {
             type: "paragraph",
@@ -2613,7 +2603,7 @@ export const categoryPages: CategoryPageContent[] = [
           },
           {
             type: "note",
-            text: "Restaurant hours and lunch hours are not the same thing: the restaurant stays open until night, but lunch prices end at 3 PM. Hours are set by each restaurant, so check your location’s page before you go.",
+            text: "Restaurant hours and lunch hours are not the same thing: the restaurant stays open until night, but lunch prices end at 3 PM. Hours are set by each restaurant.",
           },
         ],
       },
@@ -2784,7 +2774,7 @@ export const categoryPages: CategoryPageContent[] = [
       "The Pumpkin Cookie Butter Cheesecake is labeled limited time. The other six desserts are labeled vegetarian (V) on the online menu.",
     ],
     nutritionNotes: [
-      "Calories are for one dessert. For allergens, use Olive Garden’s official allergen guide and tell your server.",
+      "Calories are for one dessert. Each dessert’s item page lists the allergens Olive Garden marks for it; always tell your server about any allergy.",
     ],
     featuredOfferingIds: [
       "desserts--tiramisu",
@@ -3622,7 +3612,7 @@ export const categoryPages: CategoryPageContent[] = [
           { type: "comparison", id: "lowest-calorie-drinks" },
           {
             type: "note",
-            text: "These are Olive Garden’s published calorie values, not health advice. For sugar, caffeine, or allergens, check Olive Garden’s official nutrition and allergen guides.",
+            text: "These are Olive Garden’s published calorie values, not health advice. If you have a food allergy, tell your server before you order.",
           },
         ],
       },
@@ -3706,7 +3696,7 @@ export const categoryPages: CategoryPageContent[] = [
       {
         question: "Does Olive Garden offer free drink refills?",
         answer:
-          "We could not confirm a refill policy from an official Olive Garden source. Ask your server at your restaurant.",
+          "We could not confirm a refill policy from an official Olive Garden source.",
       },
       {
         question: "Can you order gallon-size drinks to go?",
@@ -3889,7 +3879,7 @@ export const categoryPages: CategoryPageContent[] = [
           {
             type: "paragraph",
             text: [
-              "This page is not legal advice; check with your restaurant. For alcohol-free choices, see the ",
+              "This page is not legal advice. For alcohol-free choices, see the ",
               { text: "Olive Garden non-alcoholic drinks", href: "/non-alcoholic-beverages" },
               " page, and for every drink type, the ",
               { text: "Olive Garden drink menu", href: "/drink-menu" },
@@ -3935,7 +3925,7 @@ export const categoryPages: CategoryPageContent[] = [
       {
         question: "Are wine and beer available at every Olive Garden location?",
         answer:
-          "No. Olive Garden says wine and beer to go are available at select locations where permitted by law. Choose your restaurant on the ordering page to see whether it sells them.",
+          "No. Olive Garden says wine and beer to go are available at select locations where permitted by law, so not every restaurant sells them.",
       },
     ],
     related: [
@@ -3980,7 +3970,7 @@ export const categoryPages: CategoryPageContent[] = [
     contentReviewedAt: REVIEWED_B4,
     tableHeading: "Olive Garden Gluten-Sensitive Menu Prices and Calories",
     tableIntro: [
-      "Important: Olive Garden’s kitchens are shared and have no separate fryer, and gluten-sensitive dishes are not tested to the FDA gluten-free limit. These dishes are not guaranteed safe for people with celiac disease or a wheat allergy. Tell your server about your needs and check Olive Garden’s official allergen guide.",
+      "Important: Olive Garden’s kitchens are shared and have no separate fryer, and gluten-sensitive dishes are not tested to the FDA gluten-free limit. These dishes are not guaranteed safe for people with celiac disease or a wheat allergy. Tell your server about your needs, and check the allergen list on each dish’s item page here.",
     ],
     tableCaption: "Olive Garden Gluten-Sensitive Menu: Prices and Calories",
     priceNotes: [
@@ -4126,7 +4116,7 @@ export const categoryPages: CategoryPageContent[] = [
             type: "list",
             items: [
               "First course: Famous House Salad without croutons (110 calories) or, where available, Zuppa Toscana (220 calories).",
-              "Dressing and other salad ingredients are not listed separately on the gluten-sensitive menu; check the allergen guide for details.",
+              "Dressing and other salad ingredients are not listed separately on the gluten-sensitive menu; ask your server about them if you have an allergy.",
             ],
           },
         ],
@@ -4158,7 +4148,7 @@ export const categoryPages: CategoryPageContent[] = [
         blocks: [
           {
             type: "note",
-            text: "Olive Garden’s kitchens prepare many dishes with wheat, and there is no separate fryer. Cross-contact can happen even with gluten-sensitive dishes, so they are not a guarantee for people with celiac disease or a wheat allergy. Please make your own decision with Olive Garden’s official allergen guide and, if needed, your doctor.",
+            text: "Olive Garden’s kitchens prepare many dishes with wheat, and there is no separate fryer. Cross-contact can happen even with gluten-sensitive dishes, so they are not a guarantee for people with celiac disease or a wheat allergy. Please make your own decision with the allergen list on each dish’s item page, your server, and, if needed, your doctor.",
           },
           {
             type: "list",
@@ -4223,7 +4213,7 @@ export const categoryPages: CategoryPageContent[] = [
       {
         question: "Is Olive Garden gluten-sensitive food suitable for people with celiac disease?",
         answer:
-          "Olive Garden does not guarantee it. Its gluten-sensitive dishes are not tested to the FDA gluten-free limit, kitchens are shared, and there is no separate fryer. People with celiac disease should review the official allergen guide and talk to their server.",
+          "Olive Garden does not guarantee it. Its gluten-sensitive dishes are not tested to the FDA gluten-free limit, kitchens are shared, and there is no separate fryer. People with celiac disease should review the allergen list on each dish’s item page and talk to their server.",
       },
       {
         question: "Which Olive Garden soup and salad are gluten-sensitive?",
@@ -4397,7 +4387,7 @@ export const categoryPages: CategoryPageContent[] = [
         blocks: [
           {
             type: "paragraph",
-            text: "Olive Garden words the age limit two ways. The kids menu says the meals are for children under 12, while Olive Garden’s FAQ says the kids menu is for ages 12 and under. If your child is exactly 12, ask your restaurant which rule it follows.",
+            text: "Olive Garden words the age limit two ways. The kids menu says the meals are for children under 12, while Olive Garden’s FAQ says the kids menu is for ages 12 and under. For a child who is exactly 12, the two wordings differ.",
           },
         ],
       },
@@ -4407,7 +4397,7 @@ export const categoryPages: CategoryPageContent[] = [
         blocks: [
           {
             type: "paragraph",
-            text: "We found no kids-eat-free offer on Olive Garden’s official specials, menu, or FAQ pages when we checked in November 2026. Olive Garden also says it does not have a rewards program. If you see a kids-eat-free deal advertised, confirm it with your restaurant before you go.",
+            text: "We found no kids-eat-free offer on Olive Garden’s official specials, menu, or FAQ pages when we checked in November 2026. Olive Garden also says it does not have a rewards program.",
           },
         ],
       },
@@ -4456,12 +4446,12 @@ export const categoryPages: CategoryPageContent[] = [
       {
         question: "What age is the Olive Garden kids menu for?",
         answer:
-          "The kids menu says children under 12, and Olive Garden’s FAQ says ages 12 and under. Ask your restaurant if your child is 12.",
+          "The kids menu says children under 12, and Olive Garden’s FAQ says ages 12 and under. The two wordings differ for a child who is exactly 12.",
       },
       {
         question: "Do kids eat free at Olive Garden?",
         answer:
-          "We found no kids-eat-free offer on Olive Garden’s official pages in November 2026, and Olive Garden has no rewards program. Confirm any advertised deal with your restaurant.",
+          "We found no kids-eat-free offer on Olive Garden’s official pages in November 2026, and Olive Garden has no rewards program.",
       },
       {
         question: "What sides come with kids meals?",
@@ -4753,7 +4743,7 @@ export const categoryPages: CategoryPageContent[] = [
           { type: "servingPlan", id: "plan-50" },
           {
             type: "paragraph",
-            text: "Five stations are more than the 3-station online pickup limit, so order them for delivery (up to 8 stations, 24 hours’ notice) or call the restaurant. Based on the upper count of 14, four combinations ($896.00) would be the minimum.",
+            text: "Five stations are more than the 3-station online pickup limit, so order them for delivery (up to 8 stations, 24 hours’ notice). Based on the upper count of 14, four combinations ($896.00) would be the minimum.",
           },
           { type: "subheading", text: "Catering for 100 People" },
           { type: "servingPlan", id: "plan-100" },
@@ -4794,7 +4784,7 @@ export const categoryPages: CategoryPageContent[] = [
             type: "list",
             items: [
               "Delivery minimum: $100 (Olive Garden catering page). We did not find a minimum for pickup orders.",
-              "Delivery fee: the catering page lists 10% up to $500 and 5% after that. Ask your restaurant how it applies to your order.",
+              "Delivery fee: the catering page lists 10% up to $500 and 5% after that.",
               "Timing: order by 5 PM for next-day lunch delivery. Pasta stations for delivery need 24 hours’ notice, and lasagna pans need about 2 hours.",
               "Setup: a chafing kit is available on request.",
             ],
@@ -4828,9 +4818,9 @@ export const categoryPages: CategoryPageContent[] = [
             type: "list",
             ordered: true,
             items: [
-              "Open Olive Garden’s ordering page, choose Catering, and select your restaurant.",
+              "Order online, choose Catering, and select your restaurant.",
               "Choose pickup or delivery and the date and time.",
-              "Add packages, pans, and extras; for pickup orders over $350, call the restaurant.",
+              "Add packages, pans, and extras. Online pickup orders over $350 are placed by phone.",
               "For weddings, offices, and other events, Olive Garden’s catering page lists business, event, and bridal catering.",
             ],
           },

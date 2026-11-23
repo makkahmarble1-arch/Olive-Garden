@@ -1,0 +1,16 @@
+{
+  "logo": {
+    "file": "logo.jpg",
+    "source": "public/images/brand/logo-icon.webp",
+    "width": 138,
+    "height": 96,
+    "bytes": 4280
+  },
+  "cover": {
+    "file": "cover.jpg",
+    "source": "public/images/home/olive-garden-menu-spread.webp",
+    "width": 1000,
+    "height": 667,
+    "bytes": 78672
+  }
+}

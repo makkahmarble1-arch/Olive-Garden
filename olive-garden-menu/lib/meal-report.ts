@@ -128,7 +128,7 @@ export function buildMealReport(lines: ReportInputLine[], totals: MealTotals, me
       `${meta.lastChecked ? `Prices last verified: ${formatMonthYear(meta.lastChecked)}. ` : ""}${meta.locationNotice} Prices are online pickup prices.`,
       `Nutrition: Olive Garden's official U.S. nutrition information${meta.guideVersion ? ` (${meta.guideVersion})` : ""} and online menu, for the exact version listed. Values marked Calc. on the website are our calculations from official values. A missing value is never counted as zero; "≤" means a "less than" value was counted at its upper limit.`,
       "Bundles and combinations count once, with Olive Garden's own total. This estimate is general information, not medical or dietary advice.",
-      "Allergens are not checked. Read Olive Garden's official allergen guide and tell your server about any allergy before ordering.",
+      "Allergens are not checked here. Each dish's item page on this site lists the allergens Olive Garden marks for it; tell your server about any allergy before ordering.",
     ],
     footer: `${meta.disclaimer} ${meta.siteUrl.replace(/^https?:\/\//, "")}/nutrition-calculator`,
   };

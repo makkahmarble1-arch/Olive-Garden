@@ -197,6 +197,17 @@ All are shown on the homepage (menu cards, Popular Menu Items) and, for Appetize
 |---|---|---|---|---|
 | `/images/home/olive-garden-menu-spread.webp` | `Catering/Create your own pasta.webp` (owner photo) | 1200 × 800 WebP, 98 KB | A table spread of pasta, a basket of breadsticks, a bowl of salad, iced tea, and small bowls of sauces and toppings | Preloaded (above the fold); same photo as the Create Your Own Pasta card, cropped wider |
 
+## Menu PDF copies (Improvement 8, 2026-11-21)
+
+PDF files cannot embed WebP, so two existing owner images are also stored as small JPEG copies for the menu PDF (`scripts/menu-pdf-assets.mjs`; no new images):
+
+| File | Source | Size | Used in |
+|---|---|---|---|
+| `content/menu-pdf/logo.jpg` | `/images/brand/logo-icon.webp` (owner logo icon, on white) | 138 × 96, 4 KB | PDF cover logo tile |
+| `content/menu-pdf/cover.jpg` | `/images/home/olive-garden-menu-spread.webp` (homepage hero) | 1000 × 667, 77 KB | PDF cover photo |
+
+The homepage section's cover preview uses the original WebP files.
+
 ## AI-generated images (owner-supplied, 2026-11-13)
 
 The owner generated replacement images for the missing products and supplied them in `image-staging/missing-images/` (25 PNG files, originals kept unchanged). Each was checked against the official dish (ingredients, sides, piece count) in `docs/MISSING_IMAGES.md`. 14 matched. 11 differ from the official dish; the owner decided on 2026-11-13 to use them anyway ("use the images I supplied"). The differences are listed below so a corrected image can replace them later under the same file name.

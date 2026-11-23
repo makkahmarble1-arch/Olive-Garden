@@ -105,7 +105,7 @@ category). Concise, accurate, no repetition, no keyword stuffing.
   that page is in preview or published (never a link to a 404).
 - A helpful table may be used where it suits the category (e.g. drinks).
 
-### Supporting sections (rows 7-13)
+### Supporting sections (rows 7-14)
 
 | Section | Shows | Source rule |
 |---|---|---|
@@ -115,6 +115,7 @@ category). Concise, accurate, no repetition, no keyword stuffing.
 | Olive Garden Holiday Hours | Holiday hours of the reference restaurant | Official source only; otherwise says hours are not published and to check with the restaurant |
 | Olive Garden Nutrition & Dietary Options | Where calories come from; gluten-sensitive and vegetarian information | Official nutrition/allergen documents, official wording |
 | How to Order Olive Garden Online | Neutral steps + link to the official ordering site | Official site; no affiliate links |
+| Olive Garden Menu PDF with Prices (`#menu-pdf`, added 2026-11-21, Improvement 8) | Cover preview, pages, file size, last checked; Download, View online, Print; lazy preview | Generated from the shared menu data at build time (`docs/tools/MENU_PDF_ARCHITECTURE.md`); the PDF is `noindex` |
 | Frequently Asked Questions | Short Q&As | Accurate answers only; FAQPage JSON-LD matches the visible text |
 
 Popular items use the regular portion (Classic Entrees for the five

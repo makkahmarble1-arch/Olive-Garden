@@ -257,7 +257,7 @@ Apply to the homepage, every category page, shared components, and all future pa
   with prices and calories"). `/menu` permanently redirects to `/`
   (owner decision 2026-11-13, see `docs/SEO_ARCHITECTURE.md`).
 - Homepage headings: one H1 ("Olive Garden Menu with Prices & Calories
-  2026"), one H2 per category (17), seven supporting H2s; H3 only when needed.
+  2026"), one H2 per category (17), eight supporting H2s (the Menu PDF section was added 2026-11-21); H3 only when needed.
   Section order: `docs/MENU_PAGE_OUTLINES.md` "Homepage".
 - Homepage and category pages share data, not paragraphs: category pages
   add expanded, category-specific content instead of repeating the homepage.
@@ -396,6 +396,21 @@ Apply to the homepage, every category page, shared components, and all future pa
 - One client component (`components/calculator/NutritionCalculator.tsx`), no API calls, no storage, no new dependency. Design: `docs/DESIGN_SYSTEM.md` 4.7.
 - **Download PDF and Print** (owner request 2026-11-20) under the meal totals: one report (`lib/meal-report.ts`) for both; the PDF is written in the browser without a library (`lib/meal-pdf.ts`); Print shows only the report (`#meal-print`, print CSS in `app/globals.css`). Same values, "Incomplete" notes and disclosures as the screen; nothing is sent or stored.
 
+## Homepage Menu PDF (Improvement 8, 2026-11-21, waiting for owner review)
+
+- Homepage section **H2 "Olive Garden Menu PDF with Prices"**, anchor `/#menu-pdf`, between "How to Order Olive Garden Online" and the FAQs. **No separate article or route** for it. Linked from the header "More" menu, the footer "Popular Menus" column and site search (all to `/#menu-pdf`).
+- The PDF (`/downloads/olive-garden-menu-with-prices.pdf`, US Letter) is generated from the shared menu data with the homepage display helpers (`lib/menu-pdf.ts`, writer `lib/pdf-writer.ts`, no library) and **prerendered at every build** by a synchronous route handler, so it always matches the website. Deterministic (same data → same bytes). All 17 categories, every homepage entry (231) plus the Create Your Own Pasta options; missing values are notes, never invented.
+- Always `X-Robots-Tag: noindex` + canonical link to the homepage; not in the sitemap. Do not change robots or `SITE_INDEXING` for it.
+- Images inside the PDF: JPEG copies of the owner's logo and homepage photo in `content/menu-pdf/` (re-create with `node scripts/menu-pdf-assets.mjs` when those images change). Never other or new images.
+- Print prints the PDF, not the page (hidden frame on desktop; opens the PDF on touch devices). The in-page preview loads only on click.
+- Docs: `docs/tools/MENU_PDF_ARCHITECTURE.md`, `MENU_PDF_TEST_REPORT.md`. Tests: `npm run test:menu-pdf` (must pass).
+
+## Launch and post-launch (owner decision 2026-11-22)
+
+- **Launch the existing completed site; no new articles or features before launch.** Launch scope: homepage (with the Menu PDF section), 17 category pages, `/dinner-menu`, `/hours`, 122 item pages, `/nutrition-calculator`, 7 information/legal pages (150 pages; checklist `docs/LAUNCH_CHECKLIST.md` §19).
+- **POST-LAUNCH** (`docs/POST_LAUNCH_ROADMAP.md`): coupons/promo codes article, Never-Ending Pasta Bowl article, holiday hours articles, blog, a Specials & Deals article, more calculators/tools, Menu PDF owner review and real-device checks, data upkeep, author profile, social links, analytics/ads. Never create routes, placeholders or links for them before the owner starts an item.
+- **Indexing switch** (`lib/site.ts`): ON only when `SITE_INDEXING=true` **and** the build is the Vercel Production deployment (`PRODUCTION_DEPLOYMENT=1`). Local builds and preview deployments stay `noindex` even if the variable is set by mistake.
+
 ## Menu item pages (owner decisions of 2026-11-15)
 
 - **Permanent architecture:** individual item pages at `/menu/{slug}` (`app/menu/[slug]/page.tsx`). First page: `/menu/fried-mozzarella`, **`published` on 2026-11-18** (owner approval of design and data; `ownerApprovedAt: "2026-11-18"`). Status on 2026-11-18 (item-page phase complete): **all 77 pages are `published`**. The owner confirmed visual approval of the remaining 76 on 2026-11-18; the approval dates are in `content/menu/product-pages/approvals.ts` and the four standalone page files. Indexing stays off.
@@ -426,3 +441,18 @@ Apply to the homepage, every category page, shared components, and all future pa
   - Flag only concrete, materially misleading mismatches.
   - Never generate, download, or replace images automatically.
   - If the owner sends a new photo anyway: convert it to WebP (`docs/IMAGE_REQUIREMENTS.md`), list it in `docs/IMAGE_MANIFEST.md`, and keep the same mapping.
+
+## Keep visitors on the site: one external link per page (owner decisions 2026-11-21)
+
+- The site must answer the visitor itself. Article pages (homepage, categories, guides, item pages, nutrition calculator) never send the visitor elsewhere:
+  - no external links in text, tables, notes, FAQs, cards, or buttons
+  - no sentences that redirect, such as "check your restaurant's page", "confirm before you go", "call ahead", "see the specials page", "use the official allergen guide", or "use the locator"
+  - state the fact instead (e.g. "hours vary by restaurant"; "restaurants may close early"), or link to a page on this site
+- **Exactly one external link per article page:** the Olive Garden website (`siteConfig.officialSource`, https://www.olivegarden.com/) in the Sources box (`SourceNote`). On the homepage, it is in the Sources list.
+  - Specific documents (nutrition or allergen PDFs, FAQ, specials, locator) are named as plain text ("Also checked: ..."), never linked.
+- **Allowed:**
+  - Provenance wording ("from Olive Garden's official online menu, checked November 2026").
+  - The "How to Order Online" process steps (the topic itself).
+- **Allergy safety stays:** point to the allergen list on the dish's item page and tell the visitor to inform their server. Never imply a dish is safe.
+- **Important pages keep their links:** About, Contact, Privacy Policy, Terms, Disclaimer, Editorial Policy, How We Check Prices.
+- **Check:** crawl the build. Every non-legal page has at most one external link, and it is `https://www.olivegarden.com/`.

@@ -203,6 +203,15 @@ Page `/nutrition-calculator` (`app/nutrition-calculator/page.tsx`, `components/c
 - **Below the tool:** "How the Calculator Works" cards with icon tiles (the allergen card uses the allergen red palette), FAQ accordion, Sources box, Related Menus (4 cards).
 - Accessibility: every control has a visible label or an `aria-label` naming the item; a polite live region announces additions and removals; focus rings `brand-dark`; meaning never by color alone (text pills say "Incomplete", "Calories only").
 
+### 4.8 Homepage Menu PDF section and PDF document (Improvement 8, 2026-11-21, waiting for owner review)
+
+- **Section** (`components/home/MenuPdfSection.tsx`, H2 like the other homepage sections): one cream card (`header-cream`, `card-border`, olive shadow, `rounded-3xl`). Desktop: two columns 5 : 7, cover preview left, content right; phones: one column, cover first (max 20 rem wide).
+- **Cover preview:** US Letter ratio card: owner photo on top, 4 px gold rule, dark olive panel with the logo on a white tile, Fraunces title with a lime second line, small translucent chips, "Independent guide · not an official Olive Garden menu", a lime "PDF" tag.
+- **Facts:** 2 × 2 white tiles with olive icon squares (Pages, File size, Coverage, Last checked).
+- **Buttons** (48 px): filled olive "Download PDF", outlined "View online" and "Print menu"; three columns from 640 px, stacked on phones. "Preview the PDF on this page" text button (desktop and tablets) opens a lazy embedded viewer (42 rem tall, rounded, olive border). A polite status line explains what Print did.
+- **Notice:** lime-tint box with a warning icon: USA price variation, online pickup prices, no taxes/tips/fees, independent guide.
+- **PDF:** same palette: dark olive cover and category bands with a gold edge, olive table headers with white bold text, cream striped rows, olive prices, amber calories, muted notes, lime-tint legend and disclaimer boxes; Helvetica 7-38 pt; header and footer on every page after the cover.
+
 ## 5. Accessibility rules
 
 - Semantic HTML: `header`, `nav`, `main`, `article`, `footer`, `table` with `<th scope>`, `<caption>`.

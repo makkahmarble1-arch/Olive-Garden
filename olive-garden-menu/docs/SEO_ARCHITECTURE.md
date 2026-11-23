@@ -81,6 +81,11 @@ Menu topics that are not one of the 17 categories get a **guide page** at the ro
 - Sitemap: prepared in `app/sitemap.ts`; the URL is added automatically once the status is `published` (and indexing is on).
 - Internal links from the tool: each item's page ("Details"), the official nutrition and allergen guides, and 4 Related Menus cards.
 
+### Menu PDF (Improvement 8, 2026-11-21)
+
+- A homepage section (`/#menu-pdf`, H2 "Olive Garden Menu PDF with Prices"), not a page: no `/menu-pdf` route, so the homepage stays the only full-menu target.
+- The file `/downloads/olive-garden-menu-with-prices.pdf` is always served with `X-Robots-Tag: noindex` and `Link: <homepage>; rel="canonical"`, and is not in the sitemap. Indexing safeguards unchanged.
+
 ### Rules to avoid duplicate intent
 
 - **Homepage vs. `/menu` (final owner decision, 2026-11-12).**

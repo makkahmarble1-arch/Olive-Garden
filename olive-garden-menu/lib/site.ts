@@ -26,11 +26,14 @@ export const siteConfig = {
   language: "en-US",
   locale: "en_US",
   /**
-   * Search-engine indexing switch. OFF unless SITE_INDEXING=true is set
-   * (only in Vercel Production, at launch, with owner approval). While off,
-   * every page is noindex and the sitemap is empty (docs/LAUNCH_CHECKLIST.md).
+   * Search-engine indexing switch. ON only when BOTH are true:
+   * - SITE_INDEXING=true (set only in Vercel Production, at launch, with owner approval), and
+   * - this is the Vercel Production deployment (PRODUCTION_DEPLOYMENT=1, from VERCEL_ENV in next.config.ts).
+   * So local development, local builds and Vercel preview deployments stay noindex even if the
+   * variable is set by mistake for all environments. While off, every page is noindex, the
+   * sitemap is empty and robots.txt does not announce it (docs/LAUNCH_CHECKLIST.md).
    */
-  indexingEnabled: process.env.SITE_INDEXING === "true",
+  indexingEnabled: process.env.SITE_INDEXING === "true" && process.env.PRODUCTION_DEPLOYMENT === "1",
 
   disclaimer:
     "This is an independent informational website. It is not the official Olive Garden website and is not affiliated with, endorsed by, or sponsored by Olive Garden or Darden Restaurants, Inc. Olive Garden is a trademark of its respective owner.",
@@ -45,7 +48,7 @@ export const siteConfig = {
   market: "USA",
   locationNotice: "Prices may vary by location across the USA.",
   /** Default official source shown in the short Sources section of every page. */
-  officialSource: { label: "Olive Garden", url: "https://www.olivegarden.com/" },
+  officialSource: { label: "Olive Garden website", url: "https://www.olivegarden.com/" },
   nutritionSource: {
     label: "Olive Garden Nutrition Information (PDF)",
     url: "https://media.olivegarden.com/en_us/pdf/olive_garden_nutrition.pdf",

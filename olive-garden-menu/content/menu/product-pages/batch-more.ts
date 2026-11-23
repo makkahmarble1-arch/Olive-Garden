@@ -457,7 +457,7 @@ export const morePages: ProductPageContent[] = [
       {
         question: "Is Spicy Alfredo still on the menu?",
         answer:
-          "It was on Olive Garden’s online menu as a limited-time item when we checked in November 2026. Limited-time dishes can leave the menu, so check your restaurant before ordering.",
+          "It was on Olive Garden’s online menu as a limited-time item when we checked in November 2026. Limited-time dishes can leave the menu.",
       },
     ],
     related: [
@@ -608,7 +608,7 @@ export const morePages: ProductPageContent[] = [
       {
         question: "Is the Pumpkin Cookie Butter Cheesecake still available?",
         answer:
-          "It was on Olive Garden’s online menu as a limited-time dessert when we checked in November 2026. Seasonal desserts can leave the menu, so check your restaurant before ordering.",
+          "It was on Olive Garden’s online menu as a limited-time dessert when we checked in November 2026. Seasonal desserts can leave the menu.",
       },
       {
         question: "Can you order the Pumpkin Cookie Butter Cheesecake for a group?",

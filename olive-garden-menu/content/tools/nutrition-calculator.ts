@@ -85,18 +85,6 @@ export const nutritionCalculatorPage: ToolPageContent = {
         "Treat the totals as a planning estimate, not an exact measurement. This calculator is for general information and is not medical or dietary advice.",
       ],
     },
-    {
-      id: "allergens",
-      heading: "Checking allergens",
-      icon: "alert",
-      paragraphs: [
-        [
-          "This calculator does not check allergens and never marks a meal as safe. Before ordering, read ",
-          { text: "Olive Garden’s official allergen guide", href: "https://media.olivegarden.com/en_us/pdf/allergen_guide.pdf" },
-          " and tell your server about any allergy. Each dish’s item page also lists the allergens the guide marks for it.",
-        ],
-      ],
-    },
   ],
   faqs: [
     {
@@ -117,7 +105,7 @@ export const nutritionCalculatorPage: ToolPageContent = {
     {
       question: "Can I use the calculator to avoid an allergen?",
       answer:
-        "No. The calculator only adds up prices and nutrition. Use Olive Garden’s official allergen guide and ask your server, because recipes and kitchen practices can change and cross-contact is possible.",
+        "No. The calculator only adds up prices and nutrition. Check the allergen list on each dish’s item page and tell your server about any allergy, because recipes and kitchen practices can change and cross-contact is possible.",
     },
     {
       question: "Why are some dishes or offers missing?",

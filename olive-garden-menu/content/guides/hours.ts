@@ -42,15 +42,15 @@ export const hoursGuide: GuidePageContent = {
     "olive garden hours of operation",
     "takeout olive garden hours",
   ],
-  searchIntent: "Find out when Olive Garden opens and closes, on which holidays it is closed, and how to check the exact hours of a nearby restaurant.",
+  searchIntent: "Find out when Olive Garden opens and closes, when lunch and dinner are served, and on which holidays it is closed.",
   menuTitle: "Olive Garden Hours",
   metaTitle: "Olive Garden Hours 2026 – Opening & Closing Times",
   metaDescription:
-    "Olive Garden hours by day, lunch and dinner times, holiday closures, online ordering cutoffs, and how to check your local restaurant’s exact hours.",
+    "Olive Garden hours by day, lunch and dinner menu times, weekend hours, holiday closures, and the cutoffs for online takeout and catering orders.",
   h1: "Olive Garden Hours 2026",
   intro: [
     "Most Olive Garden restaurants open at 11 AM and close at 10 PM or 11 PM. Every official restaurant listing we reviewed opened at 11 AM, and the Friday and Saturday listings closed at 11 PM. Olive Garden closes on Thanksgiving Day and Christmas Day.",
-    "Each restaurant sets its own hours, so treat the times below as a guide and confirm yours on Olive Garden’s official restaurant page before you go. This page covers the weekly hours, lunch and dinner times, weekends, holidays, and online ordering.",
+    "Each restaurant sets its own hours, so the times below show what Olive Garden restaurants usually keep. This page covers the weekly hours, lunch and dinner times, weekends, holidays, and online ordering.",
   ],
   contentReviewedAt: REVIEWED,
   verifiedAt: "2026-11-15",
@@ -75,7 +75,7 @@ export const hoursGuide: GuidePageContent = {
         },
         {
           type: "paragraph",
-          text: "We don’t show an “open now” status, because closing times differ by restaurant and time zone. Each restaurant’s official page shows today’s hours and the next six days, which is the most reliable way to check before you leave.",
+          text: "We don’t show an “open now” status, because closing times differ by restaurant and time zone.",
         },
       ],
     },
@@ -136,12 +136,12 @@ export const hoursGuide: GuidePageContent = {
       blocks: [
         {
           type: "paragraph",
-          text: "Olive Garden’s only announced closures are Thanksgiving Day and Christmas Day. On the day before each of them, restaurants may close early, so call your restaurant for that day’s closing time. On other holidays Olive Garden serves its dinner menu all day, but it does not publish holiday opening and closing times.",
+          text: "Olive Garden’s only announced closures are Thanksgiving Day and Christmas Day. On the day before each of them, restaurants may close early. On other holidays Olive Garden serves its dinner menu all day, but it does not publish holiday opening and closing times.",
         },
         { type: "staticTable", id: "holiday-hours-table" },
         {
           type: "note",
-          text: "“Not announced” means Olive Garden has published no special hours for that day. Your restaurant may keep its regular hours or change them, so check its page or call. Holiday hours in Hawaii, Puerto Rico, and Guam may differ, according to Olive Garden.",
+          text: "“Not announced” means Olive Garden has published no special hours for that day, so restaurants may keep their regular hours or change them. Holiday hours in Hawaii, Puerto Rico, and Guam may differ, according to Olive Garden.",
         },
       ],
     },
@@ -159,31 +159,7 @@ export const hoursGuide: GuidePageContent = {
           text: [
             "Ordering for a group? Catering delivery has its own cutoff, so plan ahead with our ",
             { text: "Olive Garden catering menu", href: "/catering" },
-            ". To change or cancel a To Go order, call the restaurant.",
-          ],
-        },
-      ],
-    },
-    {
-      id: "check-local-hours",
-      heading: "How to Check Your Local Olive Garden Hours",
-      blocks: [
-        {
-          type: "list",
-          ordered: true,
-          items: [
-            ["Open Olive Garden’s official ", { text: "Find a Location page", href: LOCATOR }, "."],
-            "Search by city, state, or ZIP code, and choose your restaurant.",
-            "Read the hours on the restaurant page: today and the next six days, with the lunch and dinner times.",
-            "For the day before Thanksgiving, Christmas Eve, or another holiday, call the restaurant. Its phone number is on the same page.",
-          ],
-        },
-        {
-          type: "paragraph",
-          text: [
-            "Planning what to order? The ",
-            { text: "full Olive Garden menu", href: "/#full-menu" },
-            " has every item with prices and calories.",
+            ".",
           ],
         },
       ],
@@ -207,7 +183,7 @@ export const hoursGuide: GuidePageContent = {
       ],
       notes: [
         "Based on official Olive Garden restaurant pages in nine states, checked in 2026. Every listing opened at 11 AM. The restaurant whose full week we checked in November 2026 closed at 10 PM Sunday to Thursday and 11 PM on Friday and Saturday. Listings for other restaurants showed closing times of 10 PM or 11 PM.",
-        "Individual restaurant hours may vary, so confirm your restaurant’s hours before you go.",
+        "Individual restaurant hours may vary."
       ],
     },
     {
@@ -272,7 +248,6 @@ export const hoursGuide: GuidePageContent = {
     { label: "Olive Garden Las Vegas – Cheyenne Ave (official location page)", url: "https://www.olivegarden.com/locations/nv/las-vegas/las-vegas-cheyenne-ave/1363" },
     { label: "Olive Garden Careers, Benefits (official): closed on Thanksgiving and Christmas", url: "https://jobs.olivegarden.com/benefits" },
   ],
-  extraSource: { label: "Olive Garden Find a Location (official)", url: LOCATOR },
   sourceSummary:
     "Hours are based on official Olive Garden restaurant pages and Olive Garden’s FAQ. Each restaurant sets its own hours, which may vary by location across the USA.",
   searchKind: "Guide",
@@ -282,7 +257,7 @@ export const hoursGuide: GuidePageContent = {
     {
       question: "What time does Olive Garden open?",
       answer:
-        "Every official Olive Garden restaurant listing we reviewed opened at 11 AM. Check your restaurant’s page to confirm, because each location sets its own hours.",
+        "Every official Olive Garden restaurant listing we reviewed opened at 11 AM. Each location sets its own hours, so a few may differ.",
     },
     {
       question: "What time does Olive Garden close?",
@@ -301,22 +276,17 @@ export const hoursGuide: GuidePageContent = {
     {
       question: "Is Olive Garden open on Thanksgiving?",
       answer:
-        "No. Olive Garden restaurants close on Thanksgiving Day. On the day before Thanksgiving they may close early, so call your restaurant for its closing time.",
+        "No. Olive Garden restaurants close on Thanksgiving Day. On the day before Thanksgiving they may close early.",
     },
     {
       question: "Is Olive Garden open on Christmas Day?",
       answer:
-        "No. Olive Garden restaurants close on Christmas Day. On Christmas Eve they are open but may close early, so call ahead for that day’s closing time.",
+        "No. Olive Garden restaurants close on Christmas Day. On Christmas Eve they are open but may close early.",
     },
     {
       question: "Is Olive Garden open on other holidays?",
       answer:
-        "Olive Garden lists no other holiday closures, and it serves the dinner menu all day on holidays. It does not publish holiday opening and closing times, so check your restaurant’s page or call before you go.",
-    },
-    {
-      question: "How can I check my local Olive Garden hours?",
-      answer:
-        "Use Olive Garden’s official Find a Location page: search by city, state, or ZIP code and open your restaurant’s page. It shows today’s hours and the next six days, plus the restaurant’s phone number.",
+        "Olive Garden lists no other holiday closures, and it serves the dinner menu all day on holidays. It does not publish special opening and closing times for those days.",
     },
   ],
   related: [

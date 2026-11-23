@@ -26,6 +26,7 @@ import MenuCategorySection, { cardGridClass } from "@/components/home/MenuCatego
 import CreateYourOwnPastaTable from "@/components/home/CreateYourOwnPastaTable";
 import MenuItemCard from "@/components/menu/MenuItemCard";
 import JsonLd from "@/components/seo/JsonLd";
+import MenuPdfSection from "@/components/home/MenuPdfSection";
 import {
   DealsSection,
   FaqSection,
@@ -163,13 +164,14 @@ export default function Home() {
         </Container>
       </div>
 
-      {/* 7-13. Supporting sections (seven H2s) */}
+      {/* 7-14. Supporting sections (eight H2s; Menu PDF added in Improvement 8, owner request 2026-11-21) */}
       <PopularSection offerings={offeringsById(popularOfferingIds)} />
       <DealsSection />
       <HoursSection />
       <HolidaySection />
       <NutritionSection lowerCalorie={offeringsById(lowerCalorieOfferingIds)} />
       <OrderOnlineSection />
+      <MenuPdfSection />
       <FaqSection />
 
       {/* 14-15. Important links and sources (the footer adds the disclaimer) */}

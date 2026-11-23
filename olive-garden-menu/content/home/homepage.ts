@@ -52,7 +52,7 @@ export const methodNotes = [
   "Prices are online pickup prices from Olive Garden's official ordering menu, checked for one U.S. restaurant. Dine-in prices were not checked and may differ. Prices may vary by location across the USA.",
   "Calories come from the same official menu and were cross-checked against Olive Garden's nutrition guide. Where the two differ, the nutrition guide is used for the same portion.",
   "“Calculated” marks a total we added up from official values; the parts are shown next to it. “Estimated” would mark a value from a third-party site; none are used on this page.",
-  "Prices, items, and availability vary by location and can change at any time. Always confirm with your restaurant.",
+  "Prices, items, and availability vary by location and can change at any time.",
   "Food photos are supplied by the site owner and are not official Olive Garden photos; the actual restaurant presentation may vary.",
 ];
 
@@ -202,7 +202,7 @@ export const weeklyHours: HoursRow[] = [
 
 export const hoursNotes = [
   "Online ordering closes 20 minutes before the restaurant does. Catering pickup follows the online ordering hours; catering delivery runs until 9 PM (10 PM on Friday and Saturday).",
-  "Hours are set by each restaurant, so yours may open or close at a different time. Check your restaurant's page on the official site before you go.",
+  "Hours are set by each restaurant, so yours may open or close at a different time.",
 ];
 
 /* ---------- Holiday hours (research/homepage/holiday-hours.md) ---------- */
@@ -225,17 +225,17 @@ export const holidayRows: HolidayRow[] = [
 ];
 
 export const holidayIntro =
-  "Olive Garden restaurants close on Thanksgiving Day and Christmas Day. On the day before Thanksgiving and on Christmas Eve, the manager may close early, so call ahead for that day's closing time. On other holidays the dinner menu is served all day.";
+  "Olive Garden restaurants close on Thanksgiving Day and Christmas Day. On the day before Thanksgiving and on Christmas Eve, the manager may close early. On other holidays the dinner menu is served all day.";
 
 export const holidayNote =
-  "No holiday opening or closing times were posted for the restaurant we checked. “Not announced” means exactly that: please confirm with your restaurant.";
+  "No holiday opening or closing times were posted for the restaurant we checked. “Not announced” means Olive Garden has published no special hours for that day.";
 
 /* ---------- Nutrition (research/homepage/nutrition-guide.md) ---------- */
 
 export const nutritionParagraphs = [
   "Calories on this page come from Olive Garden's online menu and were cross-checked against its official nutrition guide. Entrée calories do not include the soup or salad and breadsticks that come with them, so add those if you eat them.",
   "Olive Garden's gluten-sensitive dishes are made without gluten-containing ingredients, but the company does not call them gluten-free. Kitchens are shared and there is no separate fryer. The gluten-free rotini pasta itself meets the FDA gluten-free definition.",
-  "Items marked vegetarian contain no meat, meat stock, gelatin, or animal rennet. Many pastas, the Minestrone soup, and all desserts carry that label. For allergies, use the official allergen guide and tell your server, who will flag your order for the kitchen.",
+  "Items marked vegetarian contain no meat, meat stock, gelatin, or animal rennet. Many pastas, the Minestrone soup, and all desserts carry that label. For allergies, check the allergen list on each dish’s item page and tell your server, who will flag your order for the kitchen.",
 ];
 
 /** Offering ids for the lower-calorie table (values come from the shared data). */
@@ -263,11 +263,11 @@ export const nutritionResources: LinkItem[] = [
 /* ---------- How to order online (research/homepage/supporting-content.md §2) ---------- */
 
 export const orderSteps = [
-  "Open Olive Garden's official ordering page.",
+  "Go to the online ordering page on Olive Garden's website.",
   "Choose To Go for regular and family-style meals, or Catering for a group.",
   "Pick your restaurant by city, state, or ZIP code. Prices appear once a restaurant is selected.",
   "Add your items and choose the options, such as the sauce, size, toppings, and soup or salad.",
-  "Choose pickup or delivery where offered, then check out. To change or cancel a To Go order, call the restaurant.",
+  "Choose pickup or delivery where offered, then check out.",
 ];
 
 export const orderNote =
@@ -295,7 +295,7 @@ export const homepageFaqs: FaqItem[] = [
   {
     question: "Is Olive Garden open on Thanksgiving and Christmas?",
     answer:
-      "No. Restaurants close on Thanksgiving Day and Christmas Day. They may close early the day before Thanksgiving and on Christmas Eve, so call ahead.",
+      "No. Restaurants close on Thanksgiving Day and Christmas Day. They may close early the day before Thanksgiving and on Christmas Eve.",
   },
   {
     question: "What is the $6 Take Home offer?",

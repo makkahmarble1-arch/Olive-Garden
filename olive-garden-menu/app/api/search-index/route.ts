@@ -72,6 +72,7 @@ export function GET() {
     ["Popular Menu Items", "Six well-known dishes with prices and calories.", "/#popular-menu-items", ["popular", "best", "favorites"]],
     ["Nutrition & Dietary Options", "Calories, allergens, and dietary choices.", "/#nutrition", ["nutrition", "allergens", "vegetarian", "low calorie", "dietary"]],
     ["How to Order Online", "Pickup, delivery, and online ordering.", "/#order-online", ["order online", "pickup", "delivery", "to go"]],
+    ["Olive Garden Menu PDF with Prices", "Download, view, or print the full menu with prices and calories.", "/#menu-pdf", ["pdf", "menu pdf", "printable menu", "download menu", "print menu", "printable"]],
     ["Frequently Asked Questions", "Answers to common questions about the menu.", "/#faq", ["faq", "questions"]],
   ];
   for (const [title, description, url, keywords] of sections) entries.push({ title, description, url, kind: "Homepage section", keywords });
