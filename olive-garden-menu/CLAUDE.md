@@ -409,7 +409,8 @@ Apply to the homepage, every category page, shared components, and all future pa
 
 - **Launch the existing completed site; no new articles or features before launch.** Launch scope: homepage (with the Menu PDF section), 17 category pages, `/dinner-menu`, `/hours`, 122 item pages, `/nutrition-calculator`, 7 information/legal pages (150 pages; checklist `docs/LAUNCH_CHECKLIST.md` §19).
 - **POST-LAUNCH** (`docs/POST_LAUNCH_ROADMAP.md`): coupons/promo codes article, Never-Ending Pasta Bowl article, holiday hours articles, blog, a Specials & Deals article, more calculators/tools, Menu PDF owner review and real-device checks, data upkeep, author profile, social links, analytics/ads. Never create routes, placeholders or links for them before the owner starts an item.
-- **Indexing switch** (`lib/site.ts`): ON only when `SITE_INDEXING=true` **and** the build is the Vercel Production deployment (`PRODUCTION_DEPLOYMENT=1`). Local builds and preview deployments stay `noindex` even if the variable is set by mistake.
+- **Indexing switch** (`lib/site.ts`): ON only when `SITE_INDEXING=true` **and** the build is the Vercel Production deployment (`PRODUCTION_DEPLOYMENT=1`) **and** the site URL is a public https domain (never `localhost` or `*.vercel.app`). Local builds and preview deployments stay `noindex` even if the variable is set by mistake.
+- **Site URL** (`lib/site.ts`, 2026-11-23): `NEXT_PUBLIC_SITE_URL`, else on the Production deployment Vercel's `VERCEL_PROJECT_PRODUCTION_URL` (passed as `VERCEL_PRODUCTION_HOST` in `next.config.ts`), else `http://localhost:3000`. Never hardcode the domain. Live on 2026-11-23 the domain served the site with `SITE_INDEXING` on but `NEXT_PUBLIC_SITE_URL` missing, so robots.txt, the sitemap and every canonical pointed to `http://localhost:3000`; fixed by this fallback plus the fail-safe (not deployed until the owner approves).
 
 ## Menu item pages (owner decisions of 2026-11-15)
 

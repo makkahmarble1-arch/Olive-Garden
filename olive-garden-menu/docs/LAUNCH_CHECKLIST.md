@@ -285,3 +285,9 @@ Reports:
 - [ ] Check `https://olivegardenmenuprices.us/robots.txt` (announces the sitemap), `/sitemap.xml` (150 URLs), and a page's `<meta name="robots" content="index, follow">`.
 - [ ] Google Search Console: add the Domain property (DNS TXT), submit `https://olivegardenmenuprices.us/sitemap.xml`, request indexing for the homepage.
 
+## 20. Production SEO fix (2026-11-23, not committed yet)
+
+- Found live: domain on Vercel, `SITE_INDEXING` on, `NEXT_PUBLIC_SITE_URL` missing -> robots.txt `Sitemap: http://localhost:3000/sitemap.xml`, sitemap and canonicals on `http://localhost:3000`, ratings unavailable and the contact form off (Supabase/Resend variables missing).
+- [x] Code: site URL falls back to Vercel's production domain on the Production deployment; indexing is refused unless the site URL is a public https domain (`lib/site.ts`, `next.config.ts`). Checked 7 environment combinations; TypeScript, ESLint, 26/26 + 13/13 tests, builds pass; simulation without `NEXT_PUBLIC_SITE_URL` (Vercel domain fallback): 150/150 pages `index, follow` on the domain, sitemap 150 URLs, robots.txt with the domain sitemap, PDF still `noindex`.
+- [ ] Owner: set the Vercel Production variables (below), approve commit + push, redeploy, then verify live.
+

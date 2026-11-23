@@ -78,6 +78,10 @@ const nextConfig: NextConfig = {
     // pages are then hidden (404, no links, no search entry); see
     // content/menu/product-pages/index.ts (owner decision 2026-11-15).
     PRODUCTION_DEPLOYMENT: process.env.VERCEL_ENV === "production" ? "1" : "",
+    // Production domain reported by Vercel (system variable, e.g. "example.com"),
+    // only for the Production deployment. Fallback for lib/site.ts when
+    // NEXT_PUBLIC_SITE_URL is missing, so the domain is never hardcoded.
+    VERCEL_PRODUCTION_HOST: process.env.VERCEL_ENV === "production" ? (process.env.VERCEL_PROJECT_PRODUCTION_URL ?? "") : "",
   },
   // Owner decision 2026-11-13: the homepage is the only full-menu page, so
   // the old /menu hub permanently redirects there (308 = permanent).

@@ -3,12 +3,23 @@
  * and it updates everywhere.
  */
 
-// The production domain is not decided yet, so it is never hardcoded.
-// Set NEXT_PUBLIC_SITE_URL (e.g. in Vercel) before launch.
+// The domain is never hardcoded. Order:
+// 1. NEXT_PUBLIC_SITE_URL (set it in Vercel Production: https://olivegardenmenuprices.us),
+// 2. on the Vercel Production deployment only: the project's production domain from
+//    Vercel (VERCEL_PROJECT_PRODUCTION_URL, passed in next.config.ts as VERCEL_PRODUCTION_HOST),
+// 3. http://localhost:3000 (development).
 function getSiteUrl(): string {
-  const url = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const host = process.env.VERCEL_PRODUCTION_HOST;
+  const url = process.env.NEXT_PUBLIC_SITE_URL || (host ? `https://${host}` : "") || "http://localhost:3000";
   return url.replace(/\/+$/, "");
 }
+
+/** A real public https domain (not localhost, not a *.vercel.app deployment address). */
+function isPublicSiteUrl(url: string): boolean {
+  return /^https:\/\/[^/]+$/.test(url) && !/localhost|127\.0\.0\.1|\.vercel\.app$/i.test(url);
+}
+
+const SITE_URL = getSiteUrl();
 
 export type NavLink = {
   label: string;
@@ -21,7 +32,7 @@ export const siteConfig = {
   tagline: "Independent menu & price guide",
   description:
     "An independent guide to the Olive Garden menu for US diners, with prices and calorie information as they are verified. Not affiliated with Olive Garden.",
-  url: getSiteUrl(),
+  url: SITE_URL,
   /** Content language (html lang, Open Graph locale, structured data). */
   language: "en-US",
   locale: "en_US",
@@ -29,11 +40,14 @@ export const siteConfig = {
    * Search-engine indexing switch. ON only when BOTH are true:
    * - SITE_INDEXING=true (set only in Vercel Production, at launch, with owner approval), and
    * - this is the Vercel Production deployment (PRODUCTION_DEPLOYMENT=1, from VERCEL_ENV in next.config.ts).
+   * - the site URL is a public https domain (not localhost or *.vercel.app).
    * So local development, local builds and Vercel preview deployments stay noindex even if the
    * variable is set by mistake for all environments. While off, every page is noindex, the
    * sitemap is empty and robots.txt does not announce it (docs/LAUNCH_CHECKLIST.md).
    */
-  indexingEnabled: process.env.SITE_INDEXING === "true" && process.env.PRODUCTION_DEPLOYMENT === "1",
+  // Fail-safe: never index while the canonical site URL is not a public https domain
+  // (e.g. http://localhost:3000 when NEXT_PUBLIC_SITE_URL is missing).
+  indexingEnabled: process.env.SITE_INDEXING === "true" && process.env.PRODUCTION_DEPLOYMENT === "1" && isPublicSiteUrl(SITE_URL),
 
   disclaimer:
     "This is an independent informational website. It is not the official Olive Garden website and is not affiliated with, endorsed by, or sponsored by Olive Garden or Darden Restaurants, Inc. Olive Garden is a trademark of its respective owner.",
