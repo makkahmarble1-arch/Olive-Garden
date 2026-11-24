@@ -412,6 +412,11 @@ Apply to the homepage, every category page, shared components, and all future pa
 - **Indexing switch** (`lib/site.ts`): ON only when `SITE_INDEXING=true` **and** the build is the Vercel Production deployment (`PRODUCTION_DEPLOYMENT=1`) **and** the site URL is a public https domain (never `localhost` or `*.vercel.app`). Local builds and preview deployments stay `noindex` even if the variable is set by mistake.
 - **Site URL** (`lib/site.ts`, 2026-11-23): `NEXT_PUBLIC_SITE_URL`, else on the Production deployment Vercel's `VERCEL_PROJECT_PRODUCTION_URL` (passed as `VERCEL_PRODUCTION_HOST` in `next.config.ts`), else `http://localhost:3000`. Never hardcode the domain. Live on 2026-11-23 the domain served the site with `SITE_INDEXING` on but `NEXT_PUBLIC_SITE_URL` missing, so robots.txt, the sitemap and every canonical pointed to `http://localhost:3000`; fixed by this fallback plus the fail-safe (not deployed until the owner approves).
 
+## Final responsive and link audit (2026-11-23)
+
+- Reports: `docs/testing/FINAL_RESPONSIVE_AUDIT.md` (9 widths 320-1920 px; 150 routes at 320/1280) and `docs/testing/FINAL_INTERNAL_LINK_AUDIT.md` (150 routes, 21,001 links, 0 broken). Re-run both after layout or navigation changes.
+- Fixes kept: the last desktop dropdown ("More") opens to the left; table captions are `sticky left-0 max-w-[100cqw]` inside an `@container` wrapper (`table-styles.ts`) so they stay readable while wide tables scroll on phones; breadcrumb links are at least 24 px high.
+
 ## Menu item pages (owner decisions of 2026-11-15)
 
 - **Permanent architecture:** individual item pages at `/menu/{slug}` (`app/menu/[slug]/page.tsx`). First page: `/menu/fried-mozzarella`, **`published` on 2026-11-18** (owner approval of design and data; `ownerApprovedAt: "2026-11-18"`). Status on 2026-11-18 (item-page phase complete): **all 77 pages are `published`**. The owner confirmed visual approval of the remaining 76 on 2026-11-18; the approval dates are in `content/menu/product-pages/approvals.ts` and the four standalone page files. Indexing stays off.

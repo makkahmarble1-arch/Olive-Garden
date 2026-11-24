@@ -291,3 +291,12 @@ Reports:
 - [x] Code: site URL falls back to Vercel's production domain on the Production deployment; indexing is refused unless the site URL is a public https domain (`lib/site.ts`, `next.config.ts`). Checked 7 environment combinations; TypeScript, ESLint, 26/26 + 13/13 tests, builds pass; simulation without `NEXT_PUBLIC_SITE_URL` (Vercel domain fallback): 150/150 pages `index, follow` on the domain, sitemap 150 URLs, robots.txt with the domain sitemap, PDF still `noindex`.
 - [ ] Owner: set the Vercel Production variables (below), approve commit + push, redeploy, then verify live.
 
+## 21. Final responsive and internal link audit (2026-11-23, not committed yet)
+
+- [x] Responsive: 150 routes at 320 and 1280 px, 21 template pages at all 9 widths (320-1920 px); header/search/footer/rating/version tests 35/35, calculator 60/60, Menu PDF section 35/35. No overflow, clipped text, broken or distorted images; max CLS 0.002. Report: `docs/testing/FINAL_RESPONSIVE_AUDIT.md`.
+- [x] Fixed: "More" dropdown off screen at 1024 px; table captions cut off on phones; breadcrumb links 24 px; 12 px minimum in the Menu PDF cover preview.
+- [x] Internal links: 150 routes, 21,001 anchors, 0 broken, 0 redirects, 0 missing anchors; navigation, search and calculator links OK. Report: `docs/testing/FINAL_INTERNAL_LINK_AUDIT.md`.
+- [x] TypeScript, ESLint, production build (167 routes), `test:calculator` 26/26, `test:menu-pdf` 13/13.
+- [ ] Owner review, then commit and push (4 component files + docs).
+- [ ] Real-device check (iPhone Safari, Android Chrome) after deploying.
+

@@ -62,12 +62,12 @@ export default function MenuPdfSection() {
                 </p>
                 <p className="flex flex-wrap gap-1.5" aria-hidden="true">
                   {[`${pdf.categories} categories`, `${formatNumber(pdf.entries)} entries`, ...(checked ? [checked] : [])].map((chip) => (
-                    <span key={chip} className="rounded-full bg-white/10 px-2 py-0.5 text-[0.65rem] font-semibold text-white ring-1 ring-white/20">
+                    <span key={chip} className="rounded-full bg-white/10 px-2 py-0.5 text-xs font-semibold text-white ring-1 ring-white/20">
                       {chip}
                     </span>
                   ))}
                 </p>
-                <p className="text-[0.65rem] leading-4 text-hero-soft">Independent guide · not an official Olive Garden menu</p>
+                <p className="text-xs leading-4 text-hero-soft">Independent guide · not an official Olive Garden menu</p>
               </div>
               <span className="absolute top-3 right-3 rounded-md bg-hero-deep/90 px-2 py-0.5 text-[0.7rem] font-bold tracking-wide text-hero-highlight">PDF</span>
             </div>

@@ -116,7 +116,12 @@ export default function DesktopNav({ items }: { items: NavItem[] }) {
                 hidden={!isOpen}
                 onKeyDown={onPanelKey}
                 className={`absolute z-50 mt-2 rounded-2xl border border-card-border bg-white p-3 shadow-[0_18px_40px_-16px_rgba(40,55,15,0.45)] ${
-                  item.wide ? "inset-x-4 sm:inset-x-6 xl:inset-x-auto xl:left-1/2 xl:w-[64rem] xl:-translate-x-1/2" : "left-0 w-72"
+                  item.wide
+                    ? "inset-x-4 sm:inset-x-6 xl:inset-x-auto xl:left-1/2 xl:w-[64rem] xl:-translate-x-1/2"
+                    : // The last dropdown ("More") opens to the left so it stays on screen at 1024 px (2026-11-23).
+                      index === items.length - 1
+                      ? "right-0 w-72"
+                      : "left-0 w-72"
                 }`}
               >
                 {item.wide && (

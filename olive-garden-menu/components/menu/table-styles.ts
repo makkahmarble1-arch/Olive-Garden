@@ -3,10 +3,12 @@
  * olive green header with white text (brand-dark #556b12: 6.0:1 contrast),
  * alternating white / light olive rows, horizontal scroll on small screens.
  */
+// "@container" lets the caption below stay inside the visible width while a wide table scrolls (phones).
 export const tableWrapClass =
-  "overflow-x-auto rounded-lg border border-line focus-visible:outline-2 focus-visible:outline-brand-dark";
+  "@container overflow-x-auto rounded-lg border border-line focus-visible:outline-2 focus-visible:outline-brand-dark";
 export const tableClass = "w-full min-w-[22rem] border-collapse text-left";
-export const tableCaptionClass = "px-4 py-3 text-left font-display text-lg font-bold text-ink";
+/** sticky + max-w-[100cqw]: on phones the caption wraps within the visible part of a horizontally scrolling table (2026-11-23). */
+export const tableCaptionClass = "sticky left-0 max-w-[100cqw] px-4 py-3 text-left font-display text-lg font-bold text-ink";
 export const tableHeadClass = "bg-brand-dark text-sm text-white";
 export const tableHeadCellClass = "px-4 py-3 font-semibold";
 /** Row background alternates white / light olive. */
