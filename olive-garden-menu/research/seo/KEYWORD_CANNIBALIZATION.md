@@ -102,4 +102,16 @@
 - **FAQs:**
   - Hours questions ("What time does Olive Garden open / close", "open on Sundays", "Thanksgiving", "Christmas Day", "other holidays", "check local hours") live on `/hours`.
   - "What time does Olive Garden stop serving lunch?" (`/hours`) is a short pointer. The full lunch timing questions stay on `/lunch-menu`, and "when does dinner start" on `/dinner-menu`.
-- **Future holiday articles** (e.g. Thanksgiving or Christmas Eve hours) need owner approval and their own intent. They must link to `/hours` and join the Hours dropdown through `navGroup: "hours"`.
+- **Holiday articles:** see §9 (2026-11-25).
+
+## 9. Holiday-hours articles vs `/hours` and the homepage (2026-11-25)
+- **`/thanksgiving-hours`:** primary keyword **is olive garden open on thanksgiving**. Job: Thanksgiving week only (the day before, Thanksgiving Day, Black Friday), plus To Go, delivery, and catering for those days.
+- **`/christmas-hours`:** primary keyword **is olive garden open on christmas**. Job: Christmas Eve, Christmas Day, and December 26, plus To Go, delivery, and catering.
+- **`/hours`:**
+  - Keeps **olive garden hours** and **olive garden holiday hours**: the whole-year holiday table and one short FAQ answer per holiday.
+  - Its secondary keywords "is olive garden open on thanksgiving / christmas" moved to the articles.
+  - Its holiday section links to both articles.
+- **Homepage:** keeps its short Holiday Hours section and links to `/hours#holiday-hours` and both articles. No new homepage section.
+- **Search:** "thanksgiving", "black friday", "christmas", and "christmas eve" rank the articles first. The `/hours#holiday-hours` entry keeps "holiday", "easter", "new year", "july 4".
+- **No overlap between the two articles:** each mentions the other closure in one sentence with a link.
+- **Future holiday articles** (e.g. New Year's Eve) need owner approval, their own intent, a fact log, and `navGroup: "hours"`.

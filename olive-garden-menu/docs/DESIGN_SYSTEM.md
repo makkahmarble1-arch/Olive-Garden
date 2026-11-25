@@ -212,6 +212,21 @@ Page `/nutrition-calculator` (`app/nutrition-calculator/page.tsx`, `components/c
 - **Notice:** lime-tint box with a warning icon: USA price variation, online pickup prices, no taxes/tips/fees, independent guide.
 - **PDF:** same palette: dark olive cover and category bands with a gold edge, olive table headers with white bold text, cream striped rows, olive prices, amber calories, muted notes, lime-tint legend and disclaimer boxes; Helvetica 7-38 pt; header and footer on every page after the cover.
 
+### 4.9 Holiday-hours articles (2026-11-25, waiting for owner review)
+
+- Same guide layout as `/hours`, with two additions (`components/guide/HolidayStatus.tsx`):
+  - a seasonal label above the H1;
+  - a quick-answer panel under the hero: a dark seasonal gradient, a thin festive stripe, and one white status card per day.
+- **Status cards:**
+  - Each card shows an icon, a status pill, a short explanation, and "Stated by Olive Garden" or "No special hours announced by Olive Garden".
+  - Pills: Closed = seasonal red/orange; Open, may close early = warning amber; Open = olive.
+- **Tokens** (`globals.css`), for these pages only:
+  - Christmas (evergreen, festive red, gold): `xmas-deep`, `xmas-red`, `xmas-bg`, `xmas-text`.
+  - Thanksgiving (soft brown, autumn orange, gold): `fall-deep`, `fall-orange`, `fall-bg`, `fall-text`.
+  - Shared: `open-bg`, `open-text`.
+- Olive stays the main color: header, footer, tables, links, and the facts bar are unchanged.
+- Cards stack on phones and sit 3 across from `md`. There are no images and no JavaScript.
+
 ## 5. Accessibility rules
 
 - Semantic HTML: `header`, `nav`, `main`, `article`, `footer`, `table` with `<th scope>`, `<caption>`.

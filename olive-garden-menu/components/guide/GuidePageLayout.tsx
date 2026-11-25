@@ -9,6 +9,8 @@ import ContentSection, { tableKey } from "@/components/category/ContentSection";
 import FAQSection from "@/components/category/FAQSection";
 import SourceNote from "@/components/category/SourceNote";
 import RelatedCategories from "@/components/category/RelatedCategories";
+import HolidayHero from "./HolidayHero";
+import HolidayStatus from "@/components/guide/HolidayStatus";
 import {
   REFERENCE_ORDER_TYPE,
   getGuideCheckDate,
@@ -30,7 +32,7 @@ import type { GuidePageContent, MenuOffering } from "@/lib/types";
  * /hours; docs/SEO_ARCHITECTURE.md "Guide pages"). Same components and order
  * as the category pages, so it looks identical; only the data differs:
  *  1. Breadcrumb (Home > Menu > Guide, BreadcrumbList JSON-LD)
- *  2. Hero: H1, intro, facts bar
+ *  2. Hero: H1, intro, facts bar (holiday articles: seasonal label + quick-answer status cards)
  *  3. Main table (H2): a price overview from the shared menu data, or a
  *     static facts table (e.g. weekly hours); optional photo cards (H3, shared ratings)
  *  4. Guide sections (H2 each), FAQ (+ FAQPage JSON-LD), Sources, Related Menus
@@ -82,23 +84,37 @@ export default function GuidePageLayout({ guide }: { guide: GuidePageContent }) 
         <Breadcrumbs
           items={[
             { label: "Home", href: "/" },
-            { label: "Menu", href: menuPath },
+            guide.breadcrumbParent ?? { label: "Menu", href: menuPath },
             { label: guide.name },
           ]}
         />
 
-        <CategoryHero
-          h1={guide.h1}
-          intro={guide.intro}
-          itemCount={isMenuGuide ? guide.overview?.rows.length : undefined}
-          countLabel={guide.countLabel}
-          lastChecked={lastChecked}
-          orderType={isMenuGuide ? REFERENCE_ORDER_TYPE : undefined}
-          extraFacts={guide.heroFacts}
-          jumpLabel={guide.jumpLabel}
-          tableId={TABLE_ID}
-          isPreview={guide.status !== "published"}
-        />
+        {guide.holiday ? (
+          <HolidayHero
+            holiday={guide.holiday}
+            h1={guide.h1}
+            intro={guide.intro}
+            lastChecked={lastChecked}
+            facts={guide.heroFacts}
+            jumpLabel={guide.jumpLabel ?? "Jump to the schedule"}
+            tableId={TABLE_ID}
+          />
+        ) : (
+          <CategoryHero
+            h1={guide.h1}
+            intro={guide.intro}
+            itemCount={isMenuGuide ? guide.overview?.rows.length : undefined}
+            countLabel={guide.countLabel}
+            lastChecked={lastChecked}
+            orderType={isMenuGuide ? REFERENCE_ORDER_TYPE : undefined}
+            extraFacts={guide.heroFacts}
+            jumpLabel={guide.jumpLabel}
+            tableId={TABLE_ID}
+            isPreview={guide.status !== "published"}
+          />
+        )}
+
+        {guide.holiday && <HolidayStatus holiday={guide.holiday} />}
 
         <section aria-labelledby={TABLE_ID} className="mt-10 scroll-mt-20">
           <h2 id={TABLE_ID} className="font-display text-2xl font-bold text-ink sm:text-3xl">

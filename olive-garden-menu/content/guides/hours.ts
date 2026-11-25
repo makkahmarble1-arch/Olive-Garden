@@ -36,8 +36,7 @@ export const hoursGuide: GuidePageContent = {
     "olive garden sunday hours",
     "olive garden saturday hours",
     "olive garden holiday hours",
-    "is olive garden open on thanksgiving",
-    "is olive garden open on christmas",
+    // "is olive garden open on thanksgiving / christmas" moved to /thanksgiving-hours and /christmas-hours (2026-11-25).
     "olive garden hours near me",
     "olive garden hours of operation",
     "takeout olive garden hours",
@@ -137,6 +136,16 @@ export const hoursGuide: GuidePageContent = {
         {
           type: "paragraph",
           text: "Olive Garden’s only announced closures are Thanksgiving Day and Christmas Day. On the day before each of them, restaurants may close early. On other holidays Olive Garden serves its dinner menu all day, but it does not publish holiday opening and closing times.",
+        },
+        {
+          type: "paragraph",
+          text: [
+            "The week of each closure has its own guide: ",
+            { text: "Olive Garden Thanksgiving hours", href: "/thanksgiving-hours" },
+            " and ",
+            { text: "Olive Garden Christmas hours", href: "/christmas-hours" },
+            ".",
+          ],
         },
         { type: "staticTable", id: "holiday-hours-table" },
         {

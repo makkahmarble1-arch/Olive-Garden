@@ -63,7 +63,7 @@ export function GET() {
   const sections: [string, string, string, string[]][] = [
     // Hours: the /hours guide is its own entry (from content/guides); the holiday table gets a direct entry.
     ...(getPublishedGuides().some((g) => g.slug === "hours")
-      ? [["Olive Garden Holiday Hours", "Thanksgiving, Christmas, and other holidays.", "/hours#holiday-hours", ["holiday", "thanksgiving", "christmas", "easter", "new year", "christmas eve"]] as [string, string, string, string[]]]
+      ? [["Olive Garden Holiday Hours", "Thanksgiving, Christmas, and other holidays.", "/hours#holiday-hours", ["holiday", "holidays", "easter", "new year", "july 4"]] as [string, string, string, string[]]]
       : [
           ["Olive Garden Hours", "Opening and closing times.", "/#hours", ["hours", "open", "close", "opening", "closing", "time"]] as [string, string, string, string[]],
           ["Olive Garden Holiday Hours", "Thanksgiving, Christmas, and other holidays.", "/#holiday-hours", ["holiday", "thanksgiving", "christmas", "easter", "new year"]] as [string, string, string, string[]],

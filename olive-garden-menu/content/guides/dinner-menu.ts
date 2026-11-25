@@ -131,7 +131,13 @@ export const dinnerMenuGuide: GuidePageContent = {
           items: [
             "Monday to Friday: dinner from 3 PM to closing.",
             "Saturday and Sunday: dinner menu all day.",
-            "Holidays: dinner menu all day. Restaurants close on Thanksgiving Day and Christmas Day, and may close early the day before Thanksgiving and on Christmas Eve.",
+            [
+              "Holidays: dinner menu all day. Restaurants close on Thanksgiving Day and Christmas Day, and may close early the day before each (see our ",
+              { text: "Thanksgiving hours", href: "/thanksgiving-hours" },
+              " and ",
+              { text: "Christmas hours", href: "/christmas-hours" },
+              " guides).",
+            ],
             "Closing time: set by each restaurant. The one we checked closed at 10 PM Sunday to Thursday and 11 PM on Friday and Saturday.",
             "Online ordering for pickup or delivery: at the restaurant we checked, it closed 20 minutes before the restaurant did.",
           ],

@@ -48,6 +48,23 @@
   --color-allergen-bg: #fdecea;
   --color-allergen-border: #f5c2bd;
   --color-allergen-text: #9b1c1c; /* 6.9:1 on allergen-bg */
+
+  /*
+   * Holiday-hours articles only (/christmas-hours, /thanksgiving-hours, 2026-11-25):
+   * subtle seasonal accents for the status panel. Olive stays the main color.
+   * "-deep" values are panel backgrounds (cream text on them, 10:1+); "-text"
+   * values are text on their "-bg" (contrast in the comment); the rest are graphic only.
+   */
+  --color-xmas-deep: #17402f; /* evergreen panel */
+  --color-xmas-red: #b23a3a; /* festive red, graphic only */
+  --color-xmas-bg: #fbecea;
+  --color-xmas-text: #8e1f24; /* 7.6:1 on xmas-bg */
+  --color-fall-deep: #4a2a14; /* soft brown panel */
+  --color-fall-orange: #d9661f; /* autumn orange, graphic only */
+  --color-fall-bg: #fdf0e2;
+  --color-fall-text: #8a3c0b; /* 6.9:1 on fall-bg */
+  --color-open-bg: #eef4dc;
+  --color-open-text: #3f500d; /* 8.6:1 on open-bg */
 }
 
 @theme inline {

@@ -297,6 +297,21 @@ Reports:
 - [x] Fixed: "More" dropdown off screen at 1024 px; table captions cut off on phones; breadcrumb links 24 px; 12 px minimum in the Menu PDF cover preview.
 - [x] Internal links: 150 routes, 21,001 anchors, 0 broken, 0 redirects, 0 missing anchors; navigation, search and calculator links OK. Report: `docs/testing/FINAL_INTERNAL_LINK_AUDIT.md`.
 - [x] TypeScript, ESLint, production build (167 routes), `test:calculator` 26/26, `test:menu-pdf` 13/13.
-- [ ] Owner review, then commit and push (4 component files + docs).
+- [x] Owner review, then commit and push (4 component files + docs): commit `5310a5a`, deployed 2026-11-23.
 - [ ] Real-device check (iPhone Safari, Android Chrome) after deploying.
 
+## 22. Holiday-hours articles (2026-11-25, not committed yet)
+
+- [x] `/thanksgiving-hours` and `/christmas-hours` built as guides (status `published` in the working tree only; nothing is live until committed).
+- [x] Facts from Olive Garden's FAQ only, with no invented holiday times. olivegarden.com was blocked in Chrome on 2026-11-25, so the FAQ was read through the search index. Fact logs: `research/seo/thanksgiving-hours/`, `research/seo/christmas-hours/`.
+- [x] Linked from the header Hours dropdown, mobile menu, homepage holiday section, `/hours`, `/dinner-menu`, `/catering`, and site search.
+- [x] Checks:
+  - TypeScript, ESLint, production build;
+  - status, title, description, canonical, Open Graph, one H1, heading order, JSON-LD, breadcrumb, one external link;
+  - link audit of 152 routes and 21,855 anchors: 0 problems;
+  - responsive at 320, 390, 768, 1024 and 1440 px: no issues;
+  - `test:calculator` 26/26, `test:menu-pdf` 13/13.
+- [ ] Owner review of content, design and the decisions in the report; then commit and push.
+- [ ] Owner opens olivegarden.com/faqs in a normal browser to confirm the holiday answer.
+- [ ] After deploying: check the canonical shows `https://olivegardenmenuprices.us/...`, and that the sitemap lists both pages.
+- [ ] Seasonal: update the year and dates before Thanksgiving and Christmas 2027 (steps in the fact logs).

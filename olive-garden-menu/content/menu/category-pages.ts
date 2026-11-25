@@ -4824,6 +4824,16 @@ export const categoryPages: CategoryPageContent[] = [
               "For weddings, offices, and other events, Olive Garden’s catering page lists business, event, and bridal catering.",
             ],
           },
+          {
+            type: "note",
+            text: [
+              "Holiday parties: restaurants are closed on Thanksgiving Day and Christmas Day, so there is no catering on those days. Ordering times for the days around them are in our ",
+              { text: "Olive Garden Thanksgiving hours", href: "/thanksgiving-hours" },
+              " and ",
+              { text: "Olive Garden Christmas hours", href: "/christmas-hours" },
+              " guides.",
+            ],
+          },
         ],
       },
     ],

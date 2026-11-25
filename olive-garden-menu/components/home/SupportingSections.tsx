@@ -246,6 +246,25 @@ export function HoursSection() {
 
 /* ---------- 10. Holiday Hours ---------- */
 
+/** Links to the published holiday articles (Hours-group guides other than /hours; 2026-11-25). */
+function HolidayGuideLinks() {
+  const guides = getPublishedGuides().filter((g) => g.navGroup === "hours" && g.slug !== "hours");
+  if (guides.length === 0) return null;
+  return (
+    <p className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
+      {guides.map((g) => (
+        <Link
+          key={g.slug}
+          href={guidePath(g)}
+          className="font-semibold text-brand-dark underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-brand-dark"
+        >
+          {g.menuTitle} <span aria-hidden="true">&rarr;</span>
+        </Link>
+      ))}
+    </p>
+  );
+}
+
 export function HolidaySection() {
   return (
     <HomeSection id="holiday-hours" title="Olive Garden Holiday Hours" tinted intro={<p>{holidayIntro}</p>}>
@@ -281,6 +300,7 @@ export function HolidaySection() {
         <time dateTime={hoursCheckedAt}>{formatMonthYear(hoursCheckedAt)}</time>.
       </p>
       <HoursGuideLink hash="#holiday-hours" label="See holiday hours for the whole year" />
+      <HolidayGuideLinks />
     </HomeSection>
   );
 }

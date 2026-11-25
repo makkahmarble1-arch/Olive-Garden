@@ -382,9 +382,23 @@ Apply to the homepage, every category page, shared components, and all future pa
   - Never use `LocalBusiness`, `Restaurant`, or `OpeningHoursSpecification` schema.
 - **Navigation:**
   - The header Hours dropdown points to `/hours`, `/hours#holiday-hours`, Lunch Hours, and Dinner Hours.
-  - A future holiday article (owner approval needed) is a guide with `navGroup: "hours"` and `navLabel`; it then appears in that dropdown automatically.
+  - A holiday article is a guide with `navGroup: "hours"` and `navLabel`; it then appears in that dropdown automatically (Thanksgiving and Christmas: see "Holiday-hours articles" below; new ones need owner approval).
   - The footer lists "Olive Garden Hours" under Explore More.
 - **Homepage:** its Hours and Holiday Hours sections stay, and end with links to `/hours` and `/hours#holiday-hours` (owner approval 2026-11-15; shown only while the guide is published).
+
+## Holiday-hours articles (2026-11-25, waiting for owner review)
+
+- **`/thanksgiving-hours`** and **`/christmas-hours`** are guides (`content/guides/thanksgiving-hours.ts`, `christmas-hours.ts`) with `navGroup: "hours"`.
+  - They appear automatically in the header and mobile Hours dropdown, the search, and the sitemap.
+  - They are also linked from the homepage holiday section, `/hours`, `/dinner-menu`, and `/catering`.
+  - Breadcrumb: Home > Hours > article (`breadcrumbParent`).
+- **Facts:** only Olive Garden's FAQ statements: closed on Thanksgiving Day and Christmas Day; open the day before, but restaurants may close early, at a time each restaurant sets; Hawaii, Puerto Rico, and Guam may differ.
+  - **Never** show a holiday closing time Olive Garden has not published.
+  - Unknowns say "Not announced".
+  - Fact logs: `research/seo/<slug>/FACT_VERIFICATION.md`; intent split with `/hours`: `research/seo/KEYWORD_CANNIBALIZATION.md` §9.
+- **Design:** the `holiday` field renders a seasonal label and quick-answer status cards (`components/guide/HolidayStatus.tsx`). Tokens `xmas-*`, `fall-*`, and `open-*` in `globals.css` are for these pages only (`docs/DESIGN_SYSTEM.md` 4.9).
+- **Seasonal:** the pages are written for 2026. Before each holiday, re-check the FAQ and update the year, dates, and weekdays (steps in the fact logs).
+- **Low-memory builds:** `npm run build` can crash with "out of memory", because Next.js starts at least 4 workers. A local workaround is a temporary `experimental: { cpus: 1 }` in `next.config.ts`; remove it after the build and never commit it.
 
 ## Nutrition & Meal Price Calculator (Improvement 7, 2026-11-20)
 

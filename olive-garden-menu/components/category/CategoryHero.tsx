@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { formatMonthYear } from "@/lib/format";
 import { siteConfig } from "@/lib/site";
 
@@ -20,6 +21,8 @@ type CategoryHeroProps = {
   tableId: string;
   /** Unpublished pages show a clear preview notice. */
   isPreview: boolean;
+  /** Optional small label above the H1 (holiday articles). */
+  eyebrow?: ReactNode;
 };
 
 /**
@@ -40,10 +43,12 @@ export default function CategoryHero({
   jumpLabel = "Jump to the price table",
   tableId,
   isPreview,
+  eyebrow,
 }: CategoryHeroProps) {
   return (
     <header className="mt-6">
       <div className="max-w-3xl">
+        {eyebrow && <div className="mb-3">{eyebrow}</div>}
         <h1 className="font-display text-3xl leading-tight font-bold text-ink sm:text-4xl lg:text-[2.5rem]">{h1}</h1>
         {intro.map((paragraph) => (
           <p key={paragraph} className="mt-4 text-lg leading-8 text-muted">

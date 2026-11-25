@@ -133,3 +133,17 @@ Rules:
   `menuCategoryPath(slug)` (→ `/{slug}`), `articlePath(slug)`. Never hand-type URLs.
 - Link only to pages with `contentStatus: "published"`.
 - Before launch: build + manual click-through for broken links.
+
+## 7. Holiday-hours articles (2026-11-25)
+
+| From | Link to `/thanksgiving-hours` and `/christmas-hours` |
+|---|---|
+| Header "Hours" dropdown (desktop and mobile, same data) | "Thanksgiving Hours", "Christmas Hours" (automatic for `navGroup: "hours"` guides) |
+| Homepage "Olive Garden Holiday Hours" section | Two text links under the existing "See holiday hours" link (`HolidayGuideLinks`) |
+| `/hours` holiday section | One sentence with both links |
+| `/dinner-menu` "Dinner hours" list | Holidays item links both |
+| `/catering` "How to Order" | Note on holiday closures with both links |
+| Each article | Links to `/hours`, to the other article, and to `/catering`, `/family-style-meals`, `/desserts`, `/dinner-menu`; breadcrumb Home > Hours > article |
+| Site search | Own entries (kind "Guide") |
+
+- **Not in the footer:** the "Olive Garden Hours" footer link already leads to both articles, so footer duplicates were not added.

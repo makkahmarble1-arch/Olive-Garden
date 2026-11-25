@@ -2,6 +2,8 @@ import type { GuidePageContent } from "@/lib/types";
 import { menuCategories } from "@/content/menu/categories";
 import { dinnerMenuGuide } from "./dinner-menu";
 import { hoursGuide } from "./hours";
+import { thanksgivingHoursGuide } from "./thanksgiving-hours";
+import { christmasHoursGuide } from "./christmas-hours";
 
 /**
  * Registry of menu guides that are not one of the 17 menu categories
@@ -9,7 +11,8 @@ import { hoursGuide } from "./hours";
  * (app/<slug>/page.tsx) and is added to the navigation, footer, search index,
  * and sitemap from here once its status is "published".
  */
-export const guidePages = [dinnerMenuGuide, hoursGuide] as const satisfies readonly GuidePageContent[];
+// Holiday articles (navGroup "hours") appear in the header Hours dropdown in this order.
+export const guidePages = [dinnerMenuGuide, hoursGuide, thanksgivingHoursGuide, christmasHoursGuide] as const satisfies readonly GuidePageContent[];
 
 // A guide URL must never shadow a category URL (both live at the root).
 for (const guide of guidePages) {

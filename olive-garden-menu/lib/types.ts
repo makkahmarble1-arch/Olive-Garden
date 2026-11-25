@@ -511,6 +511,35 @@ export type StaticTableSpec = {
 };
 
 /**
+ * Quick answer of a holiday-hours article (/thanksgiving-hours, /christmas-hours):
+ * one card per day around the holiday. Every status must be backed by the
+ * article's fact log (research/seo/<slug>/FACT_VERIFICATION.md); never an
+ * opening or closing time Olive Garden has not published.
+ */
+export type HolidayDayStatus = "closed" | "open-early" | "open";
+export type HolidaySpec = {
+  theme: "christmas" | "thanksgiving";
+  /** Small label above the H1, e.g. "Christmas 2026". */
+  eyebrow: string;
+  /** Heading of the status panel (an H2). */
+  statusHeading: string;
+  days: {
+    /** e.g. "Christmas Eve". */
+    label: string;
+    /** ISO date; shown as "Thursday, December 24, 2026". */
+    date: string;
+    status: HolidayDayStatus;
+    /** Short status text, e.g. "Closed" or "Open, may close early". */
+    title: string;
+    text: string;
+    /** true = stated by Olive Garden; false = no special hours announced. */
+    confirmed: boolean;
+  }[];
+  /** One line under the cards (what the statuses are based on). */
+  note: string;
+};
+
+/**
  * A menu guide that is not one of the 17 menu categories (e.g. /dinner-menu):
  * it reads the shared menu data, uses the category page components, and has
  * its own static route. Registered in content/guides/index.ts.
@@ -563,6 +592,10 @@ export type GuidePageContent = {
    */
   navGroup?: "hours";
   navLabel?: string;
+  /** Middle breadcrumb (default Home > Menu > name). Holiday articles use Home > Hours > name. */
+  breadcrumbParent?: { label: string; href: string };
+  /** Holiday articles only: seasonal accent and the quick-answer status cards under the hero. */
+  holiday?: HolidaySpec;
   /** First sentence of the Sources box (default: the menu wording). */
   sourceSummary?: string;
   sections: CategorySection[];

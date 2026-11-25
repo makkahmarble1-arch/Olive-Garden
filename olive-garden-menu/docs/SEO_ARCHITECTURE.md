@@ -70,7 +70,13 @@ Menu topics that are not one of the 17 categories get a **guide page** at the ro
 - `proxy.ts` needs no change: a top-level folder with a `page` file is allowed automatically.
 - A guide slug may never equal a category slug (checked at build time in `content/guides/index.ts`).
 - Non-menu guides (e.g. `/hours`) use `staticTable` blocks: verified facts typed in the guide and backed by its fact log. They have no price overview or photo cards.
-- Guides with `navGroup: "hours"` (future holiday articles) join the header Hours dropdown automatically.
+- Guides with `navGroup: "hours"` (holiday articles) join the header Hours dropdown automatically.
+
+### Holiday-hours articles (2026-11-25, waiting for owner review)
+- `/thanksgiving-hours` ("Is Olive Garden Open on Thanksgiving 2026?") and `/christmas-hours` ("Is Olive Garden Open on Christmas 2026?") are guides with `navGroup: "hours"`, `breadcrumbParent` (Home > Hours > page), and a `holiday` block (seasonal accent and quick-answer status cards, `components/guide/HolidayStatus.tsx`).
+- Structured data: `WebPage`, `BreadcrumbList`, `FAQPage` only. Never `LocalBusiness`, `Restaurant`, or `OpeningHoursSpecification`.
+- Facts only from Olive Garden's FAQ (closed on the holiday; may close early the day before; time set by each restaurant). No invented closing times. Fact logs: `research/seo/<slug>/FACT_VERIFICATION.md`.
+- Intent split with `/hours`: `research/seo/KEYWORD_CANNIBALIZATION.md` §9. **Seasonal:** the year and dates must be updated before each holiday (steps in each fact log).
 
 ### Tool pages: Nutrition & Meal Price Calculator (Improvement 7, 2026-11-20)
 
